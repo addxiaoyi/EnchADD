@@ -1,0 +1,46 @@
+# Arquivo de Idioma Português
+startup:
+  title-line1: "⚡ Encantamentos Rápidos como Raio ⚡"
+  title-line2: "✨ 51 Encantamentos Personalizados ✨"
+  title-line3: "🔥 Zero Impacto no TPS 🔥"
+  starting: "🚀 Iniciando registro de encantamentos..."
+  
+completion:
+  title: "✅ REGISTRO COMPLETO ✅"
+  success: "🎉 Registrados com sucesso {count} encantamentos! 🎉"
+  combat: "⭐ Encantamentos de Combate: 18"
+  armor: "⭐ Encantamentos de Armadura: 12"
+  tool: "⭐ Encantamentos de Ferramenta: 16"
+  curse: "⭐ Encantamentos de Maldição: 8"
+  utility: "⭐ Encantamentos de Utilidade: 4"
+  defense: "⭐ Encantamentos de Defesa: 1"
+  special: "⭐ Encantamentos Especiais: 2"
+  thanks: "💎 Obrigado por usar o EnchAdd! 💎"
+  author: "Autor: ADDxiaoyi312048"
+  version: "Versão: 1.0.0 | Build: Otimizado"
+  enjoy: "♥ Aproveite sua jogabilidade aprimorada! ♥"
+  available: "🌟 Todos os encantamentos estão agora disponíveis no jogo! Use /enchant para testar! 🌟"
+  performance: "⚡ Performance: Zero impacto no TPS | Memória: <1MB | Inicialização: <100ms ⚡"
+  achievements: "🏆 Sistema de conquistas pronto! Complete desafios para ganhar recompensas! 🏆"
+
+config:
+  treasure-mode: "Encantamentos de tesouro: {status}"
+  language-loaded: "Idioma carregado: {language}"
+  achievements-enabled: "Sistema de conquistas: {status}"
+  disabled-enchantments: "Encantamentos desabilitados: {count}"
+
+achievement:
+  unlocked: "Conquista Desbloqueada!"
+  broadcast: "§5{player} §7ganhou a conquista §d{achievement}§7!"
+
+java:
+  compatibility-check: "Verificação de Compatibilidade da Versão Java"
+  version-info: "Versão: {version} | Fornecedor: {vendor}"
+  status-perfect: "✅ Compatibilidade perfeita - Versão recomendada"
+  status-forward: "✅ Compatível para frente - Deve funcionar sem problemas"
+  status-untested: "⚠️ Versão não testada - Pode funcionar mas não garantido"
+  status-unsupported: "❌ Versão não suportada"
+  warning-preview: "⚠️ Executando em versão Java preview/early access"
+  error-minimum: "Mínimo necessário: Java {version}"
+  error-upgrade: "Por favor, atualize sua instalação Java"
+  recommendation: "Para melhor compatibilidade, use Java 21 (LTS). Java 22-25 também são suportados."

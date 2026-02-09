@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../.."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"konveyor.genai.agentMode": true,
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

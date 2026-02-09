@@ -1,0 +1,318 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                          EnchAdd Plugin Configuration                        ║
+# ║                          EnchAdd 插件配置文件                                  ║
+# ║                                                                              ║
+# ║  This file controls all aspects of the EnchAdd plugin behavior              ║
+# ║  此文件控制 EnchAdd 插件的所有行为设置                                          ║
+# ║                                                                              ║
+# ║  Version: 1.0.0 | Author: ADDxiaoyi312048                                   ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                            GENERAL SETTINGS 基础设置                          │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Language / 语言设置
+# Supported: en (English), zh (中文)
+# 支持的语言: en (英语), zh (中文)
+language: zh
+
+# Treasure Enchantments / 宝藏附魔
+# If true, some enchantments can only be found in loot chests
+# 如果启用，某些附魔只能在战利品箱中找到
+treasure-enchantments: true
+
+settings:
+  # Debug Mode / 调试模式
+  # Enable detailed logging for troubleshooting (NOT recommended for production)
+  # 启用详细日志用于故障排除（生产环境不推荐）
+  debug-mode: false
+  
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │              ENCHANTMENT REGISTRATION 附魔注册设置                          │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  # Control which enchantment categories are loaded
+  # 控制加载哪些附魔类别
+  enchantment-registration:
+    enable-combat-enchantments: true    # Combat enchantments (51 total) / 战斗附魔（共51个）
+    enable-armor-enchantments: true     # Armor enchantments (34 total) / 护甲附魔（共34个）
+    enable-tool-enchantments: true      # Tool enchantments (51 total) / 工具附魔（共51个）
+    enable-curse-enchantments: true     # Curse enchantments (18 total) / 诅咒附魔（共18个）
+    enable-utility-enchantments: true   # Utility enchantments (26 total) / 实用附魔（共26个）
+    enable-defense-enchantments: true   # Defense enchantments (20 total) / 防御附魔（共20个）
+    enable-special-enchantments: true   # Special enchantments (5 total) / 特殊附魔（共5个）
+    enable-enhanced-enchantments: true  # Enhanced enchantments (21 total) / 增强附魔（共21个）
+  
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │                  VISUALIZATION 可视化设置                                   │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  visualization:
+    # Generate JSON files for web visualization
+    # 生成JSON文件用于网页可视化
+    generate-json-files: true
+    
+    # Enable conflict list generation
+    # 启用冲突列表生成
+    enable-conflict-list: true
+    
+    # Enable enhanced visual effects
+    # 启用增强视觉效果
+    enable-enhanced-visuals: true
+    
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │              PERFORMANCE OPTIMIZATION 性能优化设置                          │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  performance:
+    # Object Pooling / 对象池
+    # Reuse objects to reduce garbage collection (RECOMMENDED)
+    # 重用对象以减少垃圾回收（推荐）
+    enable-object-pooling: true
+    
+    # Caching / 缓存系统
+    # Cache frequently accessed data for better performance
+    # 缓存频繁访问的数据以提高性能
+    enable-caching: true
+    
+    # Cache Expiration / 缓存过期时间
+    # How long cached data stays valid (in minutes)
+    # 缓存数据保持有效的时间（分钟）
+    cache-expiration-minutes: 30
+    
+    # Async Effects / 异步效果
+    # Process enchantment effects asynchronously to reduce lag
+    # 异步处理附魔效果以减少延迟
+    async-effects: true
+    
+    # Max Concurrent Effects / 最大并发效果数
+    # Maximum number of effects that can run simultaneously
+    # 可以同时运行的最大效果数量
+    max-concurrent-effects: 100
+    
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │                ACHIEVEMENT SYSTEM 成就系统设置                              │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  achievements:
+    # Enable Achievement System / 启用成就系统
+    # Track player progress and unlock rewards
+    # 跟踪玩家进度并解锁奖励
+    enabled: true
+    
+    # Broadcast to All / 全服广播
+    # Announce achievements to all online players
+    # 向所有在线玩家广播成就
+    broadcast-to-all: true
+    
+    # Play Sounds / 播放音效
+    # Play sound effects when achievements are unlocked
+    # 解锁成就时播放音效
+    play-sounds: true
+    
+    # Show Titles / 显示标题
+    # Display title messages for achievements
+    # 为成就显示标题消息
+    show-titles: true
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                  DISABLED ENCHANTMENTS 禁用的附魔列表                         │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# These enchantments are disabled by default because they are too powerful
+# 这些附魔默认被禁用，因为它们过于强大
+#
+# To enable an enchantment, simply remove it from this list
+# 要启用某个附魔，只需将其从此列表中删除
+#
+# To disable more enchantments, add their IDs to this list
+# 要禁用更多附魔，将它们的ID添加到此列表
+disabled-enchantments:
+  - instant_mining      # Instant Mining / 即时挖掘 - Breaks blocks instantly (game-breaking)
+                        # 瞬间破坏方块（破坏游戏平衡）
+                        
+  - duplication         # Duplication / 复制物品 - Duplicates items (economy-breaking)
+                        # 复制物品（破坏经济平衡）
+                        
+  - meteor_strike       # Meteor Strike / 陨石打击 - Summons meteors (destroys terrain)
+                        # 召唤陨石（大范围破坏地形）
+                        
+  - earthquake          # Earthquake / 地震 - Creates massive terrain damage
+                        # 造成大规模地形破坏
+                        
+  - tidal_wave          # Tidal Wave / 潮汐波 - Floods large areas
+                        # 淹没大片区域
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │              ENCHANTMENT INTENSITY 附魔效果强度调整                            │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# Adjust trigger probability for powerful enchantments (0.0 = never, 1.0 = always)
+# 调整强力附魔的触发概率（0.0 = 从不触发，1.0 = 总是触发）
+#
+# Example: berserker_rage: 0.15 means 15% chance to trigger
+# 示例：berserker_rage: 0.15 表示15%的触发概率
+#
+# This helps balance overpowered enchantments without completely disabling them
+# 这有助于平衡过强的附魔而不完全禁用它们
+enchantment-intensity:
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │                  HEAVILY REDUCED 大幅降低（10-20%）                         │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  berserker_rage: 0.15    # Berserker Rage / 狂暴 - Massive damage boost when low HP
+                          # 低血量时大幅提升伤害
+                          
+  lifesteal: 0.20         # Lifesteal / 吸血 - Heal on hit
+                          # 攻击时恢复生命值
+                          
+  void_slash: 0.10        # Void Slash / 虚空斩击 - Ignores armor
+                          # 无视护甲
+                          
+  phantom_strike: 0.12    # Phantom Strike / 幻影打击 - Teleport behind enemy
+                          # 传送到敌人身后
+                          
+  dragon_breath: 0.15     # Dragon Breath / 龙息 - Fire breath attack
+                          # 龙息火焰攻击
+  
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │                  MODERATELY REDUCED 适度降低（25-30%）                      │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  execution: 0.25         # Execution / 处决 - Instant kill on low HP enemies
+                          # 对低血量敌人造成斩杀
+                          
+  critical_strike: 0.30   # Critical Strike / 暴击 - Deal critical damage
+                          # 造成暴击伤害
+                          
+  hemorrhage: 0.25        # Hemorrhage / 大出血 - Severe bleeding damage
+                          # 严重流血伤害
+  
+  # ┌────────────────────────────────────────────────────────────────────────────┐
+  # │                  ADD YOUR OWN 添加自定义设置                                │
+  # └────────────────────────────────────────────────────────────────────────────┘
+  # You can add more enchantments here with custom intensity values
+  # 你可以在这里添加更多附魔的自定义强度值
+  #
+  # Example / 示例:
+  # my_enchantment: 0.50  # 50% trigger chance / 50%触发概率
+  
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                    EFFECT SETTINGS 效果设置                                   │
+# └──────────────────────────────────────────────────────────────────────────────┘
+effects:
+  # Particles / 粒子效果
+  # Show particle effects for enchantments
+  # 显示附魔的粒子效果
+  particles: true
+  
+  # Sounds / 音效
+  # Play sound effects for enchantments
+  # 播放附魔的音效
+  sounds: true
+  
+  # Global Intensity / 全局效果强度
+  # Master multiplier for ALL enchantment effects (0.0-1.0)
+  # 所有附魔效果的主倍率（0.0-1.0）
+  # 
+  # This multiplies with individual enchantment intensity
+  # 这会与单个附魔强度相乘
+  # Example: If berserker_rage is 0.15 and global-intensity is 0.5,
+  #          final trigger chance = 0.15 * 0.5 = 0.075 (7.5%)
+  # 示例：如果 berserker_rage 是 0.15 且 global-intensity 是 0.5，
+  #       最终触发概率 = 0.15 * 0.5 = 0.075（7.5%）
+  global-intensity: 1.0
+  
+  # Particle Density / 粒子效果密度
+  # Control how many particles are spawned (0.0-1.0)
+  # 控制生成多少粒子（0.0-1.0）
+  # Lower values = better performance, fewer particles
+  # 较低的值 = 更好的性能，更少的粒子
+  particle-density: 0.8
+    
+# 语言设置
+messages:
+  prefix: "§7[§dEnchAdd§7] "
+  no-permission: "§c你没有权限执行此操作。"
+  reloaded: "§a配置文件已成功重载。"
+  achievement:
+    unlocked: "§a★ 成就达成！"
+    enchantment_master:
+      title: "附魔大师"
+      desc: "收集并拥有所有 51 种 EnchAdd 附魔"
+    cursed_warrior:
+      title: "诅咒战士"
+      desc: "在携带 5 种诅咒的情况下生存"
+    one_shot_kill:
+      title: "一击必杀"
+      desc: "使用处决附魔击杀一名 Boss"
+    lumberjack:
+      title: "伐木工"
+      desc: "使用伐木大师附魔砍伐 1000 棵树"
+    marksman:
+      title: "神射手"
+      desc: "在 50 格以外使用狙击附魔命中目标 100 次"
+
+# 附魔冲突规则
+conflict-rules:
+  # 战斗附魔冲突
+  combat:
+    conflicts-with:
+      - armor
+      - special
+    compatible-with:
+      - tool
+      - curse
+      - utility
+      - defense
+      - cosmetic
+    weak-conflicts:
+      - defense
+      
+  # 防具附魔冲突
+  armor:
+    conflicts-with:
+      - combat
+      - special
+    compatible-with:
+      - tool
+      - curse
+      - utility
+      - defense
+      - cosmetic
+    weak-conflicts:
+      - defense
+      
+  # 工具附魔冲突
+  tool:
+    conflicts-with:
+      - curse
+    compatible-with:
+      - combat
+      - armor
+      - utility
+      - defense
+      - cosmetic
+    weak-conflicts:
+      - special
+
+# 原版附魔冲突规则
+vanilla-conflict-rules:
+  vanilla-weapon:
+    conflicts-with:
+      - vanilla-armor
+      - special
+    compatible-with:
+      - vanilla-tool
+      - vanilla-curse
+      - vanilla-utility
+      - defense
+      - cosmetic
+    weak-conflicts:
+      - defense
+
+  vanilla-armor:
+    conflicts-with:
+      - vanilla-weapon
+      - special
+    compatible-with:
+      - vanilla-tool
+      - vanilla-curse
+      - vanilla-utility
+      - defense
+      - cosmetic
+    weak-conflicts:
+      - defense

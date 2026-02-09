@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EnchAdd - Minecraft 附魔扩展插件，提供超过 150 种全新附魔。">
+    <meta name="keywords" content="Minecraft, 附魔, 插件, EnchAdd, Enchantments">
+    <meta property="og:title" content="EnchAdd - Minecraft 附魔扩展">
+    <meta property="og:description" content="超过 150 种全新附魔，让你的 Minecraft 更有趣！">
+    <title>EnchAdd - Minecraft 附魔扩展</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>*</text></svg>">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">EnchAdd</h1>
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="zh" onclick="switchToChinese()">中文</button>
+                    <button class="lang-btn" data-lang="en" onclick="switchToEnglish()">EN</button>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-nav="home">首页</a>
+                <a href="#" class="nav-link" data-nav="enchantments">附魔列表</a>
+                <a href="#" class="nav-link" data-nav="conflicts">冲突列表</a>
+                <a href="#" class="nav-link" data-nav="commands">命令列表</a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>v1.0.0 | EnchAdd Team</p>
+            </div>
+        </aside>
+        
+        <main class="main">
+            <header class="header">
+                <input type="text" id="search-input" placeholder="搜索附魔...">
+                <div class="header-right">
+                    <button class="theme-btn" id="theme-toggle" title="切换主题">
+                        <span id="theme-icon">Dark</span>
+                    </button>
+                </div>
+            </header>
+            
+            <div class="content">
+                <div id="page-home" class="page active">
+                    <h2>欢迎来到 EnchAdd</h2>
+                    <p class="subtitle">Minecraft 附魔扩展插件</p>
+                    
+                    <div class="stats">
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-total">0</span>
+                            <span class="stat-label">总附魔</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-combat">0</span>
+                            <span class="stat-label">战斗</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-armor">0</span>
+                            <span class="stat-label">防具</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-tool">0</span>
+                            <span class="stat-label">工具</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-curse">0</span>
+                            <span class="stat-label">诅咒</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-utility">0</span>
+                            <span class="stat-label">实用</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-defense">0</span>
+                            <span class="stat-label">防御</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-special">0</span>
+                            <span class="stat-label">特殊</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="stat-cosmetic">0</span>
+                            <span class="stat-label">装饰</span>
+                        </div>
+                    </div>
+                    
+                    <div class="intro">
+                        <h3>关于插件</h3>
+                        <p>超过 150 种全新附魔，让你的 Minecraft 更有趣！</p>
+                        <ul>
+                            <li>⚔️ 战斗 - 打怪更有成就感</li>
+                            <li>🛡️ 防具 - 生存更加轻松</li>
+                            <li>⛏️ 工具 - 挖矿砍树更快</li>
+                            <li>🏹 远程 - 射手的最爱</li>
+                            <li>✨ 特殊 - 各种有趣能力</li>
+                            <li>💀 诅咒 - 挑战高难度</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="page-enchantments" class="page">
+                    <h2>附魔列表</h2>
+                    <div class="filter-tags">
+                        <button class="tag active" data-filter="all">全部</button>
+                        <button class="tag" data-filter="combat">战斗</button>
+                        <button class="tag" data-filter="armor">防具</button>
+                        <button class="tag" data-filter="tool">工具</button>
+                        <button class="tag" data-filter="curse">诅咒</button>
+                        <button class="tag" data-filter="utility">实用</button>
+                        <button class="tag" data-filter="defense">防御</button>
+                        <button class="tag" data-filter="special">特殊</button>
+                        <button class="tag" data-filter="cosmetic">装饰</button>
+                    </div>
+                    <div id="enchantment-list" class="card-grid"></div>
+                </div>
+                
+                <div id="page-conflicts" class="page">
+                    <h2>附魔冲突</h2>
+                    <div class="conflict-visualization">
+                        <div id="conflict-graph-container"></div>
+                    </div>
+                    <div class="conflict-sections">
+                        <div id="conflict-list"></div>
+                    </div>
+                </div>
+                
+                <div id="conflict-detail-modal" class="conflict-detail-modal">
+                    <div class="conflict-detail-content">
+                        <div class="conflict-detail-header">
+                            <h3 id="modal-conflict-title">冲突详情</h3>
+                            <button class="conflict-detail-close" onclick="closeConflictModal()">×</button>
+                        </div>
+                        <div class="conflict-detail-body" id="modal-conflict-body"></div>
+                    </div>
+                </div>
+                
+                <div id="page-detail" class="page">
+                    <button class="back-btn" onclick="handlePageNavigation('enchantments')">← 返回</button>
+                    <div class="detail-card">
+                        <h2 id="detail-name"></h2>
+                        <div class="detail-meta">
+                            <span id="detail-category"></span>
+                            <span id="detail-rarity"></span>
+                            <span id="detail-level"></span>
+                        </div>
+                        <p id="detail-description"></p>
+                        <div class="detail-extra">
+                            <p><strong>来源：</strong><span id="detail-source"></span></p>
+                            <p><strong>材料：</strong><span id="detail-materials"></span></p>
+                            <p><strong>冲突：</strong><span id="detail-conflicts"></span></p>
+                            <p><strong>ID：</strong><span id="detail-id"></span></p>
+                        </div>
+                        <div class="detail-effects" id="detail-effects-container">
+                            <h3>效果详情</h3>
+                            <div id="detail-effects"></div>
+                        </div>
+                        <div class="detail-tips" id="detail-tips-container">
+                            <h3>使用技巧</h3>
+                            <div id="detail-tips"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="page-commands" class="page">
+                    <h2>命令列表</h2>
+                    <p class="subtitle">游戏里直接能用</p>
+                    
+                    <div class="command-sections">
+                        <div class="command-category">
+                            <h3>🔧 基础命令</h3>
+                            <div class="command-list">
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchadd</span>
+                                        <span class="command-alias">/ea</span>
+                                    </div>
+                                    <div class="command-desc">打开附魔菜单，人人可用</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchadd</code> 或 <code>/enchadd gui</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantadd</span>
+                                        <span class="command-alias">/eadd</span>
+                                    </div>
+                                    <div class="command-desc">给手里物品加附魔（需 OP）</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantadd [附魔ID] [等级]</code>
+                                    </div>
+                                    <div class="command-example">
+                                        <span class="example-label">例：</span>
+                                        <code>/enchantadd sharpness 5</code> - 锋利 V 直接上身
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantremove</span>
+                                        <span class="command-alias">/eremove</span>
+                                    </div>
+                                    <div class="command-desc">清除手里物品的全部附魔（需 OP）</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantremove</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="command-category">
+                            <h3>🔍 查看命令</h3>
+                            <div class="command-list">
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantinfo</span>
+                                        <span class="command-alias">/einfo</span>
+                                    </div>
+                                    <div class="command-desc">查附魔详细信息和获取途径</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantinfo [附魔ID]</code>
+                                    </div>
+                                    <div class="command-example">
+                                        <span class="example-label">例：</span>
+                                        <code>/enchantinfo sharpness</code> - 看看锋利厉不厉害
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantlist</span>
+                                        <span class="command-alias">/elist</span>
+                                    </div>
+                                    <div class="command-desc">列出所有能用的附魔</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantlist</code> 或 <code>/enchantlist [类别]</code>
+                                    </div>
+                                    <div class="command-example">
+                                        <span class="example-label">例：</span>
+                                        <code>/enchantlist rare</code> - 看看都有哪些稀有货
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantpreview</span>
+                                        <span class="command-alias">/epreview</span>
+                                    </div>
+                                    <div class="command-desc">提前看看附魔效果什么样</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantpreview [附魔ID] [等级]</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="command-category">
+                            <h3>⚙️ 管理命令</h3>
+                            <div class="command-list">
+                                <div class="command-item admin">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantgive</span>
+                                        <span class="command-alias">/egive</span>
+                                        <span class="command-require">需 OP</span>
+                                    </div>
+                                    <div class="command-desc">送玩家一本附魔书</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantgive [玩家] [附魔ID] [等级]</code>
+                                    </div>
+                                    <div class="command-example">
+                                        <span class="example-label">例：</span>
+                                        <code>/enchantgive Steve sharpness 3</code> - 送 Steve 一本锋利 III
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item admin">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantconfig</span>
+                                        <span class="command-alias">/econfig</span>
+                                        <span class="command-require">需 OP</span>
+                                    </div>
+                                    <div class="command-desc">改插件设置</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantconfig [设置] [值]</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item admin">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantreload</span>
+                                        <span class="command-alias">/ereload</span>
+                                        <span class="command-require">需 OP</span>
+                                    </div>
+                                    <div class="command-desc">重载插件配置，改完.ini不用重启</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantreload</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="command-category">
+                            <h3>📊 信息命令</h3>
+                            <div class="command-list">
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantstats</span>
+                                        <span class="command-alias">/estats</span>
+                                    </div>
+                                    <div class="command-desc">看看服务器里有多少附魔</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantstats</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchanthelp</span>
+                                        <span class="command-alias">/ehelp</span>
+                                    </div>
+                                    <div class="command-desc">打开帮助菜单</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchanthelp [页码]</code>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-item">
+                                    <div class="command-header">
+                                        <span class="command-name">/enchantversion</span>
+                                        <span class="command-alias">/eversion</span>
+                                    </div>
+                                    <div class="command-desc">查查插件版本</div>
+                                    <div class="command-usage">
+                                        <span class="usage-label">用法：</span>
+                                        <code>/enchantversion</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

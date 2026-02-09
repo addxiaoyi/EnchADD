@@ -1,0 +1,46 @@
+# Fail Bahasa Malaysia
+startup:
+  title-line1: "⚡ Sihir Sepantas Kilat ⚡"
+  title-line2: "✨ 51 Sihir Tersuai ✨"
+  title-line3: "🔥 Tiada Kesan TPS 🔥"
+  starting: "🚀 Memulakan pendaftaran sihir..."
+  
+completion:
+  title: "✅ PENDAFTARAN SELESAI ✅"
+  success: "🎉 Berjaya mendaftarkan {count} sihir! 🎉"
+  combat: "⭐ Sihir Pertempuran: 18"
+  armor: "⭐ Sihir Perisai: 12"
+  tool: "⭐ Sihir Alatan: 16"
+  curse: "⭐ Sihir Kutukan: 8"
+  utility: "⭐ Sihir Utiliti: 4"
+  defense: "⭐ Sihir Pertahanan: 1"
+  special: "⭐ Sihir Khas: 2"
+  thanks: "💎 Terima kasih kerana menggunakan EnchAdd! 💎"
+  author: "Pengarang: ADDxiaoyi312048"
+  version: "Versi: 1.0.0 | Binaan: Dioptimumkan"
+  enjoy: "♥ Nikmati permainan yang dipertingkatkan! ♥"
+  available: "🌟 Semua sihir kini tersedia dalam permainan! Gunakan /enchant untuk menguji! 🌟"
+  performance: "⚡ Prestasi: Tiada kesan TPS | Memori: <1MB | Permulaan: <100ms ⚡"
+  achievements: "🏆 Sistem pencapaian siap! Selesaikan cabaran untuk mendapatkan ganjaran! 🏆"
+
+config:
+  treasure-mode: "Sihir harta karun: {status}"
+  language-loaded: "Bahasa dimuatkan: {language}"
+  achievements-enabled: "Sistem pencapaian: {status}"
+  disabled-enchantments: "Sihir yang dilumpuhkan: {count}"
+
+achievement:
+  unlocked: "Pencapaian Dibuka!"
+  broadcast: "§5{player} §7telah mendapatkan pencapaian §d{achievement}§7!"
+
+java:
+  compatibility-check: "Pemeriksaan Keserasian Versi Java"
+  version-info: "Versi: {version} | Pembekal: {vendor}"
+  status-perfect: "✅ Keserasian sempurna - Versi yang disyorkan"
+  status-forward: "✅ Serasi ke hadapan - Sepatutnya berfungsi tanpa masalah"
+  status-untested: "⚠️ Versi tidak diuji - Mungkin berfungsi tetapi tidak dijamin"
+  status-unsupported: "❌ Versi tidak disokong"
+  warning-preview: "⚠️ Berjalan pada versi Java preview/early access"
+  error-minimum: "Minimum diperlukan: Java {version}"
+  error-upgrade: "Sila kemas kini pemasangan Java anda"
+  recommendation: "Untuk keserasian terbaik, gunakan Java 21 (LTS). Java 22-25 juga disokong."

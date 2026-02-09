@@ -1,0 +1,8 @@
+name: EnchAdd
+version: '2.0.0'
+main: com.enadd.EnchAdd
+bootstrapper: com.enadd.EnchAddBootstrap
+api-version: '1.21'
+description: 一个功能强大的自定义附魔插件，支持200+种独特附魔。
+author: ADDXIAOYI2048
+website: https://github.com/enadd/EnchAdd

@@ -1,0 +1,377 @@
+# ========================================
+# EnchAdd 风险功能配置文件
+# ========================================
+# 
+# 此文件控制所有高风险功能的启用状态
+# 默认情况下，所有高风险功能都是关闭的
+# 
+# 风险等级说明：
+# - CRITICAL (严重): 可能导致服务器崩溃或安全漏洞
+# - HIGH (高): 可能导致性能问题或功能异常
+# - MEDIUM (中): 可能影响性能但风险可控
+# - LOW (低): 风险很小，可以安全使用
+#
+# ========================================
+
+# ==================== 严重风险功能 ====================
+
+# 自动扩缩容系统
+# 风险等级: CRITICAL
+# 风险描述: 自动调整线程池和tick间隔，可能导致资源耗尽或服务器崩溃
+# 建议: 保持关闭，使用手动配置
+auto-scaler:
+  enabled: false
+  risk-level: CRITICAL
+  description: "自动调整系统资源（线程池、tick间隔、内存阈值）"
+  warnings:
+    - "可能导致CPU使用率飙升到100%"
+    - "可能导致内存溢出"
+    - "可能影响游戏体验（tick延迟）"
+  # 如果启用，以下是安全限制
+  safe-limits:
+    min-threads: 2
+    max-threads: 8  # 严格限制，原来是32
+    min-tick-interval: 20
+    max-tick-interval: 30  # 严格限制，原来是50
+    max-memory-threshold-mb: 1024  # 严格限制，原来是4096
+
+# ==================== 高风险功能 ====================
+
+# 事件优化器
+# 风险等级: HIGH
+# 风险描述: 修改事件处理优先级和队列，可能导致事件丢失或功能异常
+# 建议: 保持关闭，除非你完全理解其工作原理
+event-optimizer:
+  enabled: false
+  risk-level: HIGH
+  description: "优化事件处理队列和优先级"
+  warnings:
+    - "可能导致事件丢失"
+    - "可能与其他插件冲突"
+    - "可能导致游戏功能异常"
+  safe-limits:
+    max-queue-size: 1000
+    max-concurrent-events: 10
+
+# 服务优化器
+# 风险等级: HIGH
+# 风险描述: 自动启动/停止服务，可能导致核心功能失效
+# 建议: 保持关闭，使用手动服务管理
+service-optimizer:
+  enabled: false
+  risk-level: HIGH
+  description: "自动管理服务生命周期"
+  warnings:
+    - "可能导致核心功能失效"
+    - "可能导致数据不一致"
+    - "依赖关系复杂，难以调试"
+  safe-limits:
+    auto-restart: false
+    health-check-interval-ms: 30000
+
+# 缓存优化器
+# 风险等级: HIGH
+# 风险描述: 自动调整缓存大小，可能占用过多内存
+# 建议: 保持关闭，使用固定缓存配置
+cache-optimizer:
+  enabled: false
+  risk-level: HIGH
+  description: "自动调整缓存大小和预热策略"
+  warnings:
+    - "可能导致内存溢出"
+    - "缓存预热可能导致启动缓慢"
+    - "可能增加GC压力"
+  safe-limits:
+    max-memory-percent: 5  # 严格限制，原来是25
+    enable-warming: false
+    max-cache-entries: 1000
+
+# 异步任务管理器（高级模式）
+# 风险等级: HIGH
+# 风险描述: 创建大量线程池，可能导致线程泄露
+# 建议: 使用安全模式（见下方safe-async-manager）
+async-task-manager-advanced:
+  enabled: false
+  risk-level: HIGH
+  description: "高级异步任务管理（无限制）"
+  warnings:
+    - "可能导致线程泄露"
+    - "可能导致内存泄露"
+    - "可能导致CPU使用率过高"
+  safe-limits:
+    max-threads: 4
+    max-queue-size: 500
+    task-timeout-seconds: 30
+
+# ==================== 中风险功能 ====================
+
+# 性能监控器（详细模式）
+# 风险等级: MEDIUM
+# 风险描述: 持续收集详细性能数据，有一定性能开销
+# 建议: 使用轻量级监控（见下方safe-performance-monitor）
+performance-monitor-detailed:
+  enabled: false
+  risk-level: MEDIUM
+  description: "详细性能监控（高频采样）"
+  warnings:
+    - "持续性能开销"
+    - "可能影响TPS"
+    - "数据可能泄露隐私"
+  safe-limits:
+    sampling-rate: 0.1  # 10%采样率
+    max-history-size: 1000
+    enable-thread-monitoring: false
+
+# 内存泄露检测器（主动模式）
+# 风险等级: MEDIUM
+# 风险描述: 频繁检查内存，可能触发频繁GC
+# 建议: 使用被动模式（见下方safe-memory-monitor）
+memory-leak-detector-active:
+  enabled: false
+  risk-level: MEDIUM
+  description: "主动内存泄露检测（频繁GC）"
+  warnings:
+    - "可能触发频繁GC"
+    - "可能导致卡顿"
+    - "误报可能导致不必要的操作"
+  safe-limits:
+    check-interval-seconds: 300  # 5分钟，原来可能更频繁
+    gc-threshold-percent: 90
+
+# 实体管理器（激进模式）
+# 风险等级: MEDIUM
+# 风险描述: 激进的实体清理，可能导致实体丢失
+# 建议: 使用保守模式（见下方safe-entity-manager）
+entity-manager-aggressive:
+  enabled: false
+  risk-level: MEDIUM
+  description: "激进实体管理（快速清理）"
+  warnings:
+    - "可能导致实体意外消失"
+    - "可能影响游戏体验"
+    - "可能导致数据丢失"
+  safe-limits:
+    cleanup-interval-seconds: 600  # 10分钟
+    max-entities-per-chunk: 50
+
+# 日志系统（无限制模式）
+# 风险等级: MEDIUM
+# 风险描述: 无限制写入日志，可能填满磁盘
+# 建议: 使用限制模式（见下方safe-logger）
+logger-unlimited:
+  enabled: false
+  risk-level: MEDIUM
+  description: "无限制日志写入"
+  warnings:
+    - "可能填满磁盘空间"
+    - "可能泄露敏感信息"
+    - "大量IO操作影响性能"
+  safe-limits:
+    max-file-size-mb: 10
+    max-files: 7
+    auto-cleanup: true
+
+# ==================== 安全平替功能（默认开启）====================
+
+# 安全的异步管理器
+# 风险等级: LOW
+# 描述: 有严格限制的异步任务管理
+safe-async-manager:
+  enabled: true
+  risk-level: LOW
+  description: "安全的异步任务管理（有限制）"
+  features:
+    - "固定线程池大小"
+    - "任务队列大小限制"
+    - "自动超时取消"
+    - "资源泄露检测"
+  config:
+    core-threads: 2
+    max-threads: 4
+    queue-size: 100
+    task-timeout-seconds: 10
+    enable-monitoring: true
+
+# 安全的性能监控
+# 风险等级: LOW
+# 描述: 轻量级性能监控，最小开销
+safe-performance-monitor:
+  enabled: true
+  risk-level: LOW
+  description: "轻量级性能监控（低开销）"
+  features:
+    - "低频采样（1%）"
+    - "聚合统计"
+    - "异步处理"
+    - "自动数据清理"
+  config:
+    sampling-rate: 0.01  # 1%采样
+    aggregation-interval-seconds: 60
+    max-history-minutes: 60
+    async-processing: true
+
+# 安全的内存监控
+# 风险等级: LOW
+# 描述: 被动内存监控，不触发GC
+safe-memory-monitor:
+  enabled: true
+  risk-level: LOW
+  description: "被动内存监控（不触发GC）"
+  features:
+    - "被动监控"
+    - "只记录不处理"
+    - "低频检查"
+    - "告警机制"
+  config:
+    check-interval-seconds: 600  # 10分钟
+    warning-threshold-percent: 80
+    critical-threshold-percent: 90
+    auto-gc: false  # 不自动触发GC
+
+# 安全的实体管理
+# 风险等级: LOW
+# 描述: 保守的实体管理，不会意外删除
+safe-entity-manager:
+  enabled: true
+  risk-level: LOW
+  description: "保守实体管理（安全清理）"
+  features:
+    - "保守清理策略"
+    - "多重确认"
+    - "白名单保护"
+    - "详细日志"
+  config:
+    cleanup-interval-seconds: 1800  # 30分钟
+    max-entities-per-chunk: 100
+    protected-entity-types:
+      - "PLAYER"
+      - "ARMOR_STAND"
+      - "ITEM_FRAME"
+    require-confirmation: true
+
+# 安全的日志系统
+# 风险等级: LOW
+# 描述: 有大小限制和自动清理的日志
+safe-logger:
+  enabled: true
+  risk-level: LOW
+  description: "安全日志系统（有限制）"
+  features:
+    - "文件大小限制"
+    - "自动轮转"
+    - "自动清理"
+    - "敏感信息过滤"
+  config:
+    max-file-size-mb: 10
+    max-files: 7
+    auto-cleanup-days: 7
+    filter-sensitive-data: true
+    async-writing: true
+    batch-size: 50
+
+# 安全的缓存管理
+# 风险等级: LOW
+# 描述: 固定大小的缓存，不会无限增长
+safe-cache-manager:
+  enabled: true
+  risk-level: LOW
+  description: "安全缓存管理（固定大小）"
+  features:
+    - "固定大小限制"
+    - "LRU淘汰策略"
+    - "自动过期"
+    - "内存监控"
+  config:
+    max-entries: 1000
+    max-memory-mb: 50
+    ttl-seconds: 3600  # 1小时
+    eviction-policy: "LRU"
+    enable-statistics: true
+
+# ==================== 核心功能（始终开启）====================
+
+# 这些是核心功能，不能关闭
+core-features:
+  # GUI系统
+  gui-system:
+    enabled: true
+    risk-level: LOW
+    description: "GUI界面系统"
+  
+  # 成就系统
+  achievement-system:
+    enabled: true
+    risk-level: LOW
+    description: "成就系统"
+  
+  # 冲突管理
+  conflict-manager:
+    enabled: true
+    risk-level: LOW
+    description: "附魔冲突管理"
+  
+  # 粘合剂系统
+  binder-system:
+    enabled: true
+    risk-level: LOW
+    description: "附魔粘合剂系统"
+  
+  # GUI保护
+  gui-protection:
+    enabled: true
+    risk-level: LOW
+    description: "GUI物品复制保护"
+
+# ==================== 开发者选项 ====================
+
+# 仅用于开发和调试，生产环境必须关闭
+developer-options:
+  # 调试模式
+  debug-mode:
+    enabled: false
+    risk-level: CRITICAL
+    description: "开发调试模式"
+    warnings:
+      - "会输出大量日志"
+      - "会降低性能"
+      - "可能泄露敏感信息"
+  
+  # 性能分析
+  profiling:
+    enabled: false
+    risk-level: HIGH
+    description: "性能分析工具"
+    warnings:
+      - "严重影响性能"
+      - "仅用于开发环境"
+  
+  # 实验性功能
+  experimental-features:
+    enabled: false
+    risk-level: CRITICAL
+    description: "未经测试的实验性功能"
+    warnings:
+      - "可能不稳定"
+      - "可能导致数据丢失"
+      - "不建议在生产环境使用"
+
+# ==================== 配置说明 ====================
+
+config-info:
+  version: "1.0.0"
+  last-updated: "2026-02-09"
+  documentation: "https://github.com/yourproject/wiki/risk-config"
+  support: "如有问题请联系管理员"
+  
+  # 风险等级定义
+  risk-levels:
+    CRITICAL: "严重 - 可能导致服务器崩溃或安全漏洞"
+    HIGH: "高 - 可能导致性能问题或功能异常"
+    MEDIUM: "中 - 可能影响性能但风险可控"
+    LOW: "低 - 风险很小，可以安全使用"
+  
+  # 建议配置
+  recommended-config:
+    production: "所有高风险功能关闭，只启用安全平替"
+    development: "可以启用部分高风险功能用于测试"
+    testing: "可以启用所有功能进行压力测试"

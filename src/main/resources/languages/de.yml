@@ -1,0 +1,46 @@
+# Deutsche Sprachdatei
+startup:
+  title-line1: "⚡ Blitzschnelle Verzauberungen ⚡"
+  title-line2: "✨ 229 Benutzerdefinierte Verzauberungen ✨"
+  title-line3: "🔥 Null TPS-Auswirkung 🔥"
+  starting: "🚀 Starte Verzauberungsregistrierung..."
+  
+completion:
+  title: "✅ REGISTRIERUNG ABGESCHLOSSEN ✅"
+  success: "🎉 Erfolgreich {count} Verzauberungen registriert! 🎉"
+  combat: "⭐ Kampf-Verzauberungen: 45"
+  armor: "⭐ Rüstungs-Verzauberungen: 32"
+  tool: "⭐ Werkzeug-Verzauberungen: 38"
+  curse: "⭐ Fluch-Verzauberungen: 12"
+  utility: "⭐ Dienstprogramm-Verzauberungen: 42"
+  defense: "⭐ Verteidigungs-Verzauberungen: 25"
+  special: "⭐ Spezial-Verzauberungen: 35"
+  thanks: "💎 Danke für die Nutzung von EnchAdd! 💎"
+  author: "Autor: ADDxiaoyi312048"
+  version: "Version: 2.0.0 | Build: Optimiert"
+  enjoy: "♥ Genieße dein verbessertes Gameplay! ♥"
+  available: "🌟 Alle Verzauberungen sind jetzt im Spiel verfügbar! Verwende /enchadd gui zum Testen! 🌟"
+  performance: "⚡ Leistung: Null TPS-Auswirkung | Speicher: <2MB | Start: <150ms ⚡"
+  achievements: "🏆 Erfolgs-System bereit! Absolviere Herausforderungen um Belohnungen zu verdienen! 🏆"
+
+config:
+  treasure-mode: "Schatz-Verzauberungen: {status}"
+  language-loaded: "Sprache geladen: {language}"
+  achievements-enabled: "Erfolgs-System: {status}"
+  disabled-enchantments: "Deaktivierte Verzauberungen: {count}"
+
+achievement:
+  unlocked: "Erfolg Freigeschaltet!"
+  broadcast: "§5{player} §7hat den Erfolg §d{achievement}§7 verdient!"
+
+java:
+  compatibility-check: "Java-Versionskompatibilitätsprüfung"
+  version-info: "Version: {version} | Anbieter: {vendor}"
+  status-perfect: "✅ Perfekte Kompatibilität - Empfohlene Version"
+  status-forward: "✅ Vorwärtskompatibel - Sollte ohne Probleme funktionieren"
+  status-untested: "⚠️ Ungetestete Version - Könnte funktionieren, aber nicht garantiert"
+  status-unsupported: "❌ Nicht unterstützte Version"
+  warning-preview: "⚠️ Läuft auf Vorschau/Early-Access Java-Version"
+  error-minimum: "Mindestanforderung: Java {version}"
+  error-upgrade: "Bitte aktualisieren Sie Ihre Java-Installation"
+  recommendation: "Für beste Kompatibilität verwenden Sie Java 21 (LTS). Java 22-25 werden ebenfalls unterstützt."
