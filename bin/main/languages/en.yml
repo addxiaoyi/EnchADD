@@ -1,0 +1,106 @@
+# English Language File
+startup:
+  title-line1: "⚡ Lightning Fast Enchantments ⚡"
+  title-line2: "✨ 60+ Custom Enchantments ✨"
+  title-line3: "🔥 Zero TPS Impact 🔥"
+  starting: "🚀 Starting enchantment registration..."
+  
+completion:
+  title: "✅ REGISTRATION COMPLETE ✅"
+  success: "🎉 Successfully registered {count} enchantments! 🎉"
+  combat: "⭐ Combat Enchantments: 18"
+  armor: "⭐ Armor Enchantments: 12"
+  tool: "⭐ Tool Enchantments: 16"
+  curse: "⭐ Curse Enchantments: 8"
+  utility: "⭐ Utility Enchantments: 4"
+  defense: "⭐ Defense Enchantments: 1"
+  special: "⭐ Special Enchantments: 2"
+  thanks: "💎 Thank you for using EnchAdd! 💎"
+  author: "Author: ADDxiaoyi312048"
+  version: "Version: 2.0.1-FIXED | Build: Optimized"
+  enjoy: "♥ Enjoy your enhanced gameplay! ♥"
+  available: "🌟 All enchantments are now available in-game! Use /enchant to test! 🌟"
+  performance: "⚡ Performance: Zero TPS impact | Memory: <1MB | Startup: <100ms ⚡"
+  achievements: "🏆 Achievement system ready! Complete challenges to earn rewards! 🏆"
+
+config:
+  treasure-mode: "Treasure enchantments: {status}"
+  language-loaded: "Language loaded: {language}"
+  achievements-enabled: "Achievements system: {status}"
+  disabled-enchantments: "Disabled enchantments: {count}"
+
+achievement:
+  unlocked: "Achievement Unlocked!"
+  earned: "earned"
+  broadcast: "§5{player} §7has earned the achievement §d{achievement}§7!"
+  
+  enchantment_master:
+    title: "Enchantment Master"
+    desc: "Obtain all 51 EnchAdd enchantments"
+    
+  cursed_warrior:
+    title: "Cursed Warrior"
+    desc: "Complete a dungeon with all 5 curses active"
+    
+  one_shot_kill:
+    title: "One Shot Kill"
+    desc: "Kill a boss with Execution enchantment"
+    
+  lumberjack:
+    title: "Master Lumberjack"
+    desc: "Cut down 1000 trees with Tree Feller enchantment"
+    
+  marksman:
+    title: "Master Marksman"
+    desc: "Hit 100 enemies from 50+ blocks with Sniper enchantment"
+
+system:
+  enchantment:
+    initialized: "Enchantment system initialized"
+    registered: "Registered enchantment: {name}"
+    failed: "Failed to register enchantment: {name}"
+  
+  memory:
+    leak_detected: "Memory leak detected: {type}"
+    cleanup: "Memory cleanup completed"
+    report: "Memory report generated"
+  
+  i18n:
+    loaded: "Loaded language: {language}"
+    switched: "Language switched to: {language}"
+    missing: "Missing translation: {key}"
+
+enchantment:
+  applied: "§aEnchantment applied!"
+  removed: "§cEnchantment removed!"
+  failed: "§cFailed to apply enchantment!"
+  max_level: "§cMaximum level reached!"
+  incompatible: "§cIncompatible with existing enchantments!"
+
+error:
+  log:
+    file:
+      create: "Failed to create log file"
+  general: "An error occurred: {message}"
+  
+test:
+  enchantment:
+    registration: "=== Enchantment Registration Performance Test ==="
+    conflict: "=== Conflict Detection Performance Test ==="
+    cache: "=== Cache Performance Test ==="
+    
+  marksman:
+    title: "Marksman"
+    desc: "Hit 100 enemies from 50+ blocks with Sniper enchantment"
+
+java:
+  compatibility-check: "Java Version Compatibility Check"
+  version-info: "Version: {version} | Vendor: {vendor}"
+  status-perfect: "✅ Perfect compatibility - Recommended version"
+  status-forward: "✅ Forward compatible - Should work without issues"
+  status-untested: "⚠️ Untested version - May work but not guaranteed"
+  status-unsupported: "❌ Unsupported version"
+  warning-preview: "⚠️ Running on preview/early access Java version"
+  error-minimum: "Minimum required: Java {version}"
+  error-upgrade: "Please upgrade your Java installation"
+  recommendation: "For best compatibility, use Java 21 (LTS). Java 22-25 are also supported."

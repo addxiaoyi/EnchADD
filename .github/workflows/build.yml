@@ -1,0 +1,56 @@
+name: Build and Deploy EnchAdd
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon -x test
+      
+    - name: Run Data Export
+      run: |
+        # We need to run the exporter. Since it depends on the plugin code, 
+        # we'll try to run it via gradlew if we add a task for it.
+        # For now, we assume the JSON files are updated manually or during build.
+        echo "Exporting data..."
+        # ./gradlew runExporter (to be implemented)
+      
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: docs
+        branch: gh-pages
+        clean: true
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: enchadd-jar
+        path: build/libs/*.jar
+        if-no-files-found: ignore
+

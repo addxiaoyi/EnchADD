@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冲突图测试</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        
+        #conflict-graph-container {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #222;
+            overflow: hidden;
+        }
+        
+        .node-group {
+            cursor: grab;
+        }
+        
+        .node-group:hover circle.main {
+            stroke: #fff;
+            stroke-width: 3;
+        }
+        
+        .link {
+            stroke-width: 1;
+        }
+        
+        .link.conflict {
+            stroke: #ff6b6b;
+        }
+        
+        .link.compatible {
+            stroke: #4ecdc4;
+        }
+        
+        .link.weak {
+            stroke: #a0aec0;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: 1px solid #444;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <h1>冲突图可视化测试</h1>
+    <div id="conflict-graph-container"></div>
+    <div id="tooltip" class="tooltip"></div>
+    
+    <script>
+        // 模拟数据
+        const enchantments = {
+            "weapon": {
+                "name": "武器附魔",
+                "color": "#FF6B6B",
+                "icon": "⚔️",
+                "enchantments": [
+                    {"id": "sharpness", "name": "锋利", "description": "增加伤害"},
+                    {"id": "fire_aspect", "name": "火焰附加", "description": "点燃目标"},
+                    {"id": "knockback", "name": "击退", "description": "增加击退距离"}
+                ]
+            },
+            "armor": {
+                "name": "护甲附魔",
+                "color": "#4ECDC4", 
+                "icon": "🛡️",
+                "enchantments": [
+                    {"id": "protection", "name": "保护", "description": "减少伤害"},
+                    {"id": "thorns", "name": "荆棘", "description": "反弹伤害"}
+                ]
+            },
+            "tool": {
+                "name": "工具附魔",
+                "color": "#FFE66D",
+                "icon": "⛏️",
+                "enchantments": [
+                    {"id": "efficiency", "name": "效率", "description": "提高挖掘速度"},
+                    {"id": "fortune", "name": "时运", "description": "增加掉落"}
+                ]
+            }
+        };
+
+        const conflictRules = {
+            "weapon": {
+                "conflicts": [],
+                "compatible": ["armor"],
+                "weak": ["tool"]
+            },
+            "armor": {
+                "conflicts": [],
+                "compatible": ["weapon"],
+                "weak": ["tool"]
+            },
+            "tool": {
+                "conflicts": [],
+                "compatible": ["weapon", "armor"],
+                "weak": []
+            }
+        };
+
+        // 工具函数
+        function showTooltip(event, d) {
+            const tooltip = document.getElementById("tooltip");
+            if (!tooltip) return;
+            
+            let content = "<strong>" + d.name + "</strong>";
+            if (d.description) {
+                content += "<br>" + d.description;
+            }
+            
+            tooltip.innerHTML = content;
+            tooltip.style.left = (event.pageX + 10) + "px";
+            tooltip.style.top = (event.pageY - 10) + "px";
+            tooltip.style.opacity = 1;
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById("tooltip");
+            if (tooltip) {
+                tooltip.style.opacity = 0;
+            }
+        }
+
+        function renderEnhancedConflictGraph() {
+            var container = document.getElementById("conflict-graph-container");
+            if (!container) {
+                console.warn("Conflict graph container not found");
+                return;
+            }
+            
+            if (!enchantments) {
+                console.warn("Enchantments data not loaded yet");
+                setTimeout(() => renderEnhancedConflictGraph(), 500);
+                return;
+            }
+            
+            if (typeof d3 === "undefined") {
+                console.warn("D3.js not loaded, using simple HTML fallback");
+                renderSimpleConflictGraph(container);
+                return;
+            }
+            
+            try {
+                container.innerHTML = "";
+                
+                var width = container.clientWidth || 800;
+                var height = 600;
+                var svg = d3.select(container).append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("viewBox", "0 0 " + width + " " + height);
+                
+                var centerX = width / 2;
+                var centerY = height / 2;
+                var orbitRadius = Math.min(width, height) * 0.22;
+                
+                var physicsNodes = [];
+                var categoryNodes = [];
+                var allEnchantmentNodes = [];
+                
+                // 计算每个分类的位置，按圆周分布
+                var categories = Object.keys(enchantments);
+                var angleStep = (Math.PI * 2) / categories.length;
+                
+                categories.forEach(function(catKey, catIndex) {
+                    var catData = enchantments[catKey];
+                    var angle = catIndex * angleStep - Math.PI / 2; // 从顶部开始
+                    var baseX = centerX + Math.cos(angle) * orbitRadius;
+                    var baseY = centerY + Math.sin(angle) * orbitRadius;
+                    
+                    var enchantList = catData.enchantments || [];
+                    var nodeCount = enchantList.length;
+                    
+                    // 创建分类节点
+                    var categoryNode = {
+                        id: catKey,
+                        name: catData.name,
+                        color: catData.color,
+                        icon: catData.icon || '⚡',
+                        count: nodeCount,
+                        x: baseX,
+                        y: baseY,
+                        vx: 0,
+                        vy: 0,
+                        radius: Math.max(30, Math.min(60, 20 + nodeCount * 0.8)),
+                        isCategory: true,
+                        parentId: null
+                    };
+                    
+                    categoryNodes.push(categoryNode);
+                    physicsNodes.push(categoryNode);
+                    
+                    // 如果分类中有附魔，则围绕分类节点分布
+                    if (nodeCount > 0) {
+                        var innerOrbitRadius = categoryNode.radius + 20;
+                        var enchantAngleStep = (Math.PI * 2) / Math.max(1, nodeCount);
+                        
+                        enchantList.forEach(function(enchant, enchantIndex) {
+                            var enchantAngle = enchantIndex * enchantAngleStep;
+                            var enchantX = baseX + Math.cos(enchantAngle) * innerOrbitRadius;
+                            var enchantY = baseY + Math.sin(enchantAngle) * innerOrbitRadius;
+                            
+                            var enchantNode = {
+                                id: enchant.id,
+                                name: enchant.name,
+                                description: enchant.description,
+                                parentColor: catData.color,
+                                x: enchantX,
+                                y: enchantY,
+                                vx: 0,
+                                vy: 0,
+                                radius: 6,
+                                isCategory: false,
+                                parentId: catKey,
+                                parentName: catData.name
+                            };
+                            
+                            allEnchantmentNodes.push(enchantNode);
+                            physicsNodes.push(enchantNode);
+                        });
+                    }
+                });
+                
+                // 创建SVG元素
+                var defs = svg.append("defs");
+                
+                // 为每个分类创建渐变
+                categoryNodes.forEach(function(node) {
+                    var gradientId = "grad-" + node.id;
+                    var gradient = defs.append("radialGradient")
+                        .attr("id", gradientId)
+                        .attr("cx", "50%")
+                        .attr("cy", "50%")
+                        .attr("r", "50%");
+                    
+                    gradient.append("stop")
+                        .attr("offset", "0%")
+                        .attr("stop-color", node.color)
+                        .attr("stop-opacity", 0.9);
+                    
+                    gradient.append("stop")
+                        .attr("offset", "100%")
+                        .attr("stop-color", node.color)
+                        .attr("stop-opacity", 0);
+                    
+                    node.gradientId = gradientId;
+                });
+                
+                var linkGroup = svg.append("g").attr("class", "links");
+                var nodeGroup = svg.append("g").attr("class", "nodes");
+                var labelGroup = svg.append("g").attr("class", "labels");
+                
+                function getLinkType(cat1, cat2) {
+                    var rules1 = conflictRules[cat1] || { conflicts: [], compatible: [], weak: [] };
+                    if (rules1.conflicts.indexOf(cat2) >= 0) return "conflict";
+                    if (rules1.compatible.indexOf(cat2) >= 0) return "compatible";
+                    if (rules1.weak.indexOf(cat2) >= 0) return "weak";
+                    return "weak";
+                }
+                
+                function updateLinks() {
+                    linkGroup.selectAll("*").remove();
+                    
+                    // 分类间连接线
+                    for (var i = 0; i < categoryNodes.length; i++) {
+                        for (var j = i + 1; j < categoryNodes.length; j++) {
+                            var linkType = getLinkType(categoryNodes[i].id, categoryNodes[j].id);
+                            if (linkType !== "none") {
+                                linkGroup.append("line")
+                                    .attr("class", "link " + linkType)
+                                    .attr("x1", categoryNodes[i].x)
+                                    .attr("y1", categoryNodes[i].y)
+                                    .attr("x2", categoryNodes[j].x)
+                                    .attr("y2", categoryNodes[j].y)
+                                    .attr("stroke", linkType === "conflict" ? "#ff6b6b" : 
+                                          linkType === "compatible" ? "#4ecdc4" : "#a0aec0")
+                                    .attr("stroke-width", linkType === "conflict" ? 2 : 
+                                          linkType === "compatible" ? 1 : 0.5)
+                                    .attr("opacity", linkType === "conflict" ? 0.7 : 
+                                          linkType === "compatible" ? 0.4 : 0.2);
+                            }
+                        }
+                    }
+                    
+                    // 附魔与分类之间的连接线
+                    allEnchantmentNodes.forEach(function(enchantNode) {
+                        var categoryNode = categoryNodes.find(function(n) { return n.id === enchantNode.parentId; });
+                        if (categoryNode) {
+                            linkGroup.append("line")
+                                .attr("class", "link enchant-link")
+                                .attr("x1", enchantNode.x)
+                                .attr("y1", enchantNode.y)
+                                .attr("x2", categoryNode.x)
+                                .attr("y2", categoryNode.y)
+                                .attr("stroke", categoryNode.color)
+                                .attr("stroke-width", 0.5)
+                                .attr("opacity", 0.15);
+                        }
+                    });
+                }
+                
+                // 创建节点组
+                var nodeGroups = nodeGroup.selectAll(".node-group")
+                    .data(physicsNodes)
+                    .enter()
+                    .append("g")
+                    .attr("class", "node-group");
+                
+                // 绘制节点
+                nodeGroups.each(function(d) {
+                    var g = d3.select(this);
+                    
+                    if (d.isCategory) {
+                        // 分类节点：圆形带渐变
+                        g.append("circle")
+                            .attr("class", "main")
+                            .attr("r", d.radius)
+                            .attr("fill", "url(#" + d.gradientId + ")")
+                            .attr("stroke", "#fff")
+                            .attr("stroke-width", 2)
+                            .attr("opacity", 0.8);
+                        
+                        // 添加图标
+                        g.append("text")
+                            .attr("class", "label")
+                            .attr("text-anchor", "middle")
+                            .attr("dy", "0.3em")
+                            .attr("fill", "#fff")
+                            .attr("font-size", Math.max(12, d.radius / 2))
+                            .text(d.icon);
+                    } else {
+                        // 附魔节点：小圆形
+                        g.append("circle")
+                            .attr("class", "main")
+                            .attr("r", d.radius)
+                            .attr("fill", d.parentColor)
+                            .attr("stroke", "#fff")
+                            .attr("stroke-width", 1)
+                            .attr("opacity", 0.8);
+                    }
+                    
+                    // 添加发光效果
+                    g.append("circle")
+                        .attr("class", "glow")
+                        .attr("r", d.isCategory ? d.radius * 1.8 : d.radius * 2)
+                        .attr("fill", d.isCategory ? d.color : d.parentColor)
+                        .attr("opacity", 0.2);
+                });
+                
+                // 创建标签组
+                allEnchantmentNodes.forEach(function(node) {
+                    var labelGroupItem = labelGroup.append("g")
+                        .attr("class", "label-group label-" + node.id)
+                        .attr("transform", "translate(" + node.x + "," + (node.y + node.radius + 15) + ")");
+                    
+                    labelGroupItem.append("text")
+                        .attr("class", "enchant-label")
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#ccc")
+                        .attr("font-size", "8px")
+                        .attr("pointer-events", "none")
+                        .text(node.name.length > 5 ? node.name.substring(0, 5) + ".." : node.name);
+                });
+                
+                updateLinks();
+                
+                function getMousePos(event) {
+                    var pt = svg.node().createSVGPoint();
+                    var sourceEvent = event.sourceEvent || event;
+                    pt.x = sourceEvent.clientX;
+                    pt.y = sourceEvent.clientY;
+                    return pt.matrixTransform(svg.node().getScreenCTM().inverse());
+                }
+                
+                var draggedNode = null;
+                
+                function nodeEnter(event, d) {
+                    d3.select(this).style("cursor", "grab");
+                    if (d3.select(this).select("circle.main")) {
+                        d3.select(this).select("circle.main")
+                            .transition().duration(150).attr("r", d.radius * 1.4);
+                    }
+                    if (d3.select(this).select(".glow")) {
+                        d3.select(this).select(".glow")
+                            .transition().duration(150).attr("r", d.radius * 2).attr("opacity", 0.6);
+                    }
+                    showTooltip(event, d);
+                }
+                
+                function nodeMove(event, d) {
+                    showTooltip(event, d);
+                }
+                
+                function nodeLeave(event, d) {
+                    if (!d.isDragging) {
+                        d3.select(this).select("circle.main")
+                            .transition().duration(150).attr("r", d.radius);
+                        d3.select(this).select(".glow")
+                            .transition().duration(150).attr("r", d.radius * 1.8).attr("opacity", 0.2);
+                    }
+                    hideTooltip();
+                }
+                
+                function nodeDragStart(event, d) {
+                    d.isDragging = true;
+                    draggedNode = d;
+                    d3.select(this).style("cursor", "grabbing");
+                }
+                
+                function nodeDrag(event, d) {
+                    if (d === draggedNode) {
+                        var pos = getMousePos(event);
+                        d.x = Math.max(d.radius, Math.min(width - d.radius, pos.x));
+                        d.y = Math.max(d.radius, Math.min(height - d.radius, pos.y));
+                        d.vx = event.dx || 0;
+                        d.vy = event.dy || 0;
+                        updatePositions();
+                        updateLinks();
+                    }
+                }
+                
+                function nodeDragEnd(event, d) {
+                    if (d === draggedNode) {
+                        d.isDragging = false;
+                        d3.select(this).style("cursor", "grab");
+                        draggedNode = null;
+                    }
+                }
+                
+                // 添加拖拽行为
+                var drag = d3.drag()
+                    .on("start", nodeDragStart)
+                    .on("drag", nodeDrag)
+                    .on("end", nodeDragEnd);
+                
+                nodeGroups.call(drag)
+                    .on("mouseenter", nodeEnter)
+                    .on("mousemove", nodeMove)
+                    .on("mouseleave", nodeLeave);
+                
+                function updatePositions() {
+                    nodeGroup.selectAll(".node-group").attr("transform", function(d) {
+                        if (!d || d.x === undefined || d.y === undefined) return "";
+                        return "translate(" + d.x + "," + d.y + ")";
+                    });
+                    
+                    labelGroup.selectAll("[class^='label-']").each(function() {
+                        var className = this.className.baseVal.replace("label-group ", "");
+                        var id = className.replace("label-", "");
+                        var nodeData = physicsNodes.find(function(n) { return n.id === id && !n.parentId; });
+                        if (nodeData && nodeData.x !== undefined && nodeData.y !== undefined) {
+                            d3.select(this).attr("transform", "translate(" + nodeData.x + "," + (nodeData.y + nodeData.radius + 15) + ")");
+                        }
+                    });
+                }
+                
+                updatePositions();
+                
+            } catch (error) {
+                console.error("Error rendering conflict graph:", error);
+            }
+        }
+        
+        // 页面加载完成后渲染图形
+        window.onload = function() {
+            renderEnhancedConflictGraph();
+        };
+    </script>
+</body>
+</html>

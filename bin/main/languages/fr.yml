@@ -1,0 +1,46 @@
+# Fichier de Langue Française
+startup:
+  title-line1: "⚡ Enchantements Rapides comme l'Éclair ⚡"
+  title-line2: "✨ 51 Enchantements Personnalisés ✨"
+  title-line3: "🔥 Zéro Impact TPS 🔥"
+  starting: "🚀 Démarrage de l'enregistrement des enchantements..."
+  
+completion:
+  title: "✅ ENREGISTREMENT TERMINÉ ✅"
+  success: "🎉 Enregistré avec succès {count} enchantements! 🎉"
+  combat: "⭐ Enchantements de Combat: 18"
+  armor: "⭐ Enchantements d'Armure: 12"
+  tool: "⭐ Enchantements d'Outils: 16"
+  curse: "⭐ Enchantements de Malédiction: 8"
+  utility: "⭐ Enchantements d'Utilité: 4"
+  defense: "⭐ Enchantements de Défense: 1"
+  special: "⭐ Enchantements Spéciaux: 2"
+  thanks: "💎 Merci d'utiliser EnchAdd! 💎"
+  author: "Auteur: ADDxiaoyi312048"
+  version: "Version: 1.0.0 | Build: Optimisé"
+  enjoy: "♥ Profitez de votre gameplay amélioré! ♥"
+  available: "🌟 Tous les enchantements sont maintenant disponibles en jeu! Utilisez /enchant pour tester! 🌟"
+  performance: "⚡ Performance: Zéro impact TPS | Mémoire: <1MB | Démarrage: <100ms ⚡"
+  achievements: "🏆 Système de réalisations prêt! Complétez des défis pour gagner des récompenses! 🏆"
+
+config:
+  treasure-mode: "Enchantements de trésor: {status}"
+  language-loaded: "Langue chargée: {language}"
+  achievements-enabled: "Système de réalisations: {status}"
+  disabled-enchantments: "Enchantements désactivés: {count}"
+
+achievement:
+  unlocked: "Réalisation Déverrouillée!"
+  broadcast: "§5{player} §7a obtenu la réalisation §d{achievement}§7!"
+
+java:
+  compatibility-check: "Vérification de Compatibilité Version Java"
+  version-info: "Version: {version} | Fournisseur: {vendor}"
+  status-perfect: "✅ Compatibilité parfaite - Version recommandée"
+  status-forward: "✅ Compatible vers l'avant - Devrait fonctionner sans problème"
+  status-untested: "⚠️ Version non testée - Peut fonctionner mais pas garanti"
+  status-unsupported: "❌ Version non supportée"
+  warning-preview: "⚠️ Fonctionne sur une version Java preview/early access"
+  error-minimum: "Minimum requis: Java {version}"
+  error-upgrade: "Veuillez mettre à jour votre installation Java"
+  recommendation: "Pour une meilleure compatibilité, utilisez Java 21 (LTS). Java 22-25 sont également supportés."

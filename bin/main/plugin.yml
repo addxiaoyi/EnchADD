@@ -1,0 +1,29 @@
+name: EnchAdd
+version: 2.0.0
+main: com.enadd.EnchAdd
+api-version: '1.21'
+api: "1.21"
+description: 一个功能强大的自定义附魔插件，支持200+种独特附魔。
+author: ADDXIAOYI2048
+website: https://github.com/enadd/EnchAdd
+
+commands:
+  enchadd:
+    description: EnchAdd 主命令
+    usage: /enchadd <reload|list|info>
+    permission: enchadd.admin
+  achievements:
+    description: 查看和管理成就
+    usage: /achievements <list|check|progress|reset|help>
+    aliases: [enchach, ach]
+
+permissions:
+  enchadd.admin:
+    description: 允许使用管理命令
+    default: op
+  enchadd.achievements.admin:
+    description: 允许管理其他玩家的成就
+    default: op
+  enchadd.user:
+    description: 允许使用基本命令
+    default: true

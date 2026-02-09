@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "kiroAgent.configureMCP": "Disabled",
+    "konveyor.genai.agentMode": true,
+    "java.compile.nullAnalysis.mode": "automatic"
+}

@@ -1,0 +1,66 @@
+# 繁體中文語言文件
+startup:
+  title-line1: "⚡ 閃電般快速的附魔 ⚡"
+  title-line2: "✨ 51個自定義附魔 ✨"
+  title-line3: "🔥 零TPS影響 🔥"
+  starting: "🚀 開始註冊附魔..."
+  
+completion:
+  title: "✅ 註冊完成 ✅"
+  success: "🎉 成功註冊了 {count} 個附魔！🎉"
+  combat: "⭐ 戰鬥附魔：18個"
+  armor: "⭐ 防具附魔：12個"
+  tool: "⭐ 工具附魔：16個"
+  curse: "⭐ 詛咒附魔：8個"
+  utility: "⭐ 實用附魔：4個"
+  defense: "⭐ 防禦附魔：1個"
+  special: "⭐ 特殊附魔：2個"
+  thanks: "💎 感謝使用 EnchAdd！💎"
+  author: "作者：ADDxiaoyi312048"
+  version: "版本：1.0.0 | 構建：優化版"
+  enjoy: "♥ 享受您增強的遊戲體驗！♥"
+  available: "🌟 所有附魔現已在遊戲中可用！使用 /enchant 來測試！🌟"
+  performance: "⚡ 性能：零TPS影響 | 記憶體：<1MB | 啟動：<100ms ⚡"
+  achievements: "🏆 成就系統已就緒！完成挑戰獲得獎勵！🏆"
+
+config:
+  treasure-mode: "寶藏附魔：{status}"
+  language-loaded: "已載入語言：{language}"
+  achievements-enabled: "成就系統：{status}"
+  disabled-enchantments: "禁用的附魔：{count}個"
+
+achievement:
+  unlocked: "成就解鎖！"
+  broadcast: "§5{player} §7獲得了成就 §d{achievement}§7！"
+  
+  enchantment_master:
+    title: "附魔大師"
+    desc: "獲得所有51個EnchAdd附魔"
+    
+  cursed_warrior:
+    title: "詛咒戰士"
+    desc: "在激活所有5個詛咒的情況下完成地牢"
+    
+  one_shot_kill:
+    title: "一擊必殺"
+    desc: "用處決附魔擊殺Boss"
+    
+  lumberjack:
+    title: "伐木工"
+    desc: "用伐木附魔砍倒1000棵樹"
+    
+  marksman:
+    title: "神射手"
+    desc: "用狙擊附魔從50+格外擊中100個敵人"
+
+java:
+  compatibility-check: "Java版本相容性檢查"
+  version-info: "版本：{version} | 供應商：{vendor}"
+  status-perfect: "✅ 完美相容 - 推薦版本"
+  status-forward: "✅ 向前相容 - 應該可以正常工作"
+  status-untested: "⚠️ 未測試版本 - 可能工作但不保證"
+  status-unsupported: "❌ 不支援的版本"
+  warning-preview: "⚠️ 運行在預覽/早期存取Java版本上"
+  error-minimum: "最低要求：Java {version}"
+  error-upgrade: "請升級您的Java安裝"
+  recommendation: "為了最佳相容性，請使用Java 21 (LTS)。也支援Java 22-25。"

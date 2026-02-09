@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按钮测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .test-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .test-btn.success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+        
+        .test-btn.warning {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            color: #38ef7d;
+        }
+        
+        #result-display {
+            font-size: 18px;
+            min-height: 30px;
+        }
+        
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.2);
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .info p {
+            margin-bottom: 8px;
+        }
+        
+        .info p:last-child {
+            margin-bottom: 0;
+        }
+        
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>按钮交互测试</h1>
+    
+    <div class="test-container">
+        <h2 style="margin-bottom: 20px;">点击下方按钮测试功能</h2>
+        
+        <div class="button-group">
+            <button class="test-btn primary" onclick="handleClick('primary')">
+                主要按钮
+            </button>
+            
+            <button class="test-btn success" onclick="handleClick('success')">
+                成功按钮
+            </button>
+            
+            <button class="test-btn warning" onclick="handleClick('warning')">
+                警告按钮
+            </button>
+            
+            <button class="test-btn primary" id="event-test-btn">
+                事件监听测试
+            </button>
+        </div>
+        
+        <div class="result">
+            <h3>测试结果：</h3>
+            <div id="result-display">等待点击...</div>
+        </div>
+        
+        <div class="info">
+            <p><strong>如果按钮可以点击：</strong>会显示按钮类型和当前时间</p>
+            <p><strong>如果按钮无法点击：</strong>请检查浏览器控制台是否有错误</p>
+            <p><strong>调试方法：</strong>按 <code>F12</code> 打开开发者工具，查看 Console 标签</p>
+        </div>
+    </div>
+    
+    <script>
+        function handleClick(buttonType) {
+            const now = new Date().toLocaleTimeString();
+            const messages = {
+                'primary': '主要按钮点击成功',
+                'success': '成功按钮点击成功',
+                'warning': '警告按钮点击成功'
+            };
+            
+            document.getElementById('result-display').innerHTML = 
+                `${messages[buttonType]} <span style="color: #888;">(${now})</span>`;
+            
+            console.log(`按钮点击测试成功: ${buttonType} @ ${now}`);
+        }
+        
+        // 事件监听器测试
+        document.getElementById('event-test-btn').addEventListener('click', function() {
+            handleClick('event');
+            console.log('事件监听器测试成功');
+        });
+        
+        // 页面加载完成测试
+        window.addEventListener('load', function() {
+            console.log('页面加载完成');
+            console.log('所有事件监听器已绑定');
+            console.log('按钮功能已启用');
+            
+            document.getElementById('result-display').innerHTML = 
+                '页面加载完成，按钮功能正常 <span style="color: #888;">(刷新测试)</span>';
+        });
+        
+        // 错误捕获
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('JavaScript错误:', {
+                message: msg,
+                url: url,
+                line: lineNo,
+                column: columnNo,
+                error: error
+            });
+            return false;
+        };
+    </script>
+</body>
+</html>
