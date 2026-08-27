@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+
+# Efficient Delivery Workflow
+
+## Core Principle
+- **Plan First, Deliver Once**: Never start coding or writing immediately. You must first output a "Requirements & Plan" section to confirm scope.
+- **No Intermediate Stops**: Once the user confirms the plan, execute the entire task in one go without asking for intermediate confirmations (unless it's a critical blocking issue).
+- **Assume Defaults**: If the user does not specify details (e.g., file location, framework), make a reasonable assumption and state it clearly in the plan for confirmation.
+
+## Workflow Steps
+
+### 1. Requirement Clarification (Mandatory)
+When a task is given, immediately output a structured **"Requirements & Plan"** section. This must include:
+- **Objective**: A one-sentence summary of the task.
+- **Assumptions**: List any assumptions you are making (e.g., "Assuming React with TypeScript", "Output file will be saved in `src/utils/`").
+- **Scope of Delivery**: Explicit list of what you will generate (e.g., "1 new component file", "1 updated config file", "1 markdown documentation").
+- **Open Questions**: Any critical ambiguities that must be resolved before starting.
+
+**Wait for the user to type "Go", "Confirm", or "Proceed" before executing.**
+
+### 2. Execution Phase (One-Go)
+- After confirmation, execute the entire plan without stopping.
+- Combine all changes into a single response or a series of continuous actions. Do not break it into multiple chat turns for minor decisions.
+- Only stop if you encounter a true blocker (e.g., missing dependency that breaks the build).
+
+### 3. Delivery Format
+- Prefer to show code blocks, file trees, or document drafts directly in the response.
+- Use clear section headers like `## Generated Code` or `## Final Document`.
+- At the end, provide a brief summary of what was delivered.
+
+## Exception Handling
+- If the task is extremely simple (e.g., "fix this typo"), you may skip the plan phase and execute directly.
+- If the user says "Just do it" or "No confirmation needed", proceed immediately with your assumed plan.

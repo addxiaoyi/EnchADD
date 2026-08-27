@@ -115,11 +115,3 @@ run/
 scripts/
 skills/
 dist/
-
-# Local server/runtime state
-.compat-paper-26.2/
-.server/
-.claude/settings.local.json
-.cursor/
-.tools/
-.skills/
