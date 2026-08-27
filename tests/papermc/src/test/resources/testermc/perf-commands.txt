@@ -1,0 +1,27 @@
+# Performance baseline probes
+version
+plugins
+execute in minecraft:overworld run summon minecraft:zombie 0 90 0
+
+# Deterministic load injection
+enchadd verify
+enchadd balance
+enchadd perf 1500 800
+
+# Sample server tick time windows
+sleep 3
+mspt
+sleep 3
+mspt
+enchadd perf 1500 800
+sleep 3
+mspt
+
+# Emit plugin runtime metrics
+enchadd ci
+sleep 2
+enchadd ci
+
+# Capture Spark sampling window for profiler gate
+spark profiler start --timeout 15 --thread * --force-java-sampler --ignore-sleeping
+sleep 16

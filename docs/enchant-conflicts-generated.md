@@ -1,0 +1,244 @@
+# EnchADD 附魔冲突关系表
+
+数据来源：
+- `plugin/src/main/java/net/enchadd/EnchADDConfig.java`
+- `tests/mockbukkit/src/test/java/net/enchadd/ConfigConflictAndDefaultsTest.java`
+
+说明：
+- 本表对应默认冲突策略 `conflictPolicyVersion = 3`
+- 当前仓库里未发现额外维护的 `conflicts:` 配置文件，因此以下内容是源码内置默认冲突关系
+- 冲突为双向关系：A 与 B 冲突，等价于 B 与 A 冲突
+- 默认内置冲突对总数：`42`
+
+## 冲突对总表
+
+| 序号 | 冲突 A key | 冲突 A 中文 | 冲突 B key | 冲突 B 中文 | 类型 |
+| --- | --- | --- | --- | --- | --- |
+
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:airbag``（安全气囊）↔ ``enchadd:wingguard``（羽护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:barrier``（屏障）↔ ``enchadd:bulwark``（壁垒）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:barrier``（屏障）↔ ``enchadd:parry``（借势）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:barrier``（屏障）↔ ``enchadd:riposte``（回击）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:barrier``（屏障）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:beheading``（斩首）↔ ``minecraft:looting``（抢夺）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bind``（束缚）↔ ``enchadd:volley``（齐射）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bind``（束缚）↔ ``minecraft:punch``（冲击）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:brace``（稳架）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bulwark``（壁垒）↔ ``enchadd:parry``（借势）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bulwark``（壁垒）↔ ``enchadd:pivot``（转守）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bulwark``（壁垒）↔ ``enchadd:riposte``（回击）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:bulwark``（壁垒）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:decapitate``（断首）↔ ``enchadd:executioner``（处刑者）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:evasion``（闪避）↔ ``enchadd:sidestep``（侧闪）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:evasion``（闪避）↔ ``minecraft:projectile_protection``（弹射物保护）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:farshot``（远袭）↔ ``enchadd:volley``（齐射）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:farshot``（远袭）↔ ``minecraft:multishot``（多重射击）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:fleetfoot``（疾行）↔ ``enchadd:steadfast``（稳步）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:fortitude``（坚毅）↔ ``enchadd:last_stand``（绝境）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:frostbrand``（霜刃）↔ ``enchadd:immolate``（焦灼）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:frostbrand``（霜刃）↔ ``minecraft:fire_aspect``（火焰附加）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:hemorrhage``（血蚀）↔ ``minecraft:bane_of_arthropods``（节肢杀手）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:hemorrhage``（血蚀）↔ ``minecraft:sharpness``（锋利）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:hemorrhage``（血蚀）↔ ``minecraft:smite``（亡灵杀手）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:holdfast``（固握）↔ ``enchadd:pivot``（转守）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:holdfast``（固握）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:homeward``（归途）↔ ``enchadd:sidestep``（侧闪）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:immolate``（焦灼）↔ ``minecraft:fire_aspect``（火焰附加）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:initiative``（先机）↔ ``enchadd:shadowstrike``（影袭）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:mortal_wound``（致伤）↔ ``minecraft:power``（力量）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:parry``（借势）↔ ``enchadd:pivot``（转守）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:parry``（借势）↔ ``enchadd:riposte``（回击）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:parry``（借势）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:pivot``（转守）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:riposte``（回击）↔ ``enchadd:ward``（守护）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:steady_aim``（定准）↔ ``enchadd:stillness``（静止）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:steady_aim``（定准）↔ ``enchadd:volley``（齐射）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:stillness``（静止）↔ ``enchadd:volley``（齐射）
+  - 类型：自定义-自定义（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:tide_runner``（潮行）↔ ``minecraft:depth_strider``（深海探索者）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+- ``enchadd:undertow``（回涡）↔ ``minecraft:riptide``（激流）
+  - 类型：自定义-原版（用于区分是自定义与自定义之间冲突，还是自定义与原版附魔之间冲突）
+
+## 反向索引表
+
+| key | 中文名 | 冲突数量 | 冲突对象 |
+| --- | --- | --- | --- |
+
+  - 冲突数量：---（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：---（列出所有会被它排斥的附魔）
+- ``enchadd:afterglide``（缓翼）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：安全气囊（`enchadd:airbag`）（列出所有会被它排斥的附魔）
+- ``enchadd:airbag``（安全气囊）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：缓翼（`enchadd:afterglide`）；羽护（`enchadd:wingguard`）（列出所有会被它排斥的附魔）
+- ``enchadd:barrier``（屏障）
+  - 冲突数量：4（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：壁垒（`enchadd:bulwark`）；借势（`enchadd:parry`）；回击（`enchadd:riposte`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:beheading``（斩首）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：抢夺（`minecraft:looting`）（列出所有会被它排斥的附魔）
+- ``enchadd:bind``（束缚）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：齐射（`enchadd:volley`）；冲击（`minecraft:punch`）（列出所有会被它排斥的附魔）
+- ``enchadd:brace``（稳架）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:bulwark``（壁垒）
+  - 冲突数量：5（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：屏障（`enchadd:barrier`）；借势（`enchadd:parry`）；转守（`enchadd:pivot`）；回击（`enchadd:riposte`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:decapitate``（断首）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：处刑者（`enchadd:executioner`）（列出所有会被它排斥的附魔）
+- ``enchadd:evasion``（闪避）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：侧闪（`enchadd:sidestep`）；弹射物保护（`minecraft:projectile_protection`）（列出所有会被它排斥的附魔）
+- ``enchadd:executioner``（处刑者）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：断首（`enchadd:decapitate`）（列出所有会被它排斥的附魔）
+- ``enchadd:farshot``（远袭）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：齐射（`enchadd:volley`）；多重射击（`minecraft:multishot`）（列出所有会被它排斥的附魔）
+- ``enchadd:fleetfoot``（疾行）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：稳步（`enchadd:steadfast`）（列出所有会被它排斥的附魔）
+- ``enchadd:fortitude``（坚毅）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：绝境（`enchadd:last_stand`）（列出所有会被它排斥的附魔）
+- ``enchadd:frostbrand``（霜刃）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：焦灼（`enchadd:immolate`）；火焰附加（`minecraft:fire_aspect`）（列出所有会被它排斥的附魔）
+- ``enchadd:hemorrhage``（血蚀）
+  - 冲突数量：3（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：节肢杀手（`minecraft:bane_of_arthropods`）；锋利（`minecraft:sharpness`）；亡灵杀手（`minecraft:smite`）（列出所有会被它排斥的附魔）
+- ``enchadd:holdfast``（固握）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：转守（`enchadd:pivot`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:homeward``（归途）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：侧闪（`enchadd:sidestep`）（列出所有会被它排斥的附魔）
+- ``enchadd:immolate``（焦灼）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：霜刃（`enchadd:frostbrand`）；火焰附加（`minecraft:fire_aspect`）（列出所有会被它排斥的附魔）
+- ``enchadd:initiative``（先机）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：影袭（`enchadd:shadowstrike`）（列出所有会被它排斥的附魔）
+- ``enchadd:last_stand``（绝境）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：坚毅（`enchadd:fortitude`）（列出所有会被它排斥的附魔）
+- ``enchadd:mortal_wound``（致伤）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：力量（`minecraft:power`）（列出所有会被它排斥的附魔）
+- ``enchadd:parry``（借势）
+  - 冲突数量：5（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：屏障（`enchadd:barrier`）；壁垒（`enchadd:bulwark`）；转守（`enchadd:pivot`）；回击（`enchadd:riposte`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:pivot``（转守）
+  - 冲突数量：4（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：壁垒（`enchadd:bulwark`）；固握（`enchadd:holdfast`）；借势（`enchadd:parry`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:riposte``（回击）
+  - 冲突数量：4（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：屏障（`enchadd:barrier`）；壁垒（`enchadd:bulwark`）；借势（`enchadd:parry`）；守护（`enchadd:ward`）（列出所有会被它排斥的附魔）
+- ``enchadd:shadowstrike``（影袭）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：先机（`enchadd:initiative`）（列出所有会被它排斥的附魔）
+- ``enchadd:sidestep``（侧闪）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：闪避（`enchadd:evasion`）；归途（`enchadd:homeward`）（列出所有会被它排斥的附魔）
+- ``enchadd:steadfast``（稳步）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：疾行（`enchadd:fleetfoot`）（列出所有会被它排斥的附魔）
+- ``enchadd:steady_aim``（定准）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：静止（`enchadd:stillness`）；齐射（`enchadd:volley`）（列出所有会被它排斥的附魔）
+- ``enchadd:stillness``（静止）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：定准（`enchadd:steady_aim`）；齐射（`enchadd:volley`）（列出所有会被它排斥的附魔）
+- ``enchadd:tide_runner``（潮行）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：深海探索者（`minecraft:depth_strider`）（列出所有会被它排斥的附魔）
+- ``enchadd:undertow``（回涡）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：激流（`minecraft:riptide`）（列出所有会被它排斥的附魔）
+- ``enchadd:volley``（齐射）
+  - 冲突数量：4（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：束缚（`enchadd:bind`）；远袭（`enchadd:farshot`）；定准（`enchadd:steady_aim`）；静止（`enchadd:stillness`）（列出所有会被它排斥的附魔）
+- ``enchadd:ward``（守护）
+  - 冲突数量：7（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：屏障（`enchadd:barrier`）；稳架（`enchadd:brace`）；壁垒（`enchadd:bulwark`）；固握（`enchadd:holdfast`）；借势（`enchadd:parry`）；转守（`enchadd:pivot`）；回击（`enchadd:riposte`）（列出所有会被它排斥的附魔）
+- ``enchadd:wingguard``（羽护）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：安全气囊（`enchadd:airbag`）（列出所有会被它排斥的附魔）
+- ``minecraft:bane_of_arthropods``（节肢杀手）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：血蚀（`enchadd:hemorrhage`）（列出所有会被它排斥的附魔）
+- ``minecraft:depth_strider``（深海探索者）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：潮行（`enchadd:tide_runner`）（列出所有会被它排斥的附魔）
+- ``minecraft:fire_aspect``（火焰附加）
+  - 冲突数量：2（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：霜刃（`enchadd:frostbrand`）；焦灼（`enchadd:immolate`）（列出所有会被它排斥的附魔）
+- ``minecraft:looting``（抢夺）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：斩首（`enchadd:beheading`）（列出所有会被它排斥的附魔）
+- ``minecraft:multishot``（多重射击）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：远袭（`enchadd:farshot`）（列出所有会被它排斥的附魔）
+- ``minecraft:power``（力量）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：致伤（`enchadd:mortal_wound`）（列出所有会被它排斥的附魔）
+- ``minecraft:projectile_protection``（弹射物保护）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：闪避（`enchadd:evasion`）（列出所有会被它排斥的附魔）
+- ``minecraft:punch``（冲击）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：束缚（`enchadd:bind`）（列出所有会被它排斥的附魔）
+- ``minecraft:riptide``（激流）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：回涡（`enchadd:undertow`）（列出所有会被它排斥的附魔）
+- ``minecraft:sharpness``（锋利）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：血蚀（`enchadd:hemorrhage`）（列出所有会被它排斥的附魔）
+- ``minecraft:smite``（亡灵杀手）
+  - 冲突数量：1（这个附魔不能与这么多对象同时存在）
+  - 冲突对象：血蚀（`enchadd:hemorrhage`）（列出所有会被它排斥的附魔）
+

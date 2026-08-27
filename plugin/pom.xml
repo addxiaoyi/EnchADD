@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.enchadd</groupId>
+        <artifactId>EnchADD</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>enchadd-plugin</artifactId>
+    <name>EnchADD Plugin</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <skipSource>true</skipSource>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/maven/**</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>protected-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.wvengen</groupId>
+                        <artifactId>proguard-maven-plugin</artifactId>
+                        <version>2.7.0</version>
+                        <executions>
+                            <execution>
+                                <id>obfuscate-release-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>proguard</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <proguardVersion>7.7.0</proguardVersion>
+                            <injar>${project.build.finalName}.jar</injar>
+                            <outjar>${project.build.finalName}-protected.jar</outjar>
+                            <attach>true</attach>
+                            <attachArtifactClassifier>protected</attachArtifactClassifier>
+                            <libs>
+                                <lib>${java.home}/jmods/java.base.jmod</lib>
+                                <lib>${java.home}/jmods/java.logging.jmod</lib>
+                                <lib>${java.home}/jmods/java.management.jmod</lib>
+                            </libs>
+                            <options>
+                                <option>-dontshrink</option>
+                                <option>-dontoptimize</option>
+                                <option>-dontwarn</option>
+                                <option>-ignorewarnings</option>
+                                <option>-overloadaggressively</option>
+                                <option>-useuniqueclassmembernames</option>
+                                <option>-adaptclassstrings</option>
+                                <option>-keepattributes Signature,*Annotation*,InnerClasses,EnclosingMethod</option>
+                                <option>-keep public class net.enchadd.EnchADD { public *; }</option>
+                                <option>-keep public class net.enchadd.EnchADDBootstrap { public *; }</option>
+                                <option>-keep class net.enchadd.security.PluginProtection { *; }</option>
+                                <option>-keep class * extends me.clip.placeholderapi.expansion.PlaceholderExpansion { public *; }</option>
+                                <option>-keepclassmembers class * { @org.bukkit.event.EventHandler *; }</option>
+                                <option>-keepclassmembers class * implements org.bukkit.event.Listener { public &lt;init&gt;(...); }</option>
+                                <option>-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }</option>
+                            </options>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.guardsquare</groupId>
+                                <artifactId>proguard-base</artifactId>
+                                <version>7.7.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>protected-release-checksum</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <resourcecount property="enchadd.protected.mavenMetadataCount">
+                                            <zipfileset src="${project.build.directory}/${project.build.finalName}-protected.jar"
+                                                        includes="META-INF/maven/**"/>
+                                        </resourcecount>
+                                        <fail message="Protected release contains Maven coordinate metadata">
+                                            <condition>
+                                                <not>
+                                                    <equals arg1="${enchadd.protected.mavenMetadataCount}" arg2="0"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <checksum file="${project.build.directory}/${project.build.finalName}-protected.jar"
+                                                  algorithm="SHA-256"
+                                                  property="enchadd.protected.sha256"/>
+                                        <echo file="${project.build.directory}/${project.build.finalName}-protected.jar.sha256"
+                                              message="${enchadd.protected.sha256}  ${project.build.finalName}-protected.jar"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

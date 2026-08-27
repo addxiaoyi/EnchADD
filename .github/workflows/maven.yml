@@ -1,0 +1,40 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: minimum-paper
+            java: '21'
+            paper: '1.21.6-R0.1-SNAPSHOT'
+          - name: latest-paper
+            java: '25'
+            paper: '26.2.build.112-stable'
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build and test ${{ matrix.name }}
+      run: mvn -B -pl plugin -am -Dpaper.version=${{ matrix.paper }} clean verify
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: EnchADD-Plugin-${{ matrix.name }}
+        path: plugin/target/enchadd-plugin-*.jar

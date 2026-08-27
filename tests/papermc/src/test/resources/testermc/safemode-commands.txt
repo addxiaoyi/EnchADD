@@ -1,0 +1,11 @@
+# Safety mode smoke scenario
+version
+enchadd verify
+enchadd balance
+enchadd safemode status
+enchadd safemode on
+enchadd perf 4000 1200
+sleep 3
+enchadd ci
+enchadd safemode off
+enchadd ci

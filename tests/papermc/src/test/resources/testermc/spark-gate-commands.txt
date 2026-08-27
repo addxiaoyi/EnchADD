@@ -1,0 +1,13 @@
+# Spark source-share gate under sustained synthetic load
+version
+enchadd verify
+enchadd balance
+
+# Start sampler (>=30s for better accuracy), then keep triggering while profiler runs
+spark profiler start --timeout 45 --thread * --force-java-sampler --ignore-sleeping
+enchadd perf 20000 0
+sleep 46
+
+# Allow upload completion before stop command is sent by runner
+enchadd ci
+sleep 8

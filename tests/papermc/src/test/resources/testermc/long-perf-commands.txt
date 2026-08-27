@@ -1,0 +1,180 @@
+# Long-running (60m) performance + stability profile
+version
+plugins
+execute in minecraft:overworld run summon minecraft:zombie 0 90 0
+enchadd help
+enchadd verify
+enchadd balance
+# Capture Spark sample early to keep long-soak evidence on the Spark/JFR chain.
+spark profiler start --timeout 30 --thread * --force-java-sampler --ignore-sleeping
+
+# Phase A: sustained medium stress (15 minutes)
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+
+# Phase B: sustained higher stress (15 minutes)
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+
+# Phase C: sustained medium stress (15 minutes)
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+enchadd perf 8000 3500
+sleep 90
+mspt
+enchadd ci
+
+# Phase D: sustained higher stress (15 minutes)
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+enchadd perf 12000 5000
+sleep 90
+mspt
+enchadd ci
+
+# Final runtime metrics snapshot
+enchadd ci

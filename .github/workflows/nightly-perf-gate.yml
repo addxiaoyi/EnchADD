@@ -1,0 +1,126 @@
+name: Nightly Performance Gate
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: nightly-perf-gate-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  perf-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        paper_version:
+          - "1.21.10"
+          - "1.21.11"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: temurin
+          cache: maven
+
+      - name: Build plugin jar
+        run: mvn -B -pl plugin -am package -DskipTests
+
+      - name: Run 60m Paper soak baseline on ${{ matrix.paper_version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PLUGIN_JAR="$(find plugin/target -maxdepth 1 -type f -name '*.jar' ! -name '*-sources.jar' ! -name '*-javadoc.jar' | sort | head -n 1)"
+          if [[ -z "$PLUGIN_JAR" ]]; then
+            echo "No plugin runtime jar found in plugin/target" >&2
+            exit 1
+          fi
+          python3 tests/papermc/scripts/run_paper_integration.py \
+            --paper-version "${{ matrix.paper_version }}" \
+            --plugin-jar "$PLUGIN_JAR" \
+            --commands-file tests/papermc/src/test/resources/testermc/long-perf-commands.txt \
+            --fixtures-dir tests/papermc/src/test/resources/testermc/files \
+            --startup-timeout-seconds 600 \
+            --log-file "tests/papermc/target/paper-logs/perf-paper-{version}.log"
+
+      - name: Redline 1 - Assert 60m performance thresholds for ${{ matrix.paper_version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/papermc/scripts/assert_perf_gate.py \
+            --log "tests/papermc/target/paper-logs/perf-paper-${{ matrix.paper_version }}.log" \
+            --report "tests/papermc/target/perf-gate/perf-${{ matrix.paper_version }}.json" \
+            --max-p95-tick-ms 50 \
+            --max-particle-drop-rate 0.10 \
+            --max-particle-peak-window-drop-rate 0.10 \
+            --max-particle-peak-queue 8000 \
+            --max-stats-pending 32 \
+            --max-monitor-alerts 0 \
+            --max-error-rate-per-min 1.0 \
+            --min-tps-1m 17.0 \
+            --min-tps-5m 17.0 \
+            --max-stats-pending-trend-rise 8 \
+            --max-particle-queue-trend-rise 1800 \
+            --max-heap-used-trend-rise-mb 128 \
+            --max-heap-used-mb 640 \
+            --min-trigger-throughput 100000 \
+            --min-mspt-samples 3 \
+            --min-ci-samples 10 \
+            --min-uptime-seconds 3500 \
+            --require-uptime-monotonic
+
+      - name: Redline 2 - Assert Spark source-share threshold for ${{ matrix.paper_version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/papermc/scripts/assert_spark_gate.py \
+            --log "tests/papermc/target/paper-logs/perf-paper-${{ matrix.paper_version }}.log" \
+            --report "tests/papermc/target/perf-gate/spark-${{ matrix.paper_version }}.json" \
+            --paper-version "${{ matrix.paper_version }}" \
+            --max-enchadd-share 0.001 \
+            --min-number-of-ticks 300 \
+            --min-total-triggers 100000 \
+            --target-source-hint enchadd
+
+      - name: Generate enchant catalog snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/papermc/scripts/generate_enchant_catalog.py \
+            --repo-root . \
+            --json-out tests/papermc/target/perf-gate/enchant-catalog.json \
+            --md-out tests/papermc/target/perf-gate/enchant-catalog.md \
+            --fail-on-unclassified
+
+      - name: Write gate summary for ${{ matrix.paper_version }}
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/papermc/scripts/render_perf_summary.py \
+            --paper-version "${{ matrix.paper_version }}" \
+            --perf-json "tests/papermc/target/perf-gate/perf-${{ matrix.paper_version }}.json" \
+            --spark-json "tests/papermc/target/perf-gate/spark-${{ matrix.paper_version }}.json" \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload perf artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-gate-${{ matrix.paper_version }}
+          path: |
+            tests/papermc/target/paper-logs/perf-paper-${{ matrix.paper_version }}.log
+            tests/papermc/target/perf-gate/perf-${{ matrix.paper_version }}.json
+            tests/papermc/target/perf-gate/spark-${{ matrix.paper_version }}.json
+            tests/papermc/target/perf-gate/enchant-catalog.json
+            tests/papermc/target/perf-gate/enchant-catalog.md

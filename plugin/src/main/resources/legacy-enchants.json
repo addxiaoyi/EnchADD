@@ -1,0 +1,196 @@
+{
+  "entries": [
+    {
+      "key": "enchadd:panic",
+      "displayName": "Legacy alias for enchadd:panic_curse",
+      "migrationTarget": "enchadd:panic_curse",
+      "supportedItemTags": ["#minecraft:enchantable/armor"]
+    },
+    {
+      "key": "enchadd:gluttony",
+      "displayName": "Legacy alias for enchadd:gluttony_curse",
+      "migrationTarget": "enchadd:gluttony_curse",
+      "supportedItemTags": [
+        "#minecraft:enchantable/armor",
+        "#minecraft:enchantable/weapon",
+        "#minecraft:enchantable/mining",
+        "#minecraft:enchantable/bow",
+        "#minecraft:enchantable/crossbow",
+        "#minecraft:enchantable/trident",
+        "#minecraft:enchantable/durability",
+        "minecraft:shield",
+        "minecraft:elytra",
+        "minecraft:fishing_rod",
+        "minecraft:shears"
+      ]
+    },
+    {
+      "key": "enchadd:vampirism",
+      "displayName": "Legacy alias for enchadd:vampirism_curse",
+      "migrationTarget": "enchadd:vampirism_curse",
+      "supportedItemTags": ["#minecraft:enchantable/armor"]
+    },
+    {
+      "key": "enchadd:insomnia",
+      "displayName": "Legacy alias for enchadd:insomnia_curse",
+      "migrationTarget": "enchadd:insomnia_curse",
+      "supportedItemTags": ["#minecraft:enchantable/armor"]
+    },
+    {
+      "key": "enchadd:greed",
+      "displayName": "Legacy alias for enchadd:greed_curse",
+      "migrationTarget": "enchadd:greed_curse",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "minecraft:mace"]
+    },
+    {
+      "key": "enchadd:rashness",
+      "displayName": "Legacy alias for enchadd:rashness_curse",
+      "migrationTarget": "enchadd:rashness_curse",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "minecraft:mace"]
+    },
+    {
+      "key": "enchadd:retching",
+      "displayName": "Legacy alias for enchadd:retching_curse",
+      "migrationTarget": "enchadd:retching_curse",
+      "supportedItemTags": [
+        "minecraft:leather_helmet",
+        "minecraft:chainmail_helmet",
+        "minecraft:iron_helmet",
+        "minecraft:golden_helmet",
+        "minecraft:diamond_helmet",
+        "minecraft:netherite_helmet",
+        "minecraft:turtle_helmet"
+      ]
+    },
+    {
+      "key": "enchadd:thirst",
+      "displayName": "Legacy alias for enchadd:thirst_curse",
+      "migrationTarget": "enchadd:thirst_curse",
+      "supportedItemTags": [
+        "minecraft:leather_chestplate",
+        "minecraft:chainmail_chestplate",
+        "minecraft:iron_chestplate",
+        "minecraft:golden_chestplate",
+        "minecraft:diamond_chestplate",
+        "minecraft:netherite_chestplate"
+      ]
+    },
+    {
+      "key": "enchadd:fragility",
+      "displayName": "Legacy alias for enchadd:fragility_curse",
+      "migrationTarget": "enchadd:fragility_curse",
+      "supportedItemTags": [
+        "#minecraft:enchantable/armor",
+        "#minecraft:enchantable/mining",
+        "#minecraft:enchantable/durability",
+        "minecraft:shield",
+        "minecraft:elytra",
+        "minecraft:fishing_rod",
+        "minecraft:shears"
+      ]
+    },
+    {
+      "key": "enchadd:misfortune",
+      "displayName": "Legacy alias for enchadd:misfortune_curse",
+      "migrationTarget": "enchadd:misfortune_curse",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "#minecraft:enchantable/mining"]
+    },
+    {
+      "key": "enchadd:lethargy",
+      "displayName": "Legacy alias for enchadd:lethargy_curse",
+      "migrationTarget": "enchadd:lethargy_curse",
+      "supportedItemTags": [
+        "minecraft:leather_boots",
+        "minecraft:chainmail_boots",
+        "minecraft:iron_boots",
+        "minecraft:golden_boots",
+        "minecraft:diamond_boots",
+        "minecraft:netherite_boots"
+      ]
+    },
+    {
+      "key": "enchadd:gravitation",
+      "displayName": "Legacy alias for enchadd:gravitation_curse",
+      "migrationTarget": "enchadd:gravitation_curse",
+      "supportedItemTags": [
+        "minecraft:leather_boots",
+        "minecraft:chainmail_boots",
+        "minecraft:iron_boots",
+        "minecraft:golden_boots",
+        "minecraft:diamond_boots",
+        "minecraft:netherite_boots"
+      ]
+    },
+    {
+      "key": "enchadd:brittle",
+      "displayName": "Legacy alias for enchadd:brittle_curse",
+      "migrationTarget": "enchadd:brittle_curse",
+      "supportedItemTags": [
+        "minecraft:leather_leggings",
+        "minecraft:chainmail_leggings",
+        "minecraft:iron_leggings",
+        "minecraft:golden_leggings",
+        "minecraft:diamond_leggings",
+        "minecraft:netherite_leggings"
+      ]
+    },
+    {
+      "key": "enchadd:backfire",
+      "displayName": "Legacy alias for enchadd:backfire_curse",
+      "migrationTarget": "enchadd:backfire_curse",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "minecraft:mace"]
+    },
+    {
+      "key": "enchadd:shatter",
+      "displayName": "Legacy alias for enchadd:shatter_curse",
+      "migrationTarget": "enchadd:shatter_curse",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "#minecraft:enchantable/mining"]
+    },
+    {
+      "key": "enchadd:cloaking",
+      "displayName": "Legacy Cloaking (removed)",
+      "supportedItemTags": [
+        "minecraft:leather_chestplate",
+        "minecraft:chainmail_chestplate",
+        "minecraft:iron_chestplate",
+        "minecraft:golden_chestplate",
+        "minecraft:diamond_chestplate",
+        "minecraft:netherite_chestplate",
+        "minecraft:elytra"
+      ]
+    },
+    {
+      "key": "enchadd:sonar",
+      "displayName": "Legacy Sonar (removed)",
+      "supportedItemTags": [
+        "minecraft:leather_helmet",
+        "minecraft:chainmail_helmet",
+        "minecraft:iron_helmet",
+        "minecraft:golden_helmet",
+        "minecraft:diamond_helmet",
+        "minecraft:netherite_helmet",
+        "minecraft:turtle_helmet"
+      ]
+    },
+    {
+      "key": "enchadd:arrow_refund",
+      "displayName": "Legacy Arrow Refund (removed)",
+      "supportedItemTags": ["#minecraft:enchantable/bow", "#minecraft:enchantable/crossbow"]
+    },
+    {
+      "key": "enchadd:destroying",
+      "displayName": "Legacy Destroying (removed)",
+      "supportedItemTags": ["#minecraft:enchantable/mining"]
+    },
+    {
+      "key": "enchadd:drain",
+      "displayName": "Legacy Drain (removed)",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "minecraft:mace"]
+    },
+    {
+      "key": "enchadd:drain_curse",
+      "displayName": "Legacy Drain Curse (removed)",
+      "supportedItemTags": ["#minecraft:enchantable/weapon", "minecraft:mace"]
+    }
+  ]
+}

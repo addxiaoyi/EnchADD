@@ -1,0 +1,24 @@
+name: EnchADD
+version: '${project.version}'
+main: net.enchadd.EnchADD
+api-version: '1.21.6'
+load: POSTWORLD
+commands:
+  enchadd:
+    description: EnchADD 指令主入口
+    usage: /enchadd help | /enchadd list [zh|en] [page] [size] | /enchadd export [zh|en] | /enchadd exportjson [zh|en] | /enchadd exportcsv [zh|en] | /enchadd info <key> | /enchadd find <name-part> [zh|en] | /enchadd ci | /enchadd perf [triggerCount] [particleCount] | /enchadd verify | /enchadd balance | /enchadd safemode [status|on|off|toggle] | /enchadd reload
+    permission: enchadd.list
+    aliases: [enchants]
+permissions:
+  enchadd.list:
+    description: 查看附魔列表
+    default: true
+  enchadd.info:
+    description: 查看附魔详情
+    default: true
+  enchadd.export:
+    description: 导出附魔数据
+    default: op
+  enchadd.admin:
+    description: 管理附魔插件
+    default: op

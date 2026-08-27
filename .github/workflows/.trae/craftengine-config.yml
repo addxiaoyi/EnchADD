@@ -1,0 +1,4 @@
+# 仅注释可修改处；其余为推荐默认
+serverside-blocks: 8192        # 可根据自定义方块规模调整
+sync-custom-blocks-on-chunk-load: true
+fix-atlas: true
