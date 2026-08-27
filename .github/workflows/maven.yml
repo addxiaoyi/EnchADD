@@ -34,7 +34,7 @@ jobs:
       run: mvn -B -pl plugin -am -Dpaper.version=${{ matrix.paper }} clean verify
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: EnchADD-Plugin-${{ matrix.name }}
         path: plugin/target/enchadd-plugin-*.jar

@@ -24,7 +24,7 @@ jobs:
           java -version 2>&1 | Out-File -FilePath env-info.txt -Append -Encoding utf8
           javac -version 2>&1 | Out-File -FilePath env-info.txt -Append -Encoding utf8
       - name: Upload Environment Info
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: env-info-${{ matrix.java_version }}
           path: env-info.txt
@@ -50,7 +50,7 @@ jobs:
         shell: pwsh
         run: ./scripts/dev-tools.ps1 -Task enchant-coverage-report
       - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: enchant-coverage-report
           path: dist/reports/**
@@ -61,7 +61,7 @@ jobs:
         shell: pwsh
         run: ./scripts/dev-tools.ps1 -Task build -OutputDir dist
       - name: Upload Plugin Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plugin-jar
           path: dist/**
@@ -100,12 +100,12 @@ jobs:
         shell: pwsh
         run: ./scripts/dev-tools.ps1 -Task build -OutputDir dist
       - name: Upload Matrix Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plugin-jar-${{ matrix.paper_version }}
           path: dist/**
       - name: Upload Environment Info
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: env-info-${{ matrix.paper_version }}
           path: env-info.txt
@@ -128,12 +128,12 @@ jobs:
       - name: Audit Docs
         run: npm audit --json > audit.json || true
       - name: Upload Audit Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs-audit
           path: docs/audit.json
       - name: Upload Docs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs-dist
           path: docs/dist/**
