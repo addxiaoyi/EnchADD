@@ -35,7 +35,7 @@ jobs:
         shell: pwsh
         run: ./scripts/generate-sha256.ps1 -Dir dist -OutFile dist/checksums.txt
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}
           files: dist/**
