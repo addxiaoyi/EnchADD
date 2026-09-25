@@ -51,7 +51,7 @@ public class RefineListener implements Listener {
         if (level <= 0) return;
         if (!(EnchADDConfig.ENCHANTS.get(RefineEnchant.KEY) instanceof RefineEnchant refineEnchant)) return;
         double chance = refineEnchant.getExtraDropChancePerLevel() * level;
-        if (chance <= 0) return;
+        if (!Double.isFinite(chance) || chance <= 0.0d) return;
         double clampedChance = Math.min(0.5, chance);
         for (Item item : event.getItems()) {
             ItemStack stack = item.getItemStack();

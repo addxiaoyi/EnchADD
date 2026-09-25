@@ -17,10 +17,10 @@
         <paper.version>1.21.6-R0.1-SNAPSHOT</paper.version>
         <paper.latest.version>26.2.build.112-stable</paper.latest.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>2.0.5</revision>
+        <revision>2.0.6</revision>
         <mockito.version>5.23.0</mockito.version>
     </properties>
-    <url>https://github.com/EnchADD/EnchADD</url>
+    <url>https://github.com/addxiaoyi/EnchADD</url>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -32,11 +32,11 @@
         <developer>
             <id>EnchADD</id>
             <name>EnchADD Team</name>
-            <url>https://github.com/EnchADD</url>
+            <url>https://github.com/addxiaoyi</url>
         </developer>
     </developers>
     <scm>
-        <url>https://github.com/EnchADD/EnchADD</url>
+        <url>https://github.com/addxiaoyi/EnchADD</url>
     </scm>
 
     <modules>

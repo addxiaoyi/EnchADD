@@ -58,7 +58,9 @@ public class ClairvoyanceListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查 (nanoTime)
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
         
-        double chance = Math.min(0.85, config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.85d, Math.max(0.0d, chance));
         // 性能优化: 使用 PerformanceUtils 的概率检查
         if (!PerformanceUtils.rollChance(chance)) return;
         

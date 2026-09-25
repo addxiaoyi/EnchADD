@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.SmithingInventory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class SmithingDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{null, null};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -63,7 +64,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_PICKAXE);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -85,7 +86,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_PICKAXE);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -107,7 +108,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_PICKAXE);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -129,7 +130,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_PICKAXE);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -150,7 +151,7 @@ class SmithingDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.NETHERITE_PICKAXE);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -174,7 +175,7 @@ class SmithingDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{null, null};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -200,7 +201,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -225,7 +226,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -250,7 +251,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -275,7 +276,7 @@ class SmithingDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -299,7 +300,7 @@ class SmithingDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.NETHERITE_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -325,7 +326,7 @@ class SmithingDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         event.setResult(null);
 
         // Should not throw exception when result is null
@@ -340,7 +341,7 @@ class SmithingDualSlotCheckTest {
         SmithingInventory inventory = Mockito.mock(SmithingInventory.class);
         when(inventory.getContents()).thenReturn(new ItemStack[]{});
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -364,7 +365,7 @@ class SmithingDualSlotCheckTest {
         contents[2] = new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareSmithingEvent event = new PrepareSmithingEvent(inventory, null);
+        PrepareSmithingEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -374,6 +375,12 @@ class SmithingDualSlotCheckTest {
 
         // Null in array should be treated as empty slot
         assertEquals(result, event.getResult());
+    }
+
+    private static PrepareSmithingEvent prepareEvent(SmithingInventory inventory) {
+        InventoryView view = Mockito.mock(InventoryView.class);
+        when(view.getTopInventory()).thenReturn(inventory);
+        return new PrepareSmithingEvent(view, null);
     }
 
     private static void setField(Object target, String fieldName, Object value) throws Exception {

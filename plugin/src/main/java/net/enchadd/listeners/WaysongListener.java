@@ -71,11 +71,10 @@ public final class WaysongListener implements Listener {
         if (level <= 0) {
             return;
         }
-        if (!effectSupport.startCooldown(player)) {
+        if (!effectSupport.activate(player)) {
             return;
         }
 
-        effectSupport.applyMarchBuffs(player);
         effectSupport.playCosmeticFeedback(player);
     }
 

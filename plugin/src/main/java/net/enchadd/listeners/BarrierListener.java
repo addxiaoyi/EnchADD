@@ -15,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 
 public class BarrierListener implements Listener {
@@ -34,7 +33,7 @@ public class BarrierListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onShieldHit(EntityDamageByEntityEvent event) {
-        if (enchant == null || config == null) {
+        if (event.isCancelled() || enchant == null || config == null) {
             return;
         }
         Entity entity = event.getEntity();
@@ -58,8 +57,9 @@ public class BarrierListener implements Listener {
             return;
         }
 
-        shieldSupport.knockbackNearby(player, level);
-        PerformanceUtils.setCooldown(pdc, key);
+        if (shieldSupport.knockbackNearby(player, level)) {
+            PerformanceUtils.setCooldown(pdc, key);
+        }
     }
 
     private int getBarrierLevel(Player player, EntityDamageByEntityEvent event) {
@@ -69,10 +69,6 @@ public class BarrierListener implements Listener {
         if (player.getHandRaisedTime() <= 0 || player.getHandRaisedTime() > 10) {
             return 0;
         }
-        ItemStack offhand = player.getInventory().getItemInOffHand();
-        if (offhand.getType().isAir()) {
-            return 0;
-        }
-        return PerformanceUtils.getEnchantLevel(offhand, enchant);
+        return PerformanceUtils.getActiveOffhandShieldLevel(player, enchant);
     }
 }

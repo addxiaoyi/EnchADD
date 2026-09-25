@@ -15,10 +15,12 @@ public final class MortalWoundEffectSupport {
 
     private final MortalWoundEnchant config;
     private final NamespacedKey key;
+    private final MortalWoundWindowSupport window;
 
     public MortalWoundEffectSupport(@NotNull MortalWoundEnchant config, @NotNull NamespacedKey key) {
         this.config = config;
         this.key = key;
+        this.window = new MortalWoundWindowSupport(key);
     }
 
     public void tagLaunchLevel(@NotNull AbstractArrow arrow, int level) {
@@ -30,19 +32,24 @@ public final class MortalWoundEffectSupport {
     }
 
     public boolean shouldTrigger(int level) {
-        double chance = Math.min(0.6d, config.getTriggerChance() * level);
+        level = Math.min(level, config.getMaxLevel());
+        if (level <= 0 || antiHealDurationTicks(level) <= 0) return false;
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) {
+            return false;
+        }
+        chance = Math.min(0.6d, Math.max(0.0d, chance));
         return PerformanceUtils.rollChance(chance);
     }
 
     public int antiHealDurationTicks(int level) {
-        return PerformanceUtils.calculateDurationTicksPerLevel(config.getAntiHealSecondsPerLevel(), level);
+        return MortalWoundWindowSupport.durationTicks(level, config.getMaxLevel(),
+                config.getAntiHealSecondsPerLevel(), config.getAntiHealScale());
     }
 
-    public void applyAntiHealWindow(@NotNull LivingEntity victim, int durationTicks) {
+    public boolean applyAntiHealWindow(@NotNull LivingEntity victim, int durationTicks) {
         PersistentDataContainer victimPdc = PerformanceUtils.getPDCSafe(victim);
-        if (victimPdc != null) {
-            PerformanceUtils.setWindowUntilTicks(victimPdc, key, durationTicks);
-        }
+        return victimPdc != null && window.apply(victimPdc, durationTicks);
     }
 
     public void writeShooterCooldown(@NotNull Player shooter) {
@@ -64,12 +71,15 @@ public final class MortalWoundEffectSupport {
         if (pdc == null) {
             return false;
         }
-        if (!PerformanceUtils.isWindowActive(pdc, key)) {
-            pdc.remove(key);
+        if (!window.isActive(pdc)) {
             return false;
         }
-        double scale = PerformanceUtils.clamp(config.getAntiHealScale(), 0.0d, 1.0d);
-        scaledAmountConsumer.accept(originalAmount * scale);
+        if (!Double.isFinite(originalAmount) || originalAmount <= 0.0d) {
+            return false;
+        }
+        double adjusted = SurvivalHealthSupport.reducedHealing(originalAmount, config.getAntiHealScale());
+        if (adjusted >= originalAmount) return false;
+        scaledAmountConsumer.accept(adjusted);
         return true;
     }
 }

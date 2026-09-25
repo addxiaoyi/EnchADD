@@ -2,19 +2,25 @@ package net.enchadd;
 
 import net.enchadd.enchants.BarrierEnchant;
 import net.enchadd.listeners.BarrierListener;
+import net.enchadd.listeners.support.BarrierShieldSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.util.Vector;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -27,17 +33,29 @@ import static org.mockito.Mockito.when;
 
 class BarrierBehaviorTest {
 
+    @BeforeEach
+    void setUp() {
+        MockBukkit.mock();
+    }
+
+    @AfterEach
+    void tearDown() {
+        MockBukkit.unmock();
+    }
+
     @Test
-    void barrierWritesCooldownWhenShieldProcTriggers() throws Exception {
+    void barrierWritesCooldownOnlyWhenAValidTargetIsPushed() throws Exception {
         BarrierListener listener = new BarrierListener();
         BarrierEnchant config = Mockito.mock(BarrierEnchant.class);
         when(config.getCooldownTicks()).thenReturn(200);
         when(config.getTriggerChance()).thenReturn(0.3);
         when(config.getMaxTriggerChance()).thenReturn(0.6);
         when(config.getKnockbackRadiusPerLevel()).thenReturn(2.0);
+        when(config.getMaxLevel()).thenReturn(2);
 
         NamespacedKey key = new NamespacedKey("enchadd", "barrier_test_key");
         setField(listener, "config", config);
+        setField(listener, "shieldSupport", new BarrierShieldSupport(config));
         setField(listener, "enchant", Enchantment.SHARPNESS);
         setField(listener, "key", key);
 
@@ -48,6 +66,9 @@ class BarrierBehaviorTest {
         when(inventory.getItemInOffHand()).thenReturn(shield);
         when(player.getInventory()).thenReturn(inventory);
         when(player.getHandRaisedTime()).thenReturn(6);
+        when(player.isHandRaised()).thenReturn(true);
+        when(player.getActiveItemHand()).thenReturn(EquipmentSlot.OFF_HAND);
+        when(player.getActiveItem()).thenReturn(shield);
 
         World world = Mockito.mock(World.class);
         when(world.getNearbyEntities(Mockito.any(Location.class), Mockito.anyDouble(), Mockito.anyDouble(), Mockito.anyDouble()))
@@ -67,8 +88,18 @@ class BarrierBehaviorTest {
             mocked.when(() -> PerformanceUtils.rollChance(Mockito.anyDouble())).thenReturn(true);
 
             listener.onShieldHit(event);
+            mocked.verify(() -> PerformanceUtils.setCooldown(pdc, key), never());
+
+            LivingEntity target = Mockito.mock(LivingEntity.class);
+            when(target.getLocation()).thenReturn(new Location(world, 1.0, 64.0, 0.0));
+            when(world.getNearbyEntities(Mockito.any(Location.class), Mockito.anyDouble(), Mockito.anyDouble(), Mockito.anyDouble()))
+                    .thenReturn(Collections.singleton(target));
+            mocked.when(() -> PerformanceUtils.isEntityValid(target)).thenReturn(true);
+
+            listener.onShieldHit(event);
 
             mocked.verify(() -> PerformanceUtils.setCooldown(pdc, key));
+            verify(target).setVelocity(Mockito.any(Vector.class));
         }
     }
 

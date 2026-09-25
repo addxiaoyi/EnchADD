@@ -15,6 +15,11 @@
     <name>EnchADD MockBukkit Tests</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <!-- MockBukkit 4.106.1 loads registry data from Paper 1.21.11. -->
+        <mockbukkit.paper.version>1.21.11-R0.1-SNAPSHOT</mockbukkit.paper.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>net.enchadd</groupId>
@@ -29,6 +34,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
+            <version>${mockbukkit.paper.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

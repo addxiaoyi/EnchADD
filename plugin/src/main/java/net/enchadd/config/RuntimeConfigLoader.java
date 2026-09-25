@@ -79,8 +79,9 @@ public final class RuntimeConfigLoader {
 
         ConfigurationSection updateCheckerSection = ConfigSupport.getConfigSection(configuration, "update-checker");
         ConfigSupport.getBoolean(updateCheckerSection, "enabled", false);
-        ConfigSupport.getString(updateCheckerSection, "repository", "EnchADD/EnchADD");
+        ConfigSupport.getString(updateCheckerSection, "repository", "addxiaoyi/EnchADD");
         ConfigSupport.getInt(updateCheckerSection, "timeout-seconds", 8);
+        ConfigSupport.getInt(updateCheckerSection, "interval-hours", 12);
 
         return new RuntimeConfigSnapshot(
                 monitoringEnabled,

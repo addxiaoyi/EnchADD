@@ -2,6 +2,7 @@ package net.enchadd.listeners.support;
 
 import net.enchadd.enchants.FreshcatchEnchant;
 import net.enchadd.utils.PerformanceUtils;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public final class FreshcatchRestoreSupport {
     }
 
     public void handleFish(@NotNull PlayerFishEvent event, @NotNull Enchantment enchant) {
-        if (event.getState() != PlayerFishEvent.State.CAUGHT_FISH) {
+        if (event.isCancelled() || event.getState() != PlayerFishEvent.State.CAUGHT_FISH) {
             return;
         }
         if (!(event.getCaught() instanceof Item itemEntity)) {
@@ -42,20 +43,22 @@ public final class FreshcatchRestoreSupport {
             return;
         }
 
-        int newFood = Math.min(20, player.getFoodLevel() + config.getFoodLevelPerLevel() * level);
-        player.setFoodLevel(newFood);
-
-        float newSaturation = (float) Math.min(newFood, player.getSaturation() + config.getSaturationPerLevel() * level);
-        player.setSaturation(newSaturation);
+        int newFood = NutritionSupport.food(player.getFoodLevel(), level, config.getMaxLevel(),
+                config.getFoodLevelPerLevel());
+        if (newFood != player.getFoodLevel()) player.setFoodLevel(newFood);
+        float saturation = player.getSaturation();
+        float restored = NutritionSupport.saturation(saturation, newFood, level, config.getMaxLevel(),
+                config.getSaturationPerLevel());
+        if (Float.compare(restored, saturation) != 0) player.setSaturation(restored);
     }
 
     private static @Nullable ItemStack getRodWithEnchant(@NotNull Player player, @NotNull Enchantment enchant) {
         ItemStack main = player.getInventory().getItemInMainHand();
-        if (!main.getType().isAir() && PerformanceUtils.getEnchantLevel(main, enchant) > 0) {
+        if (main.getType() == Material.FISHING_ROD && PerformanceUtils.getEnchantLevel(main, enchant) > 0) {
             return main;
         }
         ItemStack off = player.getInventory().getItemInOffHand();
-        if (!off.getType().isAir() && PerformanceUtils.getEnchantLevel(off, enchant) > 0) {
+        if (off.getType() == Material.FISHING_ROD && PerformanceUtils.getEnchantLevel(off, enchant) > 0) {
             return off;
         }
         return null;

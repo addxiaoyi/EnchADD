@@ -8,7 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.potion.PotionEffect;
@@ -27,31 +27,30 @@ public final class TideshellEffectSupport {
 
     public boolean isTouchingWater(@NotNull Player player) {
         Block feet = player.getLocation().getBlock();
-        if (feet.isLiquid()) {
+        if (containsWater(feet)) {
             return true;
         }
 
         Location eye = player.getEyeLocation();
         Block eyeBlock = eye.getBlock();
-        if (eyeBlock.isLiquid()) {
-            return true;
-        }
-
-        return eyeBlock.getRelative(BlockFace.UP).isLiquid();
+        return containsWater(eyeBlock);
     }
 
-    public boolean startCooldown(@NotNull Player player) {
+    private static boolean containsWater(Block block) {
+        boolean waterlogged = block.getBlockData() instanceof Waterlogged water && water.isWaterlogged();
+        return TideshellRules.containsWater(block.getType(), waterlogged);
+    }
+
+    public boolean activate(@NotNull Player player) {
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null || PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return false;
         }
+        boolean breathing = applyEffectIfUpgrade(player, PotionEffectType.WATER_BREATHING, config.getWaterBreathingSeconds());
+        boolean swimming = applyEffectIfUpgrade(player, PotionEffectType.DOLPHINS_GRACE, config.getDolphinsGraceSeconds());
+        if (!breathing && !swimming) return false;
         PerformanceUtils.setCooldown(pdc, cooldownKey);
         return true;
-    }
-
-    public void applyEffects(@NotNull Player player) {
-        applyEffectIfUpgrade(player, PotionEffectType.WATER_BREATHING, config.getWaterBreathingSeconds());
-        applyEffectIfUpgrade(player, PotionEffectType.DOLPHINS_GRACE, config.getDolphinsGraceSeconds());
     }
 
     public void playCosmeticFeedback(@NotNull Player player) {
@@ -62,15 +61,16 @@ public final class TideshellEffectSupport {
         player.playSound(player.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 0.7f, 1.2f);
     }
 
-    private static void applyEffectIfUpgrade(@NotNull Player player,
+    private static boolean applyEffectIfUpgrade(@NotNull Player player,
                                              @NotNull PotionEffectType type,
                                              int seconds) {
-        int durationTicks = Math.max(20, seconds * 20);
+        int durationTicks = TideshellRules.durationTicks(seconds);
+        if (durationTicks <= 0) return false;
         PotionEffect current = player.getPotionEffect(type);
-        if (current != null && current.getDuration() >= durationTicks) {
-            return;
+        if (current != null && !TideshellRules.canRefresh(current.getAmplifier(), current.getDuration(), durationTicks)) {
+            return false;
         }
 
-        player.addPotionEffect(new PotionEffect(type, durationTicks, 0, false, false, true), true);
+        return player.addPotionEffect(new PotionEffect(type, durationTicks, 0, false, false, true));
     }
 }

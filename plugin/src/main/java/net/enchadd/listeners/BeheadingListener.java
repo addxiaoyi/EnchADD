@@ -52,6 +52,8 @@ public class BeheadingListener implements Listener {
         if (level == 0) return;
 
         double chance = level * config.getChanceToDropHeadPerLevel();
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.5d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) return;
 
         ItemStack head = dropSupport.getHeadForEntity(event.getEntity(), event.getDrops());

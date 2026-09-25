@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.LastStandEnchant;
+import net.enchadd.listeners.support.SurvivalHealthSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -44,12 +45,15 @@ public class LastStandListener implements Listener {
 
         // 性能优化: 使用 PerformanceUtils 而非直接调用 getEnchantmentLevel
         int level = PerformanceUtils.getEnchantLevel(equipment.getChestplate(), enchant);
+        level = Math.min(level, config.getMaxLevel());
         if (level <= 0) return;
 
         double health = entity.getHealth();
         double finalDamage = event.getFinalDamage();
-        if (finalDamage < health) return;
+        if (!SurvivalHealthSupport.isLethal(health, finalDamage)) return;
         if (!PerformanceUtils.isEntityValid(entity)) return;
+        double newHealth = SurvivalHealthSupport.rescueHealth(entity.getMaxHealth());
+        if (newHealth <= 0.0) return;
 
         // 性能优化: 使用工具方法安全获取 PDC
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(entity);
@@ -59,15 +63,13 @@ public class LastStandListener implements Listener {
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
         // 性能优化: 使用 PerformanceUtils 的概率检查
-        double chance = Math.min(config.getMaxTriggerChance(), config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.8d, Math.max(0.0d, Math.min(config.getMaxTriggerChance(), chance)));
         if (!PerformanceUtils.rollChance(chance)) return;
 
-        double newHealth = Math.min(entity.getMaxHealth(), 2.0);
-        if (newHealth < 1.0) {
-            newHealth = 1.0;
-        }
-        event.setCancelled(true);
         entity.setHealth(newHealth);
+        event.setCancelled(true);
 
         // 性能优化: 使用 PerformanceUtils 设置冷却
         PerformanceUtils.setCooldown(pdc, key);

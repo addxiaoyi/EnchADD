@@ -44,7 +44,8 @@ public final class EnchADDConfigBootstrapper {
                 "- maximumCost: 附魔所需的最大经验等级 (base: 基础, additionalPerLevel: 每级额外增加)。",
                 "- enchantmentTags: 附魔标签，例如 #in_enchanting_table 表示可以从附魔台获得。",
                 "- supportedItemTags: 支持该附魔的物品/标签列表。",
-                "- enabled: 是否启用该附魔。"
+                "- enabled: 是否启用该附魔。",
+                "- 运行时会对等级、概率、倍率、范围和持续时间执行安全上限，防止极端配置破坏平衡。"
         ));
         configuration.setComments("conflicts", List.of(
                 "以下为默认互斥附魔组合，可按需增删。",
@@ -71,9 +72,10 @@ public final class EnchADDConfigBootstrapper {
         ));
         configuration.setComments("update-checker", List.of(
                 "GitHub Release 更新检查：只通知管理员，不会自动下载或替换运行中的 jar。",
-                "enabled: 是否在插件启动时异步检查最新稳定版。",
+                "enabled: 是否异步检查最新稳定版。",
                 "repository: GitHub 仓库，格式为 owner/repository。",
-                "timeout-seconds: GitHub API 请求超时秒数（2-30）。"
+                "timeout-seconds: GitHub API 请求超时秒数（2-30）。",
+                "interval-hours: 检查间隔小时数（1-168），默认 12 小时。"
         ));
     }
 

@@ -21,6 +21,7 @@ public final class SteadyAimProjectileSupport {
                                    @NotNull NamespacedKey levelKey,
                                    @NotNull NamespacedKey cooldownKey,
                                    @NotNull SteadyAimEnchant config) {
+        if (event.isCancelled()) return;
         if (!(event.getEntity() instanceof AbstractArrow arrow)) {
             return;
         }
@@ -28,22 +29,28 @@ public final class SteadyAimProjectileSupport {
             return;
         }
 
+        PersistentDataContainer arrowPdc = arrow.getPersistentDataContainer();
+        NamespacedKey checkedKey = new NamespacedKey(levelKey.getNamespace(), levelKey.getKey() + "_launch_checked");
+        if (arrowPdc.has(checkedKey, PersistentDataType.BYTE)) return;
+        arrowPdc.set(checkedKey, PersistentDataType.BYTE, (byte) 1);
+
         EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(shooter);
         if (equipment == null) {
             return;
         }
 
-        int level = PerformanceUtils.getEnchantLevel(equipment.getItemInMainHand(), enchant);
+        int level = Math.min(config.getMaxLevel(), PerformanceUtils.getEnchantLevel(equipment.getItemInMainHand(), enchant));
         if (level <= 0) {
             return;
         }
 
         double speed = arrow.getVelocity().length();
-        if (speed < 2.8) {
+        if (!RangedDamageRules.isSteadySpeed(speed)) {
             return;
         }
 
-        double chance = Math.min(config.getMaxTriggerChance(), config.getTriggerChance() * level);
+        if (RangedDamageRules.bonus(level, config.getMaxLevel(), config.getBonusDamagePerLevel(), 1) <= 0) return;
+        double chance = ProjectileStatusSupport.chance(config.getTriggerChance(), level, config.getMaxTriggerChance());
         if (shooter instanceof Player player) {
             PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
             if (pdc == null) {
@@ -60,12 +67,13 @@ public final class SteadyAimProjectileSupport {
             return;
         }
 
-        arrow.getPersistentDataContainer().set(levelKey, PersistentDataType.INTEGER, level);
+        arrowPdc.set(levelKey, PersistentDataType.INTEGER, level);
     }
 
     public void applyBonusDamage(@NotNull EntityDamageByEntityEvent event,
                                  @NotNull NamespacedKey levelKey,
                                  @NotNull SteadyAimEnchant config) {
+        if (event.isCancelled() || !Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0) return;
         if (!(event.getDamager() instanceof AbstractArrow arrow)) {
             return;
         }
@@ -75,7 +83,9 @@ public final class SteadyAimProjectileSupport {
         }
 
         double base = event.getDamage();
-        double bonus = Math.max(0.0, level * config.getBonusDamagePerLevel());
-        event.setDamage(base * (1.0 + bonus));
+        double bonus = RangedDamageRules.bonus(level, config.getMaxLevel(), config.getBonusDamagePerLevel(), 1);
+        double scaled = RangedDamageRules.damage(base, bonus);
+        if (Double.compare(scaled, base) == 0) return;
+        event.setDamage(scaled);
     }
 }

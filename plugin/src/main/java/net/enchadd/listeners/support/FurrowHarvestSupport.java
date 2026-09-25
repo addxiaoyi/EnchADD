@@ -42,7 +42,7 @@ public final class FurrowHarvestSupport {
     }
 
     public @NotNull List<Block> collectTargets(@NotNull Block center) {
-        int clampedRadius = Math.max(0, config.getRadius());
+        int clampedRadius = Math.min(8, Math.max(0, config.getRadius()));
         int diameter = clampedRadius * 2 + 1;
         List<Block> targets = PerformanceUtils.newArrayListWithCapacity(diameter * diameter);
         for (int dx = -clampedRadius; dx <= clampedRadius; dx++) {

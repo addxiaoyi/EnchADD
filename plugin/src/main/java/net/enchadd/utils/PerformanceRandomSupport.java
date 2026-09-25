@@ -14,9 +14,16 @@ final class PerformanceRandomSupport {
     }
 
     static boolean rollChance(double chance) {
+        if (!Double.isFinite(chance)) {
+            return false;
+        }
+        chance = Math.max(0.0d, Math.min(1.0d, chance));
         double effectiveChance = chance
                 * SafetyModeManager.getChanceMultiplier()
                 * EnchantExecutionBudgetManager.getCurrentChanceMultiplier();
+        if (!Double.isFinite(effectiveChance)) {
+            return false;
+        }
         if (effectiveChance <= 0.0) {
             return false;
         }
@@ -27,7 +34,10 @@ final class PerformanceRandomSupport {
     }
 
     static boolean rollChanceWithLevel(double baseChance, int level, double maxChance) {
-        double chance = Math.min(maxChance, baseChance * level);
+        if (!Double.isFinite(baseChance) || !Double.isFinite(maxChance) || level <= 0) {
+            return false;
+        }
+        double chance = Math.min(1.0d, Math.min(Math.max(0.0d, maxChance), Math.max(0.0d, baseChance * level)));
         return rollChance(chance);
     }
 }

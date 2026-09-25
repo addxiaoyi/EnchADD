@@ -96,6 +96,11 @@ public final class PerformanceUtils {
         PerformanceCooldownSupport.setWindowUntilTicks(pdc, key, ticks);
     }
 
+    public static boolean extendWindowUntilTicks(@NotNull PersistentDataContainer pdc,
+                                                 @NotNull NamespacedKey key, int ticks) {
+        return PerformanceCooldownSupport.extendWindowUntilTicks(pdc, key, ticks);
+    }
+
     public static void setWindowUntilSeconds(@NotNull PersistentDataContainer pdc,
                                              @NotNull NamespacedKey key,
                                              int seconds) {
@@ -118,6 +123,10 @@ public final class PerformanceUtils {
     public static boolean isSuccessfulShieldBlock(@Nullable Player player,
                                                    @Nullable EntityDamageByEntityEvent event) {
         return PerformanceShieldSupport.isSuccessfulShieldBlock(player, event);
+    }
+
+    public static int getActiveOffhandShieldLevel(@Nullable Player player, @NotNull Enchantment enchant) {
+        return PerformanceShieldSupport.getActiveOffhandShieldLevel(player, enchant);
     }
 
     public static boolean isLikelyShieldFacingBlock(@Nullable Player player,

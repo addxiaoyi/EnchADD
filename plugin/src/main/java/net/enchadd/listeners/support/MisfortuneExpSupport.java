@@ -42,8 +42,8 @@ public final class MisfortuneExpSupport {
             return;
         }
 
-        double basePenalty = config.getXpPenaltyPerLevel() * level;
-        double cappedPenalty = Math.min(config.getMaxXpPenalty(), basePenalty);
+        double basePenalty = Math.max(0.0, config.getXpPenaltyPerLevel() * level);
+        double cappedPenalty = Math.max(0.0, Math.min(0.90, Math.min(config.getMaxXpPenalty(), basePenalty)));
         if (cappedPenalty <= 0) {
             return;
         }

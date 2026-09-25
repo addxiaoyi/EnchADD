@@ -5,6 +5,7 @@ import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.BreakguardEnchant;
 import net.enchadd.listeners.support.BreakguardDamageSupport;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
@@ -36,8 +37,9 @@ public class BreakguardListener implements Listener {
         if (!PerformanceUtils.isSuccessfulShieldBlock(target, event)) return;
 
         double bonusDamage = damageSupport.resolveBonusDamage(attacker, enchant, config);
-        if (bonusDamage <= 0.0) return;
-
-        event.setDamage(event.getDamage() + bonusDamage);
+        // Shield blocking may reduce final damage to zero; use the incoming base damage.
+        double adjusted = EnchantDamageSupport.addBonus(event.getDamage(), bonusDamage);
+        if (!(adjusted > event.getDamage())) return;
+        event.setDamage(adjusted);
     }
 }

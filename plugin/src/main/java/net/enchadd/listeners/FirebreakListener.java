@@ -50,10 +50,10 @@ public class FirebreakListener implements Listener {
         float originalDuration = event.getDuration();
         if (originalDuration <= 0) return;
 
-        double reduction = Math.min(
+        double reduction = Math.max(0.0, Math.min(0.90, Math.min(
                 config.getMaxCombustionReduction(),
                 level * config.getCombustionReductionPerLevel()
-        );
+        )));
         if (reduction <= 0.0) return;
 
         float adjustedDuration = Math.max(0.0f, (float) (originalDuration * (1.0 - reduction)));
@@ -74,10 +74,10 @@ public class FirebreakListener implements Listener {
         int level = PerformanceUtils.getEnchantLevel(equipment.getChestplate(), enchant);
         if (level <= 0) return;
 
-        double reduction = Math.min(
+        double reduction = Math.max(0.0, Math.min(0.90, Math.min(
                 config.getMaxDirectDamageReduction(),
                 level * config.getDirectDamageReductionPerLevel()
-        );
+        )));
         if (reduction <= 0.0) return;
 
         event.setDamage(event.getDamage() * (1.0 - reduction));

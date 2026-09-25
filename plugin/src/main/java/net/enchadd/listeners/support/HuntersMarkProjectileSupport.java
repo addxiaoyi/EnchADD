@@ -58,6 +58,9 @@ public final class HuntersMarkProjectileSupport {
         if (level == null || level <= 0) {
             return;
         }
+        int durationTicks = ProjectileStatusSupport.durationTicks(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getMarkSecondsPerLevel());
+        if (event.isCancelled() || durationTicks <= 0) return;
         Player shooter = arrow.getShooter() instanceof Player p ? p : null;
         if (!PerformanceUtils.isPlayerValid(shooter)) {
             return;
@@ -70,13 +73,13 @@ public final class HuntersMarkProjectileSupport {
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) {
             return;
         }
-        if (!PerformanceUtils.rollChance(config.getTriggerChance())) {
+        double chance = ProjectileStatusSupport.chance(config.getTriggerChance(), 1, 0.75);
+        if (!PerformanceUtils.rollChance(chance)) {
             return;
         }
 
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getMarkSecondsPerLevel(), level);
         PotionEffect effect = new PotionEffect(PotionEffectType.GLOWING, durationTicks, 0, false, false, true);
-        victim.addPotionEffect(effect);
+        if (!victim.addPotionEffect(effect)) return;
         PerformanceUtils.setCooldown(pdc, key);
     }
 }

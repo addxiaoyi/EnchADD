@@ -64,17 +64,24 @@ public class SunderListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查 (nanoTime)
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
         
-        double chance = Math.min(config.getMaxTriggerChance(), config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.75d, Math.max(0.0d, Math.min(config.getMaxTriggerChance(), chance)));
         // 性能优化: 使用 PerformanceUtils 的概率检查
         if (!PerformanceUtils.rollChance(chance)) return;
         
         // 性能优化: 使用 PerformanceUtils.clamp 限制值范围
-        double bonus = armor * config.getBonusPerArmorPointPerLevel() * level;
+        double rawBonus = armor * config.getBonusPerArmorPointPerLevel() * level;
+        if (!Double.isFinite(rawBonus)) return;
+        double bonus = Math.min(config.getMaxBonusMultiplier(), Math.max(0.0, rawBonus));
+        bonus = Math.min(0.50, bonus);
         bonus = PerformanceUtils.clamp(bonus, 0.0, config.getMaxBonusMultiplier());
         if (bonus <= 0) return;
         
         double damage = event.getDamage();
+        if (!Double.isFinite(damage) || damage <= 0.0d) return;
         double newDamage = damage * (1.0 + bonus);
+        if (!Double.isFinite(newDamage)) return;
         event.setDamage(newDamage);
         
         // 性能优化: 使用 PerformanceUtils 设置冷却

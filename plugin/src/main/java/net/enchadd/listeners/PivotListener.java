@@ -32,7 +32,7 @@ public class PivotListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onShieldBlock(EntityDamageByEntityEvent event) {
-        if (enchant == null || config == null) return;
+        if (event.isCancelled() || enchant == null || config == null) return;
         if (!(event.getEntity() instanceof Player player)) return;
         if (!PerformanceUtils.isSuccessfulShieldBlock(player, event)) return;
 

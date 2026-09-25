@@ -29,13 +29,14 @@ public class AirbagListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onCushionedImpact(EntityDamageEvent event) {
+        if (event.isCancelled() || !Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0) return;
         if (airbag == null || config == null) return;
         if (!(event.getEntity() instanceof LivingEntity livingEntity)) return;
         EntityDamageEvent.DamageCause cause = event.getCause();
         if (!impactSupport.isCushionedCause(cause)) return;
 
         double damage = event.getDamage();
-        if (damage <= 0.0) return;
+        if (!Double.isFinite(damage) || damage <= 0.0) return;
 
         EntityEquipment entityEquipment = PerformanceUtils.getEquipmentSafe(livingEntity);
         if (entityEquipment == null) return;

@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -68,13 +69,14 @@ class ParryRetaliationBehaviorTest {
         when(defender.getHandRaisedTime()).thenReturn(5);
         when(defender.isHandRaised()).thenReturn(true);
         when(defender.getActiveItem()).thenReturn(shield);
+        when(defender.getActiveItemHand()).thenReturn(EquipmentSlot.OFF_HAND);
         Location defenderLocation = new Location(Mockito.mock(World.class), 0.0, 64.0, 0.0);
         defenderLocation.setDirection(new Vector(0.0, 0.0, 1.0));
         when(defender.getLocation()).thenReturn(defenderLocation);
 
         LivingEntity attacker = Mockito.mock(LivingEntity.class);
         when(attacker.getEntityId()).thenReturn(42);
-        when(attacker.getLocation()).thenReturn(new Location(Mockito.mock(World.class), 0.0, 64.0, 2.0));
+        when(attacker.getLocation()).thenReturn(new Location(defenderLocation.getWorld(), 0.0, 64.0, 2.0));
 
         LivingEntity differentTarget = Mockito.mock(LivingEntity.class);
         when(differentTarget.getEntityId()).thenReturn(99);
@@ -85,6 +87,7 @@ class ParryRetaliationBehaviorTest {
         when(config.getRetaliationWindowTicks()).thenReturn(60);
         when(config.getBonusDamagePerLevel()).thenReturn(1.0);
         when(config.getMaxBonusDamage()).thenReturn(2.0);
+        when(config.getMaxLevel()).thenReturn(2);
 
         NamespacedKey cooldownKey = new NamespacedKey("enchadd", "parry_test_cooldown");
         NamespacedKey windowKey = new NamespacedKey("enchadd", "parry_test_window");
@@ -101,6 +104,7 @@ class ParryRetaliationBehaviorTest {
         when(blockedEvent.getEntity()).thenReturn(defender);
         when(blockedEvent.getDamager()).thenReturn(attacker);
         when(blockedEvent.getDamageSource()).thenReturn(null);
+        when(blockedEvent.getDamage()).thenReturn(5.0);
 
         listener.onBlocked(blockedEvent);
 
@@ -112,6 +116,7 @@ class ParryRetaliationBehaviorTest {
         when(wrongTargetCounter.getDamager()).thenReturn(defender);
         when(wrongTargetCounter.getEntity()).thenReturn(differentTarget);
         when(wrongTargetCounter.getDamage()).thenReturn(5.0);
+        when(wrongTargetCounter.getFinalDamage()).thenReturn(5.0);
 
         AtomicReference<Double> appliedDamage = new AtomicReference<>();
         doAnswer(invocation -> {
@@ -127,6 +132,7 @@ class ParryRetaliationBehaviorTest {
         when(correctCounter.getDamager()).thenReturn(defender);
         when(correctCounter.getEntity()).thenReturn(attacker);
         when(correctCounter.getDamage()).thenReturn(5.0);
+        when(correctCounter.getFinalDamage()).thenReturn(5.0);
         doAnswer(invocation -> {
             appliedDamage.set(invocation.getArgument(0));
             return null;
@@ -160,13 +166,14 @@ class ParryRetaliationBehaviorTest {
         when(defender.getHandRaisedTime()).thenReturn(5);
         when(defender.isHandRaised()).thenReturn(true);
         when(defender.getActiveItem()).thenReturn(initialShield);
+        when(defender.getActiveItemHand()).thenReturn(EquipmentSlot.OFF_HAND);
         Location defenderLocation = new Location(Mockito.mock(World.class), 0.0, 64.0, 0.0);
         defenderLocation.setDirection(new Vector(0.0, 0.0, 1.0));
         when(defender.getLocation()).thenReturn(defenderLocation);
 
         LivingEntity attacker = Mockito.mock(LivingEntity.class);
         when(attacker.getEntityId()).thenReturn(77);
-        when(attacker.getLocation()).thenReturn(new Location(Mockito.mock(World.class), 0.0, 64.0, 2.0));
+        when(attacker.getLocation()).thenReturn(new Location(defenderLocation.getWorld(), 0.0, 64.0, 2.0));
 
         ParryListener listener = new ParryListener();
         ParryEnchant config = Mockito.mock(ParryEnchant.class);
@@ -174,6 +181,7 @@ class ParryRetaliationBehaviorTest {
         when(config.getRetaliationWindowTicks()).thenReturn(60);
         when(config.getBonusDamagePerLevel()).thenReturn(1.0);
         when(config.getMaxBonusDamage()).thenReturn(10.0);
+        when(config.getMaxLevel()).thenReturn(2);
 
         NamespacedKey cooldownKey = new NamespacedKey("enchadd", "parry_snapshot_cooldown");
         NamespacedKey windowKey = new NamespacedKey("enchadd", "parry_snapshot_window");
@@ -190,12 +198,14 @@ class ParryRetaliationBehaviorTest {
         when(blockedEvent.getEntity()).thenReturn(defender);
         when(blockedEvent.getDamager()).thenReturn(attacker);
         when(blockedEvent.getDamageSource()).thenReturn(null);
+        when(blockedEvent.getDamage()).thenReturn(5.0);
         listener.onBlocked(blockedEvent);
 
         EntityDamageByEntityEvent counterattack = Mockito.mock(EntityDamageByEntityEvent.class);
         when(counterattack.getDamager()).thenReturn(defender);
         when(counterattack.getEntity()).thenReturn(attacker);
         when(counterattack.getDamage()).thenReturn(5.0);
+        when(counterattack.getFinalDamage()).thenReturn(5.0);
 
         AtomicReference<Double> appliedDamage = new AtomicReference<>();
         doAnswer(invocation -> {

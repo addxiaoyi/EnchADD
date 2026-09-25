@@ -65,8 +65,11 @@ public class StillnessListener implements Listener {
         if (level == null || level <= 0) return;
         if (!(EnchADDConfig.ENCHANTS.get(StillnessEnchant.KEY) instanceof @NotNull StillnessEnchant ench)) return;
         double base = event.getDamage();
-        double bonus = Math.max(0.0, level * ench.getBonusDamagePerLevel());
-        event.setDamage(base * (1.0 + bonus));
+        double rawBonus = ench.getBonusDamagePerLevel() * level;
+        if (!Double.isFinite(base) || base <= 0.0d || !Double.isFinite(rawBonus)) return;
+        double bonus = Math.min(0.75, Math.max(0.0, rawBonus));
+        double scaled = base * (1.0d + bonus);
+        if (Double.isFinite(scaled)) event.setDamage(scaled);
     }
 }
 

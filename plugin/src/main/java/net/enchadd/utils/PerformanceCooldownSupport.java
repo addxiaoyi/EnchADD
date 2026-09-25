@@ -71,6 +71,21 @@ final class PerformanceCooldownSupport {
         pdc.set(key, PersistentDataType.LONG, until);
     }
 
+    static boolean extendWindowUntilTicks(@NotNull PersistentDataContainer pdc,
+                                          @NotNull NamespacedKey key, int ticks) {
+        if (ticks <= 0) return false;
+        long now = System.nanoTime();
+        long duration = Math.min(MAX_WINDOW_NANOS, nanosForTicks(ticks));
+        long until = saturatingAdd(now, duration);
+        Long previous = pdc.get(key, PersistentDataType.LONG);
+        if (previous != null && previous > now && previous - now > 0
+                && previous - now <= MAX_WINDOW_NANOS && previous >= until) {
+            return false;
+        }
+        pdc.set(key, PersistentDataType.LONG, until);
+        return true;
+    }
+
     static void setWindowUntilSeconds(@NotNull PersistentDataContainer pdc,
                                       @NotNull NamespacedKey key,
                                       int seconds) {

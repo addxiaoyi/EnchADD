@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.RallyEnchant;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -36,12 +37,13 @@ public class RallyListener implements Listener {
         if (enchant == null || config == null) return;
         if (!(event.getEntity() instanceof LivingEntity victim)) return;
         if (!(event.getDamager() instanceof LivingEntity)) return;
-        if (event.getFinalDamage() <= 0.0) return;
+        if (!Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0.0) return;
 
         EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(victim);
         if (equipment == null) return;
 
-        int level = PerformanceUtils.getEnchantLevel(equipment.getChestplate(), enchant);
+        int level = Math.min(config.getMaxLevel(),
+                PerformanceUtils.getEnchantLevel(equipment.getChestplate(), enchant));
         if (level <= 0) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(victim);
@@ -56,6 +58,7 @@ public class RallyListener implements Listener {
         if (enchant == null || config == null) return;
         if (!(event.getDamager() instanceof LivingEntity attacker)) return;
         if (!(event.getEntity() instanceof LivingEntity)) return;
+        if (!Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0.0) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(attacker);
         if (pdc == null) return;
@@ -63,10 +66,12 @@ public class RallyListener implements Listener {
         Integer level = pdc.get(levelKey, PersistentDataType.INTEGER);
         if (level == null || level <= 0) return;
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage <= 0.0) return;
+        double bonusDamage = EnchantDamageSupport.bonusDamage(Math.min(level, config.getMaxLevel()),
+                config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double adjusted = EnchantDamageSupport.addBonus(event.getDamage(), bonusDamage);
+        if (!(adjusted > event.getDamage())) return;
 
-        event.setDamage(event.getDamage() + bonusDamage);
+        event.setDamage(adjusted);
         pdc.remove(windowKey);
         pdc.remove(levelKey);
     }

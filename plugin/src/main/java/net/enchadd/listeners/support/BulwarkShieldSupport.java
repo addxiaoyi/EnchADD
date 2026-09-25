@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public final class BulwarkShieldSupport {
 
     public @Nullable BulwarkContext resolveContext(@NotNull Player player, @NotNull Enchantment enchant) {
-        int level = PerformanceUtils.getEnchantLevel(player.getInventory().getItemInOffHand(), enchant);
+        int level = PerformanceUtils.getActiveOffhandShieldLevel(player, enchant);
         if (level <= 0) {
             return null;
         }
@@ -33,8 +33,8 @@ public final class BulwarkShieldSupport {
     }
 
     public @NotNull PotionEffect createResistanceEffect(@NotNull BulwarkEnchant config, int level) {
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getResistanceSecondsPerLevel(), level);
-        int amplifier = Math.max(0, config.getResistanceAmplifier());
+        int durationTicks = DefenseEffectRules.seconds(level, config.getMaxLevel(), config.getResistanceSecondsPerLevel()) * 20;
+        int amplifier = Math.min(1, Math.max(0, config.getResistanceAmplifier()));
         return new PotionEffect(PotionEffectType.RESISTANCE, durationTicks, amplifier, false, false, true);
     }
 
@@ -42,8 +42,11 @@ public final class BulwarkShieldSupport {
                       @NotNull PotionEffect effect,
                       @NotNull BulwarkContext context,
                       @NotNull NamespacedKey key) {
-        PerformanceUtils.setCooldown(context.pdc(), key);
-        player.addPotionEffect(effect);
+        if (effect.getDuration() <= 0) return;
+        PotionEffect current = player.getPotionEffect(effect.getType());
+        if (current != null && !ActiveBuffSupport.canUpgrade(current.getAmplifier(), current.getDuration(),
+                effect.getAmplifier(), effect.getDuration())) return;
+        if (player.addPotionEffect(effect)) PerformanceUtils.setCooldown(context.pdc(), key);
     }
 
     public record BulwarkContext(int level, @NotNull PersistentDataContainer pdc) {

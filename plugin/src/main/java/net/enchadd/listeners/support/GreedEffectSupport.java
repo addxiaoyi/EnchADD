@@ -13,6 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 public final class GreedEffectSupport {
 
+    private static final double MAX_EFFECTIVE_DAMAGE_MULTIPLIER = 2.0;
+
     private final GreedEnchant config;
     private final NamespacedKey untilKey;
     private final NamespacedKey scaleKey;
@@ -27,44 +29,32 @@ public final class GreedEffectSupport {
 
     public void applyXpBonus(@NotNull EntityDeathEvent event, int level) {
         int originalExp = event.getDroppedExp();
-        if (originalExp <= 0) {
-            return;
-        }
-        double baseMultiplier = 1.0 + config.getXpBonusPerLevel() * level;
-        double multiplier = Math.min(config.getMaxXpMultiplier(), baseMultiplier);
-        if (multiplier <= 0) {
-            return;
-        }
-        int newExp = (int) Math.round(originalExp * multiplier);
-        event.setDroppedExp(newExp < 0 ? originalExp : newExp);
+        int adjusted = GreedRules.experience(originalExp, level, config.getMaxLevel(),
+                config.getXpBonusPerLevel(), config.getMaxXpMultiplier());
+        if (adjusted != originalExp) event.setDroppedExp(adjusted);
     }
 
     public void applyVulnerability(@NotNull Player killer, int level) {
-        double vulnerability = config.getVulnerabilityPerLevel() * level;
-        if (vulnerability <= 0) {
-            return;
-        }
-        double maxVulnerability = config.getMaxVulnerabilityMultiplier();
-        if (maxVulnerability <= 0) {
-            return;
-        }
-        double scaled = Math.min(maxVulnerability, vulnerability);
-        double finalScale = 1.0 + scaled;
-        if (finalScale <= 1.0) {
-            return;
-        }
-        int seconds = config.getVulnerabilitySecondsPerLevel() * level;
-        if (seconds <= 0) {
-            return;
-        }
+        double finalScale = GreedRules.vulnerability(level, config.getMaxLevel(),
+                config.getVulnerabilityPerLevel(), config.getMaxVulnerabilityMultiplier());
+        int ticks = GreedRules.durationTicks(level, config.getMaxLevel(), config.getVulnerabilitySecondsPerLevel());
+        if (finalScale <= 1.0 || ticks <= 0) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(killer);
         if (pdc == null) {
             return;
         }
 
-        PerformanceUtils.setWindowUntilSeconds(pdc, untilKey, seconds);
-        pdc.set(scaleKey, PersistentDataType.DOUBLE, finalScale);
+        refreshVulnerability(pdc, ticks, finalScale);
+    }
+
+    public void refreshVulnerability(@NotNull PersistentDataContainer pdc, int ticks, double scale) {
+        if (ticks <= 0 || !Double.isFinite(scale) || scale <= 1.0) return;
+        Double previous = getActiveScale(pdc);
+        // Switching to a weaker weapon must not erase the price of earlier kills.
+        PerformanceUtils.extendWindowUntilTicks(pdc, untilKey, Math.min(1200, ticks));
+        pdc.set(scaleKey, PersistentDataType.DOUBLE,
+                Math.max(previous == null ? 1.0 : previous, Math.min(MAX_EFFECTIVE_DAMAGE_MULTIPLIER, scale)));
     }
 
     public boolean applyActiveDamageScale(@NotNull EntityDamageEvent event, @NotNull PersistentDataContainer pdc) {
@@ -73,10 +63,11 @@ public final class GreedEffectSupport {
             return false;
         }
         double damage = event.getDamage();
-        if (damage <= 0) {
+        double adjusted = GreedRules.damage(damage, scale);
+        if (Double.compare(adjusted, damage) == 0) {
             return false;
         }
-        event.setDamage(damage * scale);
+        event.setDamage(adjusted);
         return true;
     }
 
@@ -87,9 +78,11 @@ public final class GreedEffectSupport {
             return null;
         }
         Double scale = pdc.get(scaleKey, PersistentDataType.DOUBLE);
-        if (scale == null || scale <= 1.0) {
+        if (scale == null || !Double.isFinite(scale) || scale <= 1.0) {
+            pdc.remove(untilKey);
+            pdc.remove(scaleKey);
             return null;
         }
-        return scale;
+        return Math.min(MAX_EFFECTIVE_DAMAGE_MULTIPLIER, scale);
     }
 }

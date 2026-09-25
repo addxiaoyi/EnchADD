@@ -33,7 +33,7 @@ public abstract class ChanceEnchant extends CooldownEnchant {
             double triggerChance
     ) {
         super(key, anvilCost, maxLevel, weight, minimumCost, maximumCost, enchantTagKeys, supportedItemTags, enabled, rarity, cooldownTicks);
-        this.triggerChance = triggerChance;
+        this.triggerChance = Math.max(0.0, Math.min(1.0, triggerChance));
     }
 
     public double getTriggerChance() {

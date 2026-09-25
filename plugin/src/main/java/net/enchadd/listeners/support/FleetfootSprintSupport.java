@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,12 +48,12 @@ public final class FleetfootSprintSupport {
                       @NotNull FleetfootContext context,
                       @NotNull NamespacedKey key,
                       @NotNull FleetfootEnchant config) {
-        PerformanceUtils.setCooldown(context.pdc(), key);
-
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSpeedSecondsPerLevel(), context.level());
-        int amplifier = Math.max(0, config.getSpeedAmplifier());
-        PotionEffect effect = new PotionEffect(PotionEffectType.SPEED, durationTicks, amplifier, false, false, true);
-        event.getPlayer().addPotionEffect(effect);
+        if (event.isCancelled() || !event.isSprinting()) return;
+        int seconds = SprintEffectRules.seconds(context.level(), config.getMaxLevel(), config.getSpeedSecondsPerLevel());
+        int amplifier = Math.min(2, Math.max(0, config.getSpeedAmplifier()));
+        if (ActiveBuffSupport.apply(event.getPlayer(), PotionEffectType.SPEED, seconds, amplifier)) {
+            PerformanceUtils.setCooldown(context.pdc(), key);
+        }
     }
 
     public record FleetfootContext(int level, @NotNull PersistentDataContainer pdc) {

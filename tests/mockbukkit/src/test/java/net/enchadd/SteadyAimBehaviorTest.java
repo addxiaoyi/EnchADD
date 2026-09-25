@@ -2,6 +2,7 @@ package net.enchadd;
 
 import net.enchadd.enchants.SteadyAimEnchant;
 import net.enchadd.listeners.SteadyAimListener;
+import net.enchadd.listeners.support.SteadyAimProjectileSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -21,7 +22,6 @@ import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -58,19 +58,17 @@ class SteadyAimBehaviorTest {
         arrow.setVelocity(new org.bukkit.util.Vector(3.2, 0.0, 0.0));
         arrow.teleport(shooter.getLocation());
 
-        SteadyAimListener listener = new SteadyAimListener();
         SteadyAimEnchant config = Mockito.mock(SteadyAimEnchant.class);
         when(config.getCooldownTicks()).thenReturn(100);
         when(config.getTriggerChance()).thenReturn(1.0);
         when(config.getMaxTriggerChance()).thenReturn(1.0);
         when(config.getBonusDamagePerLevel()).thenReturn(0.2);
+        when(config.getMaxLevel()).thenReturn(3);
 
         NamespacedKey levelKey = new NamespacedKey("enchadd", "steady_aim_level_test");
         NamespacedKey cooldownKey = new NamespacedKey("enchadd", "steady_aim_cooldown_test");
-        setField(listener, "enchant", Enchantment.SHARPNESS);
-        setField(listener, "config", config);
-        setField(listener, "levelKey", levelKey);
-        setField(listener, "cooldownKey", cooldownKey);
+        SteadyAimListener listener = new SteadyAimListener(Enchantment.SHARPNESS, levelKey, cooldownKey,
+                config, new SteadyAimProjectileSupport());
 
         listener.onShoot(new ProjectileLaunchEvent(arrow));
         assertEquals(2, arrow.getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER));
@@ -80,6 +78,7 @@ class SteadyAimBehaviorTest {
         when(event.getDamager()).thenReturn(arrow);
         when(event.getEntity()).thenReturn(victim);
         when(event.getDamage()).thenReturn(10.0);
+        when(event.getFinalDamage()).thenReturn(10.0);
         doAnswer(invocation -> {
             adjustedDamage.set(invocation.getArgument(0));
             return null;
@@ -99,22 +98,52 @@ class SteadyAimBehaviorTest {
         arrow.setVelocity(new org.bukkit.util.Vector(1.0, 0.0, 0.0));
         arrow.teleport(shooter.getLocation());
 
-        SteadyAimListener listener = new SteadyAimListener();
         SteadyAimEnchant config = Mockito.mock(SteadyAimEnchant.class);
         when(config.getCooldownTicks()).thenReturn(100);
         when(config.getTriggerChance()).thenReturn(1.0);
         when(config.getMaxTriggerChance()).thenReturn(1.0);
         when(config.getBonusDamagePerLevel()).thenReturn(0.2);
+        when(config.getMaxLevel()).thenReturn(3);
 
         NamespacedKey levelKey = new NamespacedKey("enchadd", "steady_aim_slow_test");
         NamespacedKey cooldownKey = new NamespacedKey("enchadd", "steady_aim_slow_cooldown_test");
-        setField(listener, "enchant", Enchantment.SHARPNESS);
-        setField(listener, "config", config);
-        setField(listener, "levelKey", levelKey);
-        setField(listener, "cooldownKey", cooldownKey);
+        SteadyAimListener listener = new SteadyAimListener(Enchantment.SHARPNESS, levelKey, cooldownKey,
+                config, new SteadyAimProjectileSupport());
 
         listener.onShoot(new ProjectileLaunchEvent(arrow));
         assertNull(arrow.getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER));
+    }
+
+    @Test
+    void steadyAimProcessesEachArrowLaunchOnlyOnce() {
+        PlayerMock shooter = server.addPlayer("steady_aim_duplicate");
+        shooter.getInventory().setItemInMainHand(enchantedBow(2));
+        ArrowMock arrow = new ArrowMock(server, UUID.randomUUID());
+        arrow.setShooter(shooter);
+        arrow.setVelocity(new org.bukkit.util.Vector(3.2, 0.0, 0.0));
+
+        SteadyAimEnchant config = Mockito.mock(SteadyAimEnchant.class);
+        when(config.getCooldownTicks()).thenReturn(0);
+        when(config.getTriggerChance()).thenReturn(1.0);
+        when(config.getMaxTriggerChance()).thenReturn(1.0);
+        when(config.getBonusDamagePerLevel()).thenReturn(0.2);
+        when(config.getMaxLevel()).thenReturn(3);
+        NamespacedKey levelKey = new NamespacedKey("enchadd", "steady_aim_duplicate_test");
+        NamespacedKey cooldownKey = new NamespacedKey("enchadd", "steady_aim_duplicate_cooldown_test");
+        SteadyAimListener listener = new SteadyAimListener(Enchantment.SHARPNESS, levelKey, cooldownKey,
+                config, new SteadyAimProjectileSupport());
+
+        ProjectileLaunchEvent event = new ProjectileLaunchEvent(arrow);
+        try (MockedStatic<PerformanceUtils> utils =
+                     Mockito.mockStatic(PerformanceUtils.class, Mockito.CALLS_REAL_METHODS)) {
+            utils.when(() -> PerformanceUtils.rollChance(Mockito.anyDouble())).thenReturn(true);
+            listener.onShoot(event);
+            shooter.getInventory().setItemInMainHand(enchantedBow(3));
+            listener.onShoot(event);
+            utils.verify(() -> PerformanceUtils.rollChance(Mockito.anyDouble()), Mockito.times(1));
+        }
+
+        assertEquals(2, arrow.getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER));
     }
 
     private static ItemStack enchantedBow(int level) {
@@ -123,9 +152,4 @@ class SteadyAimBehaviorTest {
         return item;
     }
 
-    private static void setField(Object target, String fieldName, Object value) throws Exception {
-        Field field = target.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(target, value);
-    }
 }

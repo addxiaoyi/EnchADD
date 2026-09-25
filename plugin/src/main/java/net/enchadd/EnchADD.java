@@ -81,7 +81,7 @@ public class EnchADD extends JavaPlugin {
         boolean handGroup = anyGroup || groups.contains(EquipmentSlotGroup.HAND);
         boolean armorGroup = anyGroup || groups.contains(EquipmentSlotGroup.ARMOR);
 
-        int level = 0;
+        long level = 0;
         if (armorGroup || groups.contains(EquipmentSlotGroup.FEET)) {
             level += levelOf(equipment.getBoots(), enchantment, true);
         }
@@ -100,11 +100,11 @@ public class EnchADD extends JavaPlugin {
         if (handGroup || groups.contains(EquipmentSlotGroup.OFFHAND)) {
             level += levelOf(equipment.getItemInOffHand(), enchantment, true);
         }
-        return level;
+        return (int) Math.min(4, level);
     }
 
     private static int levelOf(ItemStack item, Enchantment ench, boolean enabled) {
         if (!enabled || item == null) return 0;
-        return net.enchadd.utils.EnchantCache.getLevel(item, ench);
+        return Math.max(0, net.enchadd.utils.EnchantCache.getLevel(item, ench));
     }
 }

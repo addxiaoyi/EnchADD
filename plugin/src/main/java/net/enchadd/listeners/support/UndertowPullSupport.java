@@ -65,6 +65,10 @@ public final class UndertowPullSupport {
         if (!PerformanceUtils.isPlayerValid(shooter)) {
             return;
         }
+        if (!PerformanceUtils.isEntityValid(victim) || !shooter.getWorld().equals(victim.getWorld())) {
+            return;
+        }
+        level = Math.min(level, config.getMaxLevel());
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(shooter);
         if (pdc == null) {
@@ -74,17 +78,26 @@ public final class UndertowPullSupport {
             return;
         }
 
-        double chance = Math.min(0.85, config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) {
+            return;
+        }
+        chance = Math.min(0.85d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) {
             return;
         }
 
-        Vector pull = shooter.getLocation()
-                .toVector()
-                .subtract(victim.getLocation().toVector())
-                .normalize()
-                .multiply(config.getPullStrengthBase() + 0.05 * level);
-        victim.setVelocity(victim.getVelocity().add(pull));
+        double strength = config.getPullStrengthBase() + 0.05d * level;
+        if (!Double.isFinite(strength)) {
+            return;
+        }
+        strength = Math.min(1.2d, Math.max(0.0d, strength));
+        Vector pull = EffectMotionSupport.directedVelocity(
+                shooter.getLocation().toVector().subtract(victim.getLocation().toVector()), strength);
+        if (pull == null) return;
+        Vector velocity = victim.getVelocity().add(pull);
+        if (!EffectMotionSupport.finite(velocity)) return;
+        victim.setVelocity(velocity);
         PerformanceUtils.setCooldown(pdc, key);
     }
 }

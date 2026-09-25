@@ -45,6 +45,7 @@ public class SidestepListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onProjectileHit(EntityDamageByEntityEvent event) {
+        if (event.isCancelled() || !Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0) return;
         if (enchant == null || config == null) {
             return;
         }

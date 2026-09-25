@@ -36,7 +36,7 @@ public final class StonewakeEffectSupport {
         }
 
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getDurationSecondsPerLevel(), level);
-        int amplifier = config.getHasteAmplifier();
+        int amplifier = Math.min(2, Math.max(0, config.getHasteAmplifier()));
         PotionEffect current = player.getActivePotionEffects().stream()
                 .filter(effect -> effect.getType().equals(PotionEffectType.HASTE))
                 .findFirst()

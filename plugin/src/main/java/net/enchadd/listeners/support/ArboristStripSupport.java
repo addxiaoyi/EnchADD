@@ -29,7 +29,7 @@ public final class ArboristStripSupport {
     }
 
     public int extraBlocks() {
-        return config.getExtraBlocks();
+        return Math.min(8, Math.max(0, config.getExtraBlocks()));
     }
 
     public @Nullable Material resolveStrippedType(@NotNull Material clickedType) {
@@ -37,7 +37,7 @@ public final class ArboristStripSupport {
     }
 
     public @NotNull List<Block> collectTargets(@NotNull Block center, @NotNull Material clickedType) {
-        int extraBlocks = config.getExtraBlocks();
+        int extraBlocks = Math.min(8, Math.max(0, config.getExtraBlocks()));
         List<Block> targets = PerformanceUtils.newArrayListWithCapacity(extraBlocks);
         for (int offset = 1; offset <= extraBlocks; offset++) {
             Block target = center.getRelative(BlockFace.UP, offset);

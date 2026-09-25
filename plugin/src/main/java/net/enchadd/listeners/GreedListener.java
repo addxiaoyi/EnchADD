@@ -19,7 +19,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import net.enchadd.utils.PerformanceUtils;
 
@@ -64,12 +63,6 @@ public class GreedListener implements Listener {
     public void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
         if (enchant == null || config == null || effectSupport == null) return;
-
-        EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(player);
-        if (equipment == null) return;
-
-        int level = PerformanceUtils.getSumOfEnchantLevels(equipment, enchant);
-        if (level <= 0) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null) return;

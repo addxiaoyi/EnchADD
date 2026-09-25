@@ -16,6 +16,8 @@ import java.util.Collection;
 @SuppressWarnings("UnstableApiUsage")
 public abstract class CooldownEnchant extends AbstractEnchADDEnchant {
 
+    private static final int MAX_COOLDOWN_TICKS = 20 * 60 * 60;
+
     protected final int cooldownTicks;
 
     protected CooldownEnchant(
@@ -32,7 +34,7 @@ public abstract class CooldownEnchant extends AbstractEnchADDEnchant {
             int cooldownTicks
     ) {
         super(key, anvilCost, maxLevel, weight, minimumCost, maximumCost, enchantTagKeys, supportedItemTags, enabled, rarity);
-        this.cooldownTicks = cooldownTicks;
+        this.cooldownTicks = Math.max(0, Math.min(MAX_COOLDOWN_TICKS, cooldownTicks));
     }
 
     public int getCooldownTicks() {

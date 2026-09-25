@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.LodestarEnchant;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -36,11 +37,13 @@ public class LodestarListener implements Listener {
         if (enchant == null || config == null) return;
         if (!(event.getDamager() instanceof LivingEntity attacker)) return;
         if (!(event.getEntity() instanceof LivingEntity target)) return;
+        if (!Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0.0) return;
 
         EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(attacker);
         if (equipment == null) return;
 
-        int level = PerformanceUtils.getEnchantLevel(equipment.getItemInMainHand(), enchant);
+        int level = Math.min(config.getMaxLevel(),
+                PerformanceUtils.getEnchantLevel(equipment.getItemInMainHand(), enchant));
         if (level <= 0) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(attacker);
@@ -51,9 +54,11 @@ public class LodestarListener implements Listener {
         if (previousTargetId != null
                 && previousTargetId == targetId
                 && PerformanceUtils.isWindowActive(pdc, windowKey)) {
-            double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-            if (bonusDamage > 0.0) {
-                event.setDamage(event.getDamage() + bonusDamage);
+            double bonusDamage = EnchantDamageSupport.bonusDamage(level,
+                    config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+            double adjusted = EnchantDamageSupport.addBonus(event.getDamage(), bonusDamage);
+            if (adjusted > event.getDamage()) {
+                event.setDamage(adjusted);
             }
         }
 

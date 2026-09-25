@@ -65,6 +65,11 @@ public final class FlareProjectileSupport {
             return;
         }
 
+        level = Math.min(level, config.getMaxLevel());
+        int durationTicks = ProjectileStatusSupport.durationTicks(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getGlowSecondsPerLevel());
+        if (event.isCancelled() || durationTicks <= 0) return;
+
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(shooter);
         if (pdc == null) {
             return;
@@ -73,18 +78,12 @@ public final class FlareProjectileSupport {
             return;
         }
 
-        double baseChance = config.getTriggerChance() * level;
-        double chance = Math.min(config.getMaxTriggerChance(), baseChance);
+        double chance = ProjectileStatusSupport.chance(config.getTriggerChance(), level, config.getMaxTriggerChance());
         if (!PerformanceUtils.rollChance(chance)) {
             return;
         }
 
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getGlowSecondsPerLevel(), level);
-        if (durationTicks <= 0) {
-            return;
-        }
-
-        victim.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, durationTicks, 0, true, true, true));
+        if (!victim.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, durationTicks, 0, true, true, true))) return;
         PerformanceUtils.setCooldown(pdc, cooldownKey);
     }
 }

@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.NourishEnchant;
+import net.enchadd.listeners.support.NutritionSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -15,8 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 @SuppressWarnings("UnstableApiUsage")
 public class NourishListener implements Listener {
@@ -54,12 +53,9 @@ public class NourishListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
-        // 性能优化: 使用 PerformanceUtils 设置冷却
-        PerformanceUtils.setCooldown(pdc, key);
-
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getAbsorptionSecondsPerLevel(), level);
-        int amplifier = Math.max(0, config.getAbsorptionAmplifier());
-        PotionEffect effect = new PotionEffect(PotionEffectType.ABSORPTION, durationTicks, amplifier, false, false, true);
-        player.addPotionEffect(effect);
+        if (NutritionSupport.applyAbsorption(player, level, config.getMaxLevel(),
+                config.getAbsorptionSecondsPerLevel(), config.getAbsorptionAmplifier())) {
+            PerformanceUtils.setCooldown(pdc, key);
+        }
     }
 }

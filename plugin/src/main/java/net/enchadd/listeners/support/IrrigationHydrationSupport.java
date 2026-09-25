@@ -22,7 +22,7 @@ public final class IrrigationHydrationSupport {
         if (config.isBypassWhenSneaking() && sneaking) {
             return 0;
         }
-        return config.getRadius();
+        return Math.min(8, Math.max(0, config.getRadius()));
     }
 
     public @Nullable Block resolveFarmlandTarget(@NotNull Block clickedBlock) {
@@ -34,7 +34,7 @@ public final class IrrigationHydrationSupport {
     }
 
     public @NotNull List<Block> collectTargets(@NotNull Block center, int radius) {
-        int clampedRadius = Math.max(0, radius);
+        int clampedRadius = Math.min(8, Math.max(0, radius));
         int diameter = clampedRadius * 2 + 1;
         List<Block> targets = PerformanceUtils.newArrayListWithCapacity(diameter * diameter);
         for (int dx = -clampedRadius; dx <= clampedRadius; dx++) {

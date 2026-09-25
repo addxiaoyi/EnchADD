@@ -71,11 +71,10 @@ public final class TideshellListener implements Listener {
         if (level <= 0 || !effectSupport.isTouchingWater(player)) {
             return;
         }
-        if (!effectSupport.startCooldown(player)) {
+        if (!effectSupport.activate(player)) {
             return;
         }
 
-        effectSupport.applyEffects(player);
         effectSupport.playCosmeticFeedback(player);
     }
 

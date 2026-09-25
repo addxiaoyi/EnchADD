@@ -9,7 +9,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +44,8 @@ public final class SidestepDodgeSupport {
         if (PerformanceUtils.isOnCooldown(context.pdc(), key, config.getCooldownTicks())) {
             return false;
         }
-        double chance = Math.min(config.getMaxTriggerChance(), config.getTriggerChance() * context.level());
+        double chance = DefenseEffectRules.chance(context.level(), config.getMaxLevel(),
+                config.getTriggerChance(), config.getMaxTriggerChance());
         return PerformanceUtils.rollChance(chance);
     }
 
@@ -54,16 +54,19 @@ public final class SidestepDodgeSupport {
                       @NotNull SidestepContext context,
                       @NotNull NamespacedKey key,
                       @NotNull SidestepEnchant config) {
-        double reduction = PerformanceUtils.clamp(config.getDamageReductionPerLevel() * context.level(), 0.0, 0.8);
-        double newDamage = Math.max(0.0, event.getDamage() * (1.0 - reduction));
-        event.setDamage(newDamage);
+        if (event.isCancelled() || !Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0) return;
+        double damage = event.getDamage();
+        if (!Double.isFinite(damage) || damage <= 0.0d) {
+            return;
+        }
+        double newDamage = DefenseEffectRules.damage(damage, context.level(), config.getMaxLevel(),
+                config.getDamageReductionPerLevel());
+        boolean reduced = newDamage < damage;
+        if (reduced) event.setDamage(newDamage);
 
-        int duration = PerformanceUtils.calculateDurationTicksPerLevel(config.getSpeedSecondsPerLevel(), context.level());
-        duration = Math.max(40, duration);
-        PotionEffect effect = new PotionEffect(PotionEffectType.SPEED, duration, 0, false, false, true);
-        player.addPotionEffect(effect);
-
-        PerformanceUtils.setCooldown(context.pdc(), key);
+        int seconds = DefenseEffectRules.seconds(context.level(), config.getMaxLevel(), config.getSpeedSecondsPerLevel());
+        boolean accelerated = seconds > 0 && ActiveBuffSupport.apply(player, PotionEffectType.SPEED, Math.max(2, seconds), 0);
+        if (reduced || accelerated) PerformanceUtils.setCooldown(context.pdc(), key);
     }
 
     public record SidestepContext(int level, @NotNull PersistentDataContainer pdc) {

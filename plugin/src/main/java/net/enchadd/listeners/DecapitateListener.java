@@ -55,7 +55,9 @@ public class DecapitateListener implements Listener {
             }
         }
 
-        double chance = Math.min(0.3, level * config.getChancePerLevel());
+        double chance = level * config.getChancePerLevel();
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.3d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) return;
 
         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);

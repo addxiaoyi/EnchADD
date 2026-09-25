@@ -9,7 +9,6 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,23 +24,26 @@ public final class WaysongEffectSupport {
         this.cooldownKey = cooldownKey;
     }
 
-    public boolean startCooldown(@NotNull Player player) {
+    public boolean activate(@NotNull Player player) {
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null || PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return false;
         }
+        if (!applyMarchBuffs(player)) return false;
         PerformanceUtils.setCooldown(pdc, cooldownKey);
         return true;
     }
 
-    public void applyMarchBuffs(@NotNull Player caller) {
-        applySpeedIfUpgrade(caller);
+    private boolean applyMarchBuffs(@NotNull Player caller) {
+        boolean applied = applySpeedIfUpgrade(caller);
 
-        double radius = config.getRadius();
+        double radius = ActiveBuffSupport.radius(config.getRadius(), 12.0);
         if (radius <= 0.0d) {
-            return;
+            return applied;
         }
-        Collection<Entity> nearbyEntities = caller.getWorld().getNearbyEntities(caller.getLocation(), radius, radius, radius);
+        Location origin = caller.getLocation();
+        Collection<Entity> nearbyEntities = caller.getWorld().getNearbyEntities(origin, radius, radius, radius);
+        int affected = 0;
         for (Entity entity : nearbyEntities) {
             if (!(entity instanceof Player target)) {
                 continue;
@@ -49,8 +51,12 @@ public final class WaysongEffectSupport {
             if (target.equals(caller) || !PerformanceUtils.isPlayerValid(target)) {
                 continue;
             }
-            applySpeedIfUpgrade(target);
+            if (!EffectMotionSupport.withinRadius(target.getLocation().toVector().subtract(origin.toVector()), radius)) continue;
+            if (!applySpeedIfUpgrade(target)) continue;
+            applied = true;
+            if (++affected >= 16) break;
         }
+        return applied;
     }
 
     public void playCosmeticFeedback(@NotNull Player player) {
@@ -60,19 +66,8 @@ public final class WaysongEffectSupport {
         }
     }
 
-    private void applySpeedIfUpgrade(@NotNull Player player) {
-        int durationTicks = Math.max(20, config.getSpeedSeconds() * 20);
-        int amplifier = config.getSpeedAmplifier();
-        PotionEffect current = player.getPotionEffect(PotionEffectType.SPEED);
-        if (current != null) {
-            if (current.getAmplifier() > amplifier) {
-                return;
-            }
-            if (current.getAmplifier() == amplifier && current.getDuration() >= durationTicks) {
-                return;
-            }
-        }
-
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, durationTicks, amplifier, false, false, true), true);
+    private boolean applySpeedIfUpgrade(@NotNull Player player) {
+        int amplifier = Math.min(2, Math.max(0, config.getSpeedAmplifier()));
+        return ActiveBuffSupport.apply(player, PotionEffectType.SPEED, config.getSpeedSeconds(), amplifier);
     }
 }

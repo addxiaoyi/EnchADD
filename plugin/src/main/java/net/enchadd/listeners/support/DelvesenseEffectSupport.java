@@ -11,7 +11,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,39 +30,37 @@ public final class DelvesenseEffectSupport {
         return player.getLocation().getY() <= config.getMaxActivationY();
     }
 
-    public boolean startCooldown(@NotNull Player player) {
+    public boolean activate(@NotNull Player player) {
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null || PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return false;
         }
+        boolean vision = ActiveBuffSupport.apply(player, PotionEffectType.NIGHT_VISION, config.getNightVisionSeconds(), 0);
+        boolean highlighted = highlightNearbyMonsters(player);
+        if (!vision && !highlighted) return false;
         PerformanceUtils.setCooldown(pdc, cooldownKey);
         return true;
     }
 
-    public void applyNightVisionIfUpgrade(@NotNull Player player) {
-        int durationTicks = Math.max(20, config.getNightVisionSeconds() * 20);
-        PotionEffect current = player.getPotionEffect(PotionEffectType.NIGHT_VISION);
-        if (current != null && current.getDuration() >= durationTicks) {
-            return;
-        }
-        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, durationTicks, 0, false, false, true), true);
-    }
-
-    public void highlightNearbyMonsters(@NotNull Player player) {
-        double radius = config.getRadius();
+    private boolean highlightNearbyMonsters(@NotNull Player player) {
+        double radius = ActiveBuffSupport.radius(config.getRadius(), 16.0);
         int glowSeconds = config.getGlowSeconds();
         if (radius <= 0.0d || glowSeconds <= 0) {
-            return;
+            return false;
         }
 
-        int durationTicks = Math.max(20, glowSeconds * 20);
-        Collection<Entity> nearbyEntities = player.getWorld().getNearbyEntities(player.getLocation(), radius, radius, radius);
+        Location origin = player.getLocation();
+        Collection<Entity> nearbyEntities = player.getWorld().getNearbyEntities(origin, radius, radius, radius);
+        int affected = 0;
         for (Entity entity : nearbyEntities) {
             if (!(entity instanceof Monster monster) || !PerformanceUtils.isEntityValid(monster)) {
                 continue;
             }
-            applyGlowIfUpgrade(monster, durationTicks);
+            if (!EffectMotionSupport.withinRadius(monster.getLocation().toVector().subtract(origin.toVector()), radius)) continue;
+            if (!ActiveBuffSupport.apply(monster, PotionEffectType.GLOWING, glowSeconds, 0)) continue;
+            if (++affected >= 32) break;
         }
+        return affected > 0;
     }
 
     public void playCosmeticFeedback(@NotNull Player player) {
@@ -74,11 +71,4 @@ public final class DelvesenseEffectSupport {
         player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_HIT, 0.8f, 0.9f);
     }
 
-    private static void applyGlowIfUpgrade(@NotNull Monster monster, int durationTicks) {
-        PotionEffect current = monster.getPotionEffect(PotionEffectType.GLOWING);
-        if (current != null && current.getDuration() >= durationTicks) {
-            return;
-        }
-        monster.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, durationTicks, 0, false, false, true), true);
-    }
 }

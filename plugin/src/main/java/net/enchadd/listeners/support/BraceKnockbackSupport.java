@@ -15,6 +15,7 @@ public final class BraceKnockbackSupport {
                                @NotNull Player player,
                                @NotNull Enchantment enchant,
                                @NotNull BraceEnchant config) {
+        if (event.isCancelled()) return;
         EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(player);
         if (equipment == null) {
             return;
@@ -25,16 +26,8 @@ public final class BraceKnockbackSupport {
             return;
         }
 
-        double reduction = Math.min(config.getMaxReduction(), level * config.getKnockbackReductionPerLevel());
-        if (reduction <= 0.0) {
-            return;
-        }
-
-        Vector knockback = event.getKnockback();
-        if (knockback == null) {
-            return;
-        }
-        double scale = Math.max(0.0, 1.0 - reduction);
-        event.setKnockback(knockback.clone().multiply(scale));
+        Vector reduced = KnockbackRules.reduce(event.getKnockback(), level, config.getMaxLevel(),
+                config.getKnockbackReductionPerLevel(), config.getMaxReduction(), 0.8);
+        if (reduced != null) event.setKnockback(reduced);
     }
 }

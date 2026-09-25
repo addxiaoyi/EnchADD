@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.HemorrhageEnchant;
+import net.enchadd.listeners.support.StatusDurationSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -48,6 +49,9 @@ public class HemorrhageListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 而非直接调用 getEnchantmentLevel
         int level = PerformanceUtils.getEnchantLevel(equipment.getItemInMainHand(), enchant);
         if (level <= 0) return;
+        int durationTicks = StatusDurationSupport.onHit(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getWitherSecondsPerLevel());
+        if (durationTicks <= 0) return;
 
         // 性能优化: 使用工具方法安全获取 PDC
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
@@ -60,10 +64,9 @@ public class HemorrhageListener implements Listener {
         if (!PerformanceUtils.rollChance(config.getTriggerChance())) return;
 
         // 性能优化: 使用工具方法计算持续时间
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getWitherSecondsPerLevel(), level);
-        int amplifier = Math.max(0, config.getWitherAmplifier());
+        int amplifier = Math.min(1, Math.max(0, config.getWitherAmplifier()));
         PotionEffect effect = new PotionEffect(PotionEffectType.WITHER, durationTicks, amplifier, false, false, true);
-        victim.addPotionEffect(effect);
+        if (!victim.addPotionEffect(effect)) return;
 
         // 性能优化: 使用 PerformanceUtils 设置冷却
         PerformanceUtils.setCooldown(pdc, key);

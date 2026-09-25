@@ -63,13 +63,15 @@ public class MortalWoundListener implements Listener {
         if (shooter == null) return;
         if (!(event.getEntity() instanceof LivingEntity victim)) return;
         if (enchant == null || config == null || effectSupport == null) return;
+        double damage = event.getFinalDamage();
+        if (!Double.isFinite(damage) || damage <= 0.0) return;
         Integer level = effectSupport.readLaunchLevel(arrow);
         if (level == null || level <= 0) return;
         if (effectSupport.isShooterOnCooldown(shooter)) return;
         if (!effectSupport.shouldTrigger(level)) return;
 
         int durationTicks = effectSupport.antiHealDurationTicks(level);
-        effectSupport.applyAntiHealWindow(victim, durationTicks);
+        if (!effectSupport.applyAntiHealWindow(victim, durationTicks)) return;
         effectSupport.writeShooterCooldown(shooter);
     }
 
@@ -77,6 +79,6 @@ public class MortalWoundListener implements Listener {
     public void onRegain(EntityRegainHealthEvent event) {
         if (!(event.getEntity() instanceof LivingEntity entity)) return;
         if (config == null || effectSupport == null) return;
-        effectSupport.applyHealingScale(entity, event.getAmount(), amount -> event.setAmount((float) amount));
+        effectSupport.applyHealingScale(entity, event.getAmount(), event::setAmount);
     }
 }

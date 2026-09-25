@@ -11,7 +11,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +33,7 @@ public final class HomewardEscapeSupport {
     }
 
     public void handleCombatDamage(@NotNull EntityDamageByEntityEvent event, @Nullable Enchantment enchant) {
-        if (enchant == null) {
+        if (enchant == null || !HomewardRules.hasDamage(event.isCancelled(), event.getDamage(), event.getFinalDamage())) {
             return;
         }
         if (!(event.getEntity() instanceof Player player)) {
@@ -52,7 +51,8 @@ public final class HomewardEscapeSupport {
             return;
         }
 
-        int level = PerformanceUtils.getEnchantLevel(equipment.getLeggings(), enchant);
+        int level = HomewardRules.effectiveLevel(
+                PerformanceUtils.getEnchantLevel(equipment.getLeggings(), enchant), config.getMaxLevel());
         if (level <= 0) {
             return;
         }
@@ -65,28 +65,34 @@ public final class HomewardEscapeSupport {
             return;
         }
 
-        PerformanceUtils.setCooldown(pdc, cooldownKey);
-        PerformanceUtils.setWindowUntilTicks(pdc, windowKey, config.getEscapeWindowTicks());
-        pdc.set(levelKey, PersistentDataType.INTEGER, level);
-
-        int duration = PerformanceUtils.calculateDurationTicksPerLevel(config.getSpeedSecondsPerLevel(), level);
-        if (duration <= 0) {
-            return;
+        int seconds = HomewardRules.speedSeconds(level, config.getMaxLevel(), config.getSpeedSecondsPerLevel());
+        boolean speedApplied = ActiveBuffSupport.apply(player, PotionEffectType.SPEED, seconds,
+                Math.min(2, Math.max(0, config.getSpeedAmplifier())));
+        boolean windowApplied = armFallProtection(pdc, level);
+        if (speedApplied || windowApplied) {
+            PerformanceUtils.setCooldown(pdc, cooldownKey);
         }
+    }
 
-        PotionEffect speed = new PotionEffect(
-                PotionEffectType.SPEED,
-                Math.max(20, duration),
-                Math.max(0, config.getSpeedAmplifier()),
-                false,
-                false,
-                true
-        );
-        player.addPotionEffect(speed);
+    private boolean armFallProtection(PersistentDataContainer pdc, int level) {
+        int ticks = HomewardRules.windowTicks(config.getEscapeWindowTicks());
+        double reduction = HomewardRules.fallReduction(level, config.getMaxLevel(),
+                config.getFallDamageReductionPerLevel(), config.getMaxFallDamageReduction());
+        if (ticks <= 0 || reduction <= 0) return false;
+
+        boolean active = PerformanceUtils.isWindowActive(pdc, windowKey);
+        int previous = pdc.getOrDefault(levelKey, PersistentDataType.INTEGER, 0);
+        // A weaker loadout cannot keep an earlier, stronger rescue alive.
+        if (!HomewardRules.canRefreshWindow(level, previous, active, config.getMaxLevel())) return false;
+        int retained = HomewardRules.windowLevel(level, previous, active, config.getMaxLevel());
+        boolean extended = PerformanceUtils.extendWindowUntilTicks(pdc, windowKey, ticks);
+        pdc.set(levelKey, PersistentDataType.INTEGER, retained);
+        return extended || retained != previous;
     }
 
     public void handleFallDamage(@NotNull EntityDamageEvent event) {
-        if (event.getCause() != EntityDamageEvent.DamageCause.FALL) {
+        if (event.getCause() != EntityDamageEvent.DamageCause.FALL
+                || !HomewardRules.hasDamage(event.isCancelled(), event.getDamage(), event.getFinalDamage())) {
             return;
         }
         if (!(event.getEntity() instanceof Player player)) {
@@ -98,6 +104,7 @@ public final class HomewardEscapeSupport {
             return;
         }
         if (!PerformanceUtils.isWindowActive(pdc, windowKey)) {
+            pdc.remove(levelKey);
             return;
         }
 
@@ -106,14 +113,12 @@ public final class HomewardEscapeSupport {
             return;
         }
 
-        double reduction = PerformanceUtils.clamp(
-                level * config.getFallDamageReductionPerLevel(),
-                0.0,
-                config.getMaxFallDamageReduction()
-        );
-        if (reduction > 0.0) {
-            event.setDamage(Math.max(0.0, event.getDamage() * (1.0 - reduction)));
-        }
+        double reduction = HomewardRules.fallReduction(level, config.getMaxLevel(),
+                config.getFallDamageReductionPerLevel(), config.getMaxFallDamageReduction());
+        double damage = HomewardRules.reducedFallDamage(event.getDamage(), event.getFinalDamage(), reduction);
+        if (Double.compare(damage, event.getDamage()) == 0) return;
+
+        event.setDamage(damage);
         pdc.remove(windowKey);
         pdc.remove(levelKey);
     }

@@ -59,7 +59,11 @@ public class DispelListener implements Listener {
             return;
         }
 
-        double chance = Math.min(0.95, config.getTriggerChance() * cleanseContext.level());
+        double chance = config.getTriggerChance() * cleanseContext.level();
+        if (!Double.isFinite(chance)) {
+            return;
+        }
+        chance = Math.min(0.95d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) {
             return;
         }

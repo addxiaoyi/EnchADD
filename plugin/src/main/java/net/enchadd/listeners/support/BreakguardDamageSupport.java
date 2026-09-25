@@ -22,6 +22,11 @@ public final class BreakguardDamageSupport {
             return 0.0;
         }
 
-        return Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
+        return bonusDamage(level, config.getMaxLevel(),
+                config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+    }
+
+    static double bonusDamage(int level, int maxLevel, double perLevel, double maxBonus) {
+        return EnchantDamageSupport.bonusDamage(Math.min(level, maxLevel), perLevel, maxBonus);
     }
 }

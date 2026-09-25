@@ -2,6 +2,8 @@ package net.enchadd.utils;
 
 final class PerformanceMathSupport {
 
+    private static final int MAX_EFFECT_DURATION_SECONDS = 120;
+
     private PerformanceMathSupport() {
     }
 
@@ -14,6 +16,17 @@ final class PerformanceMathSupport {
     }
 
     static double clamp(double value, double min, double max) {
+        if (!Double.isFinite(value)) {
+            return min;
+        }
+        if (!Double.isFinite(min) || !Double.isFinite(max)) {
+            return value;
+        }
+        if (min > max) {
+            double lower = max;
+            max = min;
+            min = lower;
+        }
         return Math.max(min, Math.min(max, value));
     }
 
@@ -22,10 +35,14 @@ final class PerformanceMathSupport {
     }
 
     static int calculateDurationTicks(int seconds, int level) {
-        return Math.max(1, seconds * level) * 20;
+        long rawSeconds = (long) seconds * level;
+        long safeSeconds = Math.min(MAX_EFFECT_DURATION_SECONDS, Math.max(1L, rawSeconds));
+        return (int) (safeSeconds * 20L);
     }
 
     static int calculateDurationTicksPerLevel(int secondsPerLevel, int level) {
-        return Math.max(1, secondsPerLevel * level) * 20;
+        long rawSeconds = (long) secondsPerLevel * level;
+        long safeSeconds = Math.min(MAX_EFFECT_DURATION_SECONDS, Math.max(1L, rawSeconds));
+        return (int) (safeSeconds * 20L);
     }
 }

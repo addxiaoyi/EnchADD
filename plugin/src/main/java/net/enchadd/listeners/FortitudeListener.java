@@ -4,6 +4,8 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.FortitudeEnchant;
+import net.enchadd.listeners.support.SurvivalHealthSupport;
+import net.enchadd.listeners.support.SurvivalBuffSupport;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
@@ -14,9 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import net.enchadd.utils.PerformanceUtils;
 
@@ -38,7 +39,7 @@ public class FortitudeListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onLowHealth(EntityDamageEvent event) {
-        if (fortitude == null || config == null) return;
+        if (event.isCancelled() || fortitude == null || config == null) return;
         if (!(event.getEntity() instanceof LivingEntity entity)) return;
 
         // 性能优化: 使用工具方法安全获取装备
@@ -50,11 +51,13 @@ public class FortitudeListener implements Listener {
 
         // 性能优化: 使用 PerformanceUtils 而非直接调用 getEnchantmentLevel
         int level = PerformanceUtils.getEnchantLevel(chestplate, fortitude);
+        level = Math.min(level, config.getMaxLevel());
         if (level <= 0) return;
 
-        double remainingHealth = entity.getHealth() - event.getFinalDamage();
-        double thresholdHealth = level * config.getHeartsThresholdPerLevel() * 2.0;
-        if (remainingHealth > thresholdHealth) return;
+        double rawThreshold = (double) level * config.getHeartsThresholdPerLevel() * 2.0d;
+        if (!PerformanceUtils.isEntityValid(entity)) return;
+        if (!SurvivalHealthSupport.survivesBelowThreshold(entity.getHealth(), event.getFinalDamage(),
+                entity.getMaxHealth(), rawThreshold)) return;
 
         // 性能优化: 使用工具方法安全获取 PDC
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(entity);
@@ -63,13 +66,15 @@ public class FortitudeListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查 (nanoTime)
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
-        // 性能优化: 使用 PerformanceUtils 设置冷却
+        // Reserve the cooldown before potion events can re-enter this listener.
+        Long previousCooldown = pdc.get(key, PersistentDataType.LONG);
         PerformanceUtils.setCooldown(pdc, key);
-
-        // 性能优化: 使用 PerformanceUtils 计算持续时间
-        int regenTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getRegenSecondsPerLevel(), level);
-        int resistTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getResistanceSecondsPerLevel(), level);
-        entity.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTicks, 0, false, false, true));
-        entity.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, resistTicks, 0, false, false, true));
+        if (!SurvivalBuffSupport.applyFortitude(entity, level, config)) {
+            if (previousCooldown == null) {
+                pdc.remove(key);
+            } else {
+                pdc.set(key, PersistentDataType.LONG, previousCooldown);
+            }
+        }
     }
 }

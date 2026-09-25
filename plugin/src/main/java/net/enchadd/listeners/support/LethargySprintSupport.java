@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ public final class LethargySprintSupport {
                       @NotNull Enchantment enchant,
                       @NotNull NamespacedKey key,
                       @NotNull LethargyEnchant config) {
-        if (!event.isSprinting()) {
+        if (event.isCancelled() || !event.isSprinting()) {
             return;
         }
 
@@ -47,15 +46,10 @@ public final class LethargySprintSupport {
             return;
         }
 
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSlowSecondsPerLevel(), level);
-        int amplifier = Math.max(0, config.getSlowAmplifier() + level - 1);
-        PotionEffectType type = PotionEffectType.SLOWNESS;
-        if (type == null) {
-            return;
+        int seconds = SprintEffectRules.seconds(level, config.getMaxLevel(), config.getSlowSecondsPerLevel());
+        int amplifier = SprintEffectRules.slowAmplifier(config.getSlowAmplifier(), level, config.getMaxLevel());
+        if (ActiveBuffSupport.apply(player, PotionEffectType.SLOWNESS, seconds, amplifier)) {
+            PerformanceUtils.setCooldown(pdc, key);
         }
-
-        PotionEffect effect = new PotionEffect(type, durationTicks, amplifier, false, false, true);
-        player.addPotionEffect(effect);
-        PerformanceUtils.setCooldown(pdc, key);
     }
 }

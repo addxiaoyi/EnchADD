@@ -73,11 +73,10 @@ public final class StarwishListener implements Listener {
         if (!effectSupport.canTrigger(player)) {
             return;
         }
-        if (!effectSupport.startCooldown(player)) {
+        if (!effectSupport.activate(player)) {
             return;
         }
 
-        effectSupport.applyEffects(player);
         effectSupport.playCosmeticFeedback(player);
     }
 

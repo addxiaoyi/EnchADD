@@ -5,7 +5,7 @@ import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -21,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 public final class TideRunnerEffectSupport {
 
     private static final int TICK_MODULO = 5;
-    private static final double MIN_MOVEMENT_DELTA_SQUARED = 0.01;
 
     private final TideRunnerEnchant config;
     private final NamespacedKey cooldownKey;
@@ -32,7 +31,7 @@ public final class TideRunnerEffectSupport {
     }
 
     public void handleMove(@NotNull PlayerMoveEvent event, @NotNull Player player, @NotNull Enchantment enchant) {
-        if (!isInWater(player)) {
+        if (event.isCancelled() || !hasMovementDelta(event.getFrom(), event.getTo()) || !isInWater(player)) {
             return;
         }
 
@@ -60,12 +59,12 @@ public final class TideRunnerEffectSupport {
         if (PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return;
         }
-        if (!hasMovementDelta(event.getFrom(), event.getTo())) {
-            return;
-        }
-
-        int duration = Math.max(40, config.getGraceTicksPerLevel() * level);
-        int amplifier = Math.max(0, (int) Math.round(config.getSpeedAmplifierPerLevel() * level));
+        int duration = TideRunnerRules.duration(level, config.getMaxLevel(), config.getGraceTicksPerLevel());
+        if (duration <= 0) return;
+        int amplifier = TideRunnerRules.amplifier(level, config.getMaxLevel(), config.getSpeedAmplifierPerLevel());
+        PotionEffect current = player.getPotionEffect(PotionEffectType.DOLPHINS_GRACE);
+        if (current != null && !ActiveBuffSupport.canUpgrade(current.getAmplifier(), current.getDuration(),
+                amplifier, duration)) return;
         PotionEffect effect = new PotionEffect(
                 PotionEffectType.DOLPHINS_GRACE,
                 duration,
@@ -74,25 +73,23 @@ public final class TideRunnerEffectSupport {
                 false,
                 true
         );
-        player.addPotionEffect(effect);
-        PerformanceUtils.setCooldown(pdc, cooldownKey);
+        if (player.addPotionEffect(effect)) PerformanceUtils.setCooldown(pdc, cooldownKey);
     }
 
     public boolean isInWater(@NotNull Player player) {
-        Location eye = player.getEyeLocation();
-        Block block = eye.getBlock();
-        if (block.isLiquid()) {
-            return true;
-        }
-        Block above = block.getRelative(BlockFace.UP);
-        return above.isLiquid();
+        return containsWater(player.getLocation().getBlock()) || containsWater(player.getEyeLocation().getBlock());
+    }
+
+    private static boolean containsWater(Block block) {
+        boolean waterlogged = block.getBlockData() instanceof Waterlogged water && water.isWaterlogged();
+        return TideshellRules.containsWater(block.getType(), waterlogged);
     }
 
     private static boolean hasMovementDelta(@NotNull Location from, @Nullable Location to) {
-        if (to == null) {
+        if (to == null || from.getWorld() == null || !from.getWorld().equals(to.getWorld())) {
             return false;
         }
         Vector delta = to.toVector().subtract(from.toVector());
-        return delta.lengthSquared() >= MIN_MOVEMENT_DELTA_SQUARED;
+        return TideRunnerRules.hasMovement(delta);
     }
 }

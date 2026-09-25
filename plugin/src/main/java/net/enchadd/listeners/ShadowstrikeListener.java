@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.ShadowstrikeEnchant;
+import net.enchadd.listeners.support.ShadowstrikeHitSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -50,15 +51,14 @@ public class ShadowstrikeListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查 (nanoTime)
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
         
-        Vector victimFacing = victim.getLocation().getDirection().normalize();
-        Vector toAttacker = attacker.getLocation().toVector().subtract(victim.getLocation().toVector()).normalize();
-        double dot = victimFacing.dot(toAttacker);
-        if (dot <= 0.7) return;
-        
-        // 性能优化: 使用 PerformanceUtils 设置冷却
+        Vector victimFacing = victim.getLocation().getDirection();
+        Vector toAttacker = attacker.getLocation().toVector().subtract(victim.getLocation().toVector());
+        double damage = event.getDamage();
+        double adjusted = ShadowstrikeHitSupport.damage(damage,
+                Math.min(level, config.getMaxLevel()), config.getBonusDamagePerLevel(), victimFacing, toAttacker);
+        if (!Double.isFinite(adjusted) || adjusted <= damage) return;
+
+        event.setDamage(adjusted);
         PerformanceUtils.setCooldown(pdc, key);
-        
-        double bonus = level * config.getBonusDamagePerLevel();
-        event.setDamage(event.getDamage() + bonus);
     }
 }

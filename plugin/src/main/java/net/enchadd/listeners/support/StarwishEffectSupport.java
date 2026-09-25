@@ -10,7 +10,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,19 +33,18 @@ public final class StarwishEffectSupport {
         return player.getLocation().getPitch() <= config.getLookUpPitchThreshold();
     }
 
-    public boolean startCooldown(@NotNull Player player) {
+    public boolean activate(@NotNull Player player) {
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null || PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return false;
         }
+        boolean vision = ActiveBuffSupport.apply(player, PotionEffectType.NIGHT_VISION, config.getNightVisionSeconds(), 0);
+        boolean luck = ActiveBuffSupport.apply(player, PotionEffectType.LUCK, config.getLuckSeconds(), 0);
+        if (!vision && !luck) return false;
         PerformanceUtils.setCooldown(pdc, cooldownKey);
         return true;
     }
 
-    public void applyEffects(@NotNull Player player) {
-        applyEffectIfUpgrade(player, PotionEffectType.NIGHT_VISION, config.getNightVisionSeconds());
-        applyEffectIfUpgrade(player, PotionEffectType.LUCK, config.getLuckSeconds());
-    }
 
     public void playCosmeticFeedback(@NotNull Player player) {
         Location burst = player.getEyeLocation().clone().add(0.0, 2.2, 0.0);
@@ -64,20 +62,4 @@ public final class StarwishEffectSupport {
         return worldTime >= 13000L && worldTime <= 23000L;
     }
 
-    private static void applyEffectIfUpgrade(@NotNull Player player,
-                                             @NotNull PotionEffectType type,
-                                             int seconds) {
-        int durationTicks = Math.max(20, seconds * 20);
-        PotionEffect current = player.getPotionEffect(type);
-        if (current != null) {
-            if (current.getAmplifier() > 0) {
-                return;
-            }
-            if (current.getAmplifier() == 0 && current.getDuration() >= durationTicks) {
-                return;
-            }
-        }
-
-        player.addPotionEffect(new PotionEffect(type, durationTicks, 0, false, false, true), true);
-    }
 }

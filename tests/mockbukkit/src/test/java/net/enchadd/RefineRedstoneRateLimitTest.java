@@ -311,7 +311,7 @@ class RefineRedstoneRateLimitTest {
      * 测试14: 验证 EnchantExecutionBudgetManager 的执行令牌机制
      */
     @Test
-    void executionBudgetCanTrackEnchantProcessing() {
+    void executionBudgetCanTrackEnchantProcessing() throws NoSuchFieldException {
         // Verify ExecutionToken fields exist and have correct types
         Class<?> tokenClass = EnchantExecutionBudgetManager.ExecutionToken.class;
 

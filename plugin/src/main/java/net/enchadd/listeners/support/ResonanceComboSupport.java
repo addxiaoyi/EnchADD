@@ -39,22 +39,27 @@ public final class ResonanceComboSupport {
             return;
         }
 
-        int requiredHits = Math.max(
-                config.getMinHitsPerProc(),
-                config.getHitsPerProcBase() - (level - 1) * config.getHitsPerProcReductionPerLevel()
-        );
-        requiredHits = Math.max(1, requiredHits);
-
-        int currentCombo = pdc.getOrDefault(comboKey, PersistentDataType.INTEGER, 0) + 1;
+        double damage = event.getDamage();
+        if (!Double.isFinite(damage) || damage <= 0.0) {
+            return;
+        }
+        level = Math.min(level, config.getMaxLevel());
+        double bonusDamage = EnchantDamageSupport.bonusDamage(
+                level, config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double adjusted = EnchantDamageSupport.addBonus(damage, bonusDamage);
+        if (!Double.isFinite(adjusted) || adjusted <= damage) {
+            return;
+        }
+        int requiredHits = CombatTriggerSupport.requiredHits(config.getHitsPerProcBase(),
+                config.getHitsPerProcReductionPerLevel(), config.getMinHitsPerProc(), level);
+        int currentCombo = CombatTriggerSupport.nextCombo(
+                pdc.getOrDefault(comboKey, PersistentDataType.INTEGER, 0));
         if (currentCombo < requiredHits) {
             pdc.set(comboKey, PersistentDataType.INTEGER, currentCombo);
             return;
         }
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage > 0.0) {
-            event.setDamage(event.getDamage() + bonusDamage);
-        }
+        event.setDamage(adjusted);
         pdc.set(comboKey, PersistentDataType.INTEGER, 0);
     }
 }

@@ -11,6 +11,8 @@ import org.jetbrains.annotations.Nullable;
  */
 final class PerformanceEnchantSupport {
 
+    private static final int MAX_EFFECTIVE_STACKED_LEVEL = 4;
+
     private PerformanceEnchantSupport() {
     }
 
@@ -60,13 +62,16 @@ final class PerformanceEnchantSupport {
         }
 
         int sum = 0;
-        // Optimized: reduce method calls by caching item references
-        sum += getEnchantLevel(equipment.getItemInMainHand(), enchantment);
-        sum += getEnchantLevel(equipment.getItemInOffHand(), enchantment);
-        sum += getEnchantLevel(equipment.getHelmet(), enchantment);
-        sum += getEnchantLevel(equipment.getChestplate(), enchantment);
-        sum += getEnchantLevel(equipment.getLeggings(), enchantment);
-        sum += getEnchantLevel(equipment.getBoots(), enchantment);
-        return sum;
+        sum = addStackedLevel(sum, getEnchantLevel(equipment.getItemInMainHand(), enchantment));
+        sum = addStackedLevel(sum, getEnchantLevel(equipment.getItemInOffHand(), enchantment));
+        sum = addStackedLevel(sum, getEnchantLevel(equipment.getHelmet(), enchantment));
+        sum = addStackedLevel(sum, getEnchantLevel(equipment.getChestplate(), enchantment));
+        sum = addStackedLevel(sum, getEnchantLevel(equipment.getLeggings(), enchantment));
+        return addStackedLevel(sum, getEnchantLevel(equipment.getBoots(), enchantment));
+    }
+
+    static int addStackedLevel(int total, int level) {
+        long sum = (long) Math.max(0, total) + Math.max(0, level);
+        return (int) Math.min(MAX_EFFECTIVE_STACKED_LEVEL, sum);
     }
 }

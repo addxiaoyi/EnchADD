@@ -4,6 +4,8 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.ExecutionerEnchant;
+import net.enchadd.listeners.support.EnchantDamageSupport;
+import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -48,9 +50,9 @@ public class ExecutionerListener implements Listener {
         EntityEquipment damagerEquipment = net.enchadd.utils.PerformanceUtils.getEquipmentSafe(damagerEntity);
         if (damagerEquipment == null) return;
 
-        // 性能优化: 使用 PerformanceUtils 获取附魔等级总和
-        int level = net.enchadd.utils.PerformanceUtils.getSumOfEnchantLevels(damagerEquipment, executioner);
-        if (level == 0) return;
+        int level = Math.min(config.getMaxLevel(),
+                PerformanceUtils.getEnchantLevel(damagerEquipment.getItemInMainHand(), executioner));
+        if (level <= 0) return;
 
         Entity target = event.getEntity();
         if (!(target instanceof LivingEntity livingEntity)) return;
@@ -59,13 +61,12 @@ public class ExecutionerListener implements Listener {
         if (maxHealthAttribute == null) return;
         double targetMaxHealth = maxHealthAttribute.getValue();
 
-        // 性能优化: 使用 PerformanceUtils 安全除法，防止除以零
-        double targetHealthPercentage = net.enchadd.utils.PerformanceUtils.safeDivide(
-            livingEntity.getHealth(), targetMaxHealth, 1.0);
-
-        if (targetHealthPercentage < config.getMaxDamageHpThreshold()) {
-            double damageMultiplier = 1 + (config.getDamageMultiplierPerLevel() * level);
-            event.setDamage(event.getDamage() * damageMultiplier);
+        double damage = event.getDamage();
+        double adjusted = EnchantDamageSupport.executionerDamage(damage, level,
+                config.getDamageMultiplierPerLevel(), livingEntity.getHealth(),
+                targetMaxHealth, config.getMaxDamageHpThreshold());
+        if (Double.isFinite(adjusted) && adjusted > damage) {
+            event.setDamage(adjusted);
         }
     }
 

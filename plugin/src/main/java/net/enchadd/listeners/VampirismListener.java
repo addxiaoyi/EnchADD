@@ -133,7 +133,7 @@ public class VampirismListener implements Listener {
         if (fireTicks < CLIENT_FIRE_RESET_THRESHOLD) {
             fireTicks = MIN_VISIBLE_FIRE_TICKS;
         }
-        player.setFireTicks(Math.max(fireTicks, player.getMaxFireTicks()));
+        player.setFireTicks(Math.min(player.getMaxFireTicks(), Math.max(fireTicks, MIN_VISIBLE_FIRE_TICKS)));
     }
 
     public void cleanup() {

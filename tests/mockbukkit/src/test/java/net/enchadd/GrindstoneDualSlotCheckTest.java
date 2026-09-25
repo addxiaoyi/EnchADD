@@ -8,6 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.PrepareGrindstoneEvent;
 import org.bukkit.inventory.GrindstoneInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.InventoryView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class GrindstoneDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{null, null};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -73,7 +74,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -95,7 +96,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -117,7 +118,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -139,7 +140,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -160,7 +161,7 @@ class GrindstoneDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.AIR);
         event.setResult(result);
 
@@ -183,7 +184,7 @@ class GrindstoneDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{null, null};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -211,7 +212,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -238,7 +239,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -265,7 +266,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -292,7 +293,7 @@ class GrindstoneDualSlotCheckTest {
         };
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -318,7 +319,7 @@ class GrindstoneDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         result.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
@@ -346,7 +347,7 @@ class GrindstoneDualSlotCheckTest {
         ItemStack[] contents = new ItemStack[]{slot0Item, slot1Item};
         when(inventory.getContents()).thenReturn(contents);
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         event.setResult(null);
 
         // Should not throw exception when result is null
@@ -361,7 +362,7 @@ class GrindstoneDualSlotCheckTest {
         GrindstoneInventory inventory = Mockito.mock(GrindstoneInventory.class);
         when(inventory.getContents()).thenReturn(new ItemStack[]{});
 
-        PrepareGrindstoneEvent event = new PrepareGrindstoneEvent(inventory, null);
+        PrepareGrindstoneEvent event = prepareEvent(inventory);
         ItemStack result = new ItemStack(Material.DIAMOND_SWORD);
         result.addUnsafeEnchantment(Enchantment.UNBREAKING, 3);
         event.setResult(result);
@@ -370,6 +371,12 @@ class GrindstoneDualSlotCheckTest {
 
         // Empty inventory should be treated as both slots empty
         assertEquals(result, event.getResult());
+    }
+
+    private static PrepareGrindstoneEvent prepareEvent(GrindstoneInventory inventory) {
+        InventoryView view = Mockito.mock(InventoryView.class);
+        when(view.getTopInventory()).thenReturn(inventory);
+        return new PrepareGrindstoneEvent(view, null);
     }
 
     private static void setField(Object target, String fieldName, Object value) throws Exception {

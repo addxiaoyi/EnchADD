@@ -54,7 +54,9 @@ public class ImmolateListener implements Listener {
         // 性能优化: 使用 PerformanceUtils 的冷却检查 (nanoTime)
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
-        double chance = Math.min(0.6, config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.6d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) return;
 
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getFireSecondsPerLevel(), level);

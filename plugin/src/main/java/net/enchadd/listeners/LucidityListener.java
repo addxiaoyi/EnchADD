@@ -59,7 +59,8 @@ public class LucidityListener implements Listener {
         int level = PerformanceUtils.getEnchantLevel(equipment.getHelmet(), enchant);
         if (level <= 0) return;
 
-        double reduction = Math.min(config.getMaxDurationReduction(), level * config.getDurationReductionPerLevel());
+        double reduction = Math.max(0.0, Math.min(0.90,
+                Math.min(config.getMaxDurationReduction(), level * config.getDurationReductionPerLevel())));
         if (reduction <= 0.0) return;
 
         int originalDuration = effect.getDuration();

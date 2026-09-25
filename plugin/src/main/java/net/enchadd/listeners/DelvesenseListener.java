@@ -74,12 +74,10 @@ public final class DelvesenseListener implements Listener {
         if (!effectSupport.canTrigger(player)) {
             return;
         }
-        if (!effectSupport.startCooldown(player)) {
+        if (!effectSupport.activate(player)) {
             return;
         }
 
-        effectSupport.applyNightVisionIfUpgrade(player);
-        effectSupport.highlightNearbyMonsters(player);
         effectSupport.playCosmeticFeedback(player);
     }
 

@@ -36,4 +36,10 @@ class PerformanceMathSupportTest {
         assertEquals(20, PerformanceMathSupport.calculateDurationTicksPerLevel(0, 5));
         assertEquals(120, PerformanceMathSupport.calculateDurationTicksPerLevel(3, 2));
     }
+
+    @Test
+    void durationCalculationCapsExtremeConfiguration() {
+        assertEquals(120 * 20, PerformanceMathSupport.calculateDurationTicks(10_000, 10_000));
+        assertEquals(120 * 20, PerformanceMathSupport.calculateDurationTicksPerLevel(10_000, 10_000));
+    }
 }

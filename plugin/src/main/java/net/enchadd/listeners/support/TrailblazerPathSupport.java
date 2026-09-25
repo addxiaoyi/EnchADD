@@ -12,6 +12,8 @@ import java.util.Set;
 
 public final class TrailblazerPathSupport {
 
+    private static final int MAX_RADIUS = 8;
+
     private static final Set<Material> FLATTENABLE = Set.of(
             Material.GRASS_BLOCK,
             Material.DIRT,
@@ -32,7 +34,7 @@ public final class TrailblazerPathSupport {
     }
 
     public int radius() {
-        return config.getRadius();
+        return Math.min(MAX_RADIUS, Math.max(0, config.getRadius()));
     }
 
     public boolean canFlatten(@NotNull Block block) {
@@ -40,7 +42,7 @@ public final class TrailblazerPathSupport {
     }
 
     public @NotNull List<Block> collectTargets(@NotNull Block center) {
-        int clampedRadius = Math.max(0, config.getRadius());
+        int clampedRadius = radius();
         int diameter = clampedRadius * 2 + 1;
         List<Block> targets = PerformanceUtils.newArrayListWithCapacity(diameter * diameter);
         for (int dx = -clampedRadius; dx <= clampedRadius; dx++) {

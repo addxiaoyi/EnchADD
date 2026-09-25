@@ -34,11 +34,13 @@ public final class PursuitHitSupport {
             return;
         }
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage <= 0.0) {
+        double bonus = EnchantDamageSupport.bonusDamage(
+                level, config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double damage = event.getDamage();
+        double adjusted = EnchantDamageSupport.addBonus(damage, bonus);
+        if (!Double.isFinite(adjusted) || adjusted <= damage) {
             return;
         }
-
-        event.setDamage(event.getDamage() + bonusDamage);
+        event.setDamage(adjusted);
     }
 }

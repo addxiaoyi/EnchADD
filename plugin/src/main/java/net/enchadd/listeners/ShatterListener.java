@@ -34,10 +34,12 @@ public class ShatterListener implements Listener {
         double perLevel = ench.getTriggerChancePerLevel();
         if (perLevel <= 0) return;
         double chance = perLevel * level;
+        if (!Double.isFinite(chance)) return;
         double maxChance = ench.getMaxTriggerChance();
         if (maxChance > 0) {
-            chance = Math.min(maxChance, chance);
+            chance = Math.min(0.75d, Math.min(maxChance, chance));
         }
+        chance = Math.max(0.0d, chance);
         if (chance <= 0) return;
         if (!PerformanceUtils.rollChance(chance)) return;
         int extraPerLevel = ench.getExtraDamagePerLevel();

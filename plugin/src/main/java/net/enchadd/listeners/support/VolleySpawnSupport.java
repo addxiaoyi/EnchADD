@@ -23,11 +23,12 @@ public final class VolleySpawnSupport {
     }
 
     public int extraArrowsForNormal(int level) {
-        return Math.max(0, Math.min(maxExtraArrowMultiplier, level * config.getAdditionalArrowsPerLevel()));
+        return VolleyTrajectorySupport.extraArrows(level, config.getMaxLevel(),
+                config.getAdditionalArrowsPerLevel(), maxExtraArrowMultiplier);
     }
 
     public int extraArrowsForSpectral(int level) {
-        return Math.max(0, Math.min(maxExtraArrowMultiplier, level));
+        return extraArrowsForNormal(level);
     }
 
     public void spawnArrowVolley(@NotNull LivingEntity shooter,
@@ -37,6 +38,7 @@ public final class VolleySpawnSupport {
                           @NotNull Random random,
                           @NotNull Runnable pickupGuard,
                           @NotNull java.util.function.Consumer<AbstractArrow> marker) {
+        if (!VolleyTrajectorySupport.hasVelocity(velocity) || extraArrows <= 0) return;
         pickupGuard.run();
         for (int i = 0; i < extraArrows; i++) {
             Vector newVelocity = applySpread(velocity, config.getSpread(), random);
@@ -60,6 +62,7 @@ public final class VolleySpawnSupport {
                              @NotNull Random random,
                              @NotNull Runnable pickupGuard,
                              @NotNull java.util.function.Consumer<AbstractArrow> marker) {
+        if (!VolleyTrajectorySupport.hasVelocity(velocity) || extraArrows <= 0) return;
         pickupGuard.run();
         for (int i = 0; i < extraArrows; i++) {
             Vector newVelocity = applySpread(velocity, config.getSpread(), random);
@@ -83,9 +86,6 @@ public final class VolleySpawnSupport {
     }
 
     public Vector applySpread(@NotNull Vector velocity, double spread, @NotNull Random random) {
-        double spreadX = (random.nextDouble() - 0.5) * spread;
-        double spreadY = (random.nextDouble() - 0.5) * spread;
-        double spreadZ = (random.nextDouble() - 0.5) * spread;
-        return velocity.clone().add(new Vector(spreadX, spreadY, spreadZ));
+        return VolleyTrajectorySupport.spread(velocity, spread, random);
     }
 }

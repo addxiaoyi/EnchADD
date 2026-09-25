@@ -6,7 +6,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +16,7 @@ public final class ParryRetaliationSupport {
     public @Nullable ArmContext resolveArmContext(@NotNull Player defender,
                                                   @NotNull LivingEntity attacker,
                                                   @NotNull Enchantment enchant) {
-        EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(defender);
-        if (equipment == null) {
-            return null;
-        }
-
-        int level = PerformanceUtils.getEnchantLevel(equipment.getItemInOffHand(), enchant);
+        int level = PerformanceUtils.getActiveOffhandShieldLevel(defender, enchant);
         if (level <= 0) {
             return null;
         }
@@ -41,6 +35,8 @@ public final class ParryRetaliationSupport {
                                   @NotNull NamespacedKey targetKey,
                                   @NotNull NamespacedKey levelKey) {
         PersistentDataContainer pdc = context.pdc();
+        if (!RetaliationRules.canArm(context.level(), config.getMaxLevel(), config.getRetaliationWindowTicks(),
+                config.getBonusDamagePerLevel(), config.getMaxBonusDamage())) return false;
         if (PerformanceUtils.isOnCooldown(pdc, cooldownKey, config.getCooldownTicks())) {
             return false;
         }
@@ -48,7 +44,7 @@ public final class ParryRetaliationSupport {
         PerformanceUtils.setCooldown(pdc, cooldownKey);
         PerformanceUtils.setWindowUntilTicks(pdc, windowKey, config.getRetaliationWindowTicks());
         pdc.set(targetKey, PersistentDataType.INTEGER, context.attackerId());
-        pdc.set(levelKey, PersistentDataType.INTEGER, context.level());
+        pdc.set(levelKey, PersistentDataType.INTEGER, Math.min(context.level(), config.getMaxLevel()));
         return true;
     }
 
@@ -78,10 +74,13 @@ public final class ParryRetaliationSupport {
             return;
         }
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage > 0.0) {
-            writer.write(baseDamage + bonusDamage);
+        double bonusDamage = EnchantDamageSupport.bonusDamage(
+                Math.min(level, config.getMaxLevel()), config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double adjusted = EnchantDamageSupport.addBonus(baseDamage, bonusDamage);
+        if (!Double.isFinite(adjusted) || adjusted <= baseDamage) {
+            return;
         }
+        writer.write(adjusted);
 
         pdc.remove(windowKey);
         pdc.remove(targetKey);

@@ -24,6 +24,10 @@ import java.util.Set;
 @SuppressWarnings("UnstableApiUsage")
 public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
 
+    private static final int MAX_BALANCED_LEVEL = 5;
+    private static final int MAX_BALANCED_WEIGHT = 30;
+    private static final int MAX_BALANCED_ANVIL_COST = 10;
+
     protected final Key key;
     protected final int anvilCost;
     protected final int maxLevel;
@@ -54,9 +58,10 @@ public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
     ) {
         this.key = key;
         this.namespacedKey = PerformanceUtils.namespacedKey(key);
-        this.anvilCost = anvilCost;
-        this.maxLevel = maxLevel;
-        this.weight = weight;
+        // Keep malformed or extreme server configs from creating runaway power or loot rates.
+        this.anvilCost = clamp(anvilCost, 1, MAX_BALANCED_ANVIL_COST);
+        this.maxLevel = clamp(maxLevel, 1, MAX_BALANCED_LEVEL);
+        this.weight = clamp(weight, 1, MAX_BALANCED_WEIGHT);
         this.minimumCost = minimumCost;
         this.maximumCost = maximumCost;
         this.enchantTagKeys.addAll(enchantTagKeys);
@@ -161,5 +166,9 @@ public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
     public @NotNull Component getDescriptionComponent() {
         // 直接下发可读文本，确保客户端无资源包也能稳定显示附魔名
         return Component.text(getDescriptionText());
+    }
+
+    private static int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
     }
 }

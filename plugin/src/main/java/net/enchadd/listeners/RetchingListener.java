@@ -55,7 +55,7 @@ public class RetchingListener implements Listener {
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getNauseaSecondsPerLevel(), level);
         if (durationTicks <= 0) return;
 
-        int amplifier = Math.max(0, config.getNauseaAmplifier());
+        int amplifier = Math.min(1, Math.max(0, config.getNauseaAmplifier()));
         PotionEffect effect = new PotionEffect(PotionEffectType.NAUSEA, durationTicks, amplifier, false, false, true);
         player.addPotionEffect(effect);
     }

@@ -45,10 +45,12 @@ public class InsightListener implements Listener {
         int exp = event.getExpToDrop();
         if (exp <= 0) return;
         
-        double bonusMultiplier = config.getXpBonusPerLevel() * level;
+        double configuredBonus = config.getXpBonusPerLevel() * level;
+        if (!Double.isFinite(configuredBonus)) return;
+        double bonusMultiplier = Math.min(1.0, Math.max(0.0, configuredBonus));
         if (bonusMultiplier <= 0) return;
         
-        int bonus = (int) Math.round(exp * bonusMultiplier);
+        int bonus = (int) Math.min(Integer.MAX_VALUE - (long) exp, Math.round(exp * bonusMultiplier));
         if (bonus <= 0) return;
         
         event.setExpToDrop(exp + bonus);

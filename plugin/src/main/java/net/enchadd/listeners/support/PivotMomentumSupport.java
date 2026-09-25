@@ -5,7 +5,6 @@ import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -15,11 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public final class PivotMomentumSupport {
 
     public @Nullable PivotContext resolveContext(@NotNull Player player, @NotNull Enchantment enchant) {
-        EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(player);
-        if (equipment == null) {
-            return null;
-        }
-        int level = PerformanceUtils.getEnchantLevel(equipment.getItemInOffHand(), enchant);
+        int level = PerformanceUtils.getActiveOffhandShieldLevel(player, enchant);
         if (level <= 0) {
             return null;
         }
@@ -38,12 +33,12 @@ public final class PivotMomentumSupport {
     }
 
     public @Nullable PotionEffect createSpeedEffect(@NotNull PivotEnchant config, int level) {
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSpeedSecondsPerLevel(), level);
+        int durationTicks = DefenseEffectRules.seconds(level, config.getMaxLevel(), config.getSpeedSecondsPerLevel()) * 20;
         if (durationTicks <= 0) {
             return null;
         }
 
-        int amplifier = Math.max(0, config.getSpeedAmplifier());
+        int amplifier = Math.min(2, Math.max(0, config.getSpeedAmplifier()));
         return new PotionEffect(PotionEffectType.SPEED, durationTicks, amplifier, false, false, true);
     }
 
@@ -51,8 +46,11 @@ public final class PivotMomentumSupport {
                       @NotNull PotionEffect effect,
                       @NotNull PivotContext context,
                       @NotNull NamespacedKey key) {
-        player.addPotionEffect(effect);
-        PerformanceUtils.setCooldown(context.pdc(), key);
+        if (effect.getDuration() <= 0) return;
+        PotionEffect current = player.getPotionEffect(effect.getType());
+        if (current != null && !ActiveBuffSupport.canUpgrade(current.getAmplifier(), current.getDuration(),
+                effect.getAmplifier(), effect.getDuration())) return;
+        if (player.addPotionEffect(effect)) PerformanceUtils.setCooldown(context.pdc(), key);
     }
 
     public record PivotContext(int level, @NotNull PersistentDataContainer pdc) {

@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.DebilitateEnchant;
+import net.enchadd.listeners.support.StatusDurationSupport;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
@@ -50,8 +51,11 @@ public class DebilitateListener implements Listener {
         if (chestplate == null) return;
 
         // 性能优化: 使用 PerformanceUtils 而非直接调用 getEnchantmentLevel
-        int level = PerformanceUtils.getEnchantLevel(chestplate, enchant);
+        int level = Math.min(config.getMaxLevel(), PerformanceUtils.getEnchantLevel(chestplate, enchant));
         if (level <= 0) return;
+        int durationTicks = StatusDurationSupport.onHit(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getWeaknessSecondsPerLevel());
+        if (durationTicks <= 0) return;
 
         // 性能优化: 使用工具方法安全获取 PDC
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(victim);
@@ -61,13 +65,14 @@ public class DebilitateListener implements Listener {
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
         // 性能优化: 使用 PerformanceUtils 的概率检查
-        double chance = Math.min(0.6, config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.6d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) return;
 
         // 性能优化: 使用 PerformanceUtils 计算持续时间
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getWeaknessSecondsPerLevel(), level);
         PotionEffect effect = new PotionEffect(PotionEffectType.WEAKNESS, durationTicks, 0, false, false, true);
-        attacker.addPotionEffect(effect);
+        if (!attacker.addPotionEffect(effect)) return;
 
         // 性能优化: 使用 PerformanceUtils 设置冷却
         PerformanceUtils.setCooldown(pdc, key);

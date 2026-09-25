@@ -26,22 +26,10 @@ public final class ThirstEffectSupport {
     }
 
     public boolean markCombatIfApplicable(@NotNull Player player) {
-        if (enchant == null) {
+        if (chestLevel(player) <= 0 || config.getCombatWindowTicks() <= 0) {
             return false;
         }
-        EntityEquipment equipment = player.getEquipment();
-        if (equipment == null) {
-            return false;
-        }
-        ItemStack chest = equipment.getChestplate();
-        if (chest == null) {
-            return false;
-        }
-        int level = EnchantCache.getLevel(chest, enchant);
-        if (level <= 0) {
-            return false;
-        }
-        PerformanceUtils.setWindowUntilTicks(player.getPersistentDataContainer(), combatKey, config.getCombatWindowTicks());
+        PerformanceUtils.extendWindowUntilTicks(player.getPersistentDataContainer(), combatKey, config.getCombatWindowTicks());
         return true;
     }
 
@@ -55,15 +43,9 @@ public final class ThirstEffectSupport {
             pdc.remove(combatKey);
             return false;
         }
-        double reduction = config.getRegenReductionPerLevel() * level;
-        if (reduction <= 0) {
-            return false;
-        }
-        double scale = Math.max(0.0d, 1.0d - reduction);
-        if (amount <= 0.0d) {
-            return false;
-        }
-        scaledAmountConsumer.accept(amount * scale);
+        double adjusted = ThirstRules.healing(amount, level, config.getMaxLevel(), config.getRegenReductionPerLevel());
+        if (Double.compare(adjusted, amount) == 0) return false;
+        scaledAmountConsumer.accept(adjusted);
         return true;
     }
 
@@ -78,14 +60,9 @@ public final class ThirstEffectSupport {
             return null;
         }
         int currentFood = player.getFoodLevel();
-        if (newFoodLevel >= currentFood) {
-            return null;
-        }
-        int extraLoss = config.getExtraHungerLossPerLevel() * level;
-        if (extraLoss <= 0) {
-            return null;
-        }
-        return Math.max(0, newFoodLevel - extraLoss);
+        int adjusted = ThirstRules.food(currentFood, newFoodLevel, level, config.getMaxLevel(),
+                config.getExtraHungerLossPerLevel());
+        return adjusted == newFoodLevel ? null : adjusted;
     }
 
     private int chestLevel(@NotNull Player player) {
@@ -100,6 +77,6 @@ public final class ThirstEffectSupport {
         if (chest == null) {
             return 0;
         }
-        return EnchantCache.getLevel(chest, enchant);
+        return ThirstRules.effectiveLevel(EnchantCache.getLevel(chest, enchant), config.getMaxLevel());
     }
 }

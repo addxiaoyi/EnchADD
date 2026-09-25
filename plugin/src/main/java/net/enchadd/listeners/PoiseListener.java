@@ -5,6 +5,7 @@ import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.PoiseEnchant;
 import net.enchadd.utils.PerformanceUtils;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -46,9 +47,13 @@ public class PoiseListener implements Listener {
         Vector velocity = attacker.getVelocity();
         if (velocity != null && velocity.lengthSquared() > config.getMovementThresholdSquared()) return;
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage <= 0.0) return;
-
-        event.setDamage(event.getDamage() + bonusDamage);
+        double bonus = EnchantDamageSupport.bonusDamage(
+                level, config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double damage = event.getDamage();
+        double adjusted = EnchantDamageSupport.addBonus(damage, bonus);
+        if (!Double.isFinite(adjusted) || adjusted <= damage) {
+            return;
+        }
+        event.setDamage(adjusted);
     }
 }

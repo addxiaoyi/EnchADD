@@ -12,6 +12,7 @@ public final class FragilityDamageSupport {
     public void apply(@NotNull PlayerItemDamageEvent event,
                       @NotNull Enchantment enchant,
                       @NotNull FragilityEnchant config) {
+        if (event.isCancelled()) return;
         ItemStack item = event.getItem();
         if (item == null) {
             return;
@@ -27,22 +28,8 @@ public final class FragilityDamageSupport {
             return;
         }
 
-        double perLevel = config.getExtraDurabilityPerLevel();
-        if (perLevel <= 0) {
-            return;
-        }
-
-        double multiplier = 1.0 + perLevel * level;
-        double maxMultiplier = config.getMaxDurabilityMultiplier();
-        if (maxMultiplier > 1.0 && multiplier > maxMultiplier) {
-            multiplier = maxMultiplier;
-        }
-        if (multiplier <= 1.0) {
-            return;
-        }
-
-        double scaled = originalDamage * multiplier;
-        int newDamage = (int) Math.round(scaled);
+        int newDamage = CursePenaltySupport.durabilityDamage(originalDamage, level, config.getMaxLevel(),
+                config.getExtraDurabilityPerLevel(), config.getMaxDurabilityMultiplier());
         if (newDamage <= originalDamage) {
             return;
         }

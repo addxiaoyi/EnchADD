@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.QuellEnchant;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -40,22 +41,25 @@ public class QuellListener implements Listener {
 
         ItemStack chestplate = equipment.getChestplate();
         if (chestplate == null) return;
-        int level = PerformanceUtils.getEnchantLevel(chestplate, enchant);
+        int level = Math.min(config.getMaxLevel(), PerformanceUtils.getEnchantLevel(chestplate, enchant));
         if (level <= 0) return;
 
         EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause != EntityDamageEvent.DamageCause.MAGIC && cause != EntityDamageEvent.DamageCause.WITHER) return;
+        double adjusted = EnchantDamageSupport.quellDamage(event.getDamage(), event.getFinalDamage(),
+                level, config.getMaxLevel(), config.getReductionPerLevel());
+        if (!(adjusted < event.getDamage())) return;
 
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(player);
         if (pdc == null) return;
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) return;
 
-        double chance = Math.min(0.6, config.getTriggerChance() * level);
+        double chance = config.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.6d, Math.max(0.0d, chance));
         if (!PerformanceUtils.rollChance(chance)) return;
 
-        double scale = Math.max(0.5, 1.0 - level * config.getReductionPerLevel());
-        if (scale >= 1.0) return;
-        event.setDamage(event.getDamage() * scale);
+        event.setDamage(adjusted);
         PerformanceUtils.setCooldown(pdc, key);
     }
 }

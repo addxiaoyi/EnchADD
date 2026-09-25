@@ -39,19 +39,18 @@ public final class SteadfastKnockbackSupport {
     }
 
     public boolean shouldTrigger(@NotNull SteadfastEnchant config, int level) {
-        double chance = Math.min(0.6, config.getTriggerChance() * level);
+        double chance = DefenseEffectRules.chance(level, config.getMaxLevel(), config.getTriggerChance(), 0.6);
         return PerformanceUtils.rollChance(chance);
     }
 
     public boolean applyKnockbackReduction(@NotNull EntityKnockbackEvent event,
                                            @NotNull SteadfastEnchant config,
                                            int level) {
-        Vector knockback = event.getKnockback();
-        if (knockback == null) {
-            return false;
-        }
-        double scale = Math.max(0.4, 1.0 - level * config.getReductionPerLevel());
-        event.setKnockback(knockback.clone().multiply(scale));
+        if (event.isCancelled()) return false;
+        Vector reduced = KnockbackRules.reduce(event.getKnockback(), level, config.getMaxLevel(),
+                config.getReductionPerLevel(), 0.6, 0.6);
+        if (reduced == null) return false;
+        event.setKnockback(reduced);
         return true;
     }
 

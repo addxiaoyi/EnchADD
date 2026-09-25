@@ -1,6 +1,7 @@
 package net.enchadd.listeners;
 
 import net.enchadd.listeners.support.ThirstEffectSupport;
+import net.enchadd.listeners.support.ThirstRules;
 
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
@@ -11,6 +12,7 @@ import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -35,6 +37,7 @@ public class ThirstListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onCombatDamage(EntityDamageByEntityEvent event) {
+        if (!ThirstRules.isCombatHit(event.isCancelled(), event.getFinalDamage())) return;
         ThirstEffectSupport effectSupport = resolveEffectSupport();
         if (enchant == null || config == null || effectSupport == null) return;
         Entity victim = event.getEntity();
@@ -44,6 +47,8 @@ public class ThirstListener implements Listener {
         }
         if (damager instanceof Player damagerPlayer) {
             effectSupport.markCombatIfApplicable(damagerPlayer);
+        } else if (damager instanceof Projectile projectile && projectile.getShooter() instanceof Player shooter) {
+            effectSupport.markCombatIfApplicable(shooter);
         }
     }
 

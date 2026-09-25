@@ -5,6 +5,7 @@ import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.MeasuredEnchant;
 import net.enchadd.utils.PerformanceUtils;
+import net.enchadd.listeners.support.EnchantDamageSupport;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -40,9 +41,12 @@ public class MeasuredListener implements Listener {
         if (level <= 0) return;
         if (attacker.getAttackCooldown() < config.getRequiredAttackCooldown()) return;
 
-        double bonusDamage = Math.min(config.getMaxBonusDamage(), level * config.getBonusDamagePerLevel());
-        if (bonusDamage <= 0.0) return;
-
-        event.setDamage(event.getDamage() + bonusDamage);
+        double bonusDamage = EnchantDamageSupport.bonusDamage(
+                level, config.getBonusDamagePerLevel(), config.getMaxBonusDamage());
+        double damage = event.getDamage();
+        double adjusted = EnchantDamageSupport.addBonus(damage, bonusDamage);
+        if (Double.isFinite(adjusted) && adjusted > damage) {
+            event.setDamage(adjusted);
+        }
     }
 }

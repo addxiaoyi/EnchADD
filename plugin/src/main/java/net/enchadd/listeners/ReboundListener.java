@@ -4,6 +4,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import net.enchadd.EnchADDConfig;
 import net.enchadd.enchants.ReboundEnchant;
+import net.enchadd.listeners.support.ReboundDurabilitySupport;
 import net.enchadd.utils.PerformanceUtils;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
@@ -27,17 +28,11 @@ public class ReboundListener implements Listener {
         int level = net.enchadd.utils.EnchantCache.getLevel(item, enchant);
         if (level <= 0) return;
         if (!(EnchADDConfig.ENCHANTS.get(ReboundEnchant.KEY) instanceof ReboundEnchant reboundEnchant)) return;
-        double baseChance = reboundEnchant.getRefundChancePerLevel() * level;
-        double chance = Math.min(0.45, baseChance);
+        int originalDamage = event.getDamage();
+        double chance = ReboundDurabilitySupport.refundChance(originalDamage, level,
+                reboundEnchant.getMaxLevel(), reboundEnchant.getRefundChancePerLevel());
         if (chance <= 0) return;
         if (!PerformanceUtils.rollChance(chance)) return;
-        int originalDamage = event.getDamage();
-        if (originalDamage <= 0) return;
-        int reduced = originalDamage - 1;
-        if (reduced <= 0) {
-            event.setDamage(0);
-            return;
-        }
-        event.setDamage(reduced);
+        event.setDamage(originalDamage - 1);
     }
 }

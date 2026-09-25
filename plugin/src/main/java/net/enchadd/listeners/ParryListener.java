@@ -49,6 +49,7 @@ public class ParryListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onCounterattack(EntityDamageByEntityEvent event) {
+        if (event.isCancelled() || !Double.isFinite(event.getFinalDamage()) || event.getFinalDamage() <= 0) return;
         if (enchant == null || config == null) return;
         if (!(event.getDamager() instanceof Player defender)) return;
         if (!(event.getEntity() instanceof LivingEntity target)) return;

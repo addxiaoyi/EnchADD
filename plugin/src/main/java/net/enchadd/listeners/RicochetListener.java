@@ -78,7 +78,7 @@ public class RicochetListener implements Listener {
         LivingEntity target = effectSupport.findRicochetTarget(arrow, shooter, event.getEntity());
         if (target == null) return;
 
-        effectSupport.spawnRicochet(arrow, () -> shooter, target, level);
+        if (!effectSupport.spawnRicochet(arrow, () -> shooter, target, level)) return;
 
         PerformanceUtils.setCooldown(pdc, cooldownKey);
     }

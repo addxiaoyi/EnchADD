@@ -16,6 +16,9 @@ public final class BackfireDamageSupport {
                       @NotNull Enchantment enchant,
                       @NotNull org.bukkit.NamespacedKey key,
                       @NotNull BackfireEnchant config) {
+        if (event.isCancelled()) return;
+        double selfDamage = CursePenaltySupport.selfDamage(event.getFinalDamage(), config.getSelfDamageMultiplier());
+        if (selfDamage <= 0) return;
         if (!(event.getDamager() instanceof Player player)) {
             return;
         }
@@ -43,27 +46,9 @@ public final class BackfireDamageSupport {
             return;
         }
 
-        double chance = config.getTriggerChancePerLevel() * level;
-        double maxChance = config.getMaxTriggerChance();
-        if (maxChance > 0) {
-            chance = Math.min(maxChance, chance);
-        }
+        double chance = CursePenaltySupport.backfireChance(level, config.getMaxLevel(),
+                config.getTriggerChancePerLevel(), config.getMaxTriggerChance());
         if (chance <= 0 || !PerformanceUtils.rollChance(chance)) {
-            return;
-        }
-
-        double damage = event.getFinalDamage();
-        if (damage <= 0) {
-            return;
-        }
-
-        double scale = config.getSelfDamageMultiplier();
-        if (scale <= 0) {
-            return;
-        }
-
-        double selfDamage = damage * scale;
-        if (selfDamage <= 0) {
             return;
         }
 

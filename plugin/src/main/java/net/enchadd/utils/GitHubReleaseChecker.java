@@ -25,20 +25,27 @@ public final class GitHubReleaseChecker {
     private static final int MIN_TIMEOUT_SECONDS = 2;
     private static final int MAX_TIMEOUT_SECONDS = 30;
     private static final int MAX_RESPONSE_BYTES = 64 * 1024;
+    private static final int DEFAULT_INTERVAL_HOURS = 12;
+    private static final int MAX_INTERVAL_HOURS = 168;
+    private static final long INITIAL_DELAY_TICKS = 20L * 30L;
     private static final HttpClient CLIENT = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(MAX_TIMEOUT_SECONDS))
             .followRedirects(HttpClient.Redirect.NEVER)
             .build();
 
     private BukkitTask task;
+    private String etag;
 
     public void start(@NotNull JavaPlugin plugin) {
         Settings settings = Settings.from(plugin);
         if (!settings.enabled()) {
+            stop();
             return;
         }
         stop();
-        task = plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> check(plugin, settings));
+        long intervalTicks = settings.intervalHours() * 20L * 60L * 60L;
+        task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(
+                plugin, () -> check(plugin, settings), INITIAL_DELAY_TICKS, intervalTicks);
     }
 
     public void stop() {
@@ -46,6 +53,7 @@ public final class GitHubReleaseChecker {
             task.cancel();
             task = null;
         }
+        etag = null;
     }
 
     private void check(JavaPlugin plugin, Settings settings) {
@@ -72,20 +80,26 @@ public final class GitHubReleaseChecker {
         }
     }
 
-    private static Optional<Release> fetch(Settings settings) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder(settings.apiUri())
+    private Optional<Release> fetch(Settings settings) throws IOException, InterruptedException {
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder(settings.apiUri())
                 .timeout(Duration.ofSeconds(settings.timeoutSeconds()))
                 .header("Accept", "application/vnd.github+json")
                 .header("User-Agent", "EnchADD-Update-Checker")
-                .GET()
-                .build();
-        HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+                .GET();
+        if (etag != null && !etag.isBlank()) {
+            requestBuilder.header("If-None-Match", etag);
+        }
+        HttpResponse<String> response = CLIENT.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 304) {
+            return Optional.empty();
+        }
         if (response.statusCode() == 404) {
             return Optional.empty();
         }
         if (response.statusCode() != 200) {
             throw new IOException("GitHub API returned HTTP " + response.statusCode());
         }
+        response.headers().firstValue("ETag").ifPresent(value -> etag = value);
         String body = response.body();
         if (body.length() > MAX_RESPONSE_BYTES) {
             throw new IOException("GitHub API response exceeded " + MAX_RESPONSE_BYTES + " characters");
@@ -120,22 +134,27 @@ public final class GitHubReleaseChecker {
     record Release(@NotNull String version, @NotNull String url) {
     }
 
-    private record Settings(boolean enabled, @NotNull URI apiUri, int timeoutSeconds) {
+    private record Settings(boolean enabled, @NotNull URI apiUri, int timeoutSeconds, int intervalHours) {
         static Settings from(JavaPlugin plugin) {
             ConfigurationSection section = ConfigSupport.getConfigSection(plugin.getConfig(), "update-checker");
             boolean enabled = ConfigSupport.getBoolean(section, "enabled", false);
-            String repository = ConfigSupport.getString(section, "repository", "EnchADD/EnchADD").trim();
+            String repository = ConfigSupport.getString(section, "repository", "addxiaoyi/EnchADD").trim();
             if (!REPOSITORY_PATTERN.matcher(repository).matches()) {
                 enabled = false;
                 plugin.getLogger().warning("[EnchADD Update] Invalid GitHub repository setting; update checks are disabled.");
-                repository = "EnchADD/EnchADD";
+                repository = "addxiaoyi/EnchADD";
             }
             int timeout = Math.clamp(
                     ConfigSupport.getInt(section, "timeout-seconds", 8),
                     MIN_TIMEOUT_SECONDS,
                     MAX_TIMEOUT_SECONDS
             );
-            return new Settings(enabled, URI.create("https://api.github.com/repos/" + repository + "/releases/latest"), timeout);
+            int intervalHours = Math.clamp(
+                    ConfigSupport.getInt(section, "interval-hours", DEFAULT_INTERVAL_HOURS),
+                    1,
+                    MAX_INTERVAL_HOURS
+            );
+            return new Settings(enabled, URI.create("https://api.github.com/repos/" + repository + "/releases/latest"), timeout, intervalHours);
         }
     }
 }

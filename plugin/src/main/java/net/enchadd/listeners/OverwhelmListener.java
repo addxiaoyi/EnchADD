@@ -44,7 +44,7 @@ public class OverwhelmListener implements Listener {
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getWeaknessSecondsPerLevel(), level);
         if (durationTicks <= 0) return;
 
-        int amplifier = Math.max(0, config.getWeaknessAmplifier());
+        int amplifier = Math.min(1, Math.max(0, config.getWeaknessAmplifier()));
         PotionEffect effect = new PotionEffect(PotionEffectType.WEAKNESS, durationTicks, amplifier, false, false, true);
         target.addPotionEffect(effect);
     }

@@ -65,7 +65,9 @@ public class TrawlerListener implements Listener {
 
     private boolean shouldTrigger(int level, TrawlerEnchant trawler) {
         if (level <= 0) return false;
-        double chance = Math.min(trawler.getMaxTriggerChance(), trawler.getTriggerChance() * level);
+        double chance = trawler.getTriggerChance() * level;
+        if (!Double.isFinite(chance)) return false;
+        chance = Math.min(0.75d, Math.max(0.0d, Math.min(trawler.getMaxTriggerChance(), chance)));
         if (chance <= 0) return false;
         return PerformanceUtils.rollChance(chance);
     }

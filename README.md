@@ -4,13 +4,13 @@ EnchADD is a Paper plugin that adds vanilla-style enchantments with compatibilit
 
 ## Version
 
-Current release: **2.0.5**
+Current release: **2.0.6**
 
 Supported baseline: Paper 1.21.6 and newer compatible Paper builds. Java 21 or newer is required.
 
 ## Install
 
-1. Download `enchadd-plugin-2.0.5-protected.jar` from [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases).
+1. Download `enchadd-plugin-2.0.6-protected.jar` from [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases).
 2. Copy the jar to the server `plugins/` directory.
 3. Start the server and configure `plugins/EnchADD/config.yml`.
 
@@ -25,6 +25,7 @@ update-checker:
   enabled: true
   repository: addxiaoyi/EnchADD
   timeout-seconds: 8
+  interval-hours: 12
 ```
 
 The plugin only reads the latest GitHub release and logs a notification. It never downloads or replaces files automatically.

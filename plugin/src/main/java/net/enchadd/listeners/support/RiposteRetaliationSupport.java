@@ -6,7 +6,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -18,12 +17,7 @@ public final class RiposteRetaliationSupport {
     public @Nullable RiposteContext resolveContext(@NotNull Player victim,
                                                    @NotNull LivingEntity attacker,
                                                    @NotNull Enchantment enchant) {
-        EntityEquipment equipment = PerformanceUtils.getEquipmentSafe(victim);
-        if (equipment == null) {
-            return null;
-        }
-
-        int level = PerformanceUtils.getEnchantLevel(equipment.getItemInOffHand(), enchant);
+        int level = PerformanceUtils.getActiveOffhandShieldLevel(victim, enchant);
         if (level <= 0) {
             return null;
         }
@@ -42,20 +36,26 @@ public final class RiposteRetaliationSupport {
     }
 
     public boolean shouldTrigger(@NotNull RiposteEnchant config, int level) {
-        double chance = Math.min(0.85, config.getTriggerChance() * level);
+        if (RetaliationRules.weaknessTicks(level, config.getMaxLevel(), config.getWeaknessSecondsPerLevel()) <= 0) return false;
+        double chance = RetaliationRules.riposteChance(level, config.getMaxLevel(), config.getTriggerChance());
         return PerformanceUtils.rollChance(chance);
     }
 
     public @NotNull PotionEffect createWeaknessEffect(@NotNull RiposteEnchant config, int level) {
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getWeaknessSecondsPerLevel(), level);
+        int durationTicks = RetaliationRules.weaknessTicks(level, config.getMaxLevel(), config.getWeaknessSecondsPerLevel());
         return new PotionEffect(PotionEffectType.WEAKNESS, durationTicks, 0, false, false, true);
     }
 
     public void apply(@NotNull RiposteContext context,
                       @NotNull PotionEffect effect,
                       @NotNull NamespacedKey key) {
-        context.attacker().addPotionEffect(effect);
-        PerformanceUtils.setCooldown(context.pdc(), key);
+        if (effect.getDuration() <= 0) return;
+        PotionEffect current = context.attacker().getPotionEffect(effect.getType());
+        if (current != null && !ActiveBuffSupport.canUpgrade(current.getAmplifier(), current.getDuration(),
+                effect.getAmplifier(), effect.getDuration())) return;
+        if (context.attacker().addPotionEffect(effect)) {
+            PerformanceUtils.setCooldown(context.pdc(), key);
+        }
     }
 
     public record RiposteContext(@NotNull LivingEntity attacker,

@@ -65,16 +65,18 @@ public class TremorListener implements Listener {
         
         // 性能优化: 使用工具方法计算持续时间
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSlowSecondsPerLevel(), level);
-        double r = Math.max(0.5, config.getRadiusPerLevel() * level);
+        double r = Math.min(8.0, Math.max(0.5, config.getRadiusPerLevel() * level));
         
         // 性能优化: 避免 Stream API，直接遍历集合
         Collection<Entity> nearbyEntities = victim.getNearbyEntities(r, r, r);
+        int affected = 0;
         for (Entity entity : nearbyEntities) {
             if (!(entity instanceof LivingEntity target)) continue;
             if (target.equals(victim) || target.equals(player)) continue;
             
             PotionEffect effect = new PotionEffect(PotionEffectType.SLOWNESS, durationTicks, 0, false, false, true);
             target.addPotionEffect(effect);
+            if (++affected >= 24) break;
         }
         
         // 性能优化: 使用 PerformanceUtils 设置冷却

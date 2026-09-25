@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +34,8 @@ public final class WingguardRescueSupport {
     }
 
     public boolean isLethal(@NotNull Player player, double finalDamage) {
-        return player.getHealth() - finalDamage <= 0.0;
+        return PerformanceUtils.isPlayerValid(player)
+                && SurvivalHealthSupport.isLethal(player.getHealth(), finalDamage);
     }
 
     public boolean shouldTrigger(@NotNull WingguardContext context,
@@ -44,20 +44,27 @@ public final class WingguardRescueSupport {
         if (PerformanceUtils.isOnCooldown(context.pdc(), key, config.getCooldownTicks())) {
             return false;
         }
-        double chance = Math.min(config.getMaxTriggerChance(), config.getTriggerChance() * context.level());
+        double chance = triggerChance(context.level(), config.getMaxLevel(),
+                config.getTriggerChance(), config.getMaxTriggerChance());
         return PerformanceUtils.rollChance(chance);
+    }
+
+    static double triggerChance(int level, int maxLevel, double perLevel, double maximum) {
+        if (level <= 0 || maxLevel <= 0 || !Double.isFinite(perLevel) || perLevel <= 0
+                || !Double.isFinite(maximum) || maximum <= 0) return 0;
+        return Math.min(Math.min(1.0, maximum), Math.min(1.0, perLevel) * Math.min(level, maxLevel));
     }
 
     public void applyRescue(@NotNull Player player,
                             @NotNull WingguardContext context,
                             @NotNull NamespacedKey key,
                             @NotNull WingguardEnchant config) {
-        int duration = PerformanceUtils.calculateDurationTicksPerLevel(config.getSafeSecondsPerLevel(), context.level());
-        PotionEffect slowFalling = new PotionEffect(PotionEffectType.SLOW_FALLING, duration, 0, false, false, true);
-        PotionEffect resistance = new PotionEffect(PotionEffectType.RESISTANCE, duration, 0, false, false, true);
-        player.addPotionEffect(slowFalling);
-        player.addPotionEffect(resistance);
+        // Cancelling the lethal hit already grants a rescue, even if follow-up buffs are blocked.
         PerformanceUtils.setCooldown(context.pdc(), key);
+        int seconds = SurvivalBuffSupport.durationSeconds(context.level(), config.getMaxLevel(),
+                config.getSafeSecondsPerLevel());
+        ActiveBuffSupport.apply(player, PotionEffectType.SLOW_FALLING, seconds, 0);
+        ActiveBuffSupport.apply(player, PotionEffectType.RESISTANCE, seconds, 0);
     }
 
     public record WingguardContext(int level, @NotNull PersistentDataContainer pdc) {

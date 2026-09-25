@@ -31,6 +31,7 @@ public class WingguardListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onFallDamage(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
         Entity entity = event.getEntity();
         EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause != EntityDamageEvent.DamageCause.FALL && cause != EntityDamageEvent.DamageCause.FLY_INTO_WALL) return;
@@ -42,7 +43,7 @@ public class WingguardListener implements Listener {
         if (!rescueSupport.isLethal(player, event.getFinalDamage())) return;
         if (!rescueSupport.shouldTrigger(context, key, config)) return;
 
-        rescueSupport.applyRescue(player, context, key, config);
         event.setCancelled(true);
+        rescueSupport.applyRescue(player, context, key, config);
     }
 }

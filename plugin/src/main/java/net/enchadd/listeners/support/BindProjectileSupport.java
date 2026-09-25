@@ -63,6 +63,9 @@ public final class BindProjectileSupport {
             return;
         }
 
+        int durationTicks = ProjectileStatusSupport.durationTicks(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getSlowSecondsPerLevel());
+        if (event.isCancelled() || durationTicks <= 0) return;
         Player shooter = arrow.getShooter() instanceof Player p ? p : null;
         if (!PerformanceUtils.isPlayerValid(shooter)) {
             return;
@@ -75,13 +78,13 @@ public final class BindProjectileSupport {
         if (PerformanceUtils.isOnCooldown(pdc, key, config.getCooldownTicks())) {
             return;
         }
-        if (!PerformanceUtils.rollChance(config.getTriggerChance())) {
+        double chance = ProjectileStatusSupport.chance(config.getTriggerChance(), 1, 0.75);
+        if (!PerformanceUtils.rollChance(chance)) {
             return;
         }
 
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSlowSecondsPerLevel(), level);
         PotionEffect slowness = new PotionEffect(PotionEffectType.SLOWNESS, durationTicks, 0, false, false, true);
-        victim.addPotionEffect(slowness);
+        if (!victim.addPotionEffect(slowness)) return;
         PerformanceUtils.setCooldown(pdc, key);
     }
 }

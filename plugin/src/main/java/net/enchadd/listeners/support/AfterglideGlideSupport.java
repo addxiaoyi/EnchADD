@@ -39,11 +39,11 @@ public final class AfterglideGlideSupport {
     }
 
     public @Nullable PotionEffect createSlowFallingEffect(@NotNull AfterglideEnchant config, int level) {
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSlowFallingSecondsPerLevel(), level);
+        int durationTicks = durationTicks(level, config.getMaxLevel(), config.getSlowFallingSecondsPerLevel());
         if (durationTicks <= 0) {
             return null;
         }
-        int amplifier = Math.max(0, config.getSlowFallingAmplifier());
+        int amplifier = Math.min(1, Math.max(0, config.getSlowFallingAmplifier()));
         return new PotionEffect(PotionEffectType.SLOW_FALLING, durationTicks, amplifier, false, false, true);
     }
 
@@ -51,8 +51,17 @@ public final class AfterglideGlideSupport {
                       @NotNull PotionEffect effect,
                       @NotNull AfterglideContext context,
                       @NotNull NamespacedKey key) {
-        player.addPotionEffect(effect);
-        PerformanceUtils.setCooldown(context.pdc(), key);
+        if (effect.getDuration() <= 0) return;
+        PotionEffect current = player.getPotionEffect(effect.getType());
+        if (current != null && !ActiveBuffSupport.canUpgrade(current.getAmplifier(), current.getDuration(),
+                effect.getAmplifier(), effect.getDuration())) return;
+        if (player.addPotionEffect(effect)) PerformanceUtils.setCooldown(context.pdc(), key);
+    }
+
+    static int durationTicks(int level, int maxLevel, int secondsPerLevel) {
+        if (level <= 0 || maxLevel <= 0 || secondsPerLevel <= 0) return 0;
+        long seconds = (long) Math.min(level, maxLevel) * secondsPerLevel;
+        return (int) Math.min(120L, seconds) * 20;
     }
 
     public record AfterglideContext(int level, @NotNull PersistentDataContainer pdc) {

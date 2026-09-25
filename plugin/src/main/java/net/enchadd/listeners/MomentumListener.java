@@ -51,7 +51,7 @@ public class MomentumListener implements Listener {
 
         // 性能优化: 使用 PerformanceUtils 计算持续时间
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSpeedSecondsPerLevel(), level);
-        int amplifier = Math.max(0, config.getSpeedAmplifier());
+        int amplifier = Math.min(2, Math.max(0, config.getSpeedAmplifier()));
         PotionEffect effect = new PotionEffect(PotionEffectType.SPEED, durationTicks, amplifier, false, false, true);
         living.addPotionEffect(effect);
     }

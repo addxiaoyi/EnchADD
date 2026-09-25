@@ -44,7 +44,7 @@ public class UpdraftListener implements Listener {
         int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getSlowFallingSecondsPerLevel(), level);
         if (durationTicks <= 0) return;
 
-        int amplifier = Math.max(0, config.getSlowFallingAmplifier());
+        int amplifier = Math.min(1, Math.max(0, config.getSlowFallingAmplifier()));
         PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_FALLING, durationTicks, amplifier, false, false, true);
         attacker.addPotionEffect(effect);
     }

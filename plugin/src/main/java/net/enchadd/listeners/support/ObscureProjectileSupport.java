@@ -61,6 +61,11 @@ public final class ObscureProjectileSupport {
             return;
         }
 
+        level = Math.min(level, config.getMaxLevel());
+        int durationTicks = ProjectileStatusSupport.durationTicks(event.getFinalDamage(), level,
+                config.getMaxLevel(), config.getBlindSecondsPerLevel());
+        if (event.isCancelled() || durationTicks <= 0) return;
+
         PersistentDataContainer pdc = PerformanceUtils.getPDCSafe(shooter);
         if (pdc == null) {
             return;
@@ -69,14 +74,13 @@ public final class ObscureProjectileSupport {
             return;
         }
 
-        double chance = Math.min(0.75, config.getTriggerChance() * level);
+        double chance = ProjectileStatusSupport.chance(config.getTriggerChance(), level, 0.75);
         if (!PerformanceUtils.rollChance(chance)) {
             return;
         }
 
-        int durationTicks = PerformanceUtils.calculateDurationTicksPerLevel(config.getBlindSecondsPerLevel(), level);
         PotionEffect effect = new PotionEffect(PotionEffectType.BLINDNESS, durationTicks, 0, false, false, true);
-        victim.addPotionEffect(effect);
+        if (!victim.addPotionEffect(effect)) return;
         PerformanceUtils.setCooldown(pdc, key);
     }
 }

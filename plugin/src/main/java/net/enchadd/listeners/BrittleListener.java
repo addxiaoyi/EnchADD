@@ -68,7 +68,7 @@ public class BrittleListener implements Listener {
         double scale = 1.0 + bonus;
         if (scale <= 1.0) return;
         
-        event.setDamage(base * scale);
+        event.setDamage(base * Math.min(3.0, Math.max(0.0, scale)));
     }
 }
 

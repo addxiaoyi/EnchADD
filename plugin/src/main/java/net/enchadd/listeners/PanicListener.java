@@ -49,6 +49,8 @@ public class PanicListener implements Listener {
         if (level == 0) return;
         
         double chance = level * config.getPanicChancePerLevel();
+        if (!Double.isFinite(chance)) return;
+        chance = Math.min(0.6d, Math.max(0.0d, chance));
 
         // 性能优化: 使用 PerformanceUtils 的概率检查
         if (!PerformanceUtils.rollChance(chance)) return;
