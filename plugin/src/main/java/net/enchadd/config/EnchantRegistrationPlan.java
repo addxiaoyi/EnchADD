@@ -101,7 +101,16 @@ final class EnchantRegistrationPlan {
                 new Entry("sidestep", net.enchadd.enchants.SidestepEnchant::create),
                 new Entry("sunder", net.enchadd.enchants.SunderEnchant::create),
                 new Entry("steady_aim", net.enchadd.enchants.SteadyAimEnchant::create),
-                new Entry("stillness", net.enchadd.enchants.StillnessEnchant::create)
+                new Entry("stillness", net.enchadd.enchants.StillnessEnchant::create),
+                new Entry("lancer", net.enchadd.enchants.SpearEnchant::createLancer),
+                new Entry("reach", net.enchadd.enchants.SpearEnchant::createReach),
+                new Entry("skewer", net.enchadd.enchants.SpearEnchant::createSkewer),
+                new Entry("counterthrust", net.enchadd.enchants.SpearEnchant::createCounterthrust),
+                new Entry("arrowguard", net.enchadd.enchants.DefenseEnchant::createArrowguard),
+                new Entry("blastguard", net.enchadd.enchants.DefenseEnchant::createBlastguard),
+                new Entry("fireguard", net.enchadd.enchants.DefenseEnchant::createFireguard),
+                new Entry("featherstep", net.enchadd.enchants.DefenseEnchant::createFeatherstep),
+                new Entry("frostguard", net.enchadd.enchants.DefenseEnchant::createFrostguard)
         );
     }
 

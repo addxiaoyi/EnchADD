@@ -1,7 +1,7 @@
 name: EnchADD
 version: '${project.version}'
 main: net.enchadd.EnchADD
-api-version: '1.21.6'
+api-version: '1.21.11'
 load: POSTWORLD
 commands:
   enchadd:

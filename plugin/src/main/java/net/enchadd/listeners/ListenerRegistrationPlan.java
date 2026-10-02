@@ -112,7 +112,16 @@ final class ListenerRegistrationPlan {
                 entry("steady_aim", SteadyAimListener::new),
                 entry("stillness", StillnessListener::new),
                 entry("farshot", FarshotListener::new),
-                entry("flare", FlareListener::new)
+                entry("flare", FlareListener::new),
+                entry("lancer", plugin -> new SpearListener(net.enchadd.enchants.SpearEnchant.LANCER_KEY)),
+                entry("reach", plugin -> new SpearListener(net.enchadd.enchants.SpearEnchant.REACH_KEY)),
+                entry("skewer", plugin -> new SpearListener(net.enchadd.enchants.SpearEnchant.SKEWER_KEY)),
+                entry("counterthrust", plugin -> new SpearListener(net.enchadd.enchants.SpearEnchant.COUNTERTHRUST_KEY)),
+                entry("arrowguard", plugin -> new DefenseListener(net.enchadd.enchants.DefenseEnchant.ARROWGUARD_KEY)),
+                entry("blastguard", plugin -> new DefenseListener(net.enchadd.enchants.DefenseEnchant.BLASTGUARD_KEY)),
+                entry("fireguard", plugin -> new DefenseListener(net.enchadd.enchants.DefenseEnchant.FIREGUARD_KEY)),
+                entry("featherstep", plugin -> new DefenseListener(net.enchadd.enchants.DefenseEnchant.FEATHERSTEP_KEY)),
+                entry("frostguard", plugin -> new DefenseListener(net.enchadd.enchants.DefenseEnchant.FROSTGUARD_KEY))
         );
     }
 

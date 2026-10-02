@@ -94,7 +94,7 @@ class AcquisitionBalancePolicyTest {
 
         YamlConfiguration yaml = loadConfig();
 
-        assertEquals(4, yaml.getInt("acquisitionPolicyVersion"));
+        assertEquals(5, yaml.getInt("acquisitionPolicyVersion"));
 
         assertEquals(1, yaml.getInt("enchants.telepathy.weight"));
         assertEquals(TABLE_COMMON_TAGS, yaml.getStringList("enchants.telepathy.enchantmentTags"));
@@ -111,15 +111,15 @@ class AcquisitionBalancePolicyTest {
             );
         }
 
-        assertEquals(1, yaml.getInt("enchants.ricochet.weight"));
+        assertEquals(0, yaml.getInt("enchants.ricochet.weight"));
         assertEquals(TREASURE_SPECIAL_TAGS, yaml.getStringList("enchants.ricochet.enchantmentTags"));
         assertFalse(yaml.getBoolean("enchants.ricochet.canGetFromEnchantingTable"));
 
-        assertEquals(1, yaml.getInt("enchants.soulbound.weight"));
+        assertEquals(0, yaml.getInt("enchants.soulbound.weight"));
         assertEquals(TREASURE_ONLY_TAGS, yaml.getStringList("enchants.soulbound.enchantmentTags"));
         assertFalse(yaml.getBoolean("enchants.soulbound.canGetFromEnchantingTable"));
 
-        assertEquals(1, yaml.getInt("curses.gluttony.weight"));
+        assertEquals(0, yaml.getInt("curses.gluttony.weight"));
         assertEquals(CURSE_TREASURE_TAGS, yaml.getStringList("curses.gluttony.enchantmentTags"));
         assertTrue(yaml.getBoolean("curses.gluttony.canGetFromEnchantingTable"));
 
@@ -159,9 +159,9 @@ class AcquisitionBalancePolicyTest {
         EnchADDConfig.init(tempDir);
 
         YamlConfiguration upgraded = loadConfig();
-        assertEquals(4, upgraded.getInt("acquisitionPolicyVersion"));
+        assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
         assertEquals(1, upgraded.getInt("enchants.telepathy.weight"));
-        assertEquals(1, upgraded.getInt("enchants.soulbound.weight"));
+        assertEquals(0, upgraded.getInt("enchants.soulbound.weight"));
         assertEquals(CURSE_TREASURE_TAGS, upgraded.getStringList("curses.gluttony.enchantmentTags"));
         assertTrue(upgraded.getBoolean("curses.gluttony.canGetFromEnchantingTable"));
         assertFalse(upgraded.contains("enchants.cloaking"));
@@ -181,7 +181,7 @@ class AcquisitionBalancePolicyTest {
         EnchADDConfig.init(tempDir);
 
         YamlConfiguration upgraded = loadConfig();
-        assertEquals(4, upgraded.getInt("acquisitionPolicyVersion"));
+        assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
         assertEquals(1, upgraded.getInt("enchants.telepathy.weight"));
         assertEquals(1, upgraded.getInt("enchants.irrigation.weight"));
         assertEquals(1, upgraded.getInt("enchants.freshcatch.weight"));
@@ -204,7 +204,7 @@ class AcquisitionBalancePolicyTest {
             EnchADDConfig.init(tempDir);
             YamlConfiguration upgraded = loadConfig();
 
-            assertEquals(4, upgraded.getInt("acquisitionPolicyVersion"));
+            assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
             assertEquals(1, upgraded.getInt("enchants.telepathy.weight"));
             assertEquals(1, upgraded.getInt("enchants.irrigation.weight"));
             assertEquals(1, upgraded.getInt("enchants.freshcatch.weight"));
@@ -226,7 +226,7 @@ class AcquisitionBalancePolicyTest {
         EnchADDConfig.init(tempDir);
 
         YamlConfiguration upgraded = loadConfig();
-        assertEquals(4, upgraded.getInt("acquisitionPolicyVersion"));
+        assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
         assertEquals(3, upgraded.getInt("conflictPolicyVersion"));
         assertEquals(
                 WARD_DEFAULT_CONFLICTS,
@@ -260,7 +260,7 @@ class AcquisitionBalancePolicyTest {
             EnchADDConfig.init(tempDir);
             YamlConfiguration upgraded = loadConfig();
 
-            assertEquals(4, upgraded.getInt("acquisitionPolicyVersion"));
+            assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
             assertEquals(3, upgraded.getInt("conflictPolicyVersion"));
             assertEquals(1, upgraded.getInt("enchants.telepathy.weight"));
             assertEquals(WARD_DEFAULT_CONFLICTS, upgraded.getStringList("conflicts.enchadd:ward"));

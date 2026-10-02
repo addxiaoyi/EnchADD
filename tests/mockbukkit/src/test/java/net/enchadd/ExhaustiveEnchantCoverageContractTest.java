@@ -58,14 +58,25 @@ class ExhaustiveEnchantCoverageContractTest {
             "AbstractEnchADDEnchant",
             "EnchADDEnchant",
             "ChanceEnchant",
-            "CooldownEnchant"
+            "CooldownEnchant",
+            "DefenseEnchant",
+            "SpearEnchant"
     );
     private static final Set<String> EXCLUDED_LISTENER_TYPES = Set.of(
             "CurseConflictListener",
             "EnchantListenerRegistrar",
             "LifecycleListener",
             "LegacyEnchantSanitizerListener",
-            "ServerExceptionMonitorListener"
+            "ServerExceptionMonitorListener",
+            "DefenseListener",
+            "SpearListener",
+            "CommandBlockListener",
+            "DupeListener",
+            "VillagerListener"
+    );
+    private static final Set<String> PARAMETERIZED_ENCHANT_KEYS = Set.of(
+            "enchadd:lancer", "enchadd:reach", "enchadd:skewer", "enchadd:counterthrust",
+            "enchadd:arrowguard", "enchadd:blastguard", "enchadd:fireguard", "enchadd:featherstep", "enchadd:frostguard"
     );
     private static final Pattern KEY_PATTERN = Pattern.compile(
             "public\\s+static\\s+final\\s+Key\\s+KEY\\s*=\\s*Key\\.key\\(\"([^\"]+)\"\\)"
@@ -139,6 +150,7 @@ class ExhaustiveEnchantCoverageContractTest {
             EnchADDConfig.init(tempDataDir);
 
             Set<String> expectedKeys = new HashSet<>(expectedKeysByType.values());
+            expectedKeys.addAll(PARAMETERIZED_ENCHANT_KEYS);
             Set<String> actualKeys = EnchADDConfig.ENCHANTS.keySet().stream()
                     .map(Key::asString)
                     .collect(Collectors.toSet());

@@ -71,11 +71,12 @@ public final class EnchADDConfigBootstrapper {
                 "breaker-skip-execution: 熔断期间是否直接跳过监听执行（默认 false，保留核心战斗逻辑）。"
         ));
         configuration.setComments("update-checker", List.of(
-                "GitHub Release 更新检查：只通知管理员，不会自动下载或替换运行中的 jar。",
+                "GitHub Release 更新检查：默认只通知管理员。开启 auto-download 后，会校验并放入 Paper 更新目录，重启后生效。",
                 "enabled: 是否异步检查最新稳定版。",
                 "repository: GitHub 仓库，格式为 owner/repository。",
                 "timeout-seconds: GitHub API 请求超时秒数（2-30）。",
-                "interval-hours: 检查间隔小时数（1-168），默认 12 小时。"
+                "interval-hours: 检查间隔小时数（1-168），默认 12 小时。",
+                "auto-download: 是否自动下载已校验的受保护 jar 到 Paper 更新目录（默认 false）。"
         ));
     }
 

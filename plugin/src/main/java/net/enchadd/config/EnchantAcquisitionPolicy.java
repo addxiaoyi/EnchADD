@@ -10,16 +10,8 @@ import java.util.Set;
 
 public final class EnchantAcquisitionPolicy {
 
-    public static final int ACQUISITION_POLICY_VERSION = 4;
+    public static final int ACQUISITION_POLICY_VERSION = 5;
     public static final String ACQUISITION_POLICY_VERSION_KEY = "acquisitionPolicyVersion";
-    // Keep custom enchant weights at roughly one-third of the previous policy.
-    private static final double WEIGHT_REDUCTION_FACTOR = 0.34;
-    private static final double LEGACY_TABLE_COMMON_WEIGHT_MULTIPLIER_V1 = 0.5;
-    private static final double LEGACY_TABLE_COMMON_WEIGHT_MULTIPLIER_V2_PLUS = 0.3;
-    private static final double LEGACY_TABLE_SPECIAL_WEIGHT_MULTIPLIER = 0.4;
-    private static final double LEGACY_TREASURE_SPECIAL_WEIGHT_MULTIPLIER = 0.3;
-    private static final double LEGACY_TREASURE_ONLY_WEIGHT_MULTIPLIER = 0.2;
-    private static final double LEGACY_CURSE_WEIGHT_MULTIPLIER = 0.25;
 
     public static final Set<String> TABLE_COMMON_ENCHANTS = Set.of(
             "telepathy", "insight", "smelting", "replanting", "irrigation", "arborist", "trailblazer",
@@ -31,12 +23,12 @@ public final class EnchantAcquisitionPolicy {
             "purify", "clairvoyance", "sidestep", "shroud", "homeward", "bulwark", "holdfast", "parry",
             "pivot", "bind", "farshot", "flare", "hunters_mark", "obscure", "steady_aim", "stillness",
             "highground", "pursuit", "tracer", "debilitate", "quell", "rally", "breakguard", "sunder",
-            "underdog", "cadence", "wingclip"
+            "underdog", "cadence", "wingclip", "lancer", "arrowguard", "fireguard"
     );
     public static final Set<String> TREASURE_SPECIAL_ENCHANTS = Set.of(
             "riposte", "updraft", "tremor", "meteor", "overwhelm", "ricochet", "undertow", "cinder",
             "frostbrand", "immolate", "hemorrhage", "mortal_wound", "measured", "initiative", "lodestar",
-            "resonance", "poise", "last_stand", "dispel", "starwish", "waysong", "delvesense", "tideshell"
+            "resonance", "poise", "last_stand", "dispel", "starwish", "waysong", "delvesense", "tideshell", "reach", "skewer", "blastguard", "frostguard", "featherstep", "counterthrust"
     );
     public static final Set<String> TREASURE_ONLY_ENCHANTS = Set.of(
             "soulbound", "executioner", "decapitate", "momentum", "fortitude", "nourish", "volley",
@@ -48,34 +40,34 @@ public final class EnchantAcquisitionPolicy {
     );
 
     public enum AcquisitionTier {
-        TABLE_COMMON(0.3 * WEIGHT_REDUCTION_FACTOR, List.of(
+        TABLE_COMMON(1, List.of(
                 "#non_treasure", "#in_enchanting_table", "#on_random_loot", "#tradeable",
                 "#trades/desert_common", "#trades/jungle_common", "#trades/plains_common",
                 "#trades/savanna_common", "#trades/snow_common", "#trades/swamp_common", "#trades/taiga_common"
         )),
-        TABLE_SPECIAL(0.4 * WEIGHT_REDUCTION_FACTOR, List.of(
+        TABLE_SPECIAL(1, List.of(
                 "#non_treasure", "#in_enchanting_table", "#on_random_loot", "#tradeable",
                 "#trades/desert_special", "#trades/jungle_special", "#trades/plains_special",
                 "#trades/savanna_special", "#trades/snow_special", "#trades/swamp_special", "#trades/taiga_special"
         )),
-        TREASURE_SPECIAL(0.3 * WEIGHT_REDUCTION_FACTOR, List.of(
+        TREASURE_SPECIAL(0, List.of(
                 "#treasure", "#on_random_loot", "#tradeable", "#double_trade_price",
                 "#trades/desert_special", "#trades/jungle_special", "#trades/plains_special",
                 "#trades/savanna_special", "#trades/snow_special", "#trades/swamp_special", "#trades/taiga_special"
         )),
-        TREASURE_ONLY(0.2 * WEIGHT_REDUCTION_FACTOR, List.of("#treasure", "#on_random_loot")),
-        CURSE_TREASURE(0.25 * WEIGHT_REDUCTION_FACTOR, List.of("#curse", "#treasure", "#in_enchanting_table", "#on_random_loot"));
+        TREASURE_ONLY(0, List.of("#treasure", "#on_random_loot")),
+        CURSE_TREASURE(0, List.of("#curse", "#treasure", "#in_enchanting_table", "#on_random_loot"));
 
-        private final double weightMultiplier;
+        private final int weightCap;
         private final List<String> tags;
 
-        AcquisitionTier(double weightMultiplier, List<String> tags) {
-            this.weightMultiplier = weightMultiplier;
+        AcquisitionTier(int weightCap, List<String> tags) {
+            this.weightCap = weightCap;
             this.tags = tags;
         }
 
-        public double weightMultiplier() {
-            return weightMultiplier;
+        public int weightCap() {
+            return weightCap;
         }
 
         public List<String> tags() {
@@ -86,7 +78,6 @@ public final class EnchantAcquisitionPolicy {
             return tags.contains("#in_enchanting_table");
         }
     }
-
     private EnchantAcquisitionPolicy() {
     }
 
@@ -107,12 +98,11 @@ public final class EnchantAcquisitionPolicy {
         if (previousVersion >= ACQUISITION_POLICY_VERSION) {
             return false;
         }
-        double commonPreviousMultiplier = previousVersion >= 2 ? LEGACY_TABLE_COMMON_WEIGHT_MULTIPLIER_V2_PLUS : LEGACY_TABLE_COMMON_WEIGHT_MULTIPLIER_V1;
-        applyTierToSections(enchantsSection, TABLE_COMMON_ENCHANTS, AcquisitionTier.TABLE_COMMON, previousVersion, commonPreviousMultiplier);
-        applyTierToSections(enchantsSection, TABLE_SPECIAL_ENCHANTS, AcquisitionTier.TABLE_SPECIAL, previousVersion, LEGACY_TABLE_SPECIAL_WEIGHT_MULTIPLIER);
-        applyTierToSections(enchantsSection, TREASURE_SPECIAL_ENCHANTS, AcquisitionTier.TREASURE_SPECIAL, previousVersion, LEGACY_TREASURE_SPECIAL_WEIGHT_MULTIPLIER);
-        applyTierToSections(enchantsSection, TREASURE_ONLY_ENCHANTS, AcquisitionTier.TREASURE_ONLY, previousVersion, LEGACY_TREASURE_ONLY_WEIGHT_MULTIPLIER);
-        applyTierToSections(cursesSection, CURSE_ENCHANTS, AcquisitionTier.CURSE_TREASURE, previousVersion, LEGACY_CURSE_WEIGHT_MULTIPLIER);
+        applyTierToSections(enchantsSection, TABLE_COMMON_ENCHANTS, AcquisitionTier.TABLE_COMMON);
+        applyTierToSections(enchantsSection, TABLE_SPECIAL_ENCHANTS, AcquisitionTier.TABLE_SPECIAL);
+        applyTierToSections(enchantsSection, TREASURE_SPECIAL_ENCHANTS, AcquisitionTier.TREASURE_SPECIAL);
+        applyTierToSections(enchantsSection, TREASURE_ONLY_ENCHANTS, AcquisitionTier.TREASURE_ONLY);
+        applyTierToSections(cursesSection, CURSE_ENCHANTS, AcquisitionTier.CURSE_TREASURE);
         applySoulboundRarityOverride(enchantsSection);
         configuration.set(ACQUISITION_POLICY_VERSION_KEY, ACQUISITION_POLICY_VERSION);
         return true;
@@ -120,32 +110,16 @@ public final class EnchantAcquisitionPolicy {
 
     private static void applyTierToSections(@NotNull ConfigurationSection parentSection,
                                             @NotNull Set<String> sectionKeys,
-                                            @NotNull AcquisitionTier tier,
-                                            int previousVersion,
-                                            double previousMultiplier) {
+                                            @NotNull AcquisitionTier tier) {
         for (String sectionKey : sectionKeys) {
             ConfigurationSection enchantSection = ConfigSupport.getConfigSection(parentSection, sectionKey);
-            enchantSection.set("weight", scaleWeight(enchantSection.getInt("weight", 0), tier.weightMultiplier(), previousVersion, previousMultiplier));
+            enchantSection.set("weight", tier.weightCap());
             enchantSection.set("enchantmentTags", new ArrayList<>(tier.tags()));
             enchantSection.set("canGetFromEnchantingTable", tier.allowsEnchantingTable());
         }
     }
-
-    private static int scaleWeight(int currentWeight, double multiplier, int previousVersion, double previousMultiplier) {
-        if (currentWeight <= 0) {
-            return currentWeight;
-        }
-        if (previousVersion >= 1) {
-            if (Math.abs(previousMultiplier - multiplier) < 1.0E-9) {
-                return currentWeight;
-            }
-            return Math.max(1, (int) Math.round(currentWeight * (multiplier / previousMultiplier)));
-        }
-        return Math.max(1, (int) Math.round(currentWeight * multiplier));
-    }
-
     private static void applySoulboundRarityOverride(@NotNull ConfigurationSection enchantsSection) {
         ConfigurationSection soulboundSection = ConfigSupport.getConfigSection(enchantsSection, "soulbound");
-        soulboundSection.set("weight", 1);
+        soulboundSection.set("weight", 0);
     }
 }

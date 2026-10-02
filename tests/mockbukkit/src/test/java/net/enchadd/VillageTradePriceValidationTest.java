@@ -213,13 +213,13 @@ class VillageTradePriceValidationTest {
 
         YamlConfiguration yaml = loadConfig();
 
-        // All treasure special enchants should have weight 1 after policy v4 migration
+        // All treasure special enchants should have zero random-acquisition weight after policy v5 migration
         for (String enchantKey : DOUBLE_TRADE_PRICE_ENCHANTS) {
             int weight = yaml.getInt("enchants." + enchantKey + ".weight");
             assertEquals(
-                    1,
+                    0,
                     weight,
-                    () -> enchantKey + " should have weight 1"
+                    () -> enchantKey + " should have zero random-acquisition weight"
             );
         }
     }

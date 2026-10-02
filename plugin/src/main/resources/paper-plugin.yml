@@ -2,9 +2,9 @@ name: EnchADD
 version: '${project.version}'
 main: net.enchadd.EnchADD
 bootstrapper: net.enchadd.EnchADDBootstrap
-api-version: '1.21.6'
+api-version: '1.21.11'
 description: Custom enchants for paper servers
-website: https://github.com/EnchADD/EnchADD
+website: https://github.com/addxiaoyi/EnchADD
 dependencies:
   server:
     PlaceholderAPI:

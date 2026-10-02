@@ -28,10 +28,10 @@ class EnchantAcquisitionPolicyTest {
 
         assertAll(
                 () -> assertTrue(changed, "Policy migration should update an unversioned config"),
-                () -> assertEquals(4, configuration.getInt(EnchantAcquisitionPolicy.ACQUISITION_POLICY_VERSION_KEY), "Policy version should be stamped"),
-                () -> assertEquals(10, tableCommon.getInt("weight"), "Table-common weight should be reduced"),
-                () -> assertEquals(7, treasureOnly.getInt("weight"), "Treasure-only weight should be reduced"),
-                () -> assertEquals(9, curse.getInt("weight"), "Curse weight should be reduced"),
+                () -> assertEquals(5, configuration.getInt(EnchantAcquisitionPolicy.ACQUISITION_POLICY_VERSION_KEY), "Policy version should be stamped"),
+                () -> assertEquals(1, tableCommon.getInt("weight"), "Table-common weight should be reduced"),
+                () -> assertEquals(0, treasureOnly.getInt("weight"), "Treasure-only weight should be reduced"),
+                () -> assertEquals(0, curse.getInt("weight"), "Curse weight should be reduced"),
                 () -> assertTrue(tableCommon.getStringList("enchantmentTags").contains("#in_enchanting_table"), "Table-common enchants should remain table-eligible"),
                 () -> assertTrue(tableCommon.getBoolean("canGetFromEnchantingTable"), "Table-common enchants should remain table-eligible"),
                 () -> assertTrue(treasureOnly.getStringList("enchantmentTags").contains("#treasure"), "Treasure-only enchants should remain treasure-tagged"),

@@ -25,7 +25,7 @@ import java.util.Set;
 public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
 
     private static final int MAX_BALANCED_LEVEL = 5;
-    private static final int MAX_BALANCED_WEIGHT = 30;
+    private static final int MAX_BALANCED_WEIGHT = 1;
     private static final int MAX_BALANCED_ANVIL_COST = 10;
 
     protected final Key key;
@@ -61,7 +61,7 @@ public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
         // Keep malformed or extreme server configs from creating runaway power or loot rates.
         this.anvilCost = clamp(anvilCost, 1, MAX_BALANCED_ANVIL_COST);
         this.maxLevel = clamp(maxLevel, 1, MAX_BALANCED_LEVEL);
-        this.weight = clamp(weight, 1, MAX_BALANCED_WEIGHT);
+        this.weight = clamp(weight, 0, MAX_BALANCED_WEIGHT);
         this.minimumCost = minimumCost;
         this.maximumCost = maximumCost;
         this.enchantTagKeys.addAll(enchantTagKeys);

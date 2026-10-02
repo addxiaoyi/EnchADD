@@ -12,6 +12,7 @@ import net.enchadd.utils.ListenerRegistry;
 import net.enchadd.utils.ParticleQueue;
 import net.enchadd.utils.RuntimeErrorTracker;
 import net.enchadd.utils.RuntimeHealthMonitor;
+import net.enchadd.utils.ServerCompatibility;
 import net.enchadd.utils.SafetyModeManager;
 import net.enchadd.utils.SuggestionCache;
 import net.enchadd.utils.EnchantExecutionBudgetManager;
@@ -39,6 +40,18 @@ public final class EnchADDLifecycleService {
     }
 
     public boolean start() {
+        ServerCompatibility.Detection compatibility = ServerCompatibility.detect();
+        plugin.getLogger().info("[EnchADD] detected server version " + compatibility.displayVersion()
+                + ", compatibility mode=" + compatibility.mode());
+        if (!compatibility.shouldStart()) {
+            plugin.getLogger().severe("[EnchADD] Server version is below the minimum supported version 1.21.11; plugin will not start.");
+            plugin.getServer().getPluginManager().disablePlugin(plugin);
+            return false;
+        }
+        if (compatibility.status() == ServerCompatibility.Status.UNKNOWN) {
+            plugin.getLogger().warning("[EnchADD] Could not parse the server version; continuing in conservative compatibility mode. source="
+                    + compatibility.source());
+        }
         if (!initConfiguration()) {
             return false;
         }

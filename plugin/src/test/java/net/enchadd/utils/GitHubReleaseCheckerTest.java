@@ -8,18 +8,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class GitHubReleaseCheckerTest {
 
     @Test
-    void readsStableGitHubReleasePayload() {
-        String payload = "{\"tag_name\":\"v2.0.6\",\"html_url\":\"https://github.com/EnchADD/EnchADD/releases/tag/v2.0.6\",\"prerelease\":false}";
+    void readsStableGitHubReleasePayloadAndFindsProtectedAsset() {
+        String payload = "{\"tag_name\":\"v2.1.0\",\"html_url\":\"https://github.com/addxiaoyi/EnchADD/releases/tag/v2.1.0\",\"prerelease\":false,\"assets\":[{\"name\":\"enchadd-plugin-2.1.0-protected.jar\",\"browser_download_url\":\"https://github.com/addxiaoyi/EnchADD/releases/download/v2.1.0/enchadd-plugin-2.1.0-protected.jar\",\"digest\":\"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"}]}";
 
         GitHubReleaseChecker.Release release = GitHubReleaseChecker.parseRelease(payload).orElseThrow();
 
-        assertEquals("v2.0.6", release.version());
-        assertTrue(release.url().startsWith("https://github.com/EnchADD/"));
+        assertEquals("v2.1.0", release.version());
+        assertTrue(release.url().startsWith("https://github.com/addxiaoyi/"));
+        assertEquals("enchadd-plugin-2.1.0-protected.jar", release.pluginAsset().name());
+        assertTrue(release.pluginAsset().digest().startsWith("sha256:"));
     }
 
     @Test
     void ignoresPrereleasesAndUntrustedDownloadPages() {
-        assertTrue(GitHubReleaseChecker.parseRelease("{\"tag_name\":\"v2.1.0\",\"html_url\":\"https://github.com/EnchADD/EnchADD/releases/tag/v2.1.0\",\"prerelease\":true}").isEmpty());
+        assertTrue(GitHubReleaseChecker.parseRelease("{\"tag_name\":\"v2.1.0\",\"html_url\":\"https://github.com/addxiaoyi/EnchADD/releases/tag/v2.1.0\",\"prerelease\":true}").isEmpty());
         assertTrue(GitHubReleaseChecker.parseRelease("{\"tag_name\":\"v2.1.0\",\"html_url\":\"https://invalid.example/update\",\"prerelease\":false}").isEmpty());
     }
 }
