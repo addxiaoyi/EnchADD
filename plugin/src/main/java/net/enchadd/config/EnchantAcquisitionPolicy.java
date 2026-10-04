@@ -50,13 +50,13 @@ public final class EnchantAcquisitionPolicy {
                 "#trades/desert_special", "#trades/jungle_special", "#trades/plains_special",
                 "#trades/savanna_special", "#trades/snow_special", "#trades/swamp_special", "#trades/taiga_special"
         )),
-        TREASURE_SPECIAL(0, List.of(
+        TREASURE_SPECIAL(1, List.of(
                 "#treasure", "#on_random_loot", "#tradeable", "#double_trade_price",
                 "#trades/desert_special", "#trades/jungle_special", "#trades/plains_special",
                 "#trades/savanna_special", "#trades/snow_special", "#trades/swamp_special", "#trades/taiga_special"
         )),
-        TREASURE_ONLY(0, List.of("#treasure", "#on_random_loot")),
-        CURSE_TREASURE(0, List.of("#curse", "#treasure", "#in_enchanting_table", "#on_random_loot"));
+        TREASURE_ONLY(1, List.of("#treasure", "#on_random_loot")),
+        CURSE_TREASURE(1, List.of("#curse", "#treasure", "#in_enchanting_table", "#on_random_loot"));
 
         private final int weightCap;
         private final List<String> tags;
@@ -120,6 +120,6 @@ public final class EnchantAcquisitionPolicy {
     }
     private static void applySoulboundRarityOverride(@NotNull ConfigurationSection enchantsSection) {
         ConfigurationSection soulboundSection = ConfigSupport.getConfigSection(enchantsSection, "soulbound");
-        soulboundSection.set("weight", 0);
+        soulboundSection.set("weight", 1);
     }
 }

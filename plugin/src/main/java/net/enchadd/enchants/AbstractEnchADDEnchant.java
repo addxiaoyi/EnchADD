@@ -61,7 +61,7 @@ public abstract class AbstractEnchADDEnchant implements EnchADDEnchant {
         // Keep malformed or extreme server configs from creating runaway power or loot rates.
         this.anvilCost = clamp(anvilCost, 1, MAX_BALANCED_ANVIL_COST);
         this.maxLevel = clamp(maxLevel, 1, MAX_BALANCED_LEVEL);
-        this.weight = clamp(weight, 0, MAX_BALANCED_WEIGHT);
+        this.weight = clamp(weight, 1, MAX_BALANCED_WEIGHT);
         this.minimumCost = minimumCost;
         this.maximumCost = maximumCost;
         this.enchantTagKeys.addAll(enchantTagKeys);

@@ -163,7 +163,7 @@ class ExhaustiveEnchantCoverageContractTest {
                 assertNotNull(enchant.getMinimumCost(), () -> "Minimum cost is required for " + entry.getKey());
                 assertNotNull(enchant.getMaximumCost(), () -> "Maximum cost is required for " + entry.getKey());
                 assertTrue(enchant.getMaxLevel() >= 1, () -> "maxLevel should be >= 1 for " + entry.getKey());
-                assertTrue(enchant.getWeight() >= 0, () -> "weight should be >= 0 for " + entry.getKey());
+                assertTrue(enchant.getWeight() >= 1, () -> "weight should be >= 0 for " + entry.getKey());
                 assertTrue(enchant.getAnvilCost() >= 0, () -> "anvilCost should be >= 0 for " + entry.getKey());
                 assertTrue(enchant.getActiveSlots().iterator().hasNext(), () -> "activeSlots should not be empty for " + entry.getKey());
                 assertFalse(enchant.getSupportedItems().isEmpty(), () -> "supportedItems should not be empty for " + entry.getKey());

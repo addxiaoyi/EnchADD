@@ -111,15 +111,15 @@ class AcquisitionBalancePolicyTest {
             );
         }
 
-        assertEquals(0, yaml.getInt("enchants.ricochet.weight"));
+        assertEquals(1, yaml.getInt("enchants.ricochet.weight"));
         assertEquals(TREASURE_SPECIAL_TAGS, yaml.getStringList("enchants.ricochet.enchantmentTags"));
         assertFalse(yaml.getBoolean("enchants.ricochet.canGetFromEnchantingTable"));
 
-        assertEquals(0, yaml.getInt("enchants.soulbound.weight"));
+        assertEquals(1, yaml.getInt("enchants.soulbound.weight"));
         assertEquals(TREASURE_ONLY_TAGS, yaml.getStringList("enchants.soulbound.enchantmentTags"));
         assertFalse(yaml.getBoolean("enchants.soulbound.canGetFromEnchantingTable"));
 
-        assertEquals(0, yaml.getInt("curses.gluttony.weight"));
+        assertEquals(1, yaml.getInt("curses.gluttony.weight"));
         assertEquals(CURSE_TREASURE_TAGS, yaml.getStringList("curses.gluttony.enchantmentTags"));
         assertTrue(yaml.getBoolean("curses.gluttony.canGetFromEnchantingTable"));
 
@@ -161,7 +161,7 @@ class AcquisitionBalancePolicyTest {
         YamlConfiguration upgraded = loadConfig();
         assertEquals(5, upgraded.getInt("acquisitionPolicyVersion"));
         assertEquals(1, upgraded.getInt("enchants.telepathy.weight"));
-        assertEquals(0, upgraded.getInt("enchants.soulbound.weight"));
+        assertEquals(1, upgraded.getInt("enchants.soulbound.weight"));
         assertEquals(CURSE_TREASURE_TAGS, upgraded.getStringList("curses.gluttony.enchantmentTags"));
         assertTrue(upgraded.getBoolean("curses.gluttony.canGetFromEnchantingTable"));
         assertFalse(upgraded.contains("enchants.cloaking"));
