@@ -17,7 +17,7 @@
         <paper.version>1.21.11-R0.1-SNAPSHOT</paper.version>
         <paper.latest.version>26.3.build.142-beta</paper.latest.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>2.1.0</revision>
+        <revision>2.1.1</revision>
         <mockito.version>5.23.0</mockito.version>
     </properties>
     <url>https://github.com/addxiaoyi/EnchADD</url>
