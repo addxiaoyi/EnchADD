@@ -1,0 +1,32 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.18-SNAPSHOT'
+    id 'java'
+}
+
+base.archivesName = 'enchadd-fabric'
+version = mod_version
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        enchadd { sourceSet sourceSets.main }
+    }
+}
+
+sourceSets.main.java.srcDir('../common/src/main/java')
+sourceSets.main.resources.srcDir('../common/src/main/resources')
+apply from: rootProject.file(rootProject.name == 'enchadd-mod'
+        ? 'generate-enchant-resources.gradle'
+        : '../generate-enchant-resources.gradle')
+apply from: rootProject.file(rootProject.name == 'enchadd-mod'
+        ? 'downgrade-26.3-mixins.gradle'
+        : '../downgrade-26.3-mixins.gradle')
+repositories { maven { url = 'https://maven.fabricmc.net/' } }
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    implementation "net.fabricmc:fabric-loader:${loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+}
+processResources { filesMatching('fabric.mod.json') { expand version: project.version } }
+tasks.withType(JavaCompile).configureEach { options.release = Integer.parseInt(java_release); options.encoding = 'UTF-8' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(Integer.parseInt(java_release)) }

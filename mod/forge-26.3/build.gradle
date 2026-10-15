@@ -1,0 +1,41 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[7.0.29,8.0)'
+    id 'java'
+}
+
+base.archivesName = 'enchadd-forge'
+version = mod_version
+sourceSets.main.java.srcDir('../common/src/main/java')
+sourceSets.main.resources.srcDir('../common/src/main/resources')
+apply from: rootProject.file(rootProject.name == 'enchadd-mod'
+        ? 'generate-enchant-resources.gradle'
+        : '../generate-enchant-resources.gradle')
+apply from: rootProject.file(rootProject.name == 'enchadd-mod'
+        ? 'downgrade-26.3-mixins.gradle'
+        : '../downgrade-26.3-mixins.gradle')
+
+def runDirectory = project.file(findProperty('run_dir') ?: 'run')
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    runs {
+        configureEach { workingDir = runDirectory }
+        server { args '--nogui' }
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0.5'
+}
+tasks.withType(JavaCompile).configureEach { options.release = Integer.parseInt(java_release); options.encoding = 'UTF-8' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(Integer.parseInt(java_release)) }
+processResources { filesMatching('META-INF/mods.toml') { expand project.properties } }
+
+jar { manifest { attributes['MixinConfigs'] = 'enchadd.mixins.json' } }

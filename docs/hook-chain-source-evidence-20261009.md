@@ -1,0 +1,209 @@
+# Hook-chain source evidence (2026-10-09)
+
+This is source-level evidence only; it does not prove player-triggered behavior.
+
+## smelting
+
+- **mod/fabric-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabric.java:30` EnchADDFabricSmelting.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:13` final class EnchADDFabricSmelting {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:14` private static final ResourceKey<Enchantment> SMELTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "smelting"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:15` private EnchADDFabricSmelting() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:19` var holder = serverPlayer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(SMELTING);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:21` if (EnchantmentHelper.getItemEnchantmentLevel(holder, tool) > 0) SmeltingBehavior.convertFreshDrops(serverLevel, pos, tool);
+- **mod/fabric-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabric.java:30` EnchADDFabricSmelting.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:13` final class EnchADDFabricSmelting {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:14` private static final ResourceKey<Enchantment> SMELTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "smelting"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:15` private EnchADDFabricSmelting() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:19` var holder = serverPlayer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(SMELTING);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricSmelting.java:21` if (EnchantmentHelper.getItemEnchantmentLevel(holder, tool) > 0) SmeltingBehavior.convertFreshDrops(serverLevel, pos, tool);
+- **mod/forge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForge.java:38` EnchADDForgeSmelting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:15` final class EnchADDForgeSmelting {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:16` private static final ResourceKey<Enchantment> SMELTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "smelting"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:17` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeSmelting()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:20` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(SMELTING);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:23` level.getServer().execute(() -> SmeltingBehavior.convertFreshDrops(level, event.getPos(), tool));
+- **mod/forge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForge.java:38` EnchADDForgeSmelting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:15` final class EnchADDForgeSmelting {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:16` private static final ResourceKey<Enchantment> SMELTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "smelting"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:17` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeSmelting()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:20` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(SMELTING);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeSmelting.java:23` level.getServer().execute(() -> SmeltingBehavior.convertFreshDrops(level, event.getPos(), tool));
+- **mod/neoforge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:38` EnchADDNeoForgeSmeltingBehavior.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:12` final class EnchADDNeoForgeSmeltingBehavior {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:13` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeSmeltingBehavior::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:21` .getOrThrow(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENCHANTMENT, net.minecraft.resources.Identifier.fromNamespaceAndPath("enchadd", "smelting"))),
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:25` ItemStack smelted = SmeltingBehavior.smelt(level, drop.getItem());
+- **mod/neoforge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:38` EnchADDNeoForgeSmeltingBehavior.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:3` import net.enchadd.mod.common.SmeltingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:12` final class EnchADDNeoForgeSmeltingBehavior {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:13` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeSmeltingBehavior::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:19` var holder = registry.getOrThrow(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENCHANTMENT, net.minecraft.resources.Identifier.fromNamespaceAndPath("enchadd", "smelting")));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeSmeltingBehavior.java:23` ItemStack smelted = SmeltingBehavior.smelt(level, drop.getItem());
+
+## replanting
+
+- **mod/fabric-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabric.java:32` EnchADDFabricReplanting.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:12` final class EnchADDFabricReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:14` private EnchADDFabricReplanting() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:20` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:21` var seed = ReplantingBehavior.seedFor(state);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:25` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(serverLevel, pos, state, tool, stack)) return;
+- **mod/fabric-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabric.java:32` EnchADDFabricReplanting.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:12` final class EnchADDFabricReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:14` private EnchADDFabricReplanting() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:20` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:21` var seed = ReplantingBehavior.seedFor(state);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricReplanting.java:25` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(serverLevel, pos, state, tool, stack)) return;
+- **mod/forge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForge.java:40` EnchADDForgeReplanting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:14` final class EnchADDForgeReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:15` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:16` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeReplanting()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:21` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:23` var seed = ReplantingBehavior.seedFor(state);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:28` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(level, event.getPos(), state, tool, stack)) return;
+- **mod/forge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForge.java:40` EnchADDForgeReplanting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:14` final class EnchADDForgeReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:15` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:16` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeReplanting()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:21` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:23` var seed = ReplantingBehavior.seedFor(state);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeReplanting.java:28` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(level, event.getPos(), state, tool, stack)) return;
+- **mod/neoforge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:40` EnchADDNeoForgeReplanting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:12` final class EnchADDNeoForgeReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:14` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeReplanting::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:19` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:20` var seed = ReplantingBehavior.seedFor(event.getLevel().getBlockState(event.getPos()));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:25` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(event.getLevel(), event.getPos(), event.getLevel().getBlockState(event.getPos()), tool, stack)) return;
+- **mod/neoforge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:40` EnchADDNeoForgeReplanting.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:3` import net.enchadd.mod.common.ReplantingBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:12` final class EnchADDNeoForgeReplanting {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> REPLANTING = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "replanting"));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:14` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeReplanting::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:19` if (EnchantmentHelper.getItemEnchantmentLevel(registry.getOrThrow(REPLANTING), tool) <= 0) return;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:21` var seed = ReplantingBehavior.seedFor(state);
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeReplanting.java:26` if (!stack.isEmpty() && stack.getItem() == seed && ReplantingBehavior.replant(event.getLevel(), event.getPos(), state, tool, stack)) return;
+
+## irrigation
+
+- **mod/fabric-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabric.java:20` EnchADDFabricIrrigation.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:8` final class EnchADDFabricIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:9` private EnchADDFabricIrrigation() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:13` IrrigationBehavior.hydrate(level, serverPlayer, hit.getBlockPos(), player.getItemInHand(hand));
+- **mod/fabric-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabric.java:20` EnchADDFabricIrrigation.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:8` final class EnchADDFabricIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:9` private EnchADDFabricIrrigation() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricIrrigation.java:13` IrrigationBehavior.hydrate(level, serverPlayer, hit.getBlockPos(), player.getItemInHand(hand));
+- **mod/forge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForge.java:21` EnchADDForgeIrrigation.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:9` final class EnchADDForgeIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:10` static void register() { PlayerInteractEvent.RightClickBlock.BUS.addListener(new EnchADDForgeIrrigation()::onRightClick); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:13` IrrigationBehavior.hydrate(event.getLevel(), player, event.getPos(), player.getItemInHand(event.getHand()));
+- **mod/forge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForge.java:21` EnchADDForgeIrrigation.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:9` final class EnchADDForgeIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:10` static void register() { PlayerInteractEvent.RightClickBlock.BUS.addListener(new EnchADDForgeIrrigation()::onRightClick); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeIrrigation.java:13` IrrigationBehavior.hydrate(event.getLevel(), player, event.getPos(), player.getItemInHand(event.getHand()));
+- **mod/neoforge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:21` EnchADDNeoForgeIrrigation.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:8` final class EnchADDNeoForgeIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:9` static void register() { NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, EnchADDNeoForgeIrrigation::onRightClick); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:12` IrrigationBehavior.hydrate(event.getLevel(), player, event.getPos(), player.getItemInHand(event.getHand()));
+- **mod/neoforge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:21` EnchADDNeoForgeIrrigation.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:3` import net.enchadd.mod.common.IrrigationBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:8` final class EnchADDNeoForgeIrrigation {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:9` static void register() { NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, EnchADDNeoForgeIrrigation::onRightClick); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeIrrigation.java:12` IrrigationBehavior.hydrate(event.getLevel(), player, event.getPos(), player.getItemInHand(event.getHand()));
+
+## furrow
+
+- **mod/fabric-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabric.java:36` EnchADDFabricFurrow.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:12` final class EnchADDFabricFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:14` private EnchADDFabricFurrow() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:19` var holder = serverPlayer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:20` if (EnchantmentHelper.getItemEnchantmentLevel(holder, serverPlayer.getMainHandItem()) > 0) FurrowBehavior.harvest(serverLevel, serverPlayer, pos, state, serverPlayer.getMainHandItem());
+- **mod/fabric-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabric.java:36` EnchADDFabricFurrow.init();
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:12` final class EnchADDFabricFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:14` private EnchADDFabricFurrow() {}
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:19` var holder = serverPlayer.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\fabric-26.3\src\main\java\net\enchadd\mod\EnchADDFabricFurrow.java:20` if (EnchantmentHelper.getItemEnchantmentLevel(holder, serverPlayer.getMainHandItem()) > 0) FurrowBehavior.harvest(serverLevel, serverPlayer, pos, state, serverPlayer.getMainHandItem());
+- **mod/forge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForge.java:44` EnchADDForgeFurrow.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:14` final class EnchADDForgeFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:15` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:16` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeFurrow()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:19` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:22` level.getServer().execute(() -> FurrowBehavior.harvest(level, player, event.getPos(), event.getState(), tool));
+- **mod/forge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForge.java:44` EnchADDForgeFurrow.register();
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:14` final class EnchADDForgeFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:15` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:16` static void register() { BlockEvent.BreakEvent.BUS.addListener(new EnchADDForgeFurrow()::onBreak); }
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:19` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\forge-26.3\src\main\java\net\enchadd\mod\EnchADDForgeFurrow.java:22` level.getServer().execute(() -> FurrowBehavior.harvest(level, player, event.getPos(), event.getState(), tool));
+- **mod/neoforge-1.21.11/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:44` EnchADDNeoForgeFurrow.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:12` final class EnchADDNeoForgeFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:14` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeFurrow::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:17` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:20` FurrowBehavior.harvest(event.getLevel(), player, event.getPos(), event.getLevel().getBlockState(event.getPos()), tool);
+- **mod/neoforge-26.3/src/main/java**
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForge.java:44` EnchADDNeoForgeFurrow.register();
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:3` import net.enchadd.mod.common.FurrowBehavior;
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:12` final class EnchADDNeoForgeFurrow {
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:13` private static final ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FURROW = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "furrow"));
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:14` static void register() { NeoForge.EVENT_BUS.addListener(BlockDropsEvent.class, EnchADDNeoForgeFurrow::onDrops); }
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:17` var holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FURROW);
+  - `D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\src\main\java\net\enchadd\mod\EnchADDNeoForgeFurrow.java:20` FurrowBehavior.harvest(event.getLevel(), player, event.getPos(), event.getLevel().getBlockState(event.getPos()), tool);
+
+## bind
+
+- **mod/fabric-1.21.11/src/main/java**: no direct ID/behavior-name match
+- **mod/fabric-26.3/src/main/java**: no direct ID/behavior-name match
+- **mod/forge-1.21.11/src/main/java**: no direct ID/behavior-name match
+- **mod/forge-26.3/src/main/java**: no direct ID/behavior-name match
+- **mod/neoforge-1.21.11/src/main/java**: no direct ID/behavior-name match
+- **mod/neoforge-26.3/src/main/java**: no direct ID/behavior-name match
+

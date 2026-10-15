@@ -1,0 +1,4 @@
+plugins { id 'java-library' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+sourceSets.main.java.srcDir('src/main/java')
+tasks.withType(JavaCompile).configureEach { options.release = 21; options.encoding = 'UTF-8' }

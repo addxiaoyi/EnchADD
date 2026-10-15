@@ -1,0 +1,35 @@
+package net.enchadd.mod;
+
+import net.enchadd.mod.common.NourishRules;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+
+final class EnchADDForgeNourishBehavior {
+    private static final ResourceKey<Enchantment> NOURISH = ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("enchadd", "nourish"));
+    private EnchADDForgeNourishBehavior() {}
+    static void register() { LivingEntityUseItemEvent.Finish.BUS.addListener(new EnchADDForgeNourishBehavior()::onFinish); }
+    @SubscribeEvent
+    public void onFinish(LivingEntityUseItemEvent.Finish event) {
+        LivingEntity entity = event.getEntity();
+        if (!(entity instanceof ServerPlayer player)) return;
+        ItemStack food = event.getItem();
+        if (food.isEmpty() || !food.has(net.minecraft.core.component.DataComponents.FOOD)) return;
+        Holder<Enchantment> holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(NOURISH);
+        int level = Math.min(3, EnchantmentHelper.getItemEnchantmentLevel(holder, player.getItemBySlot(EquipmentSlot.CHEST)));
+        int duration = NourishRules.durationTicks(level);
+        if (duration > 0) player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, duration, NourishRules.amplifier(), false, false, true));
+    }
+}

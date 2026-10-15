@@ -1,0 +1,474 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+def catalogFile = rootProject.name == 'enchadd-mod'
+        ? rootProject.file('common/src/main/resources/data/enchadd/enchantments.list')
+        : rootProject.file('../common/src/main/resources/data/enchadd/enchantments.list')
+def generatedDir = layout.buildDirectory.dir('generated/enchadd-resources').get().asFile
+def is26_3 = project.projectDir.name.endsWith('26.3')
+def requirementType = is26_3 ? 'type' : 'condition'
+def requirement = { String type, Map fields = [:] -> [(requirementType): type] + fields }
+def damageTagId = { String tag -> is26_3 ? "#minecraft:${tag}" : "minecraft:${tag}" }
+def catalog = catalogFile.readLines('UTF-8')
+        .collect { it.trim() }
+        .findAll { it && !it.startsWith('#') }
+        .collect { it.split('\\|', 2) }
+
+def normalIds = catalog.findAll { it[1] == 'normal' }.collect { it[0] }
+def curseIds = catalog.findAll { it[1] == 'curse' }.collect { it[0] }
+def maxLevelFor = { String id, boolean curse -> ['greed', 'misfortune'].contains(id) ? 3 : (curse ? 1 : 3) }
+def spearIds = ['lancer', 'reach', 'skewer', 'counterthrust'] as Set
+def itemGroups = [
+        shield  : ['barrier', 'brace', 'bulwark', 'holdfast', 'parry', 'pivot', 'riposte', 'ward'] as Set,
+        bow     : ['bind', 'farshot', 'hunters_mark', 'mortal_wound', 'ricochet', 'steady_aim', 'stillness', 'volley'] as Set,
+        crossbow: ['flare', 'obscure', 'steady_aim'] as Set,
+        fishing : ['freshcatch', 'trawler'] as Set,
+        mining  : ['arborist', 'delvesense', 'furrow', 'insight', 'irrigation', 'refine', 'replanting', 'smelting', 'stonewake', 'telepathy', 'trailblazer'] as Set,
+        mace    : ['meteor', 'overwhelm', 'tremor', 'updraft'] as Set,
+        armor   : ['airbag', 'afterglide', 'arrowguard', 'blastguard', 'defense', 'firebreak', 'fireguard', 'fortitude', 'frostguard', 'insomnia', 'panic', 'purify', 'shroud', 'vampirism_curse'] as Set,
+        chest   : ['debilitate'] as Set,
+        feet    : ['evasion', 'featherstep'] as Set,
+        trident : ['cadence', 'cinder', 'highground', 'initiative', 'lodestar', 'measured', 'momentum', 'poise', 'pursuit', 'resonance', 'shadowstrike', 'tide_runner', 'tracer', 'undertow', 'underdog', 'wingclip'] as Set,
+        weapon  : ['backfire', 'beheading', 'breakguard', 'decapitate', 'executioner', 'frostbrand', 'greed', 'hemorrhage', 'immolate', 'misfortune', 'rashness', 'shatter', 'sunder'] as Set
+]
+
+def supportedItems = { String id ->
+    if (spearIds.contains(id)) {
+        return ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
+                'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
+                'minecraft:netherite_spear', 'minecraft:trident']
+    }
+    def group = itemGroups.find { it.value.contains(id) }
+    def tagName = [shield: 'durability', chest: 'chest_armor', feet: 'foot_armor'][group?.key] ?: group?.key
+    return group ? "#minecraft:enchantable/${tagName}" : '#minecraft:enchantable/durability'
+}
+
+def slotsFor = { String id ->
+    if (itemGroups.shield.contains(id)) return ['offhand']
+    if (itemGroups.armor.contains(id)) return ['armor']
+    if (itemGroups.chest.contains(id)) return ['chest']
+    if (itemGroups.feet.contains(id)) return ['feet']
+    return ['hand']
+}
+
+def displayName = { String id ->
+    id.split('_').collect { it.substring(0, 1).toUpperCase(Locale.ROOT) + it.substring(1) }.join(' ')
+}
+
+def linear = { double base ->
+    [type: 'minecraft:linear', base: base, per_level_above_first: base]
+}
+
+def damageEffect = { double base ->
+    [effect: [type: 'minecraft:add', value: linear(base)]]
+}
+
+def protectionEffect = { String sourceTag, double points ->
+    [
+            effect: [type: 'minecraft:add', value: linear(points)],
+            requirements: is26_3
+                    ? requirement('minecraft:damage_source_properties', [predicate: [tags: [
+                            [expected: true, id: damageTagId(sourceTag)],
+                            [expected: false, id: damageTagId('bypasses_invulnerability')]
+                    ]]])
+                    : [condition: 'minecraft:damage_source_properties', predicate: [tags: [
+                            [expected: true, id: damageTagId(sourceTag)],
+                            [expected: false, id: damageTagId('bypasses_invulnerability')]
+                    ]]]
+    ]
+}
+
+def postAttackEffect = { Map effect ->
+    [affected: 'victim', enchanted: 'attacker', effect: effect]
+}
+
+def mobEffect = { id, duration, amplifier ->
+    [
+            type: 'minecraft:apply_mob_effect',
+            to_apply: "minecraft:${id}",
+            min_amplifier: amplifier,
+            max_amplifier: amplifier,
+            min_duration: duration,
+            max_duration: linear(duration)
+    ]
+}
+
+def directHit = {
+    requirement('minecraft:damage_source_properties', [predicate: [is_direct: true]])
+}
+
+def fireProtection = { double points ->
+    protectionEffect('is_fire', points)
+}
+
+def multiplyEffect = { double factor ->
+    [effect: [type: 'minecraft:multiply', factor: factor]]
+}
+
+def arrowAttacker = {
+    def predicate = is26_3
+            ? ['minecraft:entity_type': '#minecraft:arrows']
+            : [type: '#minecraft:arrows']
+    requirement('minecraft:entity_properties', [entity: 'direct_attacker', predicate: predicate])
+}
+
+def chancePerLevel = { double amount ->
+    def requirementData = requirement('minecraft:random_chance')
+    requirementData.chance = [type: 'minecraft:enchantment_level', amount: linear(amount)]
+    requirementData
+}
+
+def effectsFor = { String id ->
+    switch (id) {
+        case 'overwhelm': return [:]
+        case 'lancer': return ['minecraft:damage': [damageEffect(0.5)]]
+        case 'reach': return ['minecraft:damage': [damageEffect(0.25)]]
+        case 'skewer': return [:]
+        case 'counterthrust': return [:]
+        case 'debilitate': return ['minecraft:post_attack': [[
+                affected: 'attacker',
+                enchanted: 'victim',
+                effect: mobEffect('weakness', 2.0, 0),
+                requirements: directHit()
+        ]]]
+        case 'frostbrand': return [:]
+        case 'immolate': return [:]
+        case 'firebreak': return [
+                'minecraft:attributes': [[
+                        amount: [type: 'minecraft:linear', base: -0.20, per_level_above_first: -0.20],
+                        attribute: 'minecraft:burning_time',
+                        id: 'minecraft:enchantment.firebreak',
+                        operation: 'add_multiplied_base'
+                ]],
+                'minecraft:damage_protection': [fireProtection(1.0)]
+        ]
+        case 'insight': return ['minecraft:block_experience': [multiplyEffect(1.30)]]
+        case 'steady_aim': return [:]
+        case 'backfire': return [:]
+        case 'rebound': return ['minecraft:item_damage': [[
+                effect: [type: 'minecraft:add', value: linear(-1.0)],
+                requirements: chancePerLevel(0.12)
+        ]]]
+        case 'trawler': return ['minecraft:fishing_luck_bonus': [[
+                effect: [type: 'minecraft:add', value: linear(1.0)]
+        ]]]
+        default: return [:]
+    }
+}
+
+tasks.register('generateEnchADDResources') {
+    inputs.file(catalogFile)
+    outputs.dir(generatedDir)
+    doLast {
+        delete(generatedDir)
+        catalog.each { entry ->
+            String id = entry[0]
+            boolean curse = entry[1] == 'curse'
+            def definition = [
+                    anvil_cost   : 2,
+                    description  : [translate: "enchantment.enchadd.${id}"],
+                    effects      : effectsFor(id),
+                    max_cost     : [base: curse ? 45 : 40, per_level_above_first: 8],
+                    max_level    : maxLevelFor(id, curse),
+                    min_cost     : [base: curse ? 15 : 1, per_level_above_first: 8],
+                    slots        : slotsFor(id),
+                    supported_items: supportedItems(id),
+                    weight       : 1
+            ]
+            def target = new File(generatedDir, "data/enchadd/enchantment/${id}.json")
+            target.parentFile.mkdirs()
+            target.text = JsonOutput.prettyPrint(JsonOutput.toJson(definition)) + System.lineSeparator()
+        }
+
+        def tag = { String name, List<String> ids ->
+            def target = new File(generatedDir, "data/minecraft/tags/enchantment/${name}.json")
+            target.parentFile.mkdirs()
+            target.text = JsonOutput.prettyPrint(JsonOutput.toJson([
+                    replace: false,
+                    values : ids.collect { "enchadd:${it}" }
+            ])) + System.lineSeparator()
+        }
+        tag('in_enchanting_table', normalIds)
+        tag('non_treasure', normalIds)
+        tag('curse', curseIds)
+        tag('treasure', curseIds)
+        tag('on_random_loot', normalIds + curseIds)
+
+        def packMeta = is26_3
+                ? [pack: [description: 'EnchADD data pack', min_format: 121, max_format: 121]]
+                : [pack: [description: 'EnchADD data pack', min_format: [94, 1], max_format: 94]]
+        new File(generatedDir, 'pack.mcmeta').text = JsonOutput.prettyPrint(JsonOutput.toJson(packMeta)) + System.lineSeparator()
+        def lang = new File(generatedDir, 'assets/enchadd/lang/en_us.json')
+        lang.parentFile.mkdirs()
+        lang.text = JsonOutput.prettyPrint(JsonOutput.toJson(
+                catalog.collectEntries { entry ->
+                    [("enchantment.enchadd.${entry[0]}"), "EnchADD ${displayName(entry[0])}"]
+                }
+        )) + System.lineSeparator()
+    }
+}
+
+tasks.register('validateEnchADDResources') {
+    dependsOn(tasks.named('generateEnchADDResources'))
+    doLast {
+        def expectedEffects = [
+                lancer       : 'minecraft:damage',
+                reach        : 'minecraft:damage',
+                debilitate   : 'minecraft:post_attack',
+                firebreak    : 'minecraft:damage_protection',
+                insight      : 'minecraft:block_experience',
+                rebound      : 'minecraft:item_damage',
+                trawler      : 'minecraft:fishing_luck_bonus'
+        ]
+        def enchantDir = new File(generatedDir, 'data/enchadd/enchantment')
+        def jsonFiles = enchantDir.listFiles({ file -> file.name.endsWith('.json') } as FileFilter) ?: []
+        assert jsonFiles.size() == catalog.size(): "Expected ${catalog.size()} enchantments, got ${jsonFiles.size()}"
+        def packMeta = new File(generatedDir, 'pack.mcmeta')
+        assert packMeta.isFile(): 'Missing generated pack.mcmeta'
+        def parser = new JsonSlurper()
+        jsonFiles.each { file ->
+            def parsed = parser.parse(file)
+            assert parsed.description?.translate: "Missing description in ${file.name}"
+            assert parsed.weight instanceof Number: "Missing weight in ${file.name}"
+        }
+        expectedEffects.each { id, effectKey ->
+            def file = new File(enchantDir, "${id}.json")
+            assert file.isFile(): "Missing migrated enchantment ${id}"
+            def parsed = parser.parse(file)
+            assert parsed.effects?.containsKey(effectKey): "${id} missing expected effect ${effectKey}"
+        }
+    }
+}
+
+tasks.register('validateEnchADDBehaviorAdapters') {
+    dependsOn(tasks.named('validateEnchADDResources'))
+    doLast {
+        def commonBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DamageProtectionBehavior.java')
+        assert commonBehavior.isFile(): 'Missing shared armor damage protection behavior'
+        def spearDefense = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearDefenseBehavior.java')
+        assert spearDefense.isFile(): 'Missing Counterthrust shared behavior'
+        def spearCombat = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearCombatBehavior.java')
+        assert spearCombat.isFile(): 'Missing Skewer shared behavior'
+        def backfire = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/BackfireBehavior.java')
+        assert backfire.isFile(): 'Missing Backfire shared behavior'
+        def mobExperience = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MobExperienceBehavior.java')
+        assert mobExperience.isFile(): 'Missing shared mob experience behavior'
+        def durabilityCurse = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DurabilityCurseBehavior.java')
+        assert durabilityCurse.isFile(): 'Missing shared durability curse behavior'
+        def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
+        def loader = project.projectDir.name
+        def required = switch (loader) {
+            case 'fabric-1.21.11', 'fabric-26.3' -> [
+                    'EnchADDNourishBehavior.java',
+                    'EnchADDFabricDelvesense.java',
+                    'EnchADDFabricLastStand.java',
+                    'EnchADDFabricFortitude.java',
+                    'EnchADDFabricBulwark.java',
+                    'EnchADDFabricWard.java',
+                    'EnchADDFabricBreakguard.java',
+                    'EnchADDFabricBarrier.java',
+                    'EnchADDFabricHoldfast.java',
+                    'EnchADDFabricPlayerStates.java',
+                    'EnchADDFabricEvasion.java',
+                    'EnchADDFabricMeleeEffects.java',
+                    'mixin/ComboDamageMixin.java',
+                    'EnchADDFabricWingguard.java',
+                    'EnchADDFabricPanic.java',
+                    'EnchADDFabricStonewake.java',
+                    'EnchADDFabricIrrigation.java',
+                    'EnchADDFabricWater.java',
+                    'EnchADDFabricProjectileStatus.java',
+                    'mixin/ProjectileStatusMixin.java',
+                    'mixin/ProjectileDamageMixin.java',
+                    'mixin/SoulboundMixin.java',
+                    'mixin/HeadDropsMixin.java',
+                    'mixin/PivotMixin.java',
+                    'mixin/ShroudMixin.java',
+                    'mixin/RicochetProjectileMixin.java',
+                    'mixin/HomecomingMixin.java',
+                    'mixin/VolleyMixin.java',
+                    'mixin/CinderDamageMixin.java',
+                    'mixin/InsomniaMixin.java',
+                    'mixin/TenderstepMixin.java',
+                    'EnchADDFabricMeleeEffects.java',
+                    'mixin/ComboDamageMixin.java',
+                    'mixin/AirbagDamageMixin.java',
+                    'mixin/SteadfastMixin.java',
+                    'mixin/HomewardDamageMixin.java',
+                    'mixin/BraceMixin.java',
+                    'mixin/FarshotArrowMixin.java',
+                    'mixin/FarshotDamageMixin.java',
+                    'mixin/ParryDamageMixin.java',
+                    'mixin/BreakguardMixin.java',
+                    'EnchADDFabricSmelting.java',
+                    'EnchADDFabricRefine.java',
+                    'EnchADDFabricReplanting.java',
+                    'EnchADDFabricTelepathy.java',
+                    'EnchADDFabricRashness.java',
+                    'EnchADDFabricToolInteractions.java',
+                    'EnchADDFabricFurrow.java',
+                    'mixin/FishingHookFreshcatchMixin.java',
+                    'mixin/RetchingMixin.java',
+                    'mixin/ThirstDamageMixin.java',
+                    'mixin/ThirstHealingMixin.java',
+                    'mixin/MomentumMixin.java',
+                    'mixin/LucidityMixin.java',
+                    'mixin/ClairvoyanceDamageMixin.java',
+                    'mixin/PoiseDamageMixin.java',
+                    'mixin/PurifyMixin.java',
+                    'mixin/DispelDamageMixin.java',
+                    'mixin/ComboDamageMixin.java',
+                    'mixin/ProjectileDamageMixin.java'
+            ]
+            case 'forge-1.21.11', 'forge-26.3' -> [
+                    'EnchADDForgeNourishBehavior.java',
+                    'EnchADDForgeDelvesense.java',
+                    'EnchADDForgeFreshcatchBehavior.java',
+                    'EnchADDForgeLastStand.java',
+                    'EnchADDForgeFortitude.java',
+                    'EnchADDForgeBulwark.java',
+                    'EnchADDForgeWard.java',
+                    'EnchADDForgeBreakguard.java',
+                    'EnchADDForgeBarrier.java',
+                    'EnchADDForgeHoldfast.java',
+                    'EnchADDForgePlayerStates.java',
+                    'EnchADDForgeEvasion.java',
+                    'EnchADDForgeMeleeEffects.java',
+                    'EnchADDForgeWingguard.java',
+                    'EnchADDForgePanic.java',
+                    'EnchADDForgeInsomnia.java',
+                    'EnchADDForgeTenderstep.java',
+                    'EnchADDForgeStonewake.java',
+                    'EnchADDForgeIrrigation.java',
+                    'EnchADDForgeHomeward.java',
+                    'EnchADDForgeHomecomingTotem.java',
+                    'EnchADDForgeVolley.java',
+                    'EnchADDForgeMeleeEffects.java',
+                    'EnchADDForgeWater.java',
+                    'EnchADDForgeProjectileStatus.java',
+                    'EnchADDForgeRicochet.java',
+                    'EnchADDForgeAirbag.java',
+                    'EnchADDForgeSteadfast.java',
+                    'EnchADDForgeBrace.java',
+                    'EnchADDForgeFarshot.java',
+                    'EnchADDForgeParry.java',
+                    'EnchADDForgeSmelting.java',
+                    'EnchADDForgeRefine.java',
+                    'EnchADDForgeReplanting.java',
+                    'EnchADDForgeTelepathy.java',
+                    'EnchADDForgeRashness.java',
+                    'EnchADDForgeToolInteractions.java',
+                    'EnchADDForgeFurrow.java',
+                    'EnchADDForgeRetchingBehavior.java',
+                    'EnchADDForgeThirstBehavior.java',
+                    'EnchADDForgeMomentum.java',
+                    'EnchADDForgeLucidity.java',
+                    'EnchADDForgeClairvoyance.java',
+                    'EnchADDForgePoise.java',
+                    'EnchADDForgePurify.java',
+                    'EnchADDForgeDispel.java',
+                    'EnchADDForgeComboEffects.java',
+                    'EnchADDForgeSoulbound.java',
+                    'EnchADDForgeHeadDrops.java',
+                    'EnchADDForgePivot.java',
+                    'EnchADDForgeShroud.java'
+            ]
+            case 'neoforge-1.21.11', 'neoforge-26.3' -> [
+                    'EnchADDNeoForgeNourishBehavior.java',
+                    'EnchADDNeoForgeDelvesense.java',
+                    'EnchADDNeoForgeFreshcatchBehavior.java',
+                    'EnchADDNeoForgeLastStand.java',
+                    'EnchADDNeoForgeFortitude.java',
+                    'EnchADDNeoForgeBulwark.java',
+                    'EnchADDNeoForgeWard.java',
+                    'EnchADDNeoForgeBreakguard.java',
+                    'EnchADDNeoForgeBarrier.java',
+                    'EnchADDNeoForgeHoldfast.java',
+                    'EnchADDNeoForgePlayerStates.java',
+                    'EnchADDNeoForgeEvasion.java',
+                    'EnchADDNeoForgeMeleeEffects.java',
+                    'EnchADDNeoForgeWingguard.java',
+                    'EnchADDNeoForgePanic.java',
+                    'EnchADDNeoForgeInsomnia.java',
+                    'EnchADDNeoForgeTenderstep.java',
+                    'EnchADDNeoForgeStonewake.java',
+                    'EnchADDNeoForgeIrrigation.java',
+                    'EnchADDNeoForgeHomeward.java',
+                    'EnchADDNeoForgeHomecomingTotem.java',
+                    'EnchADDNeoForgeVolley.java',
+                    'EnchADDNeoForgeMeleeEffects.java',
+                    'EnchADDNeoForgeWater.java',
+                    'EnchADDNeoForgeProjectileStatus.java',
+                    'EnchADDNeoForgeRicochet.java',
+                    'EnchADDNeoForgeAirbag.java',
+                    'EnchADDNeoForgeSteadfast.java',
+                    'EnchADDNeoForgeBrace.java',
+                    'EnchADDNeoForgeFarshot.java',
+                    'EnchADDNeoForgeParry.java',
+                    'EnchADDNeoForgeSmeltingBehavior.java',
+                    'EnchADDNeoForgeRefine.java',
+                    'EnchADDNeoForgeReplanting.java',
+                    'EnchADDNeoForgeTelepathy.java',
+                    'EnchADDNeoForgeRashness.java',
+                    'EnchADDNeoForgeToolInteractions.java',
+                    'EnchADDNeoForgeFurrow.java',
+                    'EnchADDNeoForgeRetchingBehavior.java',
+                    'EnchADDNeoForgeThirstBehavior.java',
+                    'EnchADDNeoForgeMomentum.java',
+                    'EnchADDNeoForgeLucidity.java',
+                    'EnchADDNeoForgeClairvoyance.java',
+                    'EnchADDNeoForgePoise.java',
+                    'EnchADDNeoForgePurify.java',
+                    'EnchADDNeoForgeDispel.java',
+                    'EnchADDNeoForgeComboEffects.java',
+                    'EnchADDNeoForgeSoulbound.java',
+                    'EnchADDNeoForgeHeadDrops.java',
+                    'EnchADDNeoForgePivot.java',
+                    'EnchADDNeoForgeShroud.java'
+            ]
+            default -> []
+        }
+        required.each { relative ->
+            assert new File(sourceRoot, relative).isFile(): "Missing ${loader} behavior adapter: ${relative}"
+        }
+        if (loader.startsWith('fabric-')) {
+            assert new File(sourceRoot, 'mixin/MobExperienceMixin.java').text.contains('ExperienceOrb;award'):
+                    "${loader} missing death-xp argument hook"
+            assert new File(sourceRoot, 'mixin/DurabilityCurseMixin.java').text.contains('DurabilityCurseBehavior.adjust'):
+                    "${loader} missing durability curse hook"
+            assert new File(sourceRoot, 'EnchADDFabric.java').exists()
+            assert new File(sourceRoot, 'EnchADDFabricMeleeEffects.java').text.contains('BackfireBehavior.onAttack'):
+                    "${loader} missing Backfire post-hit hook"
+            assert new File(sourceRoot, 'mixin/ComboDamageMixin.java').text.contains('SpearCombatBehavior.onHit'):
+                    "${loader} missing Skewer damage hook"
+            assert new File(sourceRoot, 'mixin/ComboDamageMixin.java').text.contains('SpearDefenseBehavior.adjustDamage'):
+                    "${loader} missing Counterthrust hurt-head hook"
+        } else {
+            String meleeAdapter = loader.startsWith('forge-') ? 'EnchADDForgeMeleeEffects.java' : 'EnchADDNeoForgeMeleeEffects.java'
+            String xpAdapter = loader.startsWith('forge-') ? 'EnchADDForgeMobExperience.java' : 'EnchADDNeoForgeMobExperience.java'
+            assert new File(sourceRoot, xpAdapter).text.contains('MobExperienceBehavior.adjustDeathExperience'):
+                    "${loader} missing mob experience drop behavior hook"
+            String durabilityAdapter = loader.startsWith('forge-') ? 'mixin/ForgeDurabilityCurseMixin.java' : 'mixin/NeoForgeDurabilityCurseMixin.java'
+            assert new File(sourceRoot, durabilityAdapter).text.contains('DurabilityCurseBehavior.adjust'):
+                    "${loader} missing durability curse hook"
+            assert new File(sourceRoot, loader.startsWith('forge-') ? 'EnchADDForgeBackfire.java' : 'EnchADDNeoForgeBackfire.java').isFile():
+                    "${loader} missing Backfire after-damage hook"
+            String adapter = loader.startsWith('forge-') ? 'EnchADDForgeAirbag.java' : 'EnchADDNeoForgeAirbag.java'
+            assert new File(sourceRoot, loader.startsWith('forge-') ? 'EnchADDForgeMeleeEffects.java' : 'EnchADDNeoForgeMeleeEffects.java').text.contains('SpearCombatBehavior.onHit'):
+                    "${loader} missing Skewer damage hook"
+            assert new File(sourceRoot, adapter).text.contains('SpearDefenseBehavior.adjustDamage'):
+                    "${loader} missing Counterthrust incoming-damage hook"
+        }
+    }
+}
+
+tasks.named('check').configure { dependsOn(tasks.named('validateEnchADDBehaviorAdapters')) }
+
+sourceSets.main.resources.srcDir(generatedDir)
+tasks.named('processResources').configure { dependsOn(tasks.named('generateEnchADDResources')) }
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+id,common_class,loader_class_count,loader_classes,status
+soulbound,SoulboundBehavior,6,Fabric SoulboundMixin; Forge/NeoForge LivingDeathEvent; PlayerStateBehavior restore,ADAPTER-CONFIRMED
+telepathy,TelepathyBehavior,6,Fabric AFTER break; Forge BreakEvent; NeoForge BlockDropsEvent,ADAPTER-CONFIRMED
+replanting,ReplantingBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
+irrigation,IrrigationBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
+arborist,ToolInteractionBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+trailblazer,ToolInteractionBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+furrow,FurrowBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
+executioner,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge melee adapters,SHARED-MELEE-ADAPTER
+beheading,HeadDropBehavior,6,Fabric HeadDropsMixin; Forge/NeoForge HeadDrops,ADAPTER-CONFIRMED
+smelting,SmeltingBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
+stonewake,StonewakeBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+refine,RefineBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+rebound,none,0,none,PAPER-ONLY-NO-MOD-ADAPTER
+insight,none,0,none,PAPER-ONLY-NO-MOD-ADAPTER
+airbag,airbagBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+afterglide,PlayerStateBehavior,6,Fabric/Forge/NeoForge PlayerStates tick adapters,SHARED-PLAYER-TICK
+skim,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+homecoming,HomecomingBehavior,6,Fabric Mixin; Forge/NeoForge entity join or death/totem events,ADAPTER-CONFIRMED
+volley,VolleyBehavior,6,Fabric Mixin; Forge/NeoForge entity join or death/totem events,ADAPTER-CONFIRMED
+ward,WardBehavior,6,Fabric callback/Mixin; Forge EventBus; NeoForge EventBus,ADAPTER-CONFIRMED
+holdfast,holdfastBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+brace,braceBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+pivot,pivotBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+momentum,momentumBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+cadence,not-audited,,,ADAPTER-CONFIRMED
+resonance,not-audited,,,ADAPTER-CONFIRMED
+underdog,not-audited,,,ADAPTER-CONFIRMED
+poise,PoiseBehavior,6,Fabric PoiseDamageMixin; Forge/NeoForge Poise damage adapters,ADAPTER-CONFIRMED
+highground,not-audited,,,ADAPTER-CONFIRMED
+measured,MeasuredBehavior,6,Fabric ComboDamageMixin; Forge/NeoForge ComboEffects adapters,ADAPTER-CONFIRMED
+rally,MeleeEffectBehavior.adjustDamage,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects adapters,ADAPTER-CONFIRMED
+cinder,not-audited,,,ADAPTER-CONFIRMED
+lodestar,LodestarBehavior,6,Fabric ComboDamageMixin; Forge/NeoForge ComboEffects adapters,ADAPTER-CONFIRMED
+starwish,StarwishBehavior.use,6,Fabric/Forge/NeoForge Water right-click item adapters,ADAPTER-CONFIRMED
+waysong,WaysongBehavior.use,6,Fabric/Forge/NeoForge Water right-click item adapters,ADAPTER-CONFIRMED
+delvesense,delvesenseBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
+tideshell,not-audited,,,ADAPTER-CONFIRMED
+homeward,HomewardBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+parry,ParryBehavior,6,Fabric callback/Mixin; Forge EventBus; NeoForge EventBus,ADAPTER-CONFIRMED
+initiative,not-audited,,,ADAPTER-CONFIRMED
+wingclip,not-audited,,,ADAPTER-CONFIRMED
+tracer,not-audited,,,ADAPTER-CONFIRMED
+breakguard,BreakguardBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+pursuit,not-audited,,,ADAPTER-CONFIRMED
+fortitude,FortitudeBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+debilitate,none,0,none,PAPER-ONLY-NO-MOD-ADAPTER
+nourish,NourishRules + loader behavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED
+fleetfoot,PlayerStateBehavior,6,Fabric/Forge/NeoForge PlayerStates tick adapters,SHARED-PLAYER-TICK
+tenderstep,TenderstepBehavior,6,Fabric callback/Mixin; Forge EventBus; NeoForge EventBus,ADAPTER-CONFIRMED
+shadowstrike,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge melee adapters,SHARED-MELEE-ADAPTER
+bulwark,bulwarkBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+purify,purifyBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+lucidity,lucidityBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+firebreak,FirebreakBehavior.adjustDamage,6,Fabric hurtServer head Mixin; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent,PARTIAL-ADAPTER-IMPLEMENTED
+frostbrand,FrostbrandBehavior,6,Fabric AFTER_DAMAGE; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent,ADAPTER-CONFIRMED
+dispel,dispelBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+hunters_mark,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+undertow,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+ricochet,ricochetBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+clairvoyance,clairvoyanceBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+obscure,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+riposte,RiposteBehavior,6,Fabric PivotMixin; Forge/NeoForge Pivot adapters,ADAPTER-CONFIRMED
+tremor,MeleeEffectBehavior,6,MeleeEffects adapters,SHARED-MELEE-ADAPTER
+meteor,MeleeEffectBehavior,6,CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+updraft,MeleeEffectBehavior,6,MeleeEffects adapters,SHARED-MELEE-ADAPTER
+overwhelm,OverwhelmBehavior.onHit,6,Fabric AFTER_DAMAGE; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent (both versions),ADAPTER-CONFIRMED
+hemorrhage,HemorrhageBehavior,6,Fabric AFTER_DAMAGE; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent,ADAPTER-CONFIRMED
+mortal_wound,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+decapitate,HeadDropBehavior,6,Fabric die Mixin; Forge/NeoForge LivingDeathEvent,ADAPTER-CONFIRMED
+immolate,ImmolateBehavior,6,Fabric AFTER_DAMAGE; Forge/NeoForge melee damage adapters,ADAPTER-CONFIRMED
+steadfast,steadfastBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+quell,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+evasion,evasionBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+shroud,shroudBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+bind,ProjectileStatusBehavior,6,ProjectileStatus Mixins/events,SHARED-PROJECTILE-ADAPTER
+last_stand,LastStandBehavior,6,damage/death rescue adapter all loaders,ADAPTER-CONFIRMED
+farshot,FarshotBehavior,6,Fabric Farshot Mixins; Forge/NeoForge Farshot adapters,SHARED-PROJECTILE-ADAPTER
+flare,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+trawler,TrawlerRules,6,FishingHook mixin / ItemFishedEvent,ADAPTER-CONFIRMED
+freshcatch,freshcatchBehavior,6,Common behavior + six loader adapters/Mixins,ADAPTER-CONFIRMED
+wingguard,WingguardBehavior,6,Fabric callback/Mixin; Forge EventBus; NeoForge EventBus,ADAPTER-CONFIRMED
+barrier,BarrierBehavior,6,Fabric callback/Mixin; Forge EventBus; NeoForge EventBus,ADAPTER-CONFIRMED
+tide_runner,not-audited,,,ADAPTER-CONFIRMED
+sidestep,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+sunder,SunderBehavior.adjustDamage,6,Fabric hurtServer head Mixin; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent,ADAPTER-CONFIRMED
+steady_aim,generated effect; custom semantics need review,6,generated resources in all six loaders,DATADRIVEN-RESOURCE-ONLY
+stillness,ProjectileStatusBehavior,6,ProjectileStatus Mixins/adapters,SHARED-PROJECTILE-ADAPTER
+lancer,MeleeEffectBehavior spear branch,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects,ADAPTER-CONFIRMED
+reach,MeleeEffectBehavior spear branch,6,Fabric CinderDamageMixin; Forge/NeoForge MeleeEffects,ADAPTER-CONFIRMED
+skewer,SpearCombatBehavior.onHit,6,Fabric ComboDamageMixin; Forge/NeoForge MeleeEffects adapters,ADAPTER-CONFIRMED
+counterthrust,SpearDefenseBehavior.adjustDamage,6,Fabric ComboDamageMixin; Forge/NeoForge incoming hurt adapters,ADAPTER-CONFIRMED
+arrowguard,DamageProtectionBehavior.adjustDamage,6,Fabric AirbagDamageMixin; Forge Airbag damage listener; NeoForge Airbag damage listener,ADAPTER-CONFIRMED
+blastguard,DamageProtectionBehavior.adjustDamage,6,Fabric AirbagDamageMixin; Forge Airbag damage listener; NeoForge Airbag damage listener,ADAPTER-CONFIRMED
+fireguard,DamageProtectionBehavior.adjustDamage,6,Fabric AirbagDamageMixin; Forge Airbag damage listener; NeoForge Airbag damage listener,ADAPTER-CONFIRMED
+featherstep,DamageProtectionBehavior.adjustDamage,6,Fabric AirbagDamageMixin; Forge/NeoForge Airbag damage listeners,ADAPTER-CONFIRMED
+frostguard,DamageProtectionBehavior.adjustDamage,6,Fabric AirbagDamageMixin; Forge Airbag damage listener; NeoForge Airbag damage listener,ADAPTER-CONFIRMED
+panic,PanicBehavior,6,Fabric callback/Mixin; Forge/NeoForge event/Mixin,ADAPTER-CONFIRMED
+gluttony,PlayerStateBehavior -> GluttonyBehavior,6,Fabric/Forge/NeoForge PlayerStates tick adapters,SHARED-PLAYER-TICK
+vampirism_curse,PlayerStateBehavior,6,Fabric/Forge/NeoForge PlayerStates tick adapters,SHARED-PLAYER-TICK
+insomnia,InsomniaBehavior,6,Fabric callback/Mixin; Forge/NeoForge event/Mixin,ADAPTER-CONFIRMED
+greed,MobExperienceBehavior.adjustDeathExperience + adjustIncomingDamage,6,Fabric LivingEntity dropExperience ModifyArg; Forge/NeoForge LivingExperienceDropEvent,ADAPTER-CONFIRMED-SEMANTIC-REVIEW
+rashness,RashnessBehavior,6,Fabric Mixin/callback; Forge/NeoForge EventBus,ADAPTER-CONFIRMED
+retching,RetchingBehavior,6,Fabric Mixin/callback; Forge/NeoForge EventBus,ADAPTER-CONFIRMED
+thirst,ThirstBehavior,6,Fabric Mixin/callback; Forge/NeoForge EventBus,ADAPTER-CONFIRMED
+fragility,DurabilityCurseBehavior.adjust,6,Fabric/Forge/NeoForge ItemStack processDurabilityChange hooks; startup injection checked,ADAPTER-CONFIRMED-SEMANTIC-REVIEW
+misfortune,MobExperienceBehavior.adjustDeathExperience,6,Fabric LivingEntity dropExperience ModifyArg; Forge/NeoForge LivingExperienceDropEvent,ADAPTER-CONFIRMED-SEMANTIC-REVIEW
+lethargy,PlayerStateBehavior,6,Fabric/Forge/NeoForge PlayerStates tick adapters,SHARED-PLAYER-TICK
+gravitation,MeleeEffectBehavior,6,CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+brittle,MeleeEffectBehavior,6,CinderDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
+backfire,BackfireBehavior.onAttack,6,Fabric AFTER_DAMAGE; Forge LivingHurtEvent; NeoForge LivingIncomingDamageEvent; Paper listener uses HIGHEST damage callback; timing parity pending,ADAPTER-CONFIRMED-SEMANTIC-REVIEW
+shatter,DurabilityCurseBehavior.adjust,6,Fabric/Forge/NeoForge ItemStack processDurabilityChange hooks; startup injection checked,ADAPTER-CONFIRMED-SEMANTIC-REVIEW

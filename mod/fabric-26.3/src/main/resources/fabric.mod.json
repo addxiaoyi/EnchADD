@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "enchadd",
+  "version": "${version}",
+  "name": "EnchADD",
+  "description": "EnchADD custom enchantments",
+  "environment": "*",
+  "mixins": ["enchadd.mixins.json"],
+  "entrypoints": {
+    "main": [
+      "net.enchadd.mod.EnchADDFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": "*",
+    "minecraft": "26.3"
+  }
+}

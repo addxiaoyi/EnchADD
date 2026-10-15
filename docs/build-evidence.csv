@@ -1,0 +1,7 @@
+"module","result","jar","bytes","sha256","build_log"
+"fabric-1.21.11","PASS","enchadd-fabric-2.1.1.jar","293125","EB7838C1EC5968ADF6507A44BF839D14CAE1EBDE1CC446E88755C89A520DE23A","docs/validation-logs/smelting-formal-final-fabric-build-20261015.log"
+"fabric-26.3","PASS","enchadd-fabric-2.1.1.jar","301909","4E149FB6C56701706877331009FFA388FD6326588938F60E336B86C5FBD89C47","docs/validation-logs/forge-26.3-packaged-after-mixin-20261015.log"
+"forge-1.21.11","PASS","enchadd-forge-2.1.1.jar","298662","2F6D81828D4A093C2F7A2E0E15ED89382369277DF355BE5646935597A9A81C53","docs/validation-logs/smelting-formal-final-forge-build-20261015.log"
+"forge-26.3","PASS","enchadd-forge-2.1.1.jar","299018","DC7DC0A276ABDA0B23E452CAC42C747C59C9E478212B5B252198845AF4C8013C","docs/validation-logs/forge-26.3-packaged-after-mixin-20261015.log"
+"neoforge-1.21.11","PASS","enchadd-neoforge-2.1.1.jar","295869","F0BB815146B5A5EAFCD720D9B5F0E0CCF8A0B4935CE928C2761CE29CC6FD370","docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log"
+"neoforge-26.3","PASS","enchadd-neoforge-2.1.1.jar","296204","B3620D8ACA615A9FECCAB87906069720A19A45724EEEF8790ADB4AA7A958CC9A","docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log"

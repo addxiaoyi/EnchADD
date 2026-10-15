@@ -1,0 +1,23 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="Apache-2.0"
+[[mods]]
+modId="enchadd"
+version="${version}"
+displayName="EnchADD"
+description='''EnchADD custom enchantments.'''
+[[dependencies.enchadd]]
+modId="neoforge"
+type="required"
+versionRange="[26.3.0.51-beta,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.enchadd]]
+modId="minecraft"
+type="required"
+versionRange="[26.3,26.4)"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config="enchadd.mixins.json"

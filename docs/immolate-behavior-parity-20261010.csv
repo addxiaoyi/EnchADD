@@ -1,0 +1,2 @@
+"id","paper_trigger","paper_slot","paper_max_level","paper_chance_per_level","paper_chance_cap","paper_fire_seconds_per_level","paper_cooldown_ticks","mod_trigger","mod_slot","mod_max_level","mod_chance_per_level","mod_chance_cap","mod_fire_ticks_per_level","mod_max_fire_ticks","mod_cooldown_ticks","parity_status","runtime_status"
+"immolate","Player direct melee against LivingEntity","MAINHAND","3","0.2","0.6","1","60","ServerPlayer direct melee against LivingEntity","MAINHAND","3","0.2","0.6","20","2400","60","PARAMETERS_MATCHED","NOT_VERIFIED"

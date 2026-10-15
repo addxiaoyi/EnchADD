@@ -1,0 +1,26 @@
+buildscript {
+    repositories { maven { url = 'https://maven.neoforged.net/releases?enchadd=20261006' } }
+    dependencies { classpath 'net.neoforged:moddev-gradle:2.0.148' }
+}
+
+plugins { id 'java' }
+apply plugin: 'net.neoforged.moddev'
+
+base.archivesName = 'enchadd-neoforge'
+version = mod_version
+sourceSets.main.java.srcDir('../common/src/main/java')
+sourceSets.main.resources.srcDir('../common/src/main/resources')
+apply from: rootProject.file(rootProject.name == 'enchadd-mod'
+        ? 'generate-enchant-resources.gradle'
+        : '../generate-enchant-resources.gradle')
+
+neoForge {
+    version = neo_version
+    runs { server { server(); programArgument '--nogui' } }
+    mods { enchadd { sourceSet(sourceSets.main) } }
+}
+
+dependencies { implementation "net.neoforged:neoforge:${neo_version}" }
+tasks.withType(JavaCompile).configureEach { options.release = Integer.parseInt(java_release); options.encoding = 'UTF-8' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(Integer.parseInt(java_release)) }
+processResources { filesMatching('META-INF/neoforge.mods.toml') { expand project.properties } }

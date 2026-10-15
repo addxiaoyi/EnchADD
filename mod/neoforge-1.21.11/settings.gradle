@@ -1,0 +1,28 @@
+pluginManagement {
+    repositories {
+        maven { url = uri('../.neoforge-maven') }
+        maven { url = 'https://maven.neoforged.net/releases?enchadd=20261006' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+buildscript {
+    repositories {
+        maven { url = 'https://maven.neoforged.net/releases?enchadd=20261006' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies { classpath 'net.neoforged:moddev-gradle:2.0.148' }
+}
+
+apply plugin: 'net.neoforged.moddev.repositories'
+
+dependencyResolutionManagement {
+    repositories {
+        maven { url = uri('../.neoforge-maven') }
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'enchadd-neoforge'

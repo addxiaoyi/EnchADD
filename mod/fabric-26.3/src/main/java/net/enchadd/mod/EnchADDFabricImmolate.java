@@ -1,0 +1,1 @@
+package net.enchadd.mod; import net.enchadd.mod.common.ImmolateBehavior; import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents; final class EnchADDFabricImmolate{static void init(){ServerLivingEntityEvents.AFTER_DAMAGE.register((e,s,b,t,blocked)->ImmolateBehavior.onHit(e,s,t));}}

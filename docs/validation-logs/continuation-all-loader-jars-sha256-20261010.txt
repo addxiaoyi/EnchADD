@@ -1,0 +1,11 @@
+D:\qwq\项目\Enchantio-master\mod\common\build\libs\common-2.1.1.jar	E6DB10206898BE05F0F491BD3AC5F66CEB78F61EFF236BFA863C9F98E16CD67B
+D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\build\libs\enchadd-fabric-2.1.1.jar	792E52B3154C311705BE9260B58AD19D65FC433447C706096D764090DCAF1977
+D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\build\libs\enchadd-fabric.jar	26E685BECDACC155F546ADA845C2E23017B8B04AF4D8C704805B0B23F32CA836
+D:\qwq\项目\Enchantio-master\mod\fabric-26.3\build\libs\enchadd-fabric-2.1.1.jar	C727A1FAAB428AC63B418BEDEF2548BA8D6EEA14D87C93108A1CAC520111F9B1
+D:\qwq\项目\Enchantio-master\mod\fabric-26.3\build\libs\enchadd-fabric.jar	FA2B85F09ED66BFBD668C6530748D6DA1DD609F310CE90490169A930CDEA9426
+D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\build\libs\enchadd-forge-2.1.1.jar	BAE79459A9DEE9F85883D5D6112A6E71F3A52491636810B76E63CE005206F4E3
+D:\qwq\项目\Enchantio-master\mod\forge-26.3\build\libs\enchadd-forge-2.1.1.jar	68865BD439DCA2B9F0E713BA9BD213621E1F8B528F5AEBF5661B4C5B8EFCC16A
+D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\build\libs\enchadd-neoforge-2.1.1.jar	A0F5A309820B0568B2E3198AAB165E8C35BF0B0C5A59F3EA6F1CB356D63C1204
+D:\qwq\项目\Enchantio-master\mod\neoforge-1.21.11\build\libs\enchadd-neoforge.jar	A396D7ECE6D8B4BA3BCEA594465E10B2B388088D0DE8A2A83EE63497606ECFFA
+D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\build\libs\enchadd-neoforge-2.1.1.jar	9B6ABEADAB1E6FF8E651E85CC40407526B18602BEB9636538514F4211339A474
+D:\qwq\项目\Enchantio-master\mod\neoforge-26.3\build\libs\enchadd-neoforge.jar	B9E0256CAAD57173C9474FA3A0233CEBA888A871A24178D94415D1D814FCE0D1

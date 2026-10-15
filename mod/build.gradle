@@ -1,0 +1,12 @@
+plugins {
+    id 'base'
+}
+
+group = 'net.enchadd'
+version = '2.1.1'
+
+subprojects {
+    repositories { mavenCentral() }
+    group = rootProject.group
+    version = rootProject.version
+}

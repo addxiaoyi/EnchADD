@@ -1,0 +1,5 @@
+"id","fabric","forge","neoforge","common","status","risk","runtime"
+"smelting","AFTER block-break + nearby fresh ItemEntity conversion","BreakEvent + deferred nearby fresh ItemEntity conversion","BlockDropsEvent direct drop mutation","SmeltingBehavior.convertFreshDrops / smelt","STATIC_CHAIN_PRESENT","Fabric/Forge rely on age<=2 and radius 1.35; deferred Forge execution may race or miss drops","NOT_VERIFIED"
+"replanting","AFTER block-break + inventory seed scan","BreakEvent + deferred inventory seed scan","BlockDropsEvent + inventory seed scan","ReplantingBehavior.replant","STATIC_CHAIN_PRESENT","Forge deferred callback and NeoForge event timing need in-game verification","NOT_VERIFIED"
+"irrigation","UseBlockCallback","RightClickBlock","RightClickBlock","IrrigationBehavior.hydrate","STATIC_CHAIN_PRESENT","No explicit enchantment check visible in adapters; verify common behavior gates tool/enchantment","NOT_VERIFIED"
+"furrow","AFTER block-break","BreakEvent + deferred harvest","BlockDropsEvent","FurrowBehavior.harvest","STATIC_CHAIN_PRESENT","Forge deferred event and drop timing need real harvest test","NOT_VERIFIED"

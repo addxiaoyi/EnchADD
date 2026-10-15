@@ -1,0 +1,2 @@
+"id","paper_listener","common_behavior_required","equipment","causes","defaults","platform_plan","current_state","runtime"
+"firebreak","FirebreakListener","adjustCombustDuration + adjustFireDamage","chestplate","FIRE,FIRE_TICK,HOT_FLOOR,LAVA","combustionReductionPerLevel=0.20,maxCombustionReduction=0.60,directDamageReductionPerLevel=0.08,maxDirectDamageReduction=0.24,maxLevel=3","Fabric: EntityCombust/structured damage Mixins or event hooks; Forge: combustion/damage events; NeoForge: combustion/damage events","NOT_IMPLEMENTED","NOT_VERIFIED"

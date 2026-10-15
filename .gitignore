@@ -147,3 +147,10 @@ dist/
 /docs/*安全*.md
 /*总结*.md
 /resourcepack/
+/mod/**/build/
+/mod/**/.gradle/
+/mod/**/run/
+/mod/.neoforge-maven/
+/mod/cache-seed/
+/META-INF/
+/licenses/

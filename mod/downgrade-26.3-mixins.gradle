@@ -1,0 +1,29 @@
+def mixinClasses = layout.buildDirectory.dir('classes/java/main')
+
+tasks.register('downgrade26_3MixinBytecode') {
+    dependsOn tasks.named('compileJava')
+    inputs.dir(mixinClasses)
+
+    doLast {
+        fileTree(mixinClasses).matching {
+            include '**/mixin/**/*.class'
+        }.files.each { classFile ->
+            byte[] bytes = classFile.bytes
+            if (bytes.length < 8 || bytes[0..3] != [0xCA, 0xFE, 0xBA, 0xBE] as byte[]) {
+                throw new GradleException("Invalid class file: ${classFile}")
+            }
+
+            int major = ((bytes[6] & 0xFF) << 8) | (bytes[7] & 0xFF)
+            if (major > 65) {
+                // Mixin 0.8.x parses mixin classes with a Java 21 ceiling.
+                bytes[6] = 0
+                bytes[7] = 65
+                classFile.bytes = bytes
+            }
+        }
+    }
+}
+
+tasks.named('jar') {
+    dependsOn tasks.named('downgrade26_3MixinBytecode')
+}

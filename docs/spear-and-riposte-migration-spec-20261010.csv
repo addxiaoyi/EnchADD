@@ -1,0 +1,4 @@
+"id","paper_listener","behavior","defaults","mod_gap"
+"lancer","SpearListener.Mode.LANCER","Direct melee with spear; attacker must be sprinting; bonus damage","maxLevel 3; cooldown 24 ticks; powerPerLevel 0.08; maxPower 0.24; spear/trident mainhand","No Common Spear behavior and no six-loader adapter"
+"reach","SpearListener.Mode.REACH","Direct melee with spear; distance factor between 3.5 and 7 blocks; bonus damage","maxLevel 3; cooldown 18 ticks; powerPerLevel 0.06; maxPower 0.18; minDistance 3.5; maxDistance 7.0; spear/trident mainhand","No Common Spear behavior and no six-loader adapter"
+"riposte","RiposteListener.onBlocked","Successful shield block against living attacker; chance-based Weakness; cooldown","maxLevel 3; cooldown 100 ticks; chance 0.25 per level cap 0.75; weakness 2 seconds per level; offhand shield","Common and adapters now confirmed; runtime not verified"

@@ -1,0 +1,6 @@
+"status","count","ids"
+"ADAPTER-CONFIRMED","18","soulbound,telepathy,replanting,irrigation,furrow,smelting,homecoming,volley,ward,parry,tenderstep,wingguard,barrier,panic,insomnia,rashness,retching,thirst"
+"not-audited","78","arborist,trailblazer,executioner,beheading,stonewake,refine,rebound,insight,airbag,holdfast,brace,pivot,momentum,cadence,resonance,underdog,poise,highground,measured,rally,cinder,lodestar,starwish,waysong,delvesense,tideshell,homeward,initiative,wingclip,tracer,breakguard,pursuit,fortitude,debilitate,nourish,shadowstrike,bulwark,purify,lucidity,firebreak,frostbrand,dispel,ricochet,clairvoyance,riposte,tremor,meteor,updraft,overwhelm,hemorrhage,decapitate,immolate,steadfast,evasion,shroud,bind,last_stand,trawler,freshcatch,tide_runner,sunder,steady_aim,lancer,reach,skewer,counterthrust,arrowguard,blastguard,fireguard,featherstep,frostguard,greed,fragility,misfortune,gravitation,brittle,backfire,shatter"
+"SHARED-MELEE-ADAPTER","3","skim,quell,sidestep"
+"SHARED-PLAYER-TICK","5","afterglide,fleetfoot,gluttony,vampirism_curse,lethargy"
+"SHARED-PROJECTILE-ADAPTER","7","hunters_mark,undertow,obscure,mortal_wound,farshot,flare,stillness"
