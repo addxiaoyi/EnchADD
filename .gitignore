@@ -150,6 +150,7 @@ dist/
 /mod/**/build/
 /mod/**/.gradle/
 /mod/**/run/
+/mod/**/run-*/
 /mod/.neoforge-maven/
 /mod/cache-seed/
 /META-INF/
