@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="crispEdges" role="img" aria-labelledby="title desc">
+  <title id="title">EnchADD rune icon</title>
+  <desc id="desc">A minimal pixel geometric enchantment rune.</desc>
+  <rect width="512" height="512" fill="#10131f"/>
+  <rect x="64" y="64" width="384" height="384" fill="#171c2c" stroke="#2b3850" stroke-width="16"/>
+  <path d="M240 112h32v48h32v32h32v32h32v32h-32v32h-32v32h-32v48h-32v-48h-32v-32h-32v-32h-32v-32h32v-32h32v-32h32z" fill="#64e6d5"/>
+  <path d="M240 176h32v32h32v32h-32v32h-32v-32h-32v-32h32z" fill="#10131f"/>
+  <path d="M240 80h32v32h-32zm-128 160h32v32h-32zm240 0h32v32h-32zm-112 160h32v32h-32z" fill="#f3c95f"/>
+  <path d="M144 144h32v32h-32zm192 192h32v32h-32z" fill="#8a7cff"/>
+</svg>
