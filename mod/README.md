@@ -1,10 +1,10 @@
-# EnchADD Mod
+# EnchADD Mod 模组
 
-The EnchADD Mod distribution provides the same enchantment catalog across six loader-specific artifacts. The current release is `2.1.1`.
+EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的六个 Loader 专用构件。当前版本为 `2.1.1`。
 
-## Supported Artifacts
+## 支持构件
 
-| Artifact | Minecraft | Java |
+| 构件 | Minecraft | Java |
 | --- | --- | --- |
 | `enchadd-fabric-2.1.1.jar` | Fabric `1.21.11` | 21 |
 | `enchadd-fabric-2.1.1.jar` | Fabric `26.3` | 25 |
@@ -13,30 +13,30 @@ The EnchADD Mod distribution provides the same enchantment catalog across six lo
 | `enchadd-neoforge-2.1.1.jar` | NeoForge `1.21.11` | 21 |
 | `enchadd-neoforge-2.1.1.jar` | NeoForge `26.3` | 25 |
 
-The six artifacts are not interchangeable. Select the JAR whose loader and Minecraft version match the server.
+六个构件不能互换。请根据服务端 Loader 和 Minecraft 版本选择对应文件。
 
-## Install
+## 安装
 
-1. Download the matching JAR from [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases).
-2. Put the JAR in the server's `mods/` directory.
-3. Confirm the server has the required loader and Java version.
-4. Start the server and check the loader log for EnchADD initialization.
+1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载匹配的 JAR。
+2. 将 JAR 放入服务端的 `mods/` 目录。
+3. 确认服务端使用正确的 Loader 和 Java 版本。
+4. 启动服务端，并在日志中确认 EnchADD 已初始化。
 
-Do not install the Fabric, Forge, and NeoForge variants together. The Paper plugin is a separate implementation.
+Fabric、Forge 和 NeoForge 构件不要同时安装。Paper 插件是另一套独立实现。
 
-## Features
+## 内容
 
-The Mod distribution contains 111 generated enchantment definitions backed by shared, loader-independent behavior rules and loader adapters. Coverage includes combat, defense, projectiles, movement, tools, drops, fishing, durability, and utility effects.
+Mod 包含 111 个由统一目录生成的附魔定义，行为由共享规则和 Loader 适配器共同实现，覆盖战斗、防御、投射物、移动、工具、掉落、钓鱼、耐久和辅助能力。
 
-The catalog is generated from:
+附魔目录文件：
 
 ```text
 common/src/main/resources/data/enchadd/enchantments.list
 ```
 
-## Build
+## 构建
 
-Use JDK 21 for the `1.21.11` modules and JDK 25 for the `26.3` modules. Gradle 9.7 or newer is required.
+`1.21.11` 模块使用 JDK 21，`26.3` 模块使用 JDK 25。当前构建要求 Gradle 9.7 或更高版本。
 
 ```powershell
 gradle -p mod :fabric-1.21.11:build
@@ -47,24 +47,24 @@ gradle -p mod :neoforge-1.21.11:build
 gradle -p mod :neoforge-26.3:build
 ```
 
-Each build also runs the generated resource and behavior-adapter validators.
+每个构建任务都会执行生成资源校验和行为适配器校验。
 
-## Verification Status
+## 验证状态
 
-The evidence policy separates three claims:
+项目将证据分为三类：
 
-- Build and resource validation.
-- Mod discovery, loader startup, and Mixin/event registration.
-- Real player-driven enchantment behavior.
+- 构建和资源校验。
+- Mod 被 Loader 发现、启动以及 Mixin/事件注册。
+- 真实玩家触发附魔行为。
 
-The first two claims are available for all six modules. Formal `Block.getDrops` Smelting behavior is verified for Fabric, Forge, and NeoForge `1.21.11`. The `26.3` player behavior matrix remains open until a client or protocol implementation supporting `26.3` is available.
+六个模块均有构建和 Loader 启动证据。正式的 `Block.getDrops` Smelting 行为已在 Fabric、Forge、NeoForge `1.21.11` 上验证。`26.3` 的玩家行为矩阵仍待支持 `26.3` 的客户端或协议实现后完成。
 
-See [the current evidence report](../docs/build-evidence.md) and [the 111-enchantment matrix](../docs/enchantment-evidence-matrix-20261009.csv).
+详细证据见 [构建与运行证据](../docs/build-evidence.md) 和 [111 个附魔矩阵](../docs/enchantment-evidence-matrix-20261009.csv)。
 
-## Icon
+## 图标
 
-![EnchADD icon](common/src/main/resources/assets/enchadd/enchadd-icon.svg)
+![EnchADD 图标](common/src/main/resources/assets/enchadd/enchadd-icon.svg)
 
-## License
+## 许可证
 
-See [../LICENSE](../LICENSE).
+详见 [../LICENSE](../LICENSE)。

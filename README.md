@@ -1,50 +1,83 @@
 # EnchADD
 
-EnchADD is a Minecraft enchantment project with two independent distributions:
+EnchADD 是一个 Minecraft 附魔项目，提供两套独立实现：
 
-- A Paper plugin for server-side enchantments.
-- A cross-loader mod for Fabric, Forge, and NeoForge.
+- Paper 插件：面向 Paper 服务端。
+- Mod 模组：支持 Fabric、Forge 和 NeoForge。
 
-The current release version is `2.1.1`.
+当前版本：`2.1.1`
 
-## Choose Your Distribution
+## 选择发行版
 
-| Target | Documentation | Artifact |
+| 目标平台 | 文档 | 发布文件 |
 | --- | --- | --- |
-| Paper | [Plugin guide](#paper-plugin) | `enchadd-plugin-2.1.1-protected.jar` |
-| Fabric / Forge / NeoForge | [Mod guide](mod/README.md) | Six loader-specific JARs |
+| Paper | [Paper 插件说明](#paper-插件) | `enchadd-plugin-2.1.1-protected.jar` |
+| Fabric / Forge / NeoForge | [Mod 模组说明](mod/README.md) | 六个 Loader 专用 JAR |
 
-The Paper plugin and Mod distribution are separate runtime implementations. Do not install both unless you intentionally want both active.
+Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端类型选择其中一种，不要无目的地同时安装。
 
-## Paper Plugin
+## Releases 下载
 
-The plugin targets Paper `1.21.11` and newer compatible releases. Java 21 is required for Paper 1.21.11; Paper 26.3+ follows the Java version required by that server release.
+前往 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载对应文件。
 
-### Install
+下载时请根据文件名确认：
 
-1. Download `enchadd-plugin-2.1.1-protected.jar` from [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases).
-2. Copy it to the server `plugins/` directory.
-3. Start the server and edit `plugins/EnchADD/config.yml`.
+- Paper 服务端：下载 `enchadd-plugin-2.1.1-protected.jar`。
+- Fabric 服务端：下载 `enchadd-fabric-2.1.1.jar`。
+- Forge 服务端：下载 `enchadd-forge-2.1.1.jar`。
+- NeoForge 服务端：下载 `enchadd-neoforge-2.1.1.jar`。
+- `1.21.11` 和 `26.3` 使用不同的 Loader 与 Java 版本，请勿混用。
 
-The protected artifact verifies its release checksum at startup and never overwrites the currently running JAR during updates.
+## Paper 插件
 
-### Paper Build
+插件面向 Paper `1.21.11` 及更新的兼容版本。Paper 1.21.11 使用 Java 21；Paper 26.3+ 使用该版本服务端要求的 Java 版本。
+
+### 安装
+
+1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载 `enchadd-plugin-2.1.1-protected.jar`。
+2. 将文件放入服务端的 `plugins/` 目录。
+3. 启动服务端并编辑 `plugins/EnchADD/config.yml`。
+
+受保护构件会在启动时校验发布哈希，自动更新时不会覆盖当前正在运行的 JAR。
+
+### 构建 Paper 插件
 
 ```bash
 mvn -pl plugin -am test
 mvn -pl plugin -am -Pprotected-release -DskipTests verify
 ```
 
-## Mod Icon
+## Mod 模组
 
-![EnchADD icon](mod/common/src/main/resources/assets/enchadd/enchadd-icon.svg)
+Mod 的六个构件并不通用，必须选择与服务端 Loader 和 Minecraft 版本完全匹配的文件：
 
-## Evidence
+| Loader | Minecraft | Java |
+| --- | --- | --- |
+| Fabric | `1.21.11` | 21 |
+| Fabric | `26.3` | 25 |
+| Forge | `1.21.11` | 21 |
+| Forge | `26.3` | 25 |
+| NeoForge | `1.21.11` | 21 |
+| NeoForge | `26.3` | 25 |
 
-Build and runtime evidence is maintained in [docs/build-evidence.md](docs/build-evidence.md). Build success, loader startup, and real in-game behavior are tracked separately.
+详细安装、构建和验证说明见 [Mod README](mod/README.md)。
 
-The repository does not claim full 111-enchantment behavior parity from static source inspection alone. Minecraft `26.3` player behavior requires a client or protocol implementation that supports `26.3`; the commonly available `minecraft-data` and `minecraft-protocol` packages currently stop at `26.1`.
+## 项目图标
 
-## License
+![EnchADD 图标](mod/common/src/main/resources/assets/enchadd/enchadd-icon.svg)
 
-See [LICENSE](LICENSE).
+## 验证说明
+
+项目将以下证据分开记录：
+
+- 构建和资源校验。
+- Mod 被 Loader 发现、启动和注册 Mixin/事件。
+- 真实玩家触发附魔行为。
+
+完整证据见 [docs/build-evidence.md](docs/build-evidence.md)。仓库不会仅凭静态源码或启动成功宣称完整的 111 个附魔行为一致性。
+
+目前 Minecraft `26.3` 的真实玩家行为验证仍需要支持 `26.3` 的客户端或协议实现；常用的 `minecraft-data` 和 `minecraft-protocol` 包目前只提供到 `26.1`。
+
+## 许可证
+
+详见 [LICENSE](LICENSE)。
