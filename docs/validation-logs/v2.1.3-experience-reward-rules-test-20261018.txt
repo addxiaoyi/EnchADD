@@ -1,0 +1,39 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileExperienceRewardRulesTest UP-TO-DATE
+
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+> Task :verifyExperienceRewardRules
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m?[0m
+[36m����[0m [36mJUnit Jupiter[0m [32m?[0m
+[36m   ����[0m [36mExperienceRewardRulesTest[0m [32m?[0m
+[36m      ����[0m [34mcombinesGreedAndMisfortuneWithOneFinalRoundingStep()[0m [32m?[0m
+[36m      ����[0m [34mgreedOnlyRewardsDirectPlayerKills()[0m [32m?[0m
+[36m      ����[0m [34mneitherCurseAppliesWhenTheDeathWasNotCausedByThePlayer()[0m [32m?[0m
+[36m      ����[0m [34mleavesNonPositiveExperienceUnchanged()[0m [32m?[0m
+[36m      ����[0m [34mgreedVulnerabilityIsBoundedByLevel()[0m [32m?[0m
+[36m      ����[0m [34mmisfortuneAppliesToIndirectPlayerKills()[0m [32m?[0m
+[36m      ����[0m [34mclampsLevelsAndLargeExperienceRewards()[0m [32m?[0m
+
+Test run finished after 118 ms
+[         2 containers found      ]
+[         0 containers skipped    ]
+[         2 containers started    ]
+[         0 containers aborted    ]
+[         2 containers successful ]
+[         0 containers failed     ]
+[         7 tests found           ]
+[         0 tests skipped         ]
+[         7 tests started         ]
+[         0 tests aborted         ]
+[         7 tests successful      ]
+[         0 tests failed          ]
+
+
+BUILD SUCCESSFUL in 8s
+2 actionable tasks: 1 executed, 1 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

@@ -1,4 +1,28 @@
 plugins { id 'java-library' }
+repositories { mavenCentral() }
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-console:1.10.0'
+}
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 sourceSets.main.java.srcDir('src/main/java')
 tasks.withType(JavaCompile).configureEach { options.release = 21; options.encoding = 'UTF-8' }
+tasks.withType(Test).configureEach { useJUnitPlatform() }
+
+def experienceRuleTestOutput = layout.buildDirectory.dir('experience-rule-tests')
+tasks.register('compileExperienceRewardRulesTest', JavaCompile) {
+    source files(
+            'src/main/java/net/enchadd/mod/common/ExperienceRewardRules.java',
+            'src/test/java/net/enchadd/mod/common/ExperienceRewardRulesTest.java'
+    )
+    classpath = configurations.testCompileClasspath
+    destinationDirectory.set(experienceRuleTestOutput)
+    options.release = 21
+}
+
+tasks.register('verifyExperienceRewardRules', JavaExec) {
+    dependsOn tasks.named('compileExperienceRewardRulesTest')
+    classpath = files(experienceRuleTestOutput) + configurations.testRuntimeClasspath
+    mainClass = 'org.junit.platform.console.ConsoleLauncher'
+    args 'execute', '--select-class=net.enchadd.mod.common.ExperienceRewardRulesTest'
+}

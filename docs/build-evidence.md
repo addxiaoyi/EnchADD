@@ -1,21 +1,31 @@
-# EnchADD 2.1.2 Cross-Loader Build Evidence
+# EnchADD 2.1.3 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were freshly built on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Resource and behavior-adapter validators passed for every module. A stale-output defect in version-filtered metadata was fixed by declaring the expanded version as a `processResources` input; all six packaged metadata files were checked for `2.1.2`.
+All six Mod modules were rebuilt on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Resource and behavior-adapter validators passed; packaged metadata confirms version `2.1.3`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.2.jar | 294188 | `281A64941DFAB18AFA677D6797D91897C553D5CD336D67F717D5E79F2B5788F5` | `docs/validation-logs/v2.1.2-fabric-1.21.11-build-20261018.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.2.jar | 302971 | `C3DB0A955DFCD7F15B5CAC666AD2B983262EE06FBFD065A60E7C0C0E06B20CFD` | `docs/validation-logs/v2.1.2-fabric-26.3-build-20261018.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.2.jar | 299167 | `7BECF98594F4D11608C080E729BE5995041325E36A7C01BC75D52312186F9693` | `docs/validation-logs/v2.1.2-forge-1.21.11-build-20261018.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.2.jar | 299523 | `06B2F4B57716ECF284E13F9F74930E9E2A7B5F43AD00723FA764DB6816452D51` | `docs/validation-logs/v2.1.2-forge-26.3-build-20261018.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.2.jar | 296375 | `2A548035557AA4E767B25E27EBE4790EEC46FB25C5026CDFA43BAB992AC6458B` | `docs/validation-logs/v2.1.2-neoforge-1.21.11-build-20261018.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.2.jar | 296709 | `959633D5BEAEB54526EDF0D5D13BE601596AB13AE335FCA2302CEC4C58DE774C` | `docs/validation-logs/v2.1.2-neoforge-26.3-build-20261018.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.3.jar | 295423 | `93A649F7F33A37BEDC6B15F03873E9FCE9004BDF3B5F5FB9A0A6557692ED95AE` | `docs/validation-logs/v2.1.3-fabric-1.21.11-build-20261018.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.3.jar | 304164 | `1CFA8D5C1961B7F2CCA29F00D1943C5595C88EB3059263B77BAB172F2FB69B34` | `docs/validation-logs/v2.1.3-fabric-26.3-build-20261018.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.3.jar | 300344 | `41D86BCB608E63E73CF319CCCB2786184165A61AAE32F0E99B28852E93D5C007` | `docs/validation-logs/v2.1.3-forge-1.21.11-build-20261018.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.3.jar | 300699 | `B14425D2E5A8016F1AD994DD4CAEA27D0AC37FBF3009B84C3A81E6E838FAD37F` | `docs/validation-logs/v2.1.3-forge-26.3-build-20261018.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.3.jar | 297551 | `32E52AE0142CB6229F346E8F438571D9E8DB9D276DEC19738249996A4330A81F` | `docs/validation-logs/v2.1.3-neoforge-1.21.11-build-20261018.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.3.jar | 297885 | `48C73ED1CCB1BEB141394E754469F182FCCAC658DA2861FEA0D4C62093BAF8E3` | `docs/validation-logs/v2.1.3-neoforge-26.3-build-20261018.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on 2026-10-18. Tests: 322 run, 0 failures, 0 errors, 0 skipped. Artifact: `enchadd-plugin-2.1.2-protected.jar` (702369 bytes), SHA-256 `0b3f66e7e3bf86c276c352619759a6776a5c8ede2176e905113a2b7f9ec9b434`.
+Paper protected-release `clean verify` passed on 2026-10-18. Tests: 322 run, 0 failures, 0 errors, 0 skipped. Artifact: `enchadd-plugin-2.1.3-protected.jar` (702378 bytes), SHA-256 `8500B06A68B2895A92423B581C413A834574A9D08DC1BAD985355C7675EF3FD0`.
+
+## Greed and Misfortune
+
+Greed XP and vulnerability are applied only for a credited direct player kill. Misfortune remains applicable to player-caused indirect kills; damage caused by another entity triggers neither curse. Seven focused unit tests pass. In-game triggers remain NOT_VERIFIED; Paper configuration values are not yet surfaced in Mod configuration. Test log: `docs/validation-logs/v2.1.3-experience-reward-rules-test-20261018.txt`.
+
+## Historical Runtime Evidence
+
+## Historical Runtime Evidence
+
+## Historical Runtime Evidence
 
 ## Historical Runtime Evidence
 
