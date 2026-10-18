@@ -1,33 +1,29 @@
-# EnchADD 2.1.3 Cross-Loader Build Evidence
+# EnchADD 2.1.5 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were rebuilt on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Resource and behavior-adapter validators passed; packaged metadata confirms version `2.1.3`.
+All six Mod modules were built on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.5`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.3.jar | 295423 | `93A649F7F33A37BEDC6B15F03873E9FCE9004BDF3B5F5FB9A0A6557692ED95AE` | `docs/validation-logs/v2.1.3-fabric-1.21.11-build-20261018.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.3.jar | 304164 | `1CFA8D5C1961B7F2CCA29F00D1943C5595C88EB3059263B77BAB172F2FB69B34` | `docs/validation-logs/v2.1.3-fabric-26.3-build-20261018.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.3.jar | 300344 | `41D86BCB608E63E73CF319CCCB2786184165A61AAE32F0E99B28852E93D5C007` | `docs/validation-logs/v2.1.3-forge-1.21.11-build-20261018.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.3.jar | 300699 | `B14425D2E5A8016F1AD994DD4CAEA27D0AC37FBF3009B84C3A81E6E838FAD37F` | `docs/validation-logs/v2.1.3-forge-26.3-build-20261018.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.3.jar | 297551 | `32E52AE0142CB6229F346E8F438571D9E8DB9D276DEC19738249996A4330A81F` | `docs/validation-logs/v2.1.3-neoforge-1.21.11-build-20261018.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.3.jar | 297885 | `48C73ED1CCB1BEB141394E754469F182FCCAC658DA2861FEA0D4C62093BAF8E3` | `docs/validation-logs/v2.1.3-neoforge-26.3-build-20261018.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.5.jar | 295422 | `DCCD125C127D6C7E9D6FD75BD683BA4711E1573378325E66EC03A990C1F3F459` | `docs/validation-logs/v2.1.5-fabric-1.21.11-build-20261018.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.5.jar | 304163 | `9FCD58BB738A895AEF5F71587EE63D39E9A512B1CCE13F03F4CBA0662B194409` | `docs/validation-logs/v2.1.5-fabric-26.3-build-20261018.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.5.jar | 300344 | `9ACC4FB7A11E8FC140FEB217657FDFCF11B374A5FB39E73E1E65C794C7DAAC40` | `docs/validation-logs/v2.1.5-forge-1.21.11-build-20261018.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.5.jar | 300699 | `F4A07A4F61031E6CF378213387A44E5687E4F02983C6E065934E8D39D87AD916` | `docs/validation-logs/v2.1.5-forge-26.3-build-20261018.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.5.jar | 297551 | `675484BCD76BBF2380CCDE46D4621323164A174234C8DD9C2D1224053AAD6CD0` | `docs/validation-logs/v2.1.5-neoforge-1.21.11-build-20261018.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.5.jar | 297885 | `60C3A79D10F21D1266B5A235D51A1F08A209A6360ED7099B80B701C68510B946` | `docs/validation-logs/v2.1.5-neoforge-26.3-build-20261018.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on 2026-10-18. Tests: 322 run, 0 failures, 0 errors, 0 skipped. Artifact: `enchadd-plugin-2.1.3-protected.jar` (702378 bytes), SHA-256 `8500B06A68B2895A92423B581C413A834574A9D08DC1BAD985355C7675EF3FD0`.
+Paper protected-release `clean verify` passed. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.5-protected.jar`: 702380 bytes, SHA-256 `9FEF44A19849089F09993AB97E76C7BB4B464427AD73208C53EE1B74DCBBB4B3`.
 
 ## Greed and Misfortune
 
-Greed XP and vulnerability are applied only for a credited direct player kill. Misfortune remains applicable to player-caused indirect kills; damage caused by another entity triggers neither curse. Seven focused unit tests pass. In-game triggers remain NOT_VERIFIED; Paper configuration values are not yet surfaced in Mod configuration. Test log: `docs/validation-logs/v2.1.3-experience-reward-rules-test-20261018.txt`.
+Greed XP/vulnerability requires a credited direct player kill. Misfortune remains active for player-caused indirect kills; deaths caused by another entity trigger neither curse. Seven focused unit tests passed. Live player triggers remain NOT_VERIFIED, and Paper tuning settings are not yet wired to Mod configuration.
+
 
 ## Historical Runtime Evidence
 
-## Historical Runtime Evidence
-
-## Historical Runtime Evidence
-
-## Historical Runtime Evidence
 
 - Fresh Forge builds on 2026-10-09: explicit clean plus `--rerun-tasks` passed for `forge-1.21.11` and `forge-26.3`; artifact hashes from that historical build are recorded in its archived evidence; this is not a current-artifact hash claim. The 2026-10-13 isolated Forge runs used the Forge Java 21 and Java 25 toolchains respectively, reached server `Done`, and showed no EnchADD EventBus cancellation exception. Platform-native Netty epoll/kqueue and Windows OSHI logging noise remains.
 
@@ -114,7 +110,6 @@ on_treasure, on_random_loot, 	reasure); no per-tag SHA-256 drift was detected. o
 - Added `docs/manual-shared-adapter-crosscheck-20261009.csv` to explicitly map 37 high-risk shared or Paper-only candidates across all six module source trees (222 rows). This is source-chain evidence, not a runtime behavior test.
 - Confirmed a larger Paper-only migration gap set with Paper listener-plan checks and all six Mod source trees: firebreak, frostbrand, overwhelm, hemorrhage, immolate, sunder, steady_aim, skewer, counterthrust, arrowguard, blastguard, fireguard, featherstep, frostguard, greed, fragility, misfortune, backfire, shatter. Details and per-loader search results are in `docs/paper-mod-gap-review-20261009.csv`; no Common/loader implementation was found for these IDs, so treat them as migration gaps pending implementation rather than completed enchantments.
 - Reconciled five former not-audited candidates: meteor, gravitation, and brittle are in MeleeEffectBehavior; bind is in ProjectileStatusBehavior; last_stand has dedicated behavior and adapters. Runtime behavior remains unverified.
-- Reconfirmed 19 entries previously triaged as paper-only (`firebreak`, `frostbrand`, `overwhelm`, `hemorrhage`, `immolate`, `sunder`, `steady_aim`, spear/defense listener group, `greed`, `fragility`, `misfortune`, `backfire`, `shatter`): Paper registration/listeners exist, but no Common or six-loader Mod implementation is found. Matrix and final evidence index now show MISSING for Mod behavior instead of preserving stale static True claims.
 - Confirmed and synchronized 19 Paper-only Mod gaps into the gap audit, 111-row evidence matrix, and final evidence index. Their six module behavior fields now read MISSING instead of stale static True. The source audit classifies these as implementation work needed, not registration false negatives.
 - Fixed the paper/mod gap report metadata: for all 19 confirmed entries, `paper_listener_plan_hit` is explicitly TRUE and accompanied by the evidence basis. This removes empty cells that could be mistaken for unverified status.
 - Re-audited the 19 paper-only Mod gaps against `ListenerRegistrationPlan.java`: all 19 have explicit Paper registration entries. Cross-check evidence is recorded in `docs/paper-mod-gap-review-20261009.csv`; all six Mod source trees still lack matching behavior adapters.

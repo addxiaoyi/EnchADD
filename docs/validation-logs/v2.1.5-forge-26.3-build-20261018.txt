@@ -1,0 +1,35 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+Minecraft Maven is up-to-date, took 0:01.357
+
+> Task :compileJava
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :downgrade26_3MixinBytecode
+> Task :jar
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 22s
+7 actionable tasks: 6 executed, 1 up-to-date
