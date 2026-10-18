@@ -4,6 +4,7 @@
   "version": "${version}",
   "name": "EnchADD",
   "description": "EnchADD custom enchantments",
+  "icon": "assets/enchadd/icon.png",
   "environment": "*",
   "mixins": ["enchadd.mixins.json"],
   "entrypoints": {

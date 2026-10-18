@@ -1,16 +1,16 @@
 # Cross-loader build evidence (current six-module build)
 
 - JDK: `25.0.3`
-- Gradle: `9.6.1` (local distribution; project requirement still says 9.7+)
+- Gradle: `9.7.1` (local distribution; project requirement still says 9.7+)
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-2.1.1.jar | 293125 | `EB7838C1EC5968ADF6507A44BF839D14CAE1EBDE1CC446E88755C89A520DE23A` | `docs/validation-logs/smelting-formal-final-fabric-build-20261015.log` |
-| fabric-26.3 | PASS | enchadd-fabric-2.1.1.jar | 301909 | `4E149FB6C56701706877331009FFA388FD6326588938F60E336B86C5FBD89C47` | `docs/validation-logs/forge-26.3-packaged-after-mixin-20261015.log` |
-| forge-1.21.11 | PASS | enchadd-forge-2.1.1.jar | 298662 | `2F6D81828D4A093C2F7A2E0E15ED89382369277DF355BE5646935597A9A81C53` | `docs/validation-logs/smelting-formal-final-forge-build-20261015.log` |
-| forge-26.3 | PASS | enchadd-forge-2.1.1.jar | 299018 | `DC7DC0A276ABDA0B23E452CAC42C747C59C9E478212B5B252198845AF4C8013C` | `docs/validation-logs/forge-26.3-packaged-after-mixin-20261015.log` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-2.1.1.jar | 295663 | `05C71CA90CC65C87CFC30D6555AC0B27808EBC09D3C6B3FC3D2D2BF6C72C251E` | `docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log` |
-| neoforge-26.3 | PASS | enchadd-neoforge-2.1.1.jar | 296204 | `B3620D8ACA615A9FECCAB87906069720A19A45724EEEF8790ADB4AA7A958CC9A` | `docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.1.jar | 294188 | `E2AD6CE58798B436D50EDFCC9AC7930F0CCEAD13EEA5D3C81FF8EC2DDA8B49A9` | `docs/validation-logs/fabric-1.21.11-icon-build-20261018.log` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.1.jar | 302971 | `BF8169DF62905258307D72ED2C68872B6DB8BC0704032B07E935DA0E67DF91AE` | `docs/validation-logs/fabric-26.3-icon-build-20261018.log` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.1.jar | 298662 | `2F6D81828D4A093C2F7A2E0E15ED89382369277DF355BE5646935597A9A81C53` | `docs/validation-logs/smelting-formal-final-forge-build-20261015.log` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.1.jar | 299018 | `DC7DC0A276ABDA0B23E452CAC42C747C59C9E478212B5B252198845AF4C8013C` | `docs/validation-logs/forge-26.3-packaged-after-mixin-20261015.log` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.1.jar | 295869 | `F0BB815146B5A5EAFCD720D9B5F0E0CCF8A0B4935CE928C2761CE29CC6FD370` | `docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.1.jar | 296204 | `B3620D8ACA615A9FECCAB87906069720A19A45724EEEF8790ADB4AA7A958CC9A` | `docs/validation-logs/smelting-investigation-rollback-six-build-validation-20261012.log` |
 
 ## Runtime evidence
 
@@ -344,11 +344,13 @@ ot-audited/MISSING fields for poise, measured, lodestar, rally, starwish, wayson
 
 - 2026-10-13 Fabric 1.21.11 isolated packaged-JAR Tenderstep verification: baseline without boots converted farmland to dirt, while Tenderstep I leather boots preserved farmland. Evidence: `docs/validation-logs/fabric-1.21.11-tenderstep-isolated-current-run-20261013.log` and `docs/validation-logs/fabric-1.21.11-tenderstep-isolated-server-log-20261013.log`.
 
-- 2026-10-13 Forge 1.21.11 isolated packaged-JAR verification: copied `enchadd-forge-2.1.1.jar` with SHA-256 `927A01A04016E0CCDCFD1B7A9C68DFB3525989006DC90B1EA9E9605EB5E50A19` into a fresh `mods` directory, started the server on port `25575`, and ran the Telepathy I survival dig test. Stone broke and one cobblestone entered the player's inventory. The server reached `Done`; no EnchADD EventBus cancellation exception was observed. Platform-native Netty epoll/kqueue logging noise remains and is recorded separately. Evidence: `docs/validation-logs/forge-1.21.11-telepathy-isolated-current-run-20261013.log` and `mod/forge-1.21.11/run-telepathy-current-20261013/logs/latest.log`.
+- 2026-10-13 Forge 1.21.11 isolated packaged-JAR verification: copied `enchadd-forge-1.21.11-2.1.1.jar` with SHA-256 `927A01A04016E0CCDCFD1B7A9C68DFB3525989006DC90B1EA9E9605EB5E50A19` into a fresh `mods` directory, started the server on port `25575`, and ran the Telepathy I survival dig test. Stone broke and one cobblestone entered the player's inventory. The server reached `Done`; no EnchADD EventBus cancellation exception was observed. Platform-native Netty epoll/kqueue logging noise remains and is recorded separately. Evidence: `docs/validation-logs/forge-1.21.11-telepathy-isolated-current-run-20261013.log` and `mod/forge-1.21.11/run-telepathy-current-20261013/logs/latest.log`.
 
-- 2026-10-13 Forge 26.3 independent isolated startup: copied the final JAR with SHA-256 `A190889DF7A939D31CEE8A96A92230846452AABB82956944CE655F655E95F5DC` into `mod/forge-26.3/run-current-20261013/mods`, started on port `25576` with JDK 25.0.3, and reached `Done (1.896s)`. Debug discovery selected the packaged `enchadd-forge-2.1.1.jar` over the development resources. No EnchADD cancellation exception was observed; Windows performance-counter and platform-native Netty warnings remain environment noise. Evidence: `docs/validation-logs/forge-26.3-isolated-startup-current-run-20261013.log` and `mod/forge-26.3/run-current-20261013/logs/debug.log`.
+- 2026-10-13 Forge 26.3 independent isolated startup: copied the final JAR with SHA-256 `A190889DF7A939D31CEE8A96A92230846452AABB82956944CE655F655E95F5DC` into `mod/forge-26.3/run-current-20261013/mods`, started on port `25576` with JDK 25.0.3, and reached `Done (1.896s)`. Debug discovery selected the packaged `enchadd-forge-26.3-2.1.1.jar` over the development resources. No EnchADD cancellation exception was observed; Windows performance-counter and platform-native Netty warnings remain environment noise. Evidence: `docs/validation-logs/forge-26.3-isolated-startup-current-run-20261013.log` and `mod/forge-26.3/run-current-20261013/logs/debug.log`.
 
 - 2026-10-13 Fabric combo-adapter source/build crosscheck: `ComboDamageMixin` now calls `MeleeEffectBehavior.adjustDamage` before the existing protection and spear-defense chain. Runtime combo proc remains NOT_VERIFIED because the first harness used invalid enchantment/item combinations. The current Fabric JAR hashes are recorded in the table above.
 
 
 - 2026-10-13 Fabric 26.3 combo adapter build passed resource and adapter validation; current JAR SHA-256 is `0AA6E8FE790CDBDB33297E04E4A963E6F351C77F49170A6C5AD49488D41CC9EE`. Runtime behavior remains NOT_VERIFIED.
+
+- 2026-10-18 Fabric icon integration: both Fabric descriptors reference `assets/enchadd/icon.png`; a 64x64 PNG is packaged in both JARs. Fabric 1.21.11 build and validators passed; SHA-256 `E2AD6CE58798B436D50EDFCC9AC7930F0CCEAD13EEA5D3C81FF8EC2DDA8B49A9`. Fabric 26.3 build and validators passed; SHA-256 `BF8169DF62905258307D72ED2C68872B6DB8BC0704032B07E935DA0E67DF91AE`.

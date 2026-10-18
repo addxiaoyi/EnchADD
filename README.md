@@ -23,9 +23,9 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 下载时请根据文件名确认：
 
 - Paper 服务端：下载 `enchadd-plugin-2.1.1-protected.jar`。
-- Fabric 服务端：下载 `enchadd-fabric-2.1.1.jar`。
-- Forge 服务端：下载 `enchadd-forge-2.1.1.jar`。
-- NeoForge 服务端：下载 `enchadd-neoforge-2.1.1.jar`。
+- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.1.jar`（或 `enchadd-fabric-26.3-2.1.1.jar`）。
+- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.1.jar`（或 `enchadd-forge-26.3-2.1.1.jar`）。
+- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.1.jar`（或 `enchadd-neoforge-26.3-2.1.1.jar`）。
 - `1.21.11` 和 `26.3` 使用不同的 Loader 与 Java 版本，请勿混用。
 
 ## Paper 插件

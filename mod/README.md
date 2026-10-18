@@ -6,12 +6,12 @@ EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的六个
 
 | 构件 | Minecraft | Java |
 | --- | --- | --- |
-| `enchadd-fabric-2.1.1.jar` | Fabric `1.21.11` | 21 |
-| `enchadd-fabric-2.1.1.jar` | Fabric `26.3` | 25 |
-| `enchadd-forge-2.1.1.jar` | Forge `1.21.11` | 21 |
-| `enchadd-forge-2.1.1.jar` | Forge `26.3` | 25 |
-| `enchadd-neoforge-2.1.1.jar` | NeoForge `1.21.11` | 21 |
-| `enchadd-neoforge-2.1.1.jar` | NeoForge `26.3` | 25 |
+| `enchadd-fabric-1.21.11-2.1.1.jar` | Fabric `1.21.11` | 21 |
+| `enchadd-fabric-26.3-2.1.1.jar` | Fabric `26.3` | 25 |
+| `enchadd-forge-1.21.11-2.1.1.jar` | Forge `1.21.11` | 21 |
+| `enchadd-forge-26.3-2.1.1.jar` | Forge `26.3` | 25 |
+| `enchadd-neoforge-1.21.11-2.1.1.jar` | NeoForge `1.21.11` | 21 |
+| `enchadd-neoforge-26.3-2.1.1.jar` | NeoForge `26.3` | 25 |
 
 六个构件不能互换。请根据服务端 Loader 和 Minecraft 版本选择对应文件。
 
