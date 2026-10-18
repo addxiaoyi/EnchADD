@@ -1,19 +1,25 @@
-# Current Mod Artifacts and Build Evidence
+# EnchADD 2.1.2 Cross-Loader Build Evidence
 
-All six loader modules were freshly built on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Each build ran the generated-resource and behavior-adapter validators. The table records exact local JAR sizes and SHA-256 hashes, and links all six build outputs.
+## Mod JARs
+
+All six Mod modules were freshly built on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Resource and behavior-adapter validators passed for every module. A stale-output defect in version-filtered metadata was fixed by declaring the expanded version as a `processResources` input; all six packaged metadata files were checked for `2.1.2`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.1.jar | 294188 | `E2AD6CE58798B436D50EDFCC9AC7930F0CCEAD13EEA5D3C81FF8EC2DDA8B49A9` | `docs/validation-logs/current-six-fabric-1.21.11-build-20261018.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.1.jar | 302971 | `BF8169DF62905258307D72ED2C68872B6DB8BC0704032B07E935DA0E67DF91AE` | `docs/validation-logs/current-six-fabric-26.3-build-20261018.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.1.jar | 299167 | `37B1779B148C6E62E6773C55F10478D2543C4FC0ED9B1B4F588D0DCF4895A5A7` | `docs/validation-logs/current-six-forge-1.21.11-build-20261018.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.1.jar | 299523 | `09A552962229ADEF30B6FDEC81C1CEFF230287498C457CB80BBAB7D7F7E1F7F7` | `docs/validation-logs/current-six-forge-26.3-build-20261018.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.1.jar | 296374 | `F2017F3992A0D02B5645C45B88C2E835C9DDF860D02B40CA93363CC0C0C7DA03` | `docs/validation-logs/current-six-neoforge-1.21.11-build-20261018.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.1.jar | 296709 | `6AB09671D380EA9D3446EB503F97BC115C90C5A0F6761FB79A339BF7C6AA69ED` | `docs/validation-logs/current-six-neoforge-26.3-build-20261018.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.2.jar | 294188 | `281A64941DFAB18AFA677D6797D91897C553D5CD336D67F717D5E79F2B5788F5` | `docs/validation-logs/v2.1.2-fabric-1.21.11-build-20261018.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.2.jar | 302971 | `C3DB0A955DFCD7F15B5CAC666AD2B983262EE06FBFD065A60E7C0C0E06B20CFD` | `docs/validation-logs/v2.1.2-fabric-26.3-build-20261018.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.2.jar | 299167 | `7BECF98594F4D11608C080E729BE5995041325E36A7C01BC75D52312186F9693` | `docs/validation-logs/v2.1.2-forge-1.21.11-build-20261018.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.2.jar | 299523 | `06B2F4B57716ECF284E13F9F74930E9E2A7B5F43AD00723FA764DB6816452D51` | `docs/validation-logs/v2.1.2-forge-26.3-build-20261018.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.2.jar | 296375 | `2A548035557AA4E767B25E27EBE4790EEC46FB25C5026CDFA43BAB992AC6458B` | `docs/validation-logs/v2.1.2-neoforge-1.21.11-build-20261018.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.2.jar | 296709 | `959633D5BEAEB54526EDF0D5D13BE601596AB13AE335FCA2302CEC4C58DE774C` | `docs/validation-logs/v2.1.2-neoforge-26.3-build-20261018.txt` |
 
-## Runtime evidence
+## Paper Plugin
 
-- Fresh Forge builds on 2026-10-09: explicit clean plus `--rerun-tasks` passed for `forge-1.21.11` and `forge-26.3`; current JAR hashes match this table. The 2026-10-13 isolated Forge runs used the Forge Java 21 and Java 25 toolchains respectively, reached server `Done`, and showed no EnchADD EventBus cancellation exception. Platform-native Netty epoll/kqueue and Windows OSHI logging noise remains.
+Paper protected-release `clean verify` passed on 2026-10-18. Tests: 322 run, 0 failures, 0 errors, 0 skipped. Artifact: `enchadd-plugin-2.1.2-protected.jar` (702369 bytes), SHA-256 `0b3f66e7e3bf86c276c352619759a6776a5c8ede2176e905113a2b7f9ec9b434`.
+
+## Historical Runtime Evidence
+
+- Fresh Forge builds on 2026-10-09: explicit clean plus `--rerun-tasks` passed for `forge-1.21.11` and `forge-26.3`; artifact hashes from that historical build are recorded in its archived evidence; this is not a current-artifact hash claim. The 2026-10-13 isolated Forge runs used the Forge Java 21 and Java 25 toolchains respectively, reached server `Done`, and showed no EnchADD EventBus cancellation exception. Platform-native Netty epoll/kqueue and Windows OSHI logging noise remains.
 
 - NeoForge `1.21.11` reached `Done` and logged `EnchADD mod initialized`; see `docs/validation-logs/neoforge-1.21.11-runserver-final-resource-schema-20261008.log`.
 - NeoForge `26.3` reached `Done` and logged `EnchADD mod initialized`; see `docs/validation-logs/neoforge-26.3-runserver-after-arrow-predicate-fix-20261008.log`.
@@ -26,7 +32,7 @@ All six loader modules were freshly built on 2026-10-18 with JDK `25.0.3` and Gr
 - Forge event handlers were migrated from the legacy event-bus helper to per-event `EventType.BUS.addListener` for both Forge sources. The final 1.21.11 build and startup completed; 26.3 also built. Cancellable listeners now return cancellation results. Regression evidence is in `docs/validation-logs/forge-event-listener-corrections-20261009.log` and `docs/validation-logs/forge-1.21.11-runserver-eventbus-fix-20261009.log`.
 - Forge 26.3 isolated run previously reached `EnchADD mod initialized` and `Done (3.288s)`; see `mod/forge-26.3/run-verify-20261009-1415/logs/latest.log`. Later isolated retries hit a world session-lock access error. Treat the prior successful run as startup evidence, while the retry is an environment/runtime limitation.
 - Current Forge sources were freshly rebuilt with explicit clean and rerun tasks in `docs/validation-logs/forge-build-force-current-20261009.log`; this establishes compile/resource/adapter validation, not runtime behavior. Fresh isolated runtime logs for both current Forge JARs reached `Done`: `docs/validation-logs/forge-1.21.11-run-current-jdk8toolchain-20261009.log` and `docs/validation-logs/forge-26.3-run-current-jdk8toolchain-20261009.log`. This proves current server initialization, not player-driven behavior.
-- No player-driven enchantment behavior trigger has been verified yet.
+- At the 2026-10-09 checkpoint, no player-driven enchantment trigger had been verified; later per-loader behavior records below supersede that snapshot.
 - Forge 26.3 resource compatibility was corrected to emit the 26.3 `type` requirement keys and pack format; the standalone Forge 26.3 build passed with JAR SHA-256 `D0C38711DF6ED6AF205231E723F79B7F473C3EF6A4DA383F7DE5362F351BED54`. The 2026-10-15 userdev startup reached Forge/Mixin initialization but failed because ForgeGradle exposed `build/resources/main` without its compiled mod classes. This is not packaged-JAR or Smelting behavior evidence; Smelting remains `NOT_VERIFIED` for Forge 26.3. Logs: `docs/validation-logs/forge-26.3-smelting-userdev-resource-fix-20261015.log` and its debug companion.
 - A second Forge 26.3 run temporarily hid the development classes/resources and loaded the packaged JAR from an ASCII isolated `mods` directory. Forge discovered `enchadd` and set the Mixin compatibility level; startup then stopped on the environment's Netty epoll/port-bind failure. This confirms packaged Mod discovery and Mixin initialization only, not `Block.getDrops` injection or Smelting output. Logs: `docs/validation-logs/forge-26.3-smelting-packaged-isolated-20261015.log` and its debug companion.
 - A repeat packaged run used port `25575` and reached `Starting Minecraft server on *:25575`; it still failed to bind because that port was already occupied. The debug log shows `ForgeSmeltingDropsMixin` was selected, but also reports class version 69 versus the runtime Mixin Java 21/class-version-65 limit. Keep Forge 26.3 Smelting `NOT_VERIFIED` until that warning is resolved and the server reaches a clean running state. Logs: `docs/validation-logs/forge-26.3-smelting-packaged-port25575-20261015.log` and its debug companion.
@@ -295,7 +301,7 @@ ot-audited/MISSING fields for poise, measured, lodestar, rally, starwish, wayson
 
 - Fabric 1.21.11 Skewer custom-only re-test after generated-effect de-duplication: the isolated current JAR `443B3D43DC001D7CAD23E0B01778C4B00F15A5E4A9CECD5FE1EBF49B2109F0D0` produced 5 Slowness observations in 10 level III trident batches. The generated Skewer effects object is empty, so this is custom `SpearCombatBehavior` path evidence; it does not claim a deterministic probability. Evidence: `docs/validation-logs/fabric-1.21.11-skewer-custom-only-run-20261012.log`.
 
-- NeoForge 1.21.11 current packaged-JAR Frostbrand verification: the run overrides `fml.modFolders` to point at `mod/neoforge-1.21.11/build/libs/enchadd-neoforge-2.1.1.jar`, avoiding the development-folder locator. The current JAR `05C71CA90CC65C87CFC30D6555AC0B27808EBC09D3C6B3FC3D2D2BF6C72C251E` produced 2 Slowness observations in 20 level III diamond-sword batches. Evidence: `docs/validation-logs/neoforge-1.21.11-frostbrand-jar-current-run-20261012.log`.
+- NeoForge 1.21.11 current packaged-JAR Frostbrand verification: the run overrides `fml.modFolders` to point at `mod/neoforge-1.21.11/build/libs/enchadd-neoforge-2.1.1.jar`, avoiding the development-folder locator. The v2.1.1 JAR `05C71CA90CC65C87CFC30D6555AC0B27808EBC09D3C6B3FC3D2D2BF6C72C251E` produced 2 Slowness observations in 20 level III diamond-sword batches. Evidence: `docs/validation-logs/neoforge-1.21.11-frostbrand-jar-current-run-20261012.log`.
 
 - NeoForge 1.21.11 current packaged-JAR Skewer verification: the same `fml.modFolders` packaged-JAR launch produced 4 Slowness observations in 10 level III trident batches. The generated Skewer effects object is empty, so this is custom `SpearCombatBehavior` path evidence. Evidence: `docs/validation-logs/neoforge-1.21.11-skewer-jar-current-run-20261012.log`.
 
@@ -345,13 +351,9 @@ ot-audited/MISSING fields for poise, measured, lodestar, rally, starwish, wayson
 
 - 2026-10-13 Forge 1.21.11 isolated packaged-JAR verification: copied `enchadd-forge-1.21.11-2.1.1.jar` with SHA-256 `927A01A04016E0CCDCFD1B7A9C68DFB3525989006DC90B1EA9E9605EB5E50A19` into a fresh `mods` directory, started the server on port `25575`, and ran the Telepathy I survival dig test. Stone broke and one cobblestone entered the player's inventory. The server reached `Done`; no EnchADD EventBus cancellation exception was observed. Platform-native Netty epoll/kqueue logging noise remains and is recorded separately. Evidence: `docs/validation-logs/forge-1.21.11-telepathy-isolated-current-run-20261013.log` and `mod/forge-1.21.11/run-telepathy-current-20261013/logs/latest.log`.
 
-- 2026-10-13 Forge 26.3 independent isolated startup: copied the final JAR with SHA-256 `A190889DF7A939D31CEE8A96A92230846452AABB82956944CE655F655E95F5DC` into `mod/forge-26.3/run-current-20261013/mods`, started on port `25576` with JDK 25.0.3, and reached `Done (1.896s)`. Debug discovery selected the packaged `enchadd-forge-26.3-2.1.1.jar` over the development resources. No EnchADD cancellation exception was observed; Windows performance-counter and platform-native Netty warnings remain environment noise. Evidence: `docs/validation-logs/forge-26.3-isolated-startup-current-run-20261013.log` and `mod/forge-26.3/run-current-20261013/logs/debug.log`.
+- 2026-10-13 Forge 26.3 independent isolated startup (v2.1.1): copied the JAR with SHA-256 `A190889DF7A939D31CEE8A96A92230846452AABB82956944CE655F655E95F5DC` into `mod/forge-26.3/run-current-20261013/mods`, started on port `25576` with JDK 25.0.3, and reached `Done (1.896s)`. Debug discovery selected the packaged `enchadd-forge-26.3-2.1.1.jar` over the development resources. No EnchADD cancellation exception was observed; Windows performance-counter and platform-native Netty warnings remain environment noise. Evidence: `docs/validation-logs/forge-26.3-isolated-startup-current-run-20261013.log` and `mod/forge-26.3/run-current-20261013/logs/debug.log`.
 
 - 2026-10-13 Fabric combo-adapter source/build crosscheck: `ComboDamageMixin` now calls `MeleeEffectBehavior.adjustDamage` before the existing protection and spear-defense chain. Runtime combo proc remains NOT_VERIFIED because the first harness used invalid enchantment/item combinations. The current Fabric JAR hashes are recorded in the table above.
 
 
-- 2026-10-13 Fabric 26.3 combo adapter build passed resource and adapter validation; current JAR SHA-256 is `0AA6E8FE790CDBDB33297E04E4A963E6F351C77F49170A6C5AD49488D41CC9EE`. Runtime behavior remains NOT_VERIFIED.
-
-- 2026-10-18 Fabric icon integration: both Fabric descriptors reference `assets/enchadd/icon.png`; a 64x64 PNG is packaged in both JARs. Fabric 1.21.11 build and validators passed; SHA-256 `E2AD6CE58798B436D50EDFCC9AC7930F0CCEAD13EEA5D3C81FF8EC2DDA8B49A9`. Fabric 26.3 build and validators passed; SHA-256 `BF8169DF62905258307D72ED2C68872B6DB8BC0704032B07E935DA0E67DF91AE`.
-
-- Forge and NeoForge 1.21.11/26.3 artifacts were rebuilt and byte-compared against the previous Release packages. Their only content change was inclusion of the shared icon SVG; all module classes and other packaged resources were unchanged. The current SHA-256 values are now reflected in the Release assets and table above.
+- Historical 2026-10-13 Fabric 26.3 combo-adapter build passed resource and adapter validation. Its JAR hash `0AA6E8FE790CDBDB33297E04E4A963E6F351C77F49170A6C5AD49488D41CC9EE` is superseded by the v2.1.2 artifact above; runtime behavior remains NOT_VERIFIED.
