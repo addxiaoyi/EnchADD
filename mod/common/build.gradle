@@ -26,3 +26,20 @@ tasks.register('verifyExperienceRewardRules', JavaExec) {
     mainClass = 'org.junit.platform.console.ConsoleLauncher'
     args 'execute', '--select-class=net.enchadd.mod.common.ExperienceRewardRulesTest'
 }
+
+tasks.register('compileFirebreakRulesTest', JavaCompile) {
+    source files(
+            'src/main/java/net/enchadd/mod/common/FirebreakRules.java',
+            'src/test/java/net/enchadd/mod/common/FirebreakRulesTest.java'
+    )
+    classpath = configurations.testCompileClasspath
+    destinationDirectory.set(layout.buildDirectory.dir('firebreak-rule-tests'))
+    options.release = 21
+}
+
+tasks.register('verifyFirebreakRules', JavaExec) {
+    dependsOn tasks.named('compileFirebreakRulesTest')
+    classpath = files(layout.buildDirectory.dir('firebreak-rule-tests')) + configurations.testRuntimeClasspath
+    mainClass = 'org.junit.platform.console.ConsoleLauncher'
+    args 'execute', '--select-class=net.enchadd.mod.common.FirebreakRulesTest'
+}

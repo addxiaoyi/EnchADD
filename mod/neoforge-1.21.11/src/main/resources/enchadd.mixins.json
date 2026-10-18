@@ -3,6 +3,6 @@
   "minVersion": "0.8.7",
   "package": "net.enchadd.mod.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["NeoForgeDurabilityCurseMixin"],
+  "mixins": ["NeoForgeDurabilityCurseMixin", "FirebreakCombustionMixin"],
   "injectors": { "defaultRequire": 1 }
 }

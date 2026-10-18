@@ -1,0 +1,34 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+> Task :compileFirebreakRulesTest UP-TO-DATE
+
+> Task :verifyFirebreakRules
+
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m?[0m
+[36m����[0m [36mJUnit Jupiter[0m [32m?[0m
+[36m   ����[0m [36mFirebreakRulesTest[0m [32m?[0m
+[36m      ����[0m [34mshortensCombustionUsingPaperDefaultPerLevelValues()[0m [32m?[0m
+[36m      ����[0m [34mreducesFireDamageByPaperDefaultValues()[0m [32m?[0m
+[36m      ����[0m [34mkeepsInvalidOrNonPositiveDamageUnchanged()[0m [32m?[0m
+[36m      ����[0m [34mclampsLevelsAndLeavesNonPositiveDurationsAlone()[0m [32m?[0m
+
+Test run finished after 106 ms
+[         2 containers found      ]
+[         0 containers skipped    ]
+[         2 containers started    ]
+[         0 containers aborted    ]
+[         2 containers successful ]
+[         0 containers failed     ]
+[         4 tests found           ]
+[         0 tests skipped         ]
+[         4 tests started         ]
+[         0 tests aborted         ]
+[         4 tests successful      ]
+[         0 tests failed          ]
+
+
+BUILD SUCCESSFUL in 2s
+2 actionable tasks: 1 executed, 1 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.1/userguide/configuration_cache_enabling.html

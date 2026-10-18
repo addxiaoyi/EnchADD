@@ -3,7 +3,7 @@
   "minVersion": "0.8.7",
   "package": "net.enchadd.mod.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["MobExperienceMixin", "DurabilityCurseMixin", "FishingHookFreshcatchMixin", "BreakguardMixin", "BraceMixin", "FarshotArrowMixin", "FarshotDamageMixin", "ParryDamageMixin", "AirbagDamageMixin", "SteadfastMixin", "HomewardDamageMixin", "ProjectileStatusMixin", "ProjectileDamageMixin", "RicochetProjectileMixin", "HomecomingMixin", "VolleyMixin", "FirebreakDamageMixin", "InsomniaMixin", "TenderstepMixin", "SoulboundMixin", "HeadDropsMixin", "PivotMixin", "ShroudMixin", "RetchingMixin", "ThirstDamageMixin", "ThirstHealingMixin", "MomentumMixin", "LucidityMixin", "ClairvoyanceDamageMixin", "PoiseDamageMixin", "PurifyMixin", "DispelDamageMixin", "ComboDamageMixin", "SunderDamageMixin", "SmeltingDropsMixin"],
+  "mixins": ["MobExperienceMixin", "DurabilityCurseMixin", "FishingHookFreshcatchMixin", "BreakguardMixin", "BraceMixin", "FarshotArrowMixin", "FarshotDamageMixin", "ParryDamageMixin", "AirbagDamageMixin", "SteadfastMixin", "HomewardDamageMixin", "ProjectileStatusMixin", "ProjectileDamageMixin", "RicochetProjectileMixin", "HomecomingMixin", "VolleyMixin", "FirebreakDamageMixin", "FirebreakCombustionMixin", "InsomniaMixin", "TenderstepMixin", "SoulboundMixin", "HeadDropsMixin", "PivotMixin", "ShroudMixin", "RetchingMixin", "ThirstDamageMixin", "ThirstHealingMixin", "MomentumMixin", "LucidityMixin", "ClairvoyanceDamageMixin", "PoiseDamageMixin", "PurifyMixin", "DispelDamageMixin", "ComboDamageMixin", "SunderDamageMixin", "SmeltingDropsMixin"],
   "injectors": { "defaultRequire": 1 }
 }
 
