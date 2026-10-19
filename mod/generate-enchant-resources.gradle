@@ -12,7 +12,7 @@ def damageTagId = { String tag -> is26_3 ? "#minecraft:${tag}" : "minecraft:${ta
 def catalog = catalogFile.readLines('UTF-8')
         .collect { it.trim() }
         .findAll { it && !it.startsWith('#') }
-        .collect { it.split('\\|', 2) }
+        .collect { it.split('\\|', -1) }
 
 def normalIds = catalog.findAll { it[1] == 'normal' }.collect { it[0] }
 def curseIds = catalog.findAll { it[1] == 'curse' }.collect { it[0] }
@@ -33,6 +33,10 @@ def itemGroups = [
 ]
 
 def supportedItems = { String id ->
+    def catalogEntry = catalog.find { it[0] == id }
+    if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
+        return catalogEntry[2].split(';').collect { it.trim() }
+    }
     if (spearIds.contains(id)) {
         return ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
                 'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
@@ -231,6 +235,17 @@ tasks.register('validateEnchADDResources') {
             assert parsed.description?.translate: "Missing description in ${file.name}"
             assert parsed.weight instanceof Number: "Missing weight in ${file.name}"
         }
+        def paperFrostbrandItems = [
+                'minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
+                'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
+                'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
+                'minecraft:golden_axe', 'minecraft:diamond_axe', 'minecraft:netherite_axe'
+        ] as Set
+        def frostbrand = parser.parse(new File(enchantDir, 'frostbrand.json'))
+        assert (frostbrand.supported_items as Set) == paperFrostbrandItems:
+                'Frostbrand supported_items must match the Paper sword/axe allowlist'
+        assert frostbrand.slots == ['hand']: 'Frostbrand must remain a hand-slot enchantment'
+        assert frostbrand.effects == [:]: 'Frostbrand custom adapter must be the only slowness proc source'
         expectedEffects.each { id, effectKey ->
             def file = new File(enchantDir, "${id}.json")
             assert file.isFile(): "Missing migrated enchantment ${id}"

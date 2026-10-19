@@ -1,29 +1,29 @@
-# EnchADD 2.1.6 Cross-Loader Build Evidence
+# EnchADD 2.1.7 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-18 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.6`.
+All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.7`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.6.jar | 297380 | `6C27D9418F37FF5CF5BBD7C7D7A1E1CCC29B506F2771F6F0995AD47A15C8F1CA` | `docs/validation-logs/v2.1.6-fabric-1.21.11-build-20261018.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.6.jar | 306049 | `79E0458F1D3F07A6B5253F89E62C5612AA5AC544C18BBAB2DB0148D63451D769` | `docs/validation-logs/v2.1.6-fabric-26.3-build-20261018.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.6.jar | 302203 | `D1265FCBA4E297FE128721F0BA125DA0C542F2810A792252E889CAC2EC9B446C` | `docs/validation-logs/v2.1.6-forge-1.21.11-build-20261018.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.6.jar | 302559 | `0CA28165442E7FA7543AE904AF3AE990E58C782C0BB19F085F616BA177F9313B` | `docs/validation-logs/v2.1.6-forge-26.3-build-20261018.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.6.jar | 299413 | `804ABF3AC053EEBBFB328FDB8CD06EC923728730D7B104AB31DA9EF8CAE531D8` | `docs/validation-logs/v2.1.6-neoforge-1.21.11-build-20261018.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.6.jar | 299747 | `419E0F26FA8B31F97AF4ADE5E5EA9EBF52721BAF5AD40494D3E685A61F228224` | `docs/validation-logs/v2.1.6-neoforge-26.3-build-20261018.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.7.jar | 297509 | `1428424FD8FADBD5DE88432BD6FE3B83159502CFD4CEC6D7720CB53BF12955EB` | `docs/validation-logs/v2.1.7-fabric-1.21.11-build-20261019.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.7.jar | 306178 | `E664BAB0351F0D2BE9EAE876F0119BAB5EBCC9D818398FB3440C522211B44A56` | `docs/validation-logs/v2.1.7-fabric-26.3-build-20261019.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.7.jar | 302333 | `757F636E646661F9C20C8DEFE53E9CC025C9453E8DCA2CE9097A6A60E82F1FC9` | `docs/validation-logs/v2.1.7-forge-1.21.11-build-20261019.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.7.jar | 302689 | `D69051E9372E11C82AE0A0B1D2C7E08771439CBDF5B1036340CC1515AA567250` | `docs/validation-logs/v2.1.7-forge-26.3-build-20261019.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.7.jar | 299542 | `9F8C7BE616581FE0C498F8194661678AF1F0486D41E608A3D77A5613EC8BBD53` | `docs/validation-logs/v2.1.7-neoforge-1.21.11-build-20261019.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.7.jar | 299877 | `A805A7850423C6C82BD262A866EE08B3957DC00D5259C4DC636259151F7318CC` | `docs/validation-logs/v2.1.7-neoforge-26.3-build-20261019.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.6-protected.jar`: 702380 bytes, SHA-256 `BB716192BD587849D7C6634ED0595A837BD04147C3FD94690A908E358FAF3E54`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.7-protected.jar`: 702380 bytes, SHA-256 `D6B76DD6EE2B5DA38795CB973E174BD84A945E2E47A209E9B3124F2893517F84`.
 
-## Firebreak
+## Frostbrand
 
-Firebreak combustion duration now uses the Paper default 20% per level capped at 60%; direct fire damage reduction remains 8% per level capped at 24%. Four focused rule tests passed. The six Mod loaders compile and pass resource/adapter validation. Actual fire-duration and damage behavior remains NOT_VERIFIED. Paper custom Firebreak values are not exposed through Mod configuration.
+Frostbrand supported items now match Paper's 12-item sword and axe allowlist exactly. Generated effects remain empty so the custom adapter is the only slowness proc source. All six Mod loaders build and pass resource/adapter validation. Actual trigger behavior remains NOT_VERIFIED.
 
 ## Previous Release Notes
 
-In 2.1.5, Greed XP/vulnerability requires a credited direct player kill. Misfortune remains active for player-caused indirect kills; deaths caused by another entity trigger neither curse. Seven focused unit tests passed. Live player triggers remain NOT_VERIFIED, and Paper tuning settings are not wired to Mod configuration.
+In 2.1.6, Firebreak combustion duration uses 20% reduction per level capped at 60%; direct fire damage reduction uses 8% per level capped at 24%. The six loaders build successfully; live fire behavior remains NOT_VERIFIED.
 
 
 ## Historical Runtime Evidence
