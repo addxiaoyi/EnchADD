@@ -7,7 +7,7 @@ public final class EnchADDModCommon {
     private EnchADDModCommon() {}
 
     public static String status() {
-        return "EnchADD mod core 2.1.7; supported=" + ModVersion.MINIMUM + ".." + ModVersion.MAXIMUM
+        return "EnchADD mod core 2.1.8; supported=" + ModVersion.MINIMUM + ".." + ModVersion.MAXIMUM
                 + "; customWeight=" + ModBalanceRules.weight(0);
     }
 }

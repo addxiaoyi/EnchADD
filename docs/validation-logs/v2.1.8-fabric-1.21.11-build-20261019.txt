@@ -1,0 +1,38 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=D:\gradle-tmp
+Starting a Gradle Daemon, 5 busy and 26 stopped Daemons could not be reused, use --status for details
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :compileJava UP-TO-DATE
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileClientJava NO-SOURCE
+> Task :processClientResources NO-SOURCE
+> Task :jar UP-TO-DATE
+> Task :processIncludeJars UP-TO-DATE
+> Task :remapJar UP-TO-DATE
+> Task :remapSourcesJar SKIPPED
+> Task :assemble UP-TO-DATE
+> Task :clientClasses UP-TO-DATE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :validateAccessWidener NO-SOURCE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 15s
+8 actionable tasks: 2 executed, 6 up-to-date

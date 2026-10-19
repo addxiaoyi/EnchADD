@@ -16,7 +16,10 @@ def catalog = catalogFile.readLines('UTF-8')
 
 def normalIds = catalog.findAll { it[1] == 'normal' }.collect { it[0] }
 def curseIds = catalog.findAll { it[1] == 'curse' }.collect { it[0] }
-def maxLevelFor = { String id, boolean curse -> ['greed', 'misfortune'].contains(id) ? 3 : (curse ? 1 : 3) }
+def maxLevelFor = { String id, boolean curse ->
+    if (id == 'overwhelm') return 2
+    ['greed', 'misfortune'].contains(id) ? 3 : (curse ? 1 : 3)
+}
 def spearIds = ['lancer', 'reach', 'skewer', 'counterthrust'] as Set
 def itemGroups = [
         shield  : ['barrier', 'brace', 'bulwark', 'holdfast', 'parry', 'pivot', 'riposte', 'ward'] as Set,
@@ -246,6 +249,18 @@ tasks.register('validateEnchADDResources') {
                 'Frostbrand supported_items must match the Paper sword/axe allowlist'
         assert frostbrand.slots == ['hand']: 'Frostbrand must remain a hand-slot enchantment'
         assert frostbrand.effects == [:]: 'Frostbrand custom adapter must be the only slowness proc source'
+        def overwhelm = parser.parse(new File(enchantDir, 'overwhelm.json'))
+        assert overwhelm.max_level == 2: 'Overwhelm max_level must match Paper'
+        def swordAxeItems = paperFrostbrandItems
+        ['hemorrhage', 'immolate'].each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            assert (parsed.supported_items as Set) == swordAxeItems:
+                    "${id} supported_items must match the Paper sword/axe allowlist"
+        }
+        def sunder = parser.parse(new File(enchantDir, 'sunder.json'))
+        def axeItems = paperFrostbrandItems.findAll { it.endsWith('_axe') } as Set
+        assert (sunder.supported_items as Set) == axeItems:
+                'Sunder supported_items must match the Paper axe allowlist'
         expectedEffects.each { id, effectKey ->
             def file = new File(enchantDir, "${id}.json")
             assert file.isFile(): "Missing migrated enchantment ${id}"

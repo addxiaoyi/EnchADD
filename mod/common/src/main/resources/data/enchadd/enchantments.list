@@ -65,10 +65,10 @@ tremor|normal
 meteor|normal
 updraft|normal
 overwhelm|normal
-hemorrhage|normal
+hemorrhage|normal|minecraft:wooden_sword;minecraft:stone_sword;minecraft:iron_sword;minecraft:golden_sword;minecraft:diamond_sword;minecraft:netherite_sword;minecraft:wooden_axe;minecraft:stone_axe;minecraft:iron_axe;minecraft:golden_axe;minecraft:diamond_axe;minecraft:netherite_axe
 mortal_wound|normal
 decapitate|normal
-immolate|normal
+immolate|normal|minecraft:wooden_sword;minecraft:stone_sword;minecraft:iron_sword;minecraft:golden_sword;minecraft:diamond_sword;minecraft:netherite_sword;minecraft:wooden_axe;minecraft:stone_axe;minecraft:iron_axe;minecraft:golden_axe;minecraft:diamond_axe;minecraft:netherite_axe
 steadfast|normal
 quell|normal
 evasion|normal
@@ -83,7 +83,7 @@ wingguard|normal
 barrier|normal
 tide_runner|normal
 sidestep|normal
-sunder|normal
+sunder|normal|minecraft:wooden_axe;minecraft:stone_axe;minecraft:iron_axe;minecraft:golden_axe;minecraft:diamond_axe;minecraft:netherite_axe
 steady_aim|normal
 stillness|normal
 lancer|normal

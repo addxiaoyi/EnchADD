@@ -1,29 +1,29 @@
-# EnchADD 2.1.7 Cross-Loader Build Evidence
+# EnchADD 2.1.8 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.7`.
+All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.8`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.7.jar | 297509 | `1428424FD8FADBD5DE88432BD6FE3B83159502CFD4CEC6D7720CB53BF12955EB` | `docs/validation-logs/v2.1.7-fabric-1.21.11-build-20261019.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.7.jar | 306178 | `E664BAB0351F0D2BE9EAE876F0119BAB5EBCC9D818398FB3440C522211B44A56` | `docs/validation-logs/v2.1.7-fabric-26.3-build-20261019.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.7.jar | 302333 | `757F636E646661F9C20C8DEFE53E9CC025C9453E8DCA2CE9097A6A60E82F1FC9` | `docs/validation-logs/v2.1.7-forge-1.21.11-build-20261019.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.7.jar | 302689 | `D69051E9372E11C82AE0A0B1D2C7E08771439CBDF5B1036340CC1515AA567250` | `docs/validation-logs/v2.1.7-forge-26.3-build-20261019.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.7.jar | 299542 | `9F8C7BE616581FE0C498F8194661678AF1F0486D41E608A3D77A5613EC8BBD53` | `docs/validation-logs/v2.1.7-neoforge-1.21.11-build-20261019.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.7.jar | 299877 | `A805A7850423C6C82BD262A866EE08B3957DC00D5259C4DC636259151F7318CC` | `docs/validation-logs/v2.1.7-neoforge-26.3-build-20261019.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.8.jar | 297659 | `7D98CC5A4E934C49FD1EAE33D7B0686D5FA3B9B4AA9F95400D9615A5F635E0E3` | `docs/validation-logs/v2.1.8-fabric-1.21.11-build-20261019.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.8.jar | 306328 | `9200B87C06A92A55A88E681B2E35078B35EC6083DF27BCEA44AB7DBF960A4915` | `docs/validation-logs/v2.1.8-fabric-26.3-build-20261019.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.8.jar | 302483 | `AC67349CD184EBC7719804FF1731B5099FC0CB338DE39F7DA9A4D9CE621ECDC4` | `docs/validation-logs/v2.1.8-forge-1.21.11-build-20261019.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.8.jar | 302839 | `006AFD9D6BB6817B0DB1A9C4AE78E6D9F19F43D16F09C5DF66A9F8D4712288A9` | `docs/validation-logs/v2.1.8-forge-26.3-build-20261019.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.8.jar | 299692 | `AF8F27BA2AE13F3A72AC307E29256895F6152464C05F5652EF00B457CA6E5503` | `docs/validation-logs/v2.1.8-neoforge-1.21.11-build-20261019.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.8.jar | 300027 | `FE1FBDB573D4C85287C6F276585256FE3DCF59B600B4D32D759307ECF300F239` | `docs/validation-logs/v2.1.8-neoforge-26.3-build-20261019.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.7-protected.jar`: 702380 bytes, SHA-256 `D6B76DD6EE2B5DA38795CB973E174BD84A945E2E47A209E9B3124F2893517F84`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.8-protected.jar`: 702379 bytes, SHA-256 `512D0C560E6D25CA938A21A22726890B90F3EAB92AE30CAF1799387BCA764D13`.
 
-## Frostbrand
+## Four Combat Status Enchantments
 
-Frostbrand supported items now match Paper's 12-item sword and axe allowlist exactly. Generated effects remain empty so the custom adapter is the only slowness proc source. All six Mod loaders build and pass resource/adapter validation. Actual trigger behavior remains NOT_VERIFIED.
+Overwhelm now uses max level 2. Hemorrhage and Immolate use the exact Paper sword/axe allowlist, and Sunder uses the exact Paper axe allowlist. All six Mod loaders build and pass resource/adapter validation. Actual combat triggers remain NOT_VERIFIED.
 
 ## Previous Release Notes
 
-In 2.1.6, Firebreak combustion duration uses 20% reduction per level capped at 60%; direct fire damage reduction uses 8% per level capped at 24%. The six loaders build successfully; live fire behavior remains NOT_VERIFIED.
+In 2.1.7, Frostbrand used the exact Paper sword/axe allowlist across all six Mod resources; live trigger behavior remained NOT_VERIFIED.
 
 
 ## Historical Runtime Evidence
