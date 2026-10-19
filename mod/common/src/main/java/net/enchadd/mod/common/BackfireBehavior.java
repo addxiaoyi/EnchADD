@@ -27,7 +27,7 @@ public final class BackfireBehavior {
 
     public static void onAttack(LivingEntity attacker, DamageSource source, float finalDamage) {
         if (!(attacker instanceof ServerPlayer player) || !Float.isFinite(finalDamage) || finalDamage <= 0.0f
-                || source.getEntity() != player) return;
+                || source.getEntity() != player || source.getDirectEntity() != player) return;
         Holder<Enchantment> holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(BACKFIRE);
         int level = Math.min(MAX_LEVEL, EnchantmentHelper.getItemEnchantmentLevel(holder, player.getMainHandItem()));
         if (level <= 0) return;

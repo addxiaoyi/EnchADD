@@ -98,12 +98,12 @@ public class BackfireEnchant extends CooldownEnchant {
             EnchADDConfig.getItemTagEntriesFromList(EnchADDConfig.getStringList(
                 configurationSection,
                 "supportedItemTags",
-                List.of("#minecraft:enchantable/armor")
+                List.of("#minecraft:enchantable/weapon")
             )),
             EnchADDConfig.getEquipmentSlotGroups(EnchADDConfig.getStringList(
                 configurationSection,
                 "activeSlots",
-                List.of("ANY")
+                List.of("MAINHAND")
             )),
             maxLevel,
             cooldownTicks,

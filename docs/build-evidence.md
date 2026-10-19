@@ -1,29 +1,29 @@
-# EnchADD 2.1.9 Cross-Loader Build Evidence
+# EnchADD 2.1.10 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.9`.
+All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.10`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.9.jar | 299668 | `FF88E73226FEAAC669C5BFE5E14D37AFE939F57244AA461B8DDEDCDB9700D927` | `docs/validation-logs/v2.1.9-fabric-1.21.11-build-20261019.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.9.jar | 308465 | `FFD26631310455DA06B45400079DDD1E4BD9E82F36C2ADC927399EBF110A19F7` | `docs/validation-logs/v2.1.9-fabric-26.3-build-20261019.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.9.jar | 305597 | `DDE46D2A79CAE77B6987DACF6B07E5EE7D852F747F6649CA54C1E41450A3ABEA` | `docs/validation-logs/v2.1.9-forge-1.21.11-build-20261019.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.9.jar | 305959 | `22E00FABB066A06F17206CD76219404A71E93686127FC0040C3829EEBE00E96E` | `docs/validation-logs/v2.1.9-forge-26.3-build-20261019.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.9.jar | 302802 | `1BBD8570054772AECE0667A230A0A74EB1BD30F100F70DDF7904BA8A8427B5DF` | `docs/validation-logs/v2.1.9-neoforge-1.21.11-build-20261019.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.9.jar | 303143 | `343AEF7EA9827AB0CD2A284F17727247A5C6CE746964F927EC10903321033690` | `docs/validation-logs/v2.1.9-neoforge-26.3-build-20261019.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.10.jar | 299731 | `0AE2E2791EDE537C2078310C627502C0297644CAE711EEF5AF129B5A584696F3` | `docs/validation-logs/v2.1.10-fabric-1.21.11-build-20261019.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.10.jar | 308536 | `EC82CF31FC424310A6734D093B94B8C91ED9D15A760A1C2D348152D462B73355` | `docs/validation-logs/v2.1.10-fabric-26.3-build-20261019.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.10.jar | 305669 | `4800C3133CDEFB84D94C458170923E31A184AEF7365C84D0163C84586A297BDD` | `docs/validation-logs/v2.1.10-forge-1.21.11-build-20261019.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.10.jar | 306028 | `0605B5B87C258CEC8ACE70869B8A107F44FA21DFCD6E957AA9938ECEDC41F961` | `docs/validation-logs/v2.1.10-forge-26.3-build-20261019.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.10.jar | 302893 | `07382FB6B79D3DFCA98B7C777BBD98E92DB07C2333685DCCF4974AB68EAED7B6` | `docs/validation-logs/v2.1.10-neoforge-1.21.11-build-20261019.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.10.jar | 303235 | `BE22F9FE4907D2CCCCCCA4035D17E20D9F2F179507D3477F7F1E3AB7F0165401` | `docs/validation-logs/v2.1.10-neoforge-26.3-build-20261019.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.9-protected.jar`: 702378 bytes, SHA-256 `78BB97B7DCB49B768E5D100B593AB869B0E17F7C9C1A2A8860A36342064A096E`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.10-protected.jar`: 702381 bytes, SHA-256 `CF130D6477618DA48B9F68030335DC41F35AF63907BB113214566B0E94753F96`.
 
-## Rebound, Insight, and Debilitate
+## Fragility, Shatter, and Backfire
 
-Rebound now supports Paper mining and durability tags. Insight now increases block experience by 0.30 per level from a 1.30 base multiplier. Debilitate uses a cooldown-aware shared adapter with Paper default chance, duration, and chestplate rules. All six Mod loaders build and pass resource/adapter validation. Actual behavior remains NOT_VERIFIED.
+Fragility and Shatter now use Paper max levels, slots, and durability item ranges. Backfire is limited to direct main-hand weapon attacks and NeoForge reads completed damage. All six Mod loaders build and pass resource/adapter validation. Actual behavior remains NOT_VERIFIED.
 
 ## Previous Release Notes
 
-In 2.1.9, Overwhelm, Hemorrhage, Immolate, and Sunder resource constraints were aligned with Paper defaults; live combat behavior remained NOT_VERIFIED.
+In 2.1.9, Rebound, Insight, and Debilitate were aligned with Paper defaults; live behavior remained NOT_VERIFIED.
 
 
 ## Historical Runtime Evidence

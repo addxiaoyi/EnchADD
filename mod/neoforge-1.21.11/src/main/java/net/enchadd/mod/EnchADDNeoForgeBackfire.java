@@ -3,13 +3,13 @@ package net.enchadd.mod;
 import net.enchadd.mod.common.BackfireBehavior;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 final class EnchADDNeoForgeBackfire {
-    static void register() { NeoForge.EVENT_BUS.addListener(LivingIncomingDamageEvent.class, EnchADDNeoForgeBackfire::onDamage); }
-    private static void onDamage(LivingIncomingDamageEvent event) {
+    static void register() { NeoForge.EVENT_BUS.addListener(LivingDamageEvent.Post.class, EnchADDNeoForgeBackfire::onDamage); }
+    private static void onDamage(LivingDamageEvent.Post event) {
         if (event.getSource().getEntity() instanceof ServerPlayer player) {
-            BackfireBehavior.onAttack(player, event.getSource(), event.getAmount());
+            BackfireBehavior.onAttack(player, event.getSource(), event.getNewDamage());
         }
     }
 }

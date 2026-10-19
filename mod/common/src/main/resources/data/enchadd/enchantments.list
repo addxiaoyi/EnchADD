@@ -103,11 +103,11 @@ greed|curse
 rashness|curse
 retching_curse|curse
 thirst_curse|curse
-fragility|curse
+fragility|curse|#minecraft:enchantable/armor;#minecraft:enchantable/mining;#minecraft:enchantable/durability
 misfortune|curse
 lethargy|curse
 gravitation|curse
 brittle|curse
-backfire|curse
-shatter|curse
+backfire|curse|#minecraft:enchantable/weapon
+shatter|curse|#minecraft:enchantable/weapon;#minecraft:enchantable/mining
 
