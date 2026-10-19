@@ -25,6 +25,7 @@ public final class EnchADDNeoForge {
         EnchADDNeoForgeProjectileStatus.register();
         EnchADDNeoForgeVolley.register();
         EnchADDNeoForgeMeleeEffects.register();
+        EnchADDNeoForgeDebilitate.register();
         EnchADDNeoForgeBackfire.register();
         EnchADDNeoForgeWingguard.register();
         EnchADDNeoForgePanic.register();

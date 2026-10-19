@@ -132,12 +132,7 @@ def effectsFor = { String id ->
         case 'reach': return ['minecraft:damage': [damageEffect(0.25)]]
         case 'skewer': return [:]
         case 'counterthrust': return [:]
-        case 'debilitate': return ['minecraft:post_attack': [[
-                affected: 'attacker',
-                enchanted: 'victim',
-                effect: mobEffect('weakness', 2.0, 0),
-                requirements: directHit()
-        ]]]
+        case 'debilitate': return [:]
         case 'frostbrand': return [:]
         case 'immolate': return [:]
         case 'firebreak': return [
@@ -149,7 +144,9 @@ def effectsFor = { String id ->
                 ]],
                 'minecraft:damage_protection': [fireProtection(1.0)]
         ]
-        case 'insight': return ['minecraft:block_experience': [multiplyEffect(1.30)]]
+        case 'insight': return ['minecraft:block_experience': [[
+                effect: [type: 'minecraft:multiply', factor: [type: 'minecraft:linear', base: 1.30, per_level_above_first: 0.30]]
+        ]]]
         case 'steady_aim': return [:]
         case 'backfire': return [:]
         case 'rebound': return ['minecraft:item_damage': [[
@@ -221,7 +218,6 @@ tasks.register('validateEnchADDResources') {
         def expectedEffects = [
                 lancer       : 'minecraft:damage',
                 reach        : 'minecraft:damage',
-                debilitate   : 'minecraft:post_attack',
                 firebreak    : 'minecraft:damage_protection',
                 insight      : 'minecraft:block_experience',
                 rebound      : 'minecraft:item_damage',
@@ -261,6 +257,22 @@ tasks.register('validateEnchADDResources') {
         def axeItems = paperFrostbrandItems.findAll { it.endsWith('_axe') } as Set
         assert (sunder.supported_items as Set) == axeItems:
                 'Sunder supported_items must match the Paper axe allowlist'
+        def rebound = parser.parse(new File(enchantDir, 'rebound.json'))
+        def reboundItems = ['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set
+        assert (rebound.supported_items as Set) == reboundItems:
+                'Rebound must support Paper mining and durability item tags'
+        def insight = parser.parse(new File(enchantDir, 'insight.json'))
+        def insightFactor = insight.effects['minecraft:block_experience'][0].effect.factor
+        assert insightFactor.type == 'minecraft:linear'
+        assert insightFactor.base == 1.30 && insightFactor.per_level_above_first == 0.30:
+                'Insight must increase block XP multiplier by 0.30 per level'
+        def chestplates = ['minecraft:leather_chestplate', 'minecraft:chainmail_chestplate',
+                'minecraft:iron_chestplate', 'minecraft:golden_chestplate', 'minecraft:diamond_chestplate',
+                'minecraft:netherite_chestplate'] as Set
+        def debilitate = parser.parse(new File(enchantDir, 'debilitate.json'))
+        assert (debilitate.supported_items as Set) == chestplates && debilitate.slots == ['chest']:
+                'Debilitate must use the Paper chestplate item and slot restrictions'
+        assert debilitate.effects == [:]: 'Debilitate effects are provided by the cooldown-aware event adapter'
         expectedEffects.each { id, effectKey ->
             def file = new File(enchantDir, "${id}.json")
             assert file.isFile(): "Missing migrated enchantment ${id}"
@@ -275,6 +287,8 @@ tasks.register('validateEnchADDBehaviorAdapters') {
     doLast {
         def commonBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DamageProtectionBehavior.java')
         assert commonBehavior.isFile(): 'Missing shared armor damage protection behavior'
+        def debilitateBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DebilitateBehavior.java')
+        assert debilitateBehavior.isFile(): 'Missing shared Debilitate event behavior'
         def spearDefense = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearDefenseBehavior.java')
         assert spearDefense.isFile(): 'Missing Counterthrust shared behavior'
         def spearCombat = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearCombatBehavior.java')
@@ -287,6 +301,20 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         assert durabilityCurse.isFile(): 'Missing shared durability curse behavior'
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
+        if (loader.startsWith('fabric-')) {
+            def adapter = new File(sourceRoot, 'EnchADDFabricMeleeEffects.java')
+            assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Fabric damage adapter must invoke Debilitate behavior'
+        } else if (loader.startsWith('forge-')) {
+            def adapter = new File(sourceRoot, 'EnchADDForgeDebilitate.java')
+            def entrypoint = new File(sourceRoot, 'EnchADDForge.java')
+            assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Forge damage adapter must invoke Debilitate behavior'
+            assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
+        } else if (loader.startsWith('neoforge-')) {
+            def adapter = new File(sourceRoot, 'EnchADDNeoForgeDebilitate.java')
+            def entrypoint = new File(sourceRoot, 'EnchADDNeoForge.java')
+            assert adapter.text.contains('DebilitateBehavior.onDamage'): 'NeoForge damage adapter must invoke Debilitate behavior'
+            assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'
+        }
         def required = switch (loader) {
             case 'fabric-1.21.11', 'fabric-26.3' -> [
                     'EnchADDNourishBehavior.java',
@@ -351,6 +379,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'mixin/ProjectileDamageMixin.java'
             ]
             case 'forge-1.21.11', 'forge-26.3' -> [
+                    'EnchADDForgeDebilitate.java',
                     'EnchADDForgeNourishBehavior.java',
                     'EnchADDForgeDelvesense.java',
                     'EnchADDForgeFreshcatchBehavior.java',
@@ -404,6 +433,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'EnchADDForgeShroud.java'
             ]
             case 'neoforge-1.21.11', 'neoforge-26.3' -> [
+                    'EnchADDNeoForgeDebilitate.java',
                     'EnchADDNeoForgeNourishBehavior.java',
                     'EnchADDNeoForgeDelvesense.java',
                     'EnchADDNeoForgeFreshcatchBehavior.java',

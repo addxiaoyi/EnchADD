@@ -11,7 +11,7 @@ beheading|normal
 smelting|normal
 stonewake|normal
 refine|normal
-rebound|normal
+rebound|normal|#minecraft:enchantable/mining;#minecraft:enchantable/durability
 insight|normal
 airbag|normal
 afterglide|normal
@@ -44,7 +44,7 @@ tracer|normal
 breakguard|normal
 pursuit|normal
 fortitude|normal
-debilitate|normal
+debilitate|normal|minecraft:leather_chestplate;minecraft:chainmail_chestplate;minecraft:iron_chestplate;minecraft:golden_chestplate;minecraft:diamond_chestplate;minecraft:netherite_chestplate
 nourish|normal
 fleetfoot|normal
 tenderstep|normal

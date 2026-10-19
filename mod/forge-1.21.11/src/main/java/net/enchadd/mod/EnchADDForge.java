@@ -25,6 +25,7 @@ public final class EnchADDForge {
         EnchADDForgeProjectileStatus.register();
         EnchADDForgeVolley.register();
         EnchADDForgeMeleeEffects.register();
+        EnchADDForgeDebilitate.register();
         EnchADDForgeBackfire.register();
         EnchADDForgeImmolate.register();
         EnchADDForgeHemorrhage.register();

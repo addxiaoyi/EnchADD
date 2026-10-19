@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'net.enchadd'
-version = '2.1.8'
+version = '2.1.9'
 
 subprojects {
     repositories { mavenCentral() }
