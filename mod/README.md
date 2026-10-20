@@ -1,19 +1,19 @@
 # EnchADD Mod 模组
 
-EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的六个 Loader 专用构件。当前版本为 `2.1.10`。
+EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的六个 Loader 专用构件。当前版本为 `2.1.11`。
 
-2.1.10 收紧 Fragility、Shatter、Backfire 的剑、斧可用物品白名单；真实游戏触发仍未验证。
+2.1.11 强化 Rebound、Insight、Debilitate、Cadence、Underdog 和 Rally 的资源范围与跨 Loader 校验；真实游戏触发仍未验证。
 
 ## 支持构件
 
 | 构件 | Minecraft | Java |
 | --- | --- | --- |
-| `enchadd-fabric-1.21.11-2.1.10.jar` | Fabric `1.21.11` | 21 |
-| `enchadd-fabric-26.3-2.1.10.jar` | Fabric `26.3` | 25 |
-| `enchadd-forge-1.21.11-2.1.10.jar` | Forge `1.21.11` | 21 |
-| `enchadd-forge-26.3-2.1.10.jar` | Forge `26.3` | 25 |
-| `enchadd-neoforge-1.21.11-2.1.10.jar` | NeoForge `1.21.11` | 21 |
-| `enchadd-neoforge-26.3-2.1.10.jar` | NeoForge `26.3` | 25 |
+| `enchadd-fabric-1.21.11-2.1.11.jar` | Fabric `1.21.11` | 21 |
+| `enchadd-fabric-26.3-2.1.11.jar` | Fabric `26.3` | 25 |
+| `enchadd-forge-1.21.11-2.1.11.jar` | Forge `1.21.11` | 21 |
+| `enchadd-forge-26.3-2.1.11.jar` | Forge `26.3` | 25 |
+| `enchadd-neoforge-1.21.11-2.1.11.jar` | NeoForge `1.21.11` | 21 |
+| `enchadd-neoforge-26.3-2.1.11.jar` | NeoForge `26.3` | 25 |
 
 六个构件不能互换。请根据服务端 Loader 和 Minecraft 版本选择对应文件。
 

@@ -29,7 +29,7 @@ def itemGroups = [
         mining  : ['arborist', 'delvesense', 'furrow', 'insight', 'irrigation', 'refine', 'replanting', 'smelting', 'stonewake', 'telepathy', 'trailblazer'] as Set,
         mace    : ['meteor', 'overwhelm', 'tremor', 'updraft'] as Set,
         armor   : ['airbag', 'afterglide', 'arrowguard', 'blastguard', 'defense', 'firebreak', 'fireguard', 'fortitude', 'frostguard', 'insomnia', 'panic', 'purify', 'shroud', 'vampirism_curse'] as Set,
-        chest   : ['debilitate'] as Set,
+        chest   : ['debilitate', 'rally'] as Set,
         feet    : ['evasion', 'featherstep'] as Set,
         trident : ['cadence', 'cinder', 'highground', 'initiative', 'lodestar', 'measured', 'momentum', 'poise', 'pursuit', 'resonance', 'shadowstrike', 'tide_runner', 'tracer', 'undertow', 'underdog', 'wingclip'] as Set,
         weapon  : ['backfire', 'beheading', 'breakguard', 'decapitate', 'executioner', 'frostbrand', 'greed', 'hemorrhage', 'immolate', 'misfortune', 'rashness', 'shatter', 'sunder'] as Set
@@ -260,9 +260,24 @@ tasks.register('validateEnchADDResources') {
                 'Sunder supported_items must match the Paper axe allowlist'
         def rebound = parser.parse(new File(enchantDir, 'rebound.json'))
         def reboundItems = ['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set
+        assert rebound.max_level == 3 && rebound.slots == ['hand']:
+                'Rebound must use the Paper max level and hand slot'
         assert (rebound.supported_items as Set) == reboundItems:
                 'Rebound must support Paper mining and durability item tags'
+        def reboundEffect = rebound.effects['minecraft:item_damage'][0]
+        assert reboundEffect.effect.type == 'minecraft:add'
+        assert reboundEffect.effect.value.type == 'minecraft:linear'
+        assert reboundEffect.effect.value.base == -1.0
+                && reboundEffect.effect.value.per_level_above_first == -1.0
+        assert reboundEffect.requirements[requirementType] == 'minecraft:random_chance'
+        assert reboundEffect.requirements.chance.type == 'minecraft:enchantment_level'
+        assert reboundEffect.requirements.chance.amount.base == 0.12
+                && reboundEffect.requirements.chance.amount.per_level_above_first == 0.12:
+                'Rebound must refund one durability with a bounded 0.12 chance per level'
         def insight = parser.parse(new File(enchantDir, 'insight.json'))
+        assert insight.max_level == 3 && insight.slots == ['hand']
+        assert insight.supported_items == '#minecraft:enchantable/mining':
+                'Insight must remain a main-hand mining enchantment'
         def insightFactor = insight.effects['minecraft:block_experience'][0].effect.factor
         assert insightFactor.type == 'minecraft:linear'
         assert insightFactor.base == 1.30 && insightFactor.per_level_above_first == 0.30:
@@ -271,6 +286,7 @@ tasks.register('validateEnchADDResources') {
                 'minecraft:iron_chestplate', 'minecraft:golden_chestplate', 'minecraft:diamond_chestplate',
                 'minecraft:netherite_chestplate'] as Set
         def debilitate = parser.parse(new File(enchantDir, 'debilitate.json'))
+        assert debilitate.max_level == 3
         assert (debilitate.supported_items as Set) == chestplates && debilitate.slots == ['chest']:
                 'Debilitate must use the Paper chestplate item and slot restrictions'
         assert debilitate.effects == [:]: 'Debilitate effects are provided by the cooldown-aware event adapter'
@@ -293,6 +309,23 @@ tasks.register('validateEnchADDResources') {
         assert backfire.max_level == 1 && backfire.slots == ['hand']
         assert (backfire.supported_items as Set) == ['#minecraft:enchantable/weapon'] as Set:
                 'Backfire must be limited to its main-hand weapon'
+        def weaponItems = ['minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
+                'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
+                'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
+                'minecraft:golden_axe', 'minecraft:diamond_axe', 'minecraft:netherite_axe',
+                'minecraft:trident'] as Set
+        ['cadence', 'underdog'].each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            assert parsed.max_level == 3 && parsed.slots == ['hand']
+            assert (parsed.supported_items as Set) == weaponItems:
+                    "${id} must match the Paper sword/axe/trident allowlist"
+            assert parsed.effects == [:]: "${id} must use the shared melee adapter only"
+        }
+        def rally = parser.parse(new File(enchantDir, 'rally.json'))
+        assert rally.max_level == 3 && rally.slots == ['chest']
+        assert (rally.supported_items as Set) == chestplates:
+                'Rally must match the Paper chestplate allowlist'
+        assert rally.effects == [:]: 'Rally must use the shared melee adapter only'
         expectedEffects.each { id, effectKey ->
             def file = new File(enchantDir, "${id}.json")
             assert file.isFile(): "Missing migrated enchantment ${id}"
@@ -322,20 +355,34 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         def backfireBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/BackfireBehavior.java')
         assert backfireBehavior.text.contains('source.getDirectEntity() != player'):
                 'Backfire must require a direct player attack'
+        def meleeBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
+        assert meleeBehavior.isFile(): 'Missing shared melee effect behavior'
+        ['CADENCE', 'UNDERDOG', 'RALLY'].each { id ->
+            assert meleeBehavior.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
+                    "Shared melee behavior must define ${id}"
+        }
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
         if (loader.startsWith('fabric-')) {
             def adapter = new File(sourceRoot, 'EnchADDFabricMeleeEffects.java')
+            def entrypoint = new File(sourceRoot, 'EnchADDFabric.java')
+            def combo = new File(project.projectDir, 'src/main/java/net/enchadd/mod/mixin/ComboDamageMixin.java')
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Fabric damage adapter must invoke Debilitate behavior'
+            assert combo.text.contains('MeleeEffectBehavior.adjustDamage'): 'Fabric must route melee effects through ComboDamageMixin'
+            assert entrypoint.text.contains('EnchADDFabricMeleeEffects.init()'): 'Fabric entrypoint must register the melee damage adapter'
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
+            assert mixins.contains('ComboDamageMixin'): 'Fabric must register the shared melee damage Mixin'
             assert mixins.contains('DurabilityCurseMixin'): 'Fabric must register the shared durability curse hook'
             assert adapter.text.contains('BackfireBehavior.onAttack'): 'Fabric must invoke Backfire on completed attacks'
         } else if (loader.startsWith('forge-')) {
             def adapter = new File(sourceRoot, 'EnchADDForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDForge.java')
+            def meleeAdapter = new File(sourceRoot, 'EnchADDForgeMeleeEffects.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDForgeBackfire.java')
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Forge damage adapter must invoke Debilitate behavior'
+            assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'Forge must route melee effects through its damage adapter'
+            assert entrypoint.text.contains('EnchADDForgeMeleeEffects.register()'): 'Forge entrypoint must register the melee damage adapter'
             assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
             assert entrypoint.text.contains('EnchADDForgeBackfire.register()') && backfireAdapter.text.contains('BackfireBehavior.onAttack'):
                     'Forge must register Backfire behavior'
@@ -343,9 +390,12 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         } else if (loader.startsWith('neoforge-')) {
             def adapter = new File(sourceRoot, 'EnchADDNeoForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDNeoForge.java')
+            def meleeAdapter = new File(sourceRoot, 'EnchADDNeoForgeMeleeEffects.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDNeoForgeBackfire.java')
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'NeoForge damage adapter must invoke Debilitate behavior'
+            assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'NeoForge must route melee effects through its damage adapter'
+            assert entrypoint.text.contains('EnchADDNeoForgeMeleeEffects.register()'): 'NeoForge entrypoint must register the melee damage adapter'
             assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'
             assert entrypoint.text.contains('EnchADDNeoForgeBackfire.register()') && backfireAdapter.text.contains('BackfireBehavior.onAttack'):
                     'NeoForge must register Backfire behavior'

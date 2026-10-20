@@ -1,29 +1,29 @@
-# EnchADD 2.1.10 Cross-Loader Build Evidence
+# EnchADD 2.1.11 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-19 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.10`.
+All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.11`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.10.jar | 299731 | `0AE2E2791EDE537C2078310C627502C0297644CAE711EEF5AF129B5A584696F3` | `docs/validation-logs/v2.1.10-fabric-1.21.11-build-20261019.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.10.jar | 308536 | `EC82CF31FC424310A6734D093B94B8C91ED9D15A760A1C2D348152D462B73355` | `docs/validation-logs/v2.1.10-fabric-26.3-build-20261019.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.10.jar | 305669 | `4800C3133CDEFB84D94C458170923E31A184AEF7365C84D0163C84586A297BDD` | `docs/validation-logs/v2.1.10-forge-1.21.11-build-20261019.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.10.jar | 306028 | `0605B5B87C258CEC8ACE70869B8A107F44FA21DFCD6E957AA9938ECEDC41F961` | `docs/validation-logs/v2.1.10-forge-26.3-build-20261019.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.10.jar | 302893 | `07382FB6B79D3DFCA98B7C777BBD98E92DB07C2333685DCCF4974AB68EAED7B6` | `docs/validation-logs/v2.1.10-neoforge-1.21.11-build-20261019.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.10.jar | 303235 | `BE22F9FE4907D2CCCCCCA4035D17E20D9F2F179507D3477F7F1E3AB7F0165401` | `docs/validation-logs/v2.1.10-neoforge-26.3-build-20261019.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.11.jar | 299903 | `9296EDBD7609C71E7628552E3B301439F7FBA6E7F6710863F7E951462243D11B` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.11.jar | 308710 | `D8E4E3EBB36678FEEFFAE47EE0967C3F1778F35BF5B7C4A5BE71CA4E2B806F26` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.11.jar | 305843 | `0A4E08F1C164CEA43EBA70DA6BB5EC4C6B57D142527900F0552F737C6332A654` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.11.jar | 306203 | `311042D46DC55F20E213A265F348DD9383EB9CF6D52F44EBB0311CFA6858F0CE` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.11.jar | 303067 | `4582E92BC55797021991D8E9D0501667D7C35152C3411F6C3C20ED273E390C72` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.11.jar | 303410 | `940ADC6866F8A4FA544716949924CD6EA45F68C3BA9EF532193375BFB97F4837` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.10-protected.jar`: 702381 bytes, SHA-256 `CF130D6477618DA48B9F68030335DC41F35AF63907BB113214566B0E94753F96`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.11-protected.jar`: 702378 bytes, SHA-256 `166254268B3D9BED1844D0931BAC8A4E21C98C5E0BAB4BC0D145DEB9D45DD303`.
 
-## Fragility, Shatter, and Backfire
+## Resource and Adapter Updates
 
-Fragility and Shatter now use Paper max levels, slots, and durability item ranges. Backfire is limited to direct main-hand weapon attacks and NeoForge reads completed damage. All six Mod loaders build and pass resource/adapter validation. Actual behavior remains NOT_VERIFIED.
+Fragility, Shatter, and Backfire resource ranges now match Paper constraints. Rebound, Insight, Debilitate, Cadence, Underdog, and Rally also have explicit resource and adapter assertions across all six loaders. Cadence and Underdog use the Paper sword/axe/trident allowlist; Rally uses chestplates and the chest slot. Mod builds and validators pass; actual in-game behavior remains `NOT_VERIFIED`.
 
 ## Previous Release Notes
 
-In 2.1.9, Rebound, Insight, and Debilitate were aligned with Paper defaults; live behavior remained NOT_VERIFIED.
+In 2.1.10, Fragility, Shatter, and Backfire constraints were aligned with Paper defaults. In 2.1.9, Rebound, Insight, and Debilitate were initially aligned; 2.1.11 refreshes and validates those resources with the current six-loader build. Player-trigger behavior remains `NOT_VERIFIED`.
 
 
 ## Historical Runtime Evidence

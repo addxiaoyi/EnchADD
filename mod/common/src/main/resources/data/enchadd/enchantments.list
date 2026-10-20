@@ -23,13 +23,13 @@ holdfast|normal
 brace|normal
 pivot|normal
 momentum|normal
-cadence|normal
+cadence|normal|minecraft:wooden_sword;minecraft:stone_sword;minecraft:iron_sword;minecraft:golden_sword;minecraft:diamond_sword;minecraft:netherite_sword;minecraft:wooden_axe;minecraft:stone_axe;minecraft:iron_axe;minecraft:golden_axe;minecraft:diamond_axe;minecraft:netherite_axe;minecraft:trident
 resonance|normal
-underdog|normal
+underdog|normal|minecraft:wooden_sword;minecraft:stone_sword;minecraft:iron_sword;minecraft:golden_sword;minecraft:diamond_sword;minecraft:netherite_sword;minecraft:wooden_axe;minecraft:stone_axe;minecraft:iron_axe;minecraft:golden_axe;minecraft:diamond_axe;minecraft:netherite_axe;minecraft:trident
 poise|normal
 highground|normal
 measured|normal
-rally|normal
+rally|normal|minecraft:leather_chestplate;minecraft:chainmail_chestplate;minecraft:iron_chestplate;minecraft:golden_chestplate;minecraft:diamond_chestplate;minecraft:netherite_chestplate
 cinder|normal
 lodestar|normal
 starwish|normal

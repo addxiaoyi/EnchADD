@@ -1,0 +1,833 @@
+
+=== Online validation retry 2026-10-20 ===
+
+------------------------------------------------------------
+Gradle 9.7.1
+------------------------------------------------------------
+
+Build time:    2026-08-19 14:16:09 UTC
+Revision:      92f0512e7f06d84621afba191f75e265363890cf
+
+Kotlin:        2.4.0
+Groovy:        4.0.32
+Ant:           Apache Ant(TM) version 1.10.17 compiled on April 6 2026
+Launcher JVM:  25.0.3 (Oracle Corporation 25.0.3+9-LTS-195)
+Daemon JVM:    C:\Program Files\Java\jdk-25.0.3 (no Daemon JVM specified, using current Java home)
+OS:            Windows 11 10.0 amd64
+
+
+=== fabric-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using of the official minecraft mappings is at your own risk!
+Please make sure to read and understand the following license:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# (c) 2020 Microsoft Corporation. These mappings are provided "as-is" and you bear the risk of using them. You may copy and use the mappings for development purposes, but you may not redistribute the mappings complete and unmodified. Microsoft makes no warranties, express or implied, with respect to the mappings provided here.  Use and modification of this document or the source code (in any form) of Minecraft: Java Edition is governed by the Minecraft End User License Agreement available at https://account.mojang.com/documents/minecraft_eula.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Selection failed
+  Task '.gradle.native=false' not found in root project 'enchadd-fabric'.
+
+* Try:
+> Run gradle tasks to get a list of available tasks.
+> For more on name expansion, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:name_abbreviation in the Gradle documentation.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 59s
+EXIT=1
+
+=== fabric-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-26.3/build/reports/problems/problems-report.html
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Selection failed
+  Task '.gradle.native=false' not found in root project 'enchadd-fabric'.
+
+* Try:
+> Run gradle tasks to get a list of available tasks.
+> For more on name expansion, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:name_abbreviation in the Gradle documentation.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 37s
+EXIT=1
+
+=== forge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+=== Fabric 1.21.11 validation ===
+Command: gradle -p mod/fabric-1.21.11 --no-daemon validateEnchADDResources validateEnchADDBehaviorAdapters
+BUILD SUCCESSFUL
+
+
+=== fabric-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== forge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Mavenizer 0.5.21 by Forge Development LLC
+  Output:             D:\qwq\??????\Enchantio-master\mod\forge-1.21.11\.gradle\mavenizer\repo
+  Output JSON:        D:\qwq\??????\Enchantio-master\mod\forge-1.21.11\.gradle\mavenizer\dependencies\default.json
+  Dependencies Only:  false
+  Cache:              D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  JDK Cache:          D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  Offline:            false
+  Cache Only:         false
+  Ignore Cache:       false
+  Mappings:           official-1.21.11
+  Foreign Repos:      [https://repo.maven.apache.org/maven2/, https://maven.minecraftforge.net/, https://libraries.minecraft.net/]
+  GradleVariantHack:  true
+  Disable Gradle:     false
+  Stub Jars:          false
+
+Processing Minecraft dependency: net.minecraftforge:forge:1.21.11-61.1.1
+Processing Minecraft Forge (userdev): 1.21.11-61.1.1
+  Cache miss!
+  java.lang.Exception: Cache miss! Stacktrace for Information Only
+	at net.minecraftforge.mcmaven.impl.Mavenizer.assertNotCacheOnly(Mavenizer.java:60)
+	at net.minecraftforge.mcmaven.impl.cache.MavenCache.download(MavenCache.java:271)
+	at net.minecraftforge.mcmaven.impl.cache.MavenCache.download(MavenCache.java:101)
+	at net.minecraftforge.mcmaven.impl.repo.forge.Patcher.<init>(Patcher.java:94)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.processV3(ForgeRepo.java:257)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.process(ForgeRepo.java:144)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.createForge(MinecraftMaven.java:240)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.run(MinecraftMaven.java:119)
+	at net.minecraftforge.mcmaven.cli.MavenTask.run(MavenTask.java:218)
+	at net.minecraftforge.mcmaven.cli.Main.run(Main.java:70)
+	at net.minecraftforge.mcmaven.cli.Main.main(Main.java:23)
+Mappings Zip
+  extract[mappings]
+  downloadLauncherManifest
+  downloadVersionJson[1.21.11]
+  download[1.21.11][client_mappings]
+  mergeMappings
+  download[1.21.11][server_mappings]
+  srg2names[official-1.21.11]
+Mappings POM
+  pom[mappings_official]
+Mappings map2obf
+  mapped2obf[official-1.21.11]
+Mappings map2srg
+  mapped2srg[official-1.21.11]
+Client Extra
+  download[1.21.11][client]
+  extract[mappings]
+  mergeMappings
+  extra[client]
+Client Maven POM
+  pom[client-extra]
+Sources
+  listLibraries
+  download[1.21.11][server]
+  extractServer
+  stripServer
+  stripClient
+  merge
+  rename
+  modifyAccess
+  stripSides
+  decompile
+  extract[inject]
+  inject
+  patch
+  patch[forge]
+  downloadSources
+  injectSources[forge]
+  remap[forge][official-1.21.11][javadoc]
+  remap[forge][official-1.21.11][javadoc][variants]
+Classes
+  recompile[forge][official-1.21.11]
+  injectData[forge][official-1.21.11]
+  injectData[forge][official-1.21.11][variants]
+Maven POM
+  pom[forge]
+Metadata
+  metadata[forge]
+  metadata[forge][variants]
+Minecraft Maven has finished, took 13:03.103
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+You have 1 new message from ForgeGradle.
+
+---   Message 1/1   ---
+Welcome to ForgeGradle 7.0!
+
+Here are some release highlights:
+- Now requires Gradle 9.3.0.
+- A new message board that will display any new messages (only on the next
+  successful build) from ForgeGradle, including release highlights and
+  project-wide warnings.
+- Complete rewrite of the plugin and underlying code.
+- Complete overhaul of DSL objects and registrations.
+- Slimmed down the plugin, which now delegates many actions to separate tools.
+- Support for declaring defaults in settings.gradle (experimental).
+- Support for all Forge versions that are supported by ForgeGradle 6.
+  - Minecraft 1.20.6+ are natively supported with no additional setup.
+  - Minecraft 1.13.2 - 1.20.4 (along with certain versions of 1.12.2) are
+    supported alongside the usage of the Renamer plugin (experimental).
+
+A couple of important things to note:
+- Many plugins that worked with ForgeGradle 6, such as Parchments Librarian,
+  do not work with ForgeGradle 7. For most cases (such as parchment), we have
+  implemented native support.
+- Many things that ForgeGradle 6 and older used to do are now decentralized
+  away from the plugin. This means that your project will need to apply
+  net.minecraftforge.jarjar if you wish to use Forges Jar-in-Jar system.
+  If you are on an older version (1.20.4 and older), you will need the
+  net.minecraftforge.renamer plugin. Many of these come with our provided
+  MDK, so this should not be an issue for you.
+- If you come across any lingering bugs, please report them to our GitHub
+  issue tracker. Please do not use Discord as a means to report issues, as
+  they will get lost in the discussion very easily.
+- If you would like to see additional examples of ForgeGradle 7 usages,
+  please see our MDKExamples repo (https://github.com/MinecraftForge/MDKExamples).
+  If would like to request a specific usage for ForgeGradle 7, please file an
+  issue on the GitHub issue tracker for it.
+
+For our GitHub issue tracker, see https://github.com/MinecraftForge/ForgeGradle/issues
+
+Proper documentation for ForgeGradle 7 is coming soon. For now, feel free to
+ask any questions you may have on the following platforms:
+- Forums (https://forums.minecraftforge.net/)
+- Discord (https://discord.minecraftforge.net/)
+
+This message will not display again until ForgeGradle 7.1 or the below file is
+deleted:
+D:\.gradle\caches\minecraftforge\forgegradle\messages\7_0_WELCOME_1
+--- End of Message ---
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 13m 16s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== forge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Mavenizer 0.5.21 by Forge Development LLC
+  Output:             D:\qwq\??????\Enchantio-master\mod\forge-26.3\.gradle\mavenizer\repo
+  Output JSON:        D:\qwq\??????\Enchantio-master\mod\forge-26.3\.gradle\mavenizer\dependencies\default.json
+  Dependencies Only:  false
+  Cache:              D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  JDK Cache:          D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  Offline:            false
+  Cache Only:         false
+  Ignore Cache:       false
+  Mappings:           official-26.3
+  Foreign Repos:      [https://repo.maven.apache.org/maven2/, https://maven.minecraftforge.net/, https://libraries.minecraft.net/]
+  GradleVariantHack:  true
+  Disable Gradle:     false
+  Stub Jars:          false
+
+Processing Minecraft dependency: net.minecraftforge:forge:26.3-66.0.9
+Processing Minecraft Forge (userdev): 26.3-66.0.9
+  Cache miss!
+  java.lang.Exception: Cache miss! Stacktrace for Information Only
+	at net.minecraftforge.mcmaven.impl.Mavenizer.assertNotCacheOnly(Mavenizer.java:60)
+	at net.minecraftforge.mcmaven.impl.cache.MavenCache.download(MavenCache.java:271)
+	at net.minecraftforge.mcmaven.impl.cache.MavenCache.download(MavenCache.java:101)
+	at net.minecraftforge.mcmaven.impl.repo.forge.Patcher.<init>(Patcher.java:94)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.processV3(ForgeRepo.java:257)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.process(ForgeRepo.java:144)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.createForge(MinecraftMaven.java:240)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.run(MinecraftMaven.java:119)
+	at net.minecraftforge.mcmaven.cli.MavenTask.run(MavenTask.java:218)
+	at net.minecraftforge.mcmaven.cli.Main.run(Main.java:70)
+	at net.minecraftforge.mcmaven.cli.Main.main(Main.java:23)
+Mappings Zip
+  srg2names[official-26.3][Empty]
+Mappings POM
+  pom[mappings_official]
+Client Extra
+  downloadLauncherManifest
+  downloadVersionJson[26.3]
+  download[26.3][client]
+  extra[client]
+Client Maven POM
+  pom[client-extra]
+Sources
+  stripClient
+  download[26.3][server]
+  extractServer
+  stripServer
+  merge
+  modifyAccess
+  stripSides
+  listLibraries
+  decompile
+  patch
+  patch[forge]
+  downloadSources
+  injectSources[forge]
+  remap[forge][official-26.3][javadoc]
+  remap[forge][official-26.3][javadoc][variants]
+Classes
+  recompile[forge][official-26.3]
+  injectData[forge][official-26.3]
+  injectData[forge][official-26.3][variants]
+Maven POM
+  pom[forge]
+Metadata
+  metadata[forge]
+  metadata[forge][variants]
+Minecraft Maven has finished, took 3:01.504
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 8s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== neoforge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not resolve all artifacts for configuration 'classpath'.
+> Could not resolve net.neoforged:moddev-gradle:2.0.148.
+  Required by:
+      settings file 'settings.gradle'
+   > Could not resolve net.neoforged:moddev-gradle:2.0.148.
+      > Could not get resource 'https://maven.neoforged.net/releases/net/neoforged/moddev-gradle/2.0.148/moddev-gradle-2.0.148.pom'.
+         > Could not GET 'https://maven.neoforged.net/releases/net/neoforged/moddev-gradle/2.0.148/moddev-gradle-2.0.148.pom'.
+            > Got socket exception during request. It might be caused by SSL misconfiguration
+               > Connect to maven.neoforged.net:443 [maven.neoforged.net/104.244.43.104] failed: Connection timed out: getsockopt
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 10s
+EXIT=1
+
+=== neoforge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not resolve all artifacts for configuration 'classpath'.
+> Could not resolve net.neoforged:moddev-gradle:2.0.148.
+  Required by:
+      settings file 'settings.gradle'
+   > Could not resolve net.neoforged:moddev-gradle:2.0.148.
+      > Could not get resource 'https://maven.neoforged.net/releases/net/neoforged/moddev-gradle/2.0.148/moddev-gradle-2.0.148.pom'.
+         > Could not GET 'https://maven.neoforged.net/releases/net/neoforged/moddev-gradle/2.0.148/moddev-gradle-2.0.148.pom'.
+            > Got socket exception during request. It might be caused by SSL misconfiguration
+               > Connect to maven.neoforged.net:443 [maven.neoforged.net/104.244.43.104] failed: Connection timed out: getsockopt
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 9s
+EXIT=1
+
+VALIDATION_FAILURES=neoforge-1.21.11,neoforge-26.3
+
+=== Final six-loader validation with local HTTP proxy 2026-10-20 ===
+
+------------------------------------------------------------
+Gradle 9.7.1
+------------------------------------------------------------
+
+Build time:    2026-08-19 14:16:09 UTC
+Revision:      92f0512e7f06d84621afba191f75e265363890cf
+
+Kotlin:        2.4.0
+Groovy:        4.0.32
+Ant:           Apache Ant(TM) version 1.10.17 compiled on April 6 2026
+Launcher JVM:  25.0.3 (Oracle Corporation 25.0.3+9-LTS-195)
+Daemon JVM:    C:\Program Files\Java\jdk-25.0.3 (no Daemon JVM specified, using current Java home)
+OS:            Windows 11 10.0 amd64
+
+
+=== fabric-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== fabric-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== forge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Mavenizer 0.5.21 by Forge Development LLC
+  Output:             D:\qwq\??????\Enchantio-master\mod\forge-1.21.11\.gradle\mavenizer\repo
+  Output JSON:        D:\qwq\??????\Enchantio-master\mod\forge-1.21.11\.gradle\mavenizer\dependencies\default.json
+  Dependencies Only:  false
+  Cache:              D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  JDK Cache:          D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  Offline:            false
+  Cache Only:         false
+  Ignore Cache:       false
+  Mappings:           official-1.21.11
+  Foreign Repos:      [https://repo.maven.apache.org/maven2/, https://maven.minecraftforge.net/, https://libraries.minecraft.net/]
+  GradleVariantHack:  true
+  Disable Gradle:     false
+  Stub Jars:          false
+
+Processing Minecraft dependency: net.minecraftforge:forge:1.21.11-61.1.1
+Processing Minecraft Forge (userdev): 1.21.11-61.1.1
+Mappings Zip
+  downloadLauncherManifest
+  downloadVersionJson[1.21.11]
+  download[1.21.11][client_mappings]
+  extract[mappings]
+  mergeMappings
+  download[1.21.11][server_mappings]
+  srg2names[official-1.21.11]
+Mappings POM
+  pom[mappings_official]
+Mappings map2obf
+  mapped2obf[official-1.21.11]
+Mappings map2srg
+  mapped2srg[official-1.21.11]
+Client Extra
+  download[1.21.11][client]
+  extract[mappings]
+  mergeMappings
+  extra[client]
+Client Maven POM
+  pom[client-extra]
+Sources
+  listLibraries
+  stripClient
+  download[1.21.11][server]
+  extractServer
+  stripServer
+  merge
+  rename
+  modifyAccess
+  stripSides
+  decompile
+  extract[inject]
+  inject
+  patch
+  patch[forge]
+  downloadSources
+  injectSources[forge]
+  remap[forge][official-1.21.11][javadoc]
+  remap[forge][official-1.21.11][javadoc][variants]
+Classes
+  recompile[forge][official-1.21.11]
+  injectData[forge][official-1.21.11]
+  injectData[forge][official-1.21.11][variants]
+Maven POM
+  pom[forge]
+Metadata
+  metadata[forge]
+    Cache miss!
+    java.lang.Exception: Cache miss! Stacktrace for Information Only
+	at net.minecraftforge.mcmaven.impl.Mavenizer.assertNotCacheOnly(Mavenizer.java:60)
+	at net.minecraftforge.mcmaven.impl.Mavenizer.checkCache(Mavenizer.java:94)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.lambda$metadata$0(ForgeRepo.java:365)
+	at net.minecraftforge.mcmaven.impl.util.Task$Simple.execute(Task.java:145)
+	at net.minecraftforge.mcmaven.impl.repo.Repo$PendingArtifact.get(Repo.java:243)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.finalize(MinecraftMaven.java:408)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.createForge(MinecraftMaven.java:241)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.run(MinecraftMaven.java:119)
+	at net.minecraftforge.mcmaven.cli.MavenTask.run(MavenTask.java:218)
+	at net.minecraftforge.mcmaven.cli.Main.run(Main.java:70)
+	at net.minecraftforge.mcmaven.cli.Main.main(Main.java:23)
+  metadata[forge][variants]
+Minecraft Maven has finished, took 0:02.411
+
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 9s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== forge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Mavenizer 0.5.21 by Forge Development LLC
+  Output:             D:\qwq\??????\Enchantio-master\mod\forge-26.3\.gradle\mavenizer\repo
+  Output JSON:        D:\qwq\??????\Enchantio-master\mod\forge-26.3\.gradle\mavenizer\dependencies\default.json
+  Dependencies Only:  false
+  Cache:              D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  JDK Cache:          D:\.gradle\caches\minecraftforge\forgegradle\mavenizer\caches
+  Offline:            false
+  Cache Only:         false
+  Ignore Cache:       false
+  Mappings:           official-26.3
+  Foreign Repos:      [https://repo.maven.apache.org/maven2/, https://maven.minecraftforge.net/, https://libraries.minecraft.net/]
+  GradleVariantHack:  true
+  Disable Gradle:     false
+  Stub Jars:          false
+
+Processing Minecraft dependency: net.minecraftforge:forge:26.3-66.0.9
+Processing Minecraft Forge (userdev): 26.3-66.0.9
+Mappings Zip
+  srg2names[official-26.3][Empty]
+Mappings POM
+  pom[mappings_official]
+Client Extra
+  downloadLauncherManifest
+  downloadVersionJson[26.3]
+  download[26.3][client]
+  extra[client]
+Client Maven POM
+  pom[client-extra]
+Sources
+  stripClient
+  download[26.3][server]
+  extractServer
+  stripServer
+  merge
+  modifyAccess
+  stripSides
+  listLibraries
+  decompile
+  patch
+  patch[forge]
+  downloadSources
+  injectSources[forge]
+  remap[forge][official-26.3][javadoc]
+  remap[forge][official-26.3][javadoc][variants]
+Classes
+  recompile[forge][official-26.3]
+  injectData[forge][official-26.3]
+  injectData[forge][official-26.3][variants]
+Maven POM
+  pom[forge]
+Metadata
+  metadata[forge]
+    Cache miss!
+    java.lang.Exception: Cache miss! Stacktrace for Information Only
+	at net.minecraftforge.mcmaven.impl.Mavenizer.assertNotCacheOnly(Mavenizer.java:60)
+	at net.minecraftforge.mcmaven.impl.Mavenizer.checkCache(Mavenizer.java:94)
+	at net.minecraftforge.mcmaven.impl.repo.forge.ForgeRepo.lambda$metadata$0(ForgeRepo.java:365)
+	at net.minecraftforge.mcmaven.impl.util.Task$Simple.execute(Task.java:145)
+	at net.minecraftforge.mcmaven.impl.repo.Repo$PendingArtifact.get(Repo.java:243)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.finalize(MinecraftMaven.java:408)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.createForge(MinecraftMaven.java:241)
+	at net.minecraftforge.mcmaven.impl.MinecraftMaven.run(MinecraftMaven.java:119)
+	at net.minecraftforge.mcmaven.cli.MavenTask.run(MavenTask.java:218)
+	at net.minecraftforge.mcmaven.cli.Main.run(Main.java:70)
+	at net.minecraftforge.mcmaven.cli.Main.main(Main.java:23)
+  metadata[forge][variants]
+Minecraft Maven has finished, took 0:00.799
+
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== neoforge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/neoforge-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== neoforge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/neoforge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+ALL SIX ONLINE VALIDATIONS PASSED
+
+=== Final entrypoint-registration assertions 2026-10-20 ===
+
+=== fabric-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateEnchADDResources UP-TO-DATE
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 2 executed, 1 up-to-date
+EXIT=0
+
+=== fabric-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/fabric-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== forge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Maven is up-to-date, took 0:00.995
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== forge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Directory 'D:\UserCache\Temp\enchadd-jdk8-8u504\jdk8u504-b01' (Gradle property 'org.gradle.java.installations.paths') used for java installations does not exist
+
+> Configure project :
+Minecraft Maven is up-to-date, took 0:00.836
+
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/forge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== neoforge-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/neoforge-1.21.11/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+3 actionable tasks: 3 executed
+EXIT=0
+
+=== neoforge-26.3 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :generateEnchADDResources
+> Task :validateEnchADDResources
+> Task :validateEnchADDBehaviorAdapters
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/neoforge-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+3 actionable tasks: 3 executed
+EXIT=0
+
+ALL SIX FINAL VALIDATIONS PASSED

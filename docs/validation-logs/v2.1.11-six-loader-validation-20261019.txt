@@ -1,0 +1,211 @@
+
+------------------------------------------------------------
+Gradle 9.7.1
+------------------------------------------------------------
+
+Build time:    2026-08-19 14:16:09 UTC
+Revision:      92f0512e7f06d84621afba191f75e265363890cf
+
+Kotlin:        2.4.0
+Groovy:        4.0.32
+Ant:           Apache Ant(TM) version 1.10.17 compiled on April 6 2026
+Launcher JVM:  25.0.3 (Oracle Corporation 25.0.3+9-LTS-195)
+Daemon JVM:    C:\Program Files\Java\jdk-25.0.3 (no Daemon JVM specified, using current Java home)
+OS:            Windows 11 10.0 amd64
+
+
+=== fabric-1.21.11 validateEnchADDResources validateEnchADDBehaviorAdapters ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'enchadd-fabric'.
+> Could not resolve all artifacts for configuration 'classpath'.
+   > Could not resolve net.fabricmc:fabric-loom:1.18.4.
+     Required by:
+         buildscript of root project 'enchadd-fabric' > net.fabricmc.fabric-loom-remap:net.fabricmc.fabric-loom-remap.gradle.plugin:1.18-SNAPSHOT:20261010.111021-4
+      > Could not resolve net.fabricmc:fabric-loom:1.18.4.
+         > Could not get resource 'https://maven.fabricmc.net/net/fabricmc/fabric-loom/1.18.4/fabric-loom-1.18.4.module'.
+            > Read timed out
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4m 2s
+
+=== Offline retry summary ===
+=== fabric-1.21.11 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'D:\qwq\项目\Enchantio-master\mod\fabric-1.21.11\build.gradle' line: 2
+
+* What went wrong:
+Plugin [id: 'net.fabricmc.fabric-loom-remap', version: '1.18-SNAPSHOT'] was not found in any of the following sources:
+
+- Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
+- Included Builds (No included builds contain this plugin)
+- Plugin Repositories (could not resolve plugin artifact 'net.fabricmc.fabric-loom-remap:net.fabricmc.fabric-loom-remap.gradle.plugin:1.18-SNAPSHOT')
+  Searched in the following repositories:
+    Fabric(https://maven.fabricmc.net/)
+    MavenRepo
+    Gradle Central Plugin Repository
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4s
+EXIT=1
+=== fabric-26.3 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'D:\qwq\项目\Enchantio-master\mod\fabric-26.3\build.gradle' line: 2
+
+* What went wrong:
+Plugin [id: 'net.fabricmc.fabric-loom', version: '1.18-SNAPSHOT', artifact: 'net.fabricmc.fabric-loom-remap:net.fabricmc.fabric-loom-remap.gradle.plugin:1.18-SNAPSHOT'] was not found in any of the following sources:
+
+- Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
+- Included Builds (No included builds contain this plugin)
+- Plugin Repositories (could not resolve plugin artifact 'net.fabricmc.fabric-loom-remap:net.fabricmc.fabric-loom-remap.gradle.plugin:1.18-SNAPSHOT')
+  Searched in the following repositories:
+    Fabric(https://maven.fabricmc.net/)
+    MavenRepo
+    Gradle Central Plugin Repository
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 7s
+EXIT=1
+=== forge-1.21.11 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'D:\qwq\项目\Enchantio-master\mod\forge-1.21.11\build.gradle' line: 2
+
+* What went wrong:
+Plugin [id: 'net.minecraftforge.gradle', version: '[7.0.29,8.0)'] was not found in any of the following sources:
+
+- Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
+- Included Builds (No included builds contain this plugin)
+- Plugin Repositories (could not resolve plugin artifact 'net.minecraftforge.gradle:net.minecraftforge.gradle.gradle.plugin:[7.0.29,8.0)')
+  Searched in the following repositories:
+    maven(https://maven.minecraftforge.net/)
+    Gradle Central Plugin Repository
+    MavenRepo
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 7s
+EXIT=1
+=== forge-26.3 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'D:\qwq\项目\Enchantio-master\mod\forge-26.3\build.gradle' line: 2
+
+* What went wrong:
+Plugin [id: 'net.minecraftforge.gradle', version: '[7.0.29,8.0)'] was not found in any of the following sources:
+
+- Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
+- Included Builds (No included builds contain this plugin)
+- Plugin Repositories (could not resolve plugin artifact 'net.minecraftforge.gradle:net.minecraftforge.gradle.gradle.plugin:[7.0.29,8.0)')
+  Searched in the following repositories:
+    maven(https://maven.minecraftforge.net/)
+    Gradle Central Plugin Repository
+    MavenRepo
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 6s
+EXIT=1
+=== neoforge-1.21.11 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not resolve all artifacts for configuration 'classpath'.
+> Could not resolve net.neoforged:moddev-gradle:2.0.148.
+  Required by:
+      settings file 'settings.gradle'
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4s
+EXIT=1
+=== neoforge-26.3 ===
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not resolve all artifacts for configuration 'classpath'.
+> Could not resolve net.neoforged:moddev-gradle:2.0.148.
+  Required by:
+      settings file 'settings.gradle'
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+   > No cached version of net.neoforged:moddev-gradle:2.0.148 available for offline mode.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4s
+EXIT=1
+
+=== Static generated-resource contract audit ===
+fabric-1.21.11: PASS requirement=condition
+fabric-26.3: PASS requirement=type
+forge-1.21.11: PASS requirement=condition
+forge-26.3: PASS requirement=type
+neoforge-1.21.11: PASS requirement=condition
+neoforge-26.3: PASS requirement=type
+Paper protected build: PASS; jar=plugin/target/enchadd-plugin-2.1.11-protected.jar; sha256=166254268B3D9BED1844D0931BAC8A4E21C98C5E0BAB4BC0D145DEB9D45DD303
+
+=== Cadence/Underdog/Rally static adapter audit ===
+catalog ranges: PASS; common melee keys: PASS; six loader damage adapters: PASS
