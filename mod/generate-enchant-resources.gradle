@@ -23,6 +23,7 @@ def maxLevelFor = { String id, boolean curse ->
     if (id == 'airbag') return 4
     if (id == 'wingguard') return 2
     if (id == 'tenderstep') return 1
+    if (id in ['purify', 'ricochet', 'freshcatch']) return 2
     if (id == 'tideshell') return 1
     if (id in ['gravitation', 'brittle']) return 3
     if (id == 'lethargy') return 3
@@ -50,10 +51,28 @@ def itemGroups = [
 
 def supportedItems = { String id ->
     if (id in ['afterglide', 'skim', 'airbag', 'wingguard']) return ['minecraft:elytra']
+    if (id == 'bulwark') return ['minecraft:shield']
+    if (id in ['purify', 'lucidity', 'clairvoyance']) return [
+            'minecraft:leather_helmet', 'minecraft:chainmail_helmet', 'minecraft:iron_helmet',
+            'minecraft:golden_helmet', 'minecraft:diamond_helmet', 'minecraft:netherite_helmet',
+            'minecraft:turtle_helmet'
+    ]
+    if (id == 'dispel') return [
+            'minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
+            'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
+            'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
+            'minecraft:golden_axe', 'minecraft:diamond_axe', 'minecraft:netherite_axe'
+    ]
+    if (id == 'ricochet') return ['minecraft:bow', 'minecraft:crossbow']
     if (id == 'brittle') return [
             'minecraft:leather_leggings', 'minecraft:chainmail_leggings', 'minecraft:iron_leggings',
             'minecraft:golden_leggings', 'minecraft:diamond_leggings', 'minecraft:netherite_leggings'
     ]
+    if (id == 'shroud') return [
+            'minecraft:leather_leggings', 'minecraft:chainmail_leggings', 'minecraft:iron_leggings',
+            'minecraft:golden_leggings', 'minecraft:diamond_leggings', 'minecraft:netherite_leggings'
+    ]
+    if (id == 'freshcatch') return ['minecraft:fishing_rod']
     def catalogEntry = catalog.find { it[0] == id }
     if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
         return catalogEntry[2].split(';').collect { it.trim() }
@@ -74,6 +93,9 @@ def slotsFor = { String id ->
     if (id in ['afterglide', 'skim', 'airbag', 'wingguard']) return ['chest']
     if (id == 'tideshell') return ['mainhand']
     if (id == 'brittle') return ['legs']
+    if (id in ['purify', 'lucidity', 'clairvoyance']) return ['head']
+    if (id in ['dispel', 'ricochet', 'freshcatch']) return ['mainhand']
+    if (id == 'shroud') return ['legs']
     if (itemGroups.shield.contains(id)) return ['offhand']
     if (itemGroups.armor.contains(id)) return ['armor']
     if (itemGroups.chest.contains(id)) return ['chest']
@@ -363,6 +385,44 @@ tasks.register('validateEnchADDResources') {
         assert brittle.max_level == 3 && brittle.slots == ['legs']
         assert (brittle.supported_items as Set) == leggings
         assert brittle.effects == [:]: 'Brittle must use the shared melee fall-damage adapter only'
+        def helmets = ['minecraft:leather_helmet', 'minecraft:chainmail_helmet',
+                'minecraft:iron_helmet', 'minecraft:golden_helmet', 'minecraft:diamond_helmet',
+                'minecraft:netherite_helmet', 'minecraft:turtle_helmet'] as Set
+        ['purify', 'lucidity', 'clairvoyance'].each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            def expectedLevel = id == 'purify' ? 2 : 3
+            assert parsed.max_level == expectedLevel && parsed.slots == ['head']
+            assert (parsed.supported_items as Set) == helmets:
+                    "${id} must use the Paper helmet restriction"
+            assert parsed.effects == [:]: "${id} must use its custom head/effect adapter only"
+        }
+        def dispel = parser.parse(new File(enchantDir, 'dispel.json'))
+        def dispelItems = ['minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
+                'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
+                'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
+                'minecraft:golden_axe', 'minecraft:diamond_axe', 'minecraft:netherite_axe'] as Set
+        assert dispel.max_level == 3 && dispel.slots == ['mainhand']
+        assert (dispel.supported_items as Set) == dispelItems
+        assert dispel.effects == [:]: 'Dispel must use the shared direct-melee adapter only'
+        def ricochet = parser.parse(new File(enchantDir, 'ricochet.json'))
+        assert ricochet.max_level == 2 && ricochet.slots == ['mainhand']
+        assert (ricochet.supported_items as Set) == ['minecraft:bow', 'minecraft:crossbow'] as Set
+        assert ricochet.effects == [:]: 'Ricochet must use the shared projectile adapter only'
+        def evasion = parser.parse(new File(enchantDir, 'evasion.json'))
+        assert evasion.max_level == 3 && evasion.slots == ['feet']
+        assert evasion.supported_items == '#minecraft:enchantable/foot_armor'
+        assert evasion.effects == [:]: 'Evasion must use the shared projectile-dodge adapter only'
+        def shroud = parser.parse(new File(enchantDir, 'shroud.json'))
+        def leggingsForShroud = ['minecraft:leather_leggings', 'minecraft:chainmail_leggings',
+                'minecraft:iron_leggings', 'minecraft:golden_leggings', 'minecraft:diamond_leggings',
+                'minecraft:netherite_leggings'] as Set
+        assert shroud.max_level == 3 && shroud.slots == ['legs']
+        assert (shroud.supported_items as Set) == leggingsForShroud
+        assert shroud.effects == [:]: 'Shroud must use the shared target-break adapter only'
+        def freshcatch = parser.parse(new File(enchantDir, 'freshcatch.json'))
+        assert freshcatch.max_level == 2 && freshcatch.slots == ['mainhand']
+        assert (freshcatch.supported_items as Set) == ['minecraft:fishing_rod'] as Set
+        assert freshcatch.effects == [:]: 'Freshcatch must use the shared fishing adapter only'
         def chestplates = ['minecraft:leather_chestplate', 'minecraft:chainmail_chestplate',
                 'minecraft:iron_chestplate', 'minecraft:golden_chestplate', 'minecraft:diamond_chestplate',
                 'minecraft:netherite_chestplate'] as Set
@@ -525,6 +585,16 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'Pursuit must target sprinting players and use Paper bonus defaults'
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
+        def sharedSupportFiles = [
+                'BulwarkBehavior.java', 'PurifyBehavior.java', 'LucidityBehavior.java',
+                'DispelBehavior.java', 'RicochetBehavior.java', 'ClairvoyanceBehavior.java',
+                'EvasionBehavior.java', 'ShroudBehavior.java', 'FreshcatchRules.java'
+        ]
+        def missingSharedSupport = sharedSupportFiles.findAll { name ->
+            !new File(project.projectDir, "../common/src/main/java/net/enchadd/mod/common/${name}").isFile()
+        }
+        assert missingSharedSupport.isEmpty():
+                "Equipment and projectile parity candidates are missing Common support: ${missingSharedSupport}"
         def airbagBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/AirbagBehavior.java')
         def steadfastBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SteadfastBehavior.java')
         def tenderstepBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/TenderstepBehavior.java')
@@ -558,6 +628,13 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'Fabric must register the equipment protection Mixin chain'
             assert entrypoint.text.contains('EnchADDFabricWingguard.init()'):
                     'Fabric must register the Elytra rescue adapter'
+            assert entrypoint.text.contains('EnchADDFabricBulwark.init()')
+            assert entrypoint.text.contains('EnchADDFabricEvasion.init()')
+            assert entrypoint.text.contains('EnchADDFabricProjectileStatus.init()')
+            assert entrypoint.text.contains('EnchADDFabricRicochet.init()')
+            assert mixins.contains('FishingHookFreshcatchMixin') && mixins.contains('ShroudMixin')
+            assert mixins.contains('LucidityMixin') && mixins.contains('ClairvoyanceDamageMixin')
+            assert mixins.contains('PurifyMixin') && mixins.contains('DispelDamageMixin')
             assert mixins.contains('HeadDropsMixin') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Fabric must register the shared head-drop behavior'
             assert mixins.contains('DurabilityCurseMixin'): 'Fabric must register the shared durability curse hook'
@@ -581,6 +658,17 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert entrypoint.text.contains('EnchADDForgeSteadfast.register()')
             assert entrypoint.text.contains('EnchADDForgeTenderstep.register()')
             assert entrypoint.text.contains('EnchADDForgeWingguard.register()')
+            assert entrypoint.text.contains('EnchADDForgeBulwark.register()')
+            assert entrypoint.text.contains('EnchADDForgeEvasion.register()')
+            assert entrypoint.text.contains('EnchADDForgeProjectileStatus.register()')
+            assert new File(sourceRoot, 'EnchADDForgeProjectileStatus.java').text.contains('RicochetBehavior.recordLaunch')
+            assert entrypoint.text.contains('EnchADDForgeRicochet.register()')
+            assert entrypoint.text.contains('EnchADDForgePurify.register()')
+            assert entrypoint.text.contains('EnchADDForgeLucidity.register()')
+            assert entrypoint.text.contains('EnchADDForgeDispel.register()')
+            assert entrypoint.text.contains('EnchADDForgeClairvoyance.register()')
+            assert entrypoint.text.contains('EnchADDForgeShroud.register()')
+            assert entrypoint.text.contains('EnchADDForgeFreshcatchBehavior.register()')
             assert entrypoint.text.contains('EnchADDForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Forge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
@@ -606,6 +694,17 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert entrypoint.text.contains('EnchADDNeoForgeSteadfast.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeTenderstep.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeWingguard.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeBulwark.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeEvasion.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeProjectileStatus.register()')
+            assert new File(sourceRoot, 'EnchADDNeoForgeProjectileStatus.java').text.contains('RicochetBehavior.recordLaunch')
+            assert entrypoint.text.contains('EnchADDNeoForgeRicochet.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgePurify.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeLucidity.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeDispel.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeClairvoyance.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeShroud.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeFreshcatchBehavior.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'NeoForge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'

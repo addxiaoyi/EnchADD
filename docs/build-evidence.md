@@ -28,6 +28,11 @@ This is a static resource and adapter checkpoint only. The normal six-loader bui
 The v2.1.15 source update corrects the generated resource constraints for tenderstep, steadfast, gravitation, brittle, airbag, and wingguard. A narrow Gradle 9.7.1/JDK 25.0.3 harness ran `validateEnchADDResources` and `validateEnchADDBehaviorAdapters` successfully for all six loader source trees. The detailed log is `docs/validation-logs/v2.1.15-static-validation-20261020.txt`, and the 36-cell traceability file is `docs/equipment-resource-parity-v2.1.15.csv`.
 
 This is a static resource and adapter checkpoint only. No v2.1.15 packaged JAR hash, loader startup, or player-trigger evidence is claimed. Player behavior remains `NOT_VERIFIED`.
+## v2.1.16 Static Projectile/Effect Parity Checkpoint
+
+The v2.1.16 source update corrects the generated resource constraints for bulwark, purify, lucidity, dispel, ricochet, clairvoyance, evasion, shroud, and freshcatch. It also closes a real Forge/NeoForge Ricochet launch-state gap by recording `AbstractArrow` launch state from the existing projectile entity-join adapter. A narrow Gradle 9.7.1/JDK 25.0.3 harness ran `validateEnchADDResources` and `validateEnchADDBehaviorAdapters` successfully for all six loader source trees. The detailed log is `docs/validation-logs/v2.1.16-static-validation-20261020.txt`, and the 54-cell traceability file is `docs/projectile-effect-resource-parity-v2.1.16.csv`.
+
+This is a static resource and adapter checkpoint only. No v2.1.16 packaged JAR hash, loader startup, or player-trigger evidence is claimed. Player behavior remains `NOT_VERIFIED`.
 
 ## Resource and Adapter Updates
 
