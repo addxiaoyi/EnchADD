@@ -1,29 +1,29 @@
-# EnchADD 2.1.11 Cross-Loader Build Evidence
+# EnchADD 2.1.12 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.11`.
+All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.12`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.11.jar | 299903 | `9296EDBD7609C71E7628552E3B301439F7FBA6E7F6710863F7E951462243D11B` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.11.jar | 308710 | `D8E4E3EBB36678FEEFFAE47EE0967C3F1778F35BF5B7C4A5BE71CA4E2B806F26` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.11.jar | 305843 | `0A4E08F1C164CEA43EBA70DA6BB5EC4C6B57D142527900F0552F737C6332A654` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.11.jar | 306203 | `311042D46DC55F20E213A265F348DD9383EB9CF6D52F44EBB0311CFA6858F0CE` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.11.jar | 303067 | `4582E92BC55797021991D8E9D0501667D7C35152C3411F6C3C20ED273E390C72` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.11.jar | 303410 | `940ADC6866F8A4FA544716949924CD6EA45F68C3BA9EF532193375BFB97F4837` | `docs/validation-logs/v2.1.11-six-loader-build-20261020.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.12.jar | 300168 | `CFF4E5B0AC21B6C7877672CEB463B4D4121221C3603D98031DF67BD2F2C65860` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.12.jar | 308973 | `52B65E5FCF8DA0C571C5AE43961A59BA79D7980ECFF5FB4343BD9AEAFBA0F20A` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.12.jar | 306106 | `4FF9ACA52C0DCE549E6BFF50CB931DF202B1207158659DBC21045D404B753F99` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.12.jar | 306466 | `828DC3148E5B27DB80C0594C55D003B81D7BB0215B385204BBCA042A71AAA245` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.12.jar | 303331 | `563CDD470C82704BCCEE945A54B4EDD3E5E60FF655276C970BAEB7CF57AA79BE` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.12.jar | 303673 | `DF8BD440A124DB1F568FDF36060B01B1DE6B85FBE16EB048952997886269321B` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.11-protected.jar`: 702378 bytes, SHA-256 `166254268B3D9BED1844D0931BAC8A4E21C98C5E0BAB4BC0D145DEB9D45DD303`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.12-protected.jar`: 702382 bytes, SHA-256 `124CF6C71E8D34C491E9F564D34D5F8EB049994F0F81BED725D734AD19062C36`.
 
 ## Resource and Adapter Updates
 
-Fragility, Shatter, and Backfire resource ranges now match Paper constraints. Rebound, Insight, Debilitate, Cadence, Underdog, and Rally also have explicit resource and adapter assertions across all six loaders. Cadence and Underdog use the Paper sword/axe/trident allowlist; Rally uses chestplates and the chest slot. Mod builds and validators pass; actual in-game behavior remains `NOT_VERIFIED`.
+Initiative, Wingclip, Tracer, and Pursuit now use the Paper sword/axe/trident allowlist instead of a trident-only tag. Resource validators check each trigger condition and bonus bound; adapter checks verify the shared melee method is registered through all six loader entrypoints. Builds and validators pass; player behavior remains `NOT_VERIFIED`.
 
 ## Previous Release Notes
 
-In 2.1.10, Fragility, Shatter, and Backfire constraints were aligned with Paper defaults. In 2.1.9, Rebound, Insight, and Debilitate were initially aligned; 2.1.11 refreshes and validates those resources with the current six-loader build. Player-trigger behavior remains `NOT_VERIFIED`.
+2.1.11 aligned Rebound, Insight, Debilitate, Cadence, Underdog, and Rally resource constraints. 2.1.10 aligned Fragility, Shatter, and Backfire constraints. Earlier published behavior notes and the historical runtime evidence below remain scoped to their recorded versions; 2.1.12 player-trigger behavior remains `NOT_VERIFIED`.
 
 
 ## Historical Runtime Evidence

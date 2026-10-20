@@ -1,0 +1,364 @@
+=== EnchADD Paper 2.1.12 protected-release build 2026-10-20 ===
+JAVA_HOME=C:\Program Files\Java\jdk-21
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ---------------------< net.enchadd:enchadd-plugin >---------------------
+[INFO] Building EnchADD Plugin 2.1.12
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ enchadd-plugin ---
+[INFO] Deleting D:\qwq\��Ŀ\Enchantio-master\plugin\target
+[INFO]
+[INFO] --- resources:3.4.0:resources (default-resources) @ enchadd-plugin ---
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ enchadd-plugin ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 448 source files with javac [debug release 21] to target\classes
+[INFO] ��������·���з�����һ�����������������������
+  ��ע������δ�����а�� javac ���ܻ������ע������
+  �������ٰ�����ָ����һ���������� (-processor)��
+  ��ָ��������·�� (--processor-path, --processor-module-path)��
+  ����ʽ��������ע���� (-proc:only, -proc:full)��
+  ��ʹ�� -Xlint:-options ���ش���Ϣ��
+  ��ʹ�� -proc:none ������ע������
+[INFO] /D:/qwq/��Ŀ/Enchantio-master/plugin/src/main/java/net/enchadd/listeners/AfterglideListener.java: ĳЩ�����ļ�ʹ�û򸲸����ѹ�ʱ�� API��
+[INFO] /D:/qwq/��Ŀ/Enchantio-master/plugin/src/main/java/net/enchadd/listeners/AfterglideListener.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+[INFO]
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ enchadd-plugin ---
+[INFO] skip non existing resourceDirectory D:\qwq\��Ŀ\Enchantio-master\plugin\src\test\resources
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ enchadd-plugin ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 77 source files with javac [debug release 21] to target\test-classes
+[INFO] ��������·���з�����һ�����������������������
+  ��ע������δ�����а�� javac ���ܻ������ע������
+  �������ٰ�����ָ����һ���������� (-processor)��
+  ��ָ��������·�� (--processor-path, --processor-module-path)��
+  ����ʽ��������ע���� (-proc:only, -proc:full)��
+  ��ʹ�� -Xlint:-options ���ش���Ϣ��
+  ��ʹ�� -proc:none ������ע������
+[INFO]
+[INFO] --- surefire:3.5.2:test (default-test) @ enchadd-plugin ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running net.enchadd.commands.BalanceReportLineComposerTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.117 s -- in net.enchadd.commands.BalanceReportLineComposerTest
+[INFO] Running net.enchadd.commands.BalanceScenarioCatalogTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in net.enchadd.commands.BalanceScenarioCatalogTest
+[INFO] Running net.enchadd.commands.CiStatusLegacySupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.commands.CiStatusLegacySupportTest
+[INFO] Running net.enchadd.commands.CiStatusMetricFormatterTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.enchadd.commands.CiStatusMetricFormatterTest
+[INFO] Running net.enchadd.commands.CommandBlockPermissionTest
+[INFO] Running net.enchadd.commands.CommandBlockPermissionTest$SubcommandPermissionTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in net.enchadd.commands.CommandBlockPermissionTest$SubcommandPermissionTests
+[INFO] Running net.enchadd.commands.CommandBlockPermissionTest$PermissionBehaviorTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.enchadd.commands.CommandBlockPermissionTest$PermissionBehaviorTests
+[INFO] Running net.enchadd.commands.CommandBlockPermissionTest$PermissionConstantsTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.commands.CommandBlockPermissionTest$PermissionConstantsTests
+[INFO] Running net.enchadd.commands.CommandBlockPermissionTest$PermissionSupportEvaluateTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.commands.CommandBlockPermissionTest$PermissionSupportEvaluateTests
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in net.enchadd.commands.CommandBlockPermissionTest
+[INFO] Running net.enchadd.commands.EnchantListAdminSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in net.enchadd.commands.EnchantListAdminSupportTest
+[INFO] Running net.enchadd.commands.EnchantListCompletionSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in net.enchadd.commands.EnchantListCompletionSupportTest
+[INFO] Running net.enchadd.commands.EnchantListDisplayMetadataSupportTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in net.enchadd.commands.EnchantListDisplayMetadataSupportTest
+[INFO] Running net.enchadd.commands.EnchantListHelpComposerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in net.enchadd.commands.EnchantListHelpComposerTest
+[INFO] Running net.enchadd.commands.EnchantListHighlightSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in net.enchadd.commands.EnchantListHighlightSupportTest
+[INFO] Running net.enchadd.commands.EnchantListKeywordParserTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.commands.EnchantListKeywordParserTest
+[INFO] Running net.enchadd.commands.EnchantListOptionParserTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in net.enchadd.commands.EnchantListOptionParserTest
+[INFO] Running net.enchadd.commands.EnchantListPerfRequestTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.commands.EnchantListPerfRequestTest
+[INFO] Running net.enchadd.commands.EnchantListPermissionSupportTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in net.enchadd.commands.EnchantListPermissionSupportTest
+[INFO] Running net.enchadd.commands.EnchantListRoutingSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in net.enchadd.commands.EnchantListRoutingSupportTest
+[INFO] Running net.enchadd.commands.LegacyScanRequestTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.commands.LegacyScanRequestTest
+[INFO] Running net.enchadd.commands.PerfInjectionMessageComposerTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.commands.PerfInjectionMessageComposerTest
+[INFO] Running net.enchadd.commands.ReloadMessageComposerTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.commands.ReloadMessageComposerTest
+[INFO] Running net.enchadd.commands.ReloadStatusComposerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in net.enchadd.commands.ReloadStatusComposerTest
+[INFO] Running net.enchadd.commands.SafeModeActionSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in net.enchadd.commands.SafeModeActionSupportTest
+[INFO] Running net.enchadd.commands.SafeModeMessageComposerTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.commands.SafeModeMessageComposerTest
+[INFO] Running net.enchadd.commands.SafeModeStatusComposerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.commands.SafeModeStatusComposerTest
+[INFO] Running net.enchadd.commands.VerifyMessageBuilderTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.commands.VerifyMessageBuilderTest
+[INFO] Running net.enchadd.config.EnchantAcquisitionPolicyTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in net.enchadd.config.EnchantAcquisitionPolicyTest
+[INFO] Running net.enchadd.listeners.support.ActiveBuffSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in net.enchadd.listeners.support.ActiveBuffSupportTest
+[INFO] Running net.enchadd.listeners.support.AirbagImpactSupportTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in net.enchadd.listeners.support.AirbagImpactSupportTest
+[INFO] Running net.enchadd.listeners.support.BarrierShieldSupportTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in net.enchadd.listeners.support.BarrierShieldSupportTest
+[INFO] Running net.enchadd.listeners.support.BreakguardDamageSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.listeners.support.BreakguardDamageSupportTest
+[INFO] Running net.enchadd.listeners.support.CombatTriggerSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in net.enchadd.listeners.support.CombatTriggerSupportTest
+[INFO] Running net.enchadd.listeners.support.CursePenaltySupportTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.listeners.support.CursePenaltySupportTest
+[INFO] Running net.enchadd.listeners.support.DefenseCombatSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.listeners.support.DefenseCombatSupportTest
+[INFO] Running net.enchadd.listeners.support.DefenseEffectRulesTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in net.enchadd.listeners.support.DefenseEffectRulesTest
+[INFO] Running net.enchadd.listeners.support.EffectMotionSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.listeners.support.EffectMotionSupportTest
+[INFO] Running net.enchadd.listeners.support.EnchantDamageSupportTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.EnchantDamageSupportTest
+[INFO] Running net.enchadd.listeners.support.GlideDefenseTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in net.enchadd.listeners.support.GlideDefenseTest
+[INFO] Running net.enchadd.listeners.support.GreedRulesTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.listeners.support.GreedRulesTest
+[INFO] Running net.enchadd.listeners.support.HomewardRulesTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in net.enchadd.listeners.support.HomewardRulesTest
+[INFO] Running net.enchadd.listeners.support.KnockbackRulesTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in net.enchadd.listeners.support.KnockbackRulesTest
+[INFO] Running net.enchadd.listeners.support.NutritionSupportTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.NutritionSupportTest
+[INFO] Running net.enchadd.listeners.support.ProjectileStatusSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.enchadd.listeners.support.ProjectileStatusSupportTest
+[INFO] Running net.enchadd.listeners.support.QuellDamageSupportTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.listeners.support.QuellDamageSupportTest
+[INFO] Running net.enchadd.listeners.support.RangedDamageRulesTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.listeners.support.RangedDamageRulesTest
+[INFO] Running net.enchadd.listeners.support.ReboundDurabilitySupportTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.listeners.support.ReboundDurabilitySupportTest
+[INFO] Running net.enchadd.listeners.support.RetaliationRulesTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.RetaliationRulesTest
+[INFO] Running net.enchadd.listeners.support.SpearCombatSupportTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.SpearCombatSupportTest
+[INFO] Running net.enchadd.listeners.support.SprintEffectRulesTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.SprintEffectRulesTest
+[INFO] Running net.enchadd.listeners.support.StatusDurationSupportTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.listeners.support.StatusDurationSupportTest
+[INFO] Running net.enchadd.listeners.support.SurvivalBuffSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.listeners.support.SurvivalBuffSupportTest
+[INFO] Running net.enchadd.listeners.support.SurvivalHealthSupportTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.listeners.support.SurvivalHealthSupportTest
+[INFO] Running net.enchadd.listeners.support.ThirstRulesTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.listeners.support.ThirstRulesTest
+[INFO] Running net.enchadd.listeners.support.TideRunnerRulesTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.389 s -- in net.enchadd.listeners.support.TideRunnerRulesTest
+[INFO] Running net.enchadd.listeners.support.TideshellRulesTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.listeners.support.TideshellRulesTest
+[INFO] Running net.enchadd.listeners.support.VolleyTrajectorySupportTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.listeners.support.VolleyTrajectorySupportTest
+[INFO] Running net.enchadd.listeners.support.WardShieldSupportTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.listeners.support.WardShieldSupportTest
+[INFO] Running net.enchadd.listeners.support.WingguardRescueSupportTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.listeners.support.WingguardRescueSupportTest
+[INFO] Running net.enchadd.utils.EnchantStatsJsonWriterTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in net.enchadd.utils.EnchantStatsJsonWriterTest
+[INFO] Running net.enchadd.utils.GitHubReleaseCheckerTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.284 s -- in net.enchadd.utils.GitHubReleaseCheckerTest
+[INFO] Running net.enchadd.utils.GitHubReleaseVersionSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.utils.GitHubReleaseVersionSupportTest
+[INFO] Running net.enchadd.utils.GreedVulnerabilityTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.enchadd.utils.GreedVulnerabilityTest
+[INFO] Running net.enchadd.utils.ListenerBudgetDispatchSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in net.enchadd.utils.ListenerBudgetDispatchSupportTest
+[INFO] Running net.enchadd.utils.ListenerLifecycleSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.utils.ListenerLifecycleSupportTest
+[INFO] Running net.enchadd.utils.MortalWoundWindowSupportTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.utils.MortalWoundWindowSupportTest
+[INFO] Running net.enchadd.utils.ParticleQueueAdaptationSupportTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in net.enchadd.utils.ParticleQueueAdaptationSupportTest
+[INFO] Running net.enchadd.utils.PerformanceCollectionSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.utils.PerformanceCollectionSupportTest
+[INFO] Running net.enchadd.utils.PerformanceCooldownSupportTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.utils.PerformanceCooldownSupportTest
+[INFO] Running net.enchadd.utils.PerformanceEnchantSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.utils.PerformanceEnchantSupportTest
+[INFO] Running net.enchadd.utils.PerformanceKeySupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.enchadd.utils.PerformanceKeySupportTest
+[INFO] Running net.enchadd.utils.PerformanceMathSupportTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.utils.PerformanceMathSupportTest
+[INFO] Running net.enchadd.utils.PerformanceRandomSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.utils.PerformanceRandomSupportTest
+[INFO] Running net.enchadd.utils.PerformanceShieldSupportTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in net.enchadd.utils.PerformanceShieldSupportTest
+[INFO] Running net.enchadd.utils.PerformanceValidationSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.utils.PerformanceValidationSupportTest
+[INFO] Running net.enchadd.utils.RuntimeErrorTrackerLogSupportTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in net.enchadd.utils.RuntimeErrorTrackerLogSupportTest
+[INFO] Running net.enchadd.utils.RuntimeErrorTrackerTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.enchadd.utils.RuntimeErrorTrackerTest
+[INFO] Running net.enchadd.utils.RuntimeHealthMonitorSupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.enchadd.utils.RuntimeHealthMonitorSupportTest
+[INFO] Running net.enchadd.utils.SafetyModePolicySupportTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in net.enchadd.utils.SafetyModePolicySupportTest
+[INFO] Running net.enchadd.utils.ServerCompatibilityTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in net.enchadd.utils.ServerCompatibilityTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 322, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- jar:3.5.0:jar (default-jar) @ enchadd-plugin ---
+[INFO] Building jar: D:\qwq\��Ŀ\Enchantio-master\plugin\target\enchadd-plugin-2.1.12.jar
+[INFO]
+[INFO] >>> source:3.3.0:jar (attach-sources) > generate-sources @ enchadd-plugin >>>
+[INFO]
+[INFO] <<< source:3.3.0:jar (attach-sources) < generate-sources @ enchadd-plugin <<<
+[INFO]
+[INFO]
+[INFO] --- source:3.3.0:jar (attach-sources) @ enchadd-plugin ---
+[INFO] Skipping source per configuration.
+[INFO]
+[INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ enchadd-plugin ---
+[INFO] Skipping javadoc generation
+[INFO]
+[INFO] --- shade:3.2.4:shade (default) @ enchadd-plugin ---
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing D:\qwq\��Ŀ\Enchantio-master\plugin\target\enchadd-plugin-2.1.12.jar with D:\qwq\��Ŀ\Enchantio-master\plugin\target\enchadd-plugin-2.1.12-shaded.jar
+[INFO]
+[INFO] --- proguard:2.7.0:proguard (obfuscate-release-jar) @ enchadd-plugin ---
+[INFO] execute ProGuard [-injars, 'D:\qwq\��Ŀ\Enchantio-master\plugin\target\enchadd-plugin-2.1.12.jar'(!META-INF/maven/**), -libraryjars, 'C:\Users\l\.m2\repository\io\papermc\paper\paper-api\1.21.11-R0.1-SNAPSHOT\paper-api-1.21.11-R0.1-SNAPSHOT.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\guava\guava\33.3.1-jre\guava-33.3.1-jre.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\errorprone\error_prone_annotations\2.28.0\error_prone_annotations-2.28.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\j2objc\j2objc-annotations\3.0.0\j2objc-annotations-3.0.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\code\gson\gson\2.11.0\gson-2.11.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\joml\joml\1.10.8\joml-1.10.8.jar', -libraryjars, 'C:\Users\l\.m2\repository\it\unimi\dsi\fastutil\8.5.15\fastutil-8.5.15.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.1\log4j-api-2.24.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\slf4j\slf4j-api\2.0.16\slf4j-api-2.0.16.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\mojang\brigadier\1.3.10\brigadier-1.3.10.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\md-5\bungeecord-chat\1.21-R0.2-deprecated+build.21\bungeecord-chat-1.21-R0.2-deprecated+build.21.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-resolver-provider\3.9.6\maven-resolver-provider-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-model\3.9.6\maven-model-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-model-builder\3.9.6\maven-model-builder-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.26\plexus-interpolation-1.26.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-artifact\3.9.6\maven-artifact-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-builder-support\3.9.6\maven-builder-support-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\eclipse\sisu\org.eclipse.sisu.inject\0.9.0.M2\org.eclipse.sisu.inject-0.9.0.M2.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\maven-repository-metadata\3.9.6\maven-repository-metadata-3.9.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-api\1.9.18\maven-resolver-api-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-spi\1.9.18\maven-resolver-spi-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-util\1.9.18\maven-resolver-util-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-impl\1.9.18\maven-resolver-impl-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-named-locks\1.9.18\maven-resolver-named-locks-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\codehaus\plexus\plexus-utils\3.5.1\plexus-utils-3.5.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\javax\inject\javax.inject\1\javax.inject-1.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\jspecify\jspecify\1.0.0\jspecify-1.0.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-api\4.26.1\adventure-api-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-key\4.26.1\adventure-key-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\examination-api\1.3.0\examination-api-1.3.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\examination-string\1.3.0\examination-string-1.3.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-minimessage\4.26.1\adventure-text-minimessage-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-gson\4.26.1\adventure-text-serializer-gson-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-json\4.26.1\adventure-text-serializer-json-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\option\1.1.0\option-1.1.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\com\google\auto\service\auto-service-annotations\1.1.1\auto-service-annotations-1.1.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-commons\4.26.1\adventure-text-serializer-commons-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-legacy\4.26.1\adventure-text-serializer-legacy-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-plain\4.26.1\adventure-text-serializer-plain-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-logger-slf4j\4.26.1\adventure-text-logger-slf4j-4.26.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\checkerframework\checker-qual\3.49.2\checker-qual-3.49.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-connector-basic\1.9.18\maven-resolver-connector-basic-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\maven\resolver\maven-resolver-transport-http\1.9.18\maven-resolver-transport-http-1.9.18.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\httpcomponents\httpclient\4.5.14\httpclient-4.5.14.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar', -libraryjars, 'C:\Users\l\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\slf4j\jcl-over-slf4j\1.7.36\jcl-over-slf4j-1.7.36.jar', -libraryjars, 'C:\Users\l\.m2\repository\me\clip\placeholderapi\2.11.6\placeholderapi-2.11.6.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\jetbrains\annotations\23.0.0\annotations-23.0.0.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\bstats\bstats-bukkit\3.0.1\bstats-bukkit-3.0.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\org\bstats\bstats-base\3.0.1\bstats-base-3.0.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-platform-bukkit\4.3.2\adventure-platform-bukkit-4.3.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-platform-api\4.3.2\adventure-platform-api-4.3.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-bungeecord\4.3.2\adventure-text-serializer-bungeecord-4.3.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-nbt\4.13.1\adventure-nbt-4.13.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-text-serializer-gson-legacy-impl\4.13.1\adventure-text-serializer-gson-legacy-impl-4.13.1.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-platform-facet\4.3.2\adventure-platform-facet-4.3.2.jar', -libraryjars, 'C:\Users\l\.m2\repository\net\kyori\adventure-platform-viaversion\4.3.2\adventure-platform-viaversion-4.3.2.jar', -outjars, 'D:\qwq\��Ŀ\Enchantio-master\plugin\target\enchadd-plugin-2.1.12-protected.jar', -libraryjars, 'C:\Program Files\Java\jdk-21/jmods/java.base.jmod', -libraryjars, 'C:\Program Files\Java\jdk-21/jmods/java.logging.jmod', -libraryjars, 'C:\Program Files\Java\jdk-21/jmods/java.management.jmod', -printmapping, 'D:\qwq\��Ŀ\Enchantio-master\plugin\target\proguard_map.txt', -printseeds, 'D:\qwq\��Ŀ\Enchantio-master\plugin\target\proguard_seed.txt', -dontshrink, -dontoptimize, -dontwarn, -ignorewarnings, -overloadaggressively, -useuniqueclassmembernames, -adaptclassstrings, -keepattributes Signature,*Annotation*,InnerClasses,EnclosingMethod, -keep public class net.enchadd.EnchADD { public *; }, -keep public class net.enchadd.EnchADDBootstrap { public *; }, -keep class net.enchadd.security.PluginProtection { *; }, -keep class * extends me.clip.placeholderapi.expansion.PlaceholderExpansion { public *; }, -keepclassmembers class * { @org.bukkit.event.EventHandler *; }, -keepclassmembers class * implements org.bukkit.event.Listener { public <init>(...); }, -keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }]
+[INFO] proguard jar: [C:\Users\l\.m2\repository\com\guardsquare\proguard-base\7.7.0\proguard-base-7.7.0.jar]
+ [proguard] ProGuard, version 7.7.0
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageHeader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageLocation]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Directory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$LinkNode]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Node]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Resource]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$SharedImageReader$LocationVisitor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$SharedImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReaderFactory$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReaderFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStream]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStrings]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStringsReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.NativeImageBuffer$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.NativeImageBuffer]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.CompressIndexes]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.CompressedResourceHeader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.Decompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressor$StringsProvider]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressorRepository]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.SignatureParser$ParseResult]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.SignatureParser]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.StringSharingDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.StringSharingDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ZipDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ZipDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.ExplodedImage$PathNode]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.ExplodedImage]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtDirectoryStream$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtDirectoryStream]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributeView$AttrID]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributeView]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributes]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileStore]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystem$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystem]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider$JrtFsLoader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtUtils]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage]
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: there were 60 duplicate class definitions.
+ [proguard]       (https://www.guardsquare.com/proguard/manual/troubleshooting#duplicateclass)
+ [proguard] Note: net.enchadd.utils.ListenerLifecycleSupport accesses a method 'cleanup()' dynamically
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ArboristListener { ArboristListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.ArboristEnchant); }', but not the descriptor class 'net.enchadd.enchants.ArboristEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.BackfireListener { BackfireListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.BackfireEnchant,net.enchadd.listeners.support.BackfireDamageSupport); }', but not the descriptor class 'net.enchadd.enchants.BackfireEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.BackfireListener { BackfireListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.BackfireEnchant,net.enchadd.listeners.support.BackfireDamageSupport); }', but not the descriptor class 'net.enchadd.listeners.support.BackfireDamageSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.CinderListener { CinderListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.CinderEnchant,net.enchadd.listeners.support.CinderHitSupport); }', but not the descriptor class 'net.enchadd.enchants.CinderEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.CinderListener { CinderListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.CinderEnchant,net.enchadd.listeners.support.CinderHitSupport); }', but not the descriptor class 'net.enchadd.listeners.support.CinderHitSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.DelvesenseListener { DelvesenseListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.DelvesenseEnchant,org.bukkit.NamespacedKey); }', but not the descriptor class 'net.enchadd.enchants.DelvesenseEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.EvasionListener { EvasionListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.EvasionEnchant,org.bukkit.NamespacedKey,net.enchadd.listeners.support.EvasionProjectileSupport); }', but not the descriptor class 'net.enchadd.enchants.EvasionEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.EvasionListener { EvasionListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.EvasionEnchant,org.bukkit.NamespacedKey,net.enchadd.listeners.support.EvasionProjectileSupport); }', but not the descriptor class 'net.enchadd.listeners.support.EvasionProjectileSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FarshotListener { FarshotListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,org.bukkit.NamespacedKey,net.enchadd.enchants.FarshotEnchant); }', but not the descriptor class 'net.enchadd.enchants.FarshotEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FlareListener { FlareListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,org.bukkit.NamespacedKey,net.enchadd.enchants.FlareEnchant,net.enchadd.listeners.support.FlareProjectileSupport); }', but not the descriptor class 'net.enchadd.enchants.FlareEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FlareListener { FlareListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,org.bukkit.NamespacedKey,net.enchadd.enchants.FlareEnchant,net.enchadd.listeners.support.FlareProjectileSupport); }', but not the descriptor class 'net.enchadd.listeners.support.FlareProjectileSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FleetfootListener { FleetfootListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.FleetfootEnchant,net.enchadd.listeners.support.FleetfootSprintSupport); }', but not the descriptor class 'net.enchadd.enchants.FleetfootEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FleetfootListener { FleetfootListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.FleetfootEnchant,net.enchadd.listeners.support.FleetfootSprintSupport); }', but not the descriptor class 'net.enchadd.listeners.support.FleetfootSprintSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FragilityListener { FragilityListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.FragilityEnchant,net.enchadd.listeners.support.FragilityDamageSupport); }', but not the descriptor class 'net.enchadd.enchants.FragilityEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FragilityListener { FragilityListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.FragilityEnchant,net.enchadd.listeners.support.FragilityDamageSupport); }', but not the descriptor class 'net.enchadd.listeners.support.FragilityDamageSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FreshcatchListener { FreshcatchListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.FreshcatchEnchant); }', but not the descriptor class 'net.enchadd.enchants.FreshcatchEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.FurrowListener { FurrowListener(org.bukkit.enchantments.Enchantment,org.bukkit.enchantments.Enchantment,net.enchadd.enchants.FurrowEnchant); }', but not the descriptor class 'net.enchadd.enchants.FurrowEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.HomecomingListener { HomecomingListener(org.bukkit.enchantments.Enchantment,net.enchadd.listeners.support.HomecomingResurrectSupport); }', but not the descriptor class 'net.enchadd.listeners.support.HomecomingResurrectSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.HuntersMarkListener { HuntersMarkListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.HuntersMarkEnchant,net.enchadd.listeners.support.HuntersMarkProjectileSupport); }', but not the descriptor class 'net.enchadd.enchants.HuntersMarkEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.HuntersMarkListener { HuntersMarkListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.HuntersMarkEnchant,net.enchadd.listeners.support.HuntersMarkProjectileSupport); }', but not the descriptor class 'net.enchadd.listeners.support.HuntersMarkProjectileSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.IrrigationListener { IrrigationListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.IrrigationEnchant); }', but not the descriptor class 'net.enchadd.enchants.IrrigationEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.LethargyListener { LethargyListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.LethargyEnchant,net.enchadd.listeners.support.LethargySprintSupport); }', but not the descriptor class 'net.enchadd.enchants.LethargyEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.LethargyListener { LethargyListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.LethargyEnchant,net.enchadd.listeners.support.LethargySprintSupport); }', but not the descriptor class 'net.enchadd.listeners.support.LethargySprintSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.MeteorListener { MeteorListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.MeteorEnchant,net.enchadd.listeners.support.MeteorHitSupport); }', but not the descriptor class 'net.enchadd.enchants.MeteorEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.MeteorListener { MeteorListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.MeteorEnchant,net.enchadd.listeners.support.MeteorHitSupport); }', but not the descriptor class 'net.enchadd.listeners.support.MeteorHitSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.MisfortuneListener { MisfortuneListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.MisfortuneEnchant,net.enchadd.listeners.support.MisfortuneExpSupport); }', but not the descriptor class 'net.enchadd.enchants.MisfortuneEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.MisfortuneListener { MisfortuneListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.MisfortuneEnchant,net.enchadd.listeners.support.MisfortuneExpSupport); }', but not the descriptor class 'net.enchadd.listeners.support.MisfortuneExpSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ObscureListener { ObscureListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ObscureEnchant,net.enchadd.listeners.support.ObscureProjectileSupport); }', but not the descriptor class 'net.enchadd.enchants.ObscureEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ObscureListener { ObscureListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ObscureEnchant,net.enchadd.listeners.support.ObscureProjectileSupport); }', but not the descriptor class 'net.enchadd.listeners.support.ObscureProjectileSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.PursuitListener { PursuitListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.PursuitEnchant,net.enchadd.listeners.support.PursuitHitSupport); }', but not the descriptor class 'net.enchadd.enchants.PursuitEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.PursuitListener { PursuitListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.PursuitEnchant,net.enchadd.listeners.support.PursuitHitSupport); }', but not the descriptor class 'net.enchadd.listeners.support.PursuitHitSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ResonanceListener { ResonanceListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ResonanceEnchant,net.enchadd.listeners.support.ResonanceComboSupport); }', but not the descriptor class 'net.enchadd.enchants.ResonanceEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ResonanceListener { ResonanceListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ResonanceEnchant,net.enchadd.listeners.support.ResonanceComboSupport); }', but not the descriptor class 'net.enchadd.listeners.support.ResonanceComboSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ShroudListener { ShroudListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ShroudEnchant,net.enchadd.listeners.support.ShroudTargetSupport); }', but not the descriptor class 'net.enchadd.enchants.ShroudEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.ShroudListener { ShroudListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.ShroudEnchant,net.enchadd.listeners.support.ShroudTargetSupport); }', but not the descriptor class 'net.enchadd.listeners.support.ShroudTargetSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SidestepListener { SidestepListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.SidestepEnchant,net.enchadd.listeners.support.SidestepDodgeSupport); }', but not the descriptor class 'net.enchadd.enchants.SidestepEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SidestepListener { SidestepListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.SidestepEnchant,net.enchadd.listeners.support.SidestepDodgeSupport); }', but not the descriptor class 'net.enchadd.listeners.support.SidestepDodgeSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.StarwishListener { StarwishListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.StarwishEnchant,org.bukkit.NamespacedKey); }', but not the descriptor class 'net.enchadd.enchants.StarwishEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SteadfastListener { SteadfastListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.SteadfastEnchant,net.enchadd.listeners.support.SteadfastKnockbackSupport); }', but not the descriptor class 'net.enchadd.enchants.SteadfastEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SteadfastListener { SteadfastListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.SteadfastEnchant,net.enchadd.listeners.support.SteadfastKnockbackSupport); }', but not the descriptor class 'net.enchadd.listeners.support.SteadfastKnockbackSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SteadyAimListener { SteadyAimListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,org.bukkit.NamespacedKey,net.enchadd.enchants.SteadyAimEnchant,net.enchadd.listeners.support.SteadyAimProjectileSupport); }', but not the descriptor class 'net.enchadd.enchants.SteadyAimEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.SteadyAimListener { SteadyAimListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,org.bukkit.NamespacedKey,net.enchadd.enchants.SteadyAimEnchant,net.enchadd.listeners.support.SteadyAimProjectileSupport); }', but not the descriptor class 'net.enchadd.listeners.support.SteadyAimProjectileSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.StonewakeListener { StonewakeListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.StonewakeEnchant); }', but not the descriptor class 'net.enchadd.enchants.StonewakeEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.TenderstepListener { TenderstepListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.TenderstepEnchant); }', but not the descriptor class 'net.enchadd.enchants.TenderstepEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.TideRunnerListener { TideRunnerListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.TideRunnerEnchant,org.bukkit.NamespacedKey); }', but not the descriptor class 'net.enchadd.enchants.TideRunnerEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.TideshellListener { TideshellListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.TideshellEnchant,org.bukkit.NamespacedKey); }', but not the descriptor class 'net.enchadd.enchants.TideshellEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.TrailblazerListener { TrailblazerListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.TrailblazerEnchant); }', but not the descriptor class 'net.enchadd.enchants.TrailblazerEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.UndertowListener { UndertowListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.UndertowEnchant,net.enchadd.listeners.support.UndertowPullSupport); }', but not the descriptor class 'net.enchadd.enchants.UndertowEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.UndertowListener { UndertowListener(org.bukkit.enchantments.Enchantment,org.bukkit.NamespacedKey,net.enchadd.enchants.UndertowEnchant,net.enchadd.listeners.support.UndertowPullSupport); }', but not the descriptor class 'net.enchadd.listeners.support.UndertowPullSupport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.listeners.WaysongListener { WaysongListener(org.bukkit.enchantments.Enchantment,net.enchadd.enchants.WaysongEnchant,org.bukkit.NamespacedKey); }', but not the descriptor class 'net.enchadd.enchants.WaysongEnchant'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.security.PluginProtection { void verifyJarShape(java.nio.file.Path,net.enchadd.security.PluginProtection$ProtectionReport); }', but not the descriptor class 'net.enchadd.security.PluginProtection$ProtectionReport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.security.PluginProtection { void requireEntry(java.util.jar.JarFile,java.lang.String,net.enchadd.security.PluginProtection$ProtectionReport); }', but not the descriptor class 'net.enchadd.security.PluginProtection$ProtectionReport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.security.PluginProtection { void rejectEntry(java.util.jar.JarFile,java.lang.String,java.lang.String,net.enchadd.security.PluginProtection$ProtectionReport); }', but not the descriptor class 'net.enchadd.security.PluginProtection$ProtectionReport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.security.PluginProtection { void verifyChecksum(java.nio.file.Path,net.enchadd.security.PluginProtection$ProtectionReport); }', but not the descriptor class 'net.enchadd.security.PluginProtection$ProtectionReport'
+ [proguard] Note: the configuration keeps the entry point 'net.enchadd.security.PluginProtection { void detectInstrumentation(net.enchadd.security.PluginProtection$ProtectionReport); }', but not the descriptor class 'net.enchadd.security.PluginProtection$ProtectionReport'
+[INFO]
+[INFO] --- antrun:3.1.0:run (protected-release-checksum) @ enchadd-plugin ---
+[INFO] Executing tasks
+[INFO] Executed tasks
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.697 s
+[INFO] Finished at: 2026-10-20T09:34:48+08:00
+[INFO] ------------------------------------------------------------------------

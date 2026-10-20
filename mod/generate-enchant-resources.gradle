@@ -314,7 +314,7 @@ tasks.register('validateEnchADDResources') {
                 'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
                 'minecraft:golden_axe', 'minecraft:diamond_axe', 'minecraft:netherite_axe',
                 'minecraft:trident'] as Set
-        ['cadence', 'underdog'].each { id ->
+        ['cadence', 'underdog', 'initiative', 'wingclip', 'tracer', 'pursuit'].each { id ->
             def parsed = parser.parse(new File(enchantDir, "${id}.json"))
             assert parsed.max_level == 3 && parsed.slots == ['hand']
             assert (parsed.supported_items as Set) == weaponItems:
@@ -357,10 +357,24 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'Backfire must require a direct player attack'
         def meleeBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
         assert meleeBehavior.isFile(): 'Missing shared melee effect behavior'
-        ['CADENCE', 'UNDERDOG', 'RALLY'].each { id ->
+        ['CADENCE', 'UNDERDOG', 'RALLY', 'INITIATIVE', 'WINGCLIP', 'TRACER', 'PURSUIT'].each { id ->
             assert meleeBehavior.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
                     "Shared melee behavior must define ${id}"
         }
+        assert meleeBehavior.text.contains('source.getDirectEntity() != attacker'):
+                'Shared melee damage behavior must reject indirect attacks'
+        assert meleeBehavior.text.contains('maxHealth > 0.0 && victim.getHealth() / maxHealth >= 0.9')
+        assert meleeBehavior.text.contains('Math.min(2.1, 0.7 * initiativeLevel)'):
+                'Initiative must use Paper health threshold and bounded bonus defaults'
+        assert meleeBehavior.text.contains('wingclipLevel > 0 && !victim.onGround()')
+        assert meleeBehavior.text.contains('Math.min(2.25, 0.75 * wingclipLevel)'):
+                'Wingclip must require an airborne victim and use Paper bonus defaults'
+        assert meleeBehavior.text.contains('tracerLevel > 0 && victim.hasEffect(MobEffects.GLOWING)')
+        assert meleeBehavior.text.contains('Math.min(2.1, 0.7 * tracerLevel)'):
+                'Tracer must require Glowing and use Paper bonus defaults'
+        assert meleeBehavior.text.contains('victim instanceof ServerPlayer sprintingTarget && sprintingTarget.isSprinting()')
+        assert meleeBehavior.text.contains('Math.min(2.1, 0.7 * pursuitLevel)'):
+                'Pursuit must target sprinting players and use Paper bonus defaults'
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
         if (loader.startsWith('fabric-')) {
