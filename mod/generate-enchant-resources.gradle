@@ -20,7 +20,11 @@ def maxLevelFor = { String id, boolean curse ->
     if (id == 'overwhelm') return 2
     if (id == 'executioner') return 5
     if (id == 'beheading') return 1
+    if (id == 'airbag') return 4
+    if (id == 'wingguard') return 2
+    if (id == 'tenderstep') return 1
     if (id == 'tideshell') return 1
+    if (id in ['gravitation', 'brittle']) return 3
     if (id == 'lethargy') return 3
     ['greed', 'misfortune', 'fragility', 'shatter'].contains(id) ? 3 : (curse ? 1 : 3)
 }
@@ -37,19 +41,23 @@ def itemGroups = [
         fishing : ['freshcatch', 'trawler'] as Set,
         mining  : ['arborist', 'delvesense', 'furrow', 'insight', 'irrigation', 'refine', 'replanting', 'smelting', 'stonewake', 'telepathy', 'trailblazer'] as Set,
         mace    : ['meteor', 'overwhelm', 'tremor', 'updraft'] as Set,
-        armor   : ['airbag', 'afterglide', 'arrowguard', 'blastguard', 'defense', 'firebreak', 'fireguard', 'fortitude', 'frostguard', 'insomnia', 'panic', 'purify', 'shroud', 'vampirism_curse'] as Set,
+        armor   : ['afterglide', 'arrowguard', 'blastguard', 'defense', 'firebreak', 'fireguard', 'fortitude', 'frostguard', 'insomnia', 'panic', 'purify', 'shroud', 'vampirism_curse'] as Set,
         chest   : ['debilitate', 'rally'] as Set,
-        feet    : ['evasion', 'featherstep', 'fleetfoot', 'tide_runner', 'lethargy'] as Set,
+        feet    : ['evasion', 'featherstep', 'fleetfoot', 'gravitation', 'lethargy', 'steadfast', 'tenderstep', 'tide_runner'] as Set,
         trident : ['cadence', 'cinder', 'highground', 'initiative', 'lodestar', 'measured', 'momentum', 'poise', 'pursuit', 'resonance', 'shadowstrike', 'tracer', 'undertow', 'underdog', 'wingclip'] as Set,
         weapon  : ['backfire', 'beheading', 'breakguard', 'decapitate', 'executioner', 'frostbrand', 'greed', 'hemorrhage', 'immolate', 'misfortune', 'rashness', 'shatter', 'sunder'] as Set
 ]
 
 def supportedItems = { String id ->
+    if (id in ['afterglide', 'skim', 'airbag', 'wingguard']) return ['minecraft:elytra']
+    if (id == 'brittle') return [
+            'minecraft:leather_leggings', 'minecraft:chainmail_leggings', 'minecraft:iron_leggings',
+            'minecraft:golden_leggings', 'minecraft:diamond_leggings', 'minecraft:netherite_leggings'
+    ]
     def catalogEntry = catalog.find { it[0] == id }
     if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
         return catalogEntry[2].split(';').collect { it.trim() }
     }
-    if (id in ['afterglide', 'skim']) return ['minecraft:elytra']
     if (id == 'tideshell') return ['minecraft:nautilus_shell']
     if (spearIds.contains(id)) {
         return ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
@@ -63,8 +71,9 @@ def supportedItems = { String id ->
 
 def slotsFor = { String id ->
     if (id == 'fragility') return ['any']
-    if (id in ['afterglide', 'skim']) return ['chest']
+    if (id in ['afterglide', 'skim', 'airbag', 'wingguard']) return ['chest']
     if (id == 'tideshell') return ['mainhand']
+    if (id == 'brittle') return ['legs']
     if (itemGroups.shield.contains(id)) return ['offhand']
     if (itemGroups.armor.contains(id)) return ['armor']
     if (itemGroups.chest.contains(id)) return ['chest']
@@ -328,6 +337,32 @@ tasks.register('validateEnchADDResources') {
                     "${id} must use the vanilla foot armor tag"
             assert parsed.effects == [:]: "${id} must use the shared player-state adapter only"
         }
+        def tenderstep = parser.parse(new File(enchantDir, 'tenderstep.json'))
+        assert tenderstep.max_level == 1 && tenderstep.slots == ['feet']
+        assert tenderstep.supported_items == '#minecraft:enchantable/foot_armor'
+        assert tenderstep.effects == [:]: 'Tenderstep must use its dedicated trample adapter only'
+        ['steadfast', 'gravitation'].each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            assert parsed.max_level == 3 && parsed.slots == ['feet']
+            assert parsed.supported_items == '#minecraft:enchantable/foot_armor':
+                    "${id} must use the Paper foot armor restriction"
+            assert parsed.effects == [:]: "${id} must use its custom damage/knockback adapter only"
+        }
+        ['airbag', 'wingguard'].each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            def expectedLevel = id == 'airbag' ? 4 : 2
+            assert parsed.max_level == expectedLevel && parsed.slots == ['chest']:
+                    "${id} must use the Paper Elytra chest restriction and level cap"
+            assert (parsed.supported_items as Set) == ['minecraft:elytra'] as Set
+            assert parsed.effects == [:]: "${id} must use its custom Elytra adapter only"
+        }
+        def brittle = parser.parse(new File(enchantDir, 'brittle.json'))
+        def leggings = ['minecraft:leather_leggings', 'minecraft:chainmail_leggings',
+                'minecraft:iron_leggings', 'minecraft:golden_leggings', 'minecraft:diamond_leggings',
+                'minecraft:netherite_leggings'] as Set
+        assert brittle.max_level == 3 && brittle.slots == ['legs']
+        assert (brittle.supported_items as Set) == leggings
+        assert brittle.effects == [:]: 'Brittle must use the shared melee fall-damage adapter only'
         def chestplates = ['minecraft:leather_chestplate', 'minecraft:chainmail_chestplate',
                 'minecraft:iron_chestplate', 'minecraft:golden_chestplate', 'minecraft:diamond_chestplate',
                 'minecraft:netherite_chestplate'] as Set
@@ -490,6 +525,13 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'Pursuit must target sprinting players and use Paper bonus defaults'
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
+        def airbagBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/AirbagBehavior.java')
+        def steadfastBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SteadfastBehavior.java')
+        def tenderstepBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/TenderstepBehavior.java')
+        def wingguardBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/WingguardBehavior.java')
+        assert airbagBehavior.isFile() && steadfastBehavior.isFile() && tenderstepBehavior.isFile() && wingguardBehavior.isFile()
+        assert meleeBehavior.text.contains('BRITTLE') && meleeBehavior.text.contains('GRAVITATION'):
+                'Shared melee behavior must define the fall-damage curses'
         def playerStateBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/PlayerStateBehavior.java')
         def waterMovementBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/WaterMovementBehavior.java')
         assert playerStateBehavior.text.contains('FLEETFOOT')
@@ -512,6 +554,10 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'Fabric must route water effects through use and player-tick callbacks'
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert mixins.contains('ComboDamageMixin'): 'Fabric must register the shared melee damage Mixin'
+            assert mixins.contains('AirbagDamageMixin') && mixins.contains('SteadfastMixin') && mixins.contains('TenderstepMixin'):
+                    'Fabric must register the equipment protection Mixin chain'
+            assert entrypoint.text.contains('EnchADDFabricWingguard.init()'):
+                    'Fabric must register the Elytra rescue adapter'
             assert mixins.contains('HeadDropsMixin') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Fabric must register the shared head-drop behavior'
             assert mixins.contains('DurabilityCurseMixin'): 'Fabric must register the shared durability curse hook'
@@ -531,6 +577,10 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert playerStates.text.contains('PlayerStateBehavior.tick'): 'Forge must route player-state effects through player ticks'
             assert water.text.contains('WaterMovementBehavior.useShell') && water.text.contains('WaterMovementBehavior.tick'):
                     'Forge must route water effects through use and player-tick events'
+            assert entrypoint.text.contains('EnchADDForgeAirbag.register()')
+            assert entrypoint.text.contains('EnchADDForgeSteadfast.register()')
+            assert entrypoint.text.contains('EnchADDForgeTenderstep.register()')
+            assert entrypoint.text.contains('EnchADDForgeWingguard.register()')
             assert entrypoint.text.contains('EnchADDForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Forge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
@@ -552,6 +602,10 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert playerStates.text.contains('PlayerStateBehavior.tick'): 'NeoForge must route player-state effects through player ticks'
             assert water.text.contains('WaterMovementBehavior.useShell') && water.text.contains('WaterMovementBehavior.tick'):
                     'NeoForge must route water effects through use and player-tick events'
+            assert entrypoint.text.contains('EnchADDNeoForgeAirbag.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeSteadfast.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeTenderstep.register()')
+            assert entrypoint.text.contains('EnchADDNeoForgeWingguard.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'NeoForge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'
