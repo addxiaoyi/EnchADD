@@ -1,0 +1,41 @@
+=== EnchADD 2.1.14 movement and water static validation 2026-10-20 ===
+
+Scope:
+- afterglide
+- skim
+- tideshell
+- fleetfoot
+- tide_runner
+- lethargy
+
+Environment:
+- Gradle 9.7.1
+- JDK 25.0.3
+- ASCII temporary validation root: D:\UserCache\Temp\enchadd-static-validation-20261020
+- The temporary projects used the repository's generate-enchant-resources.gradle and copied Common/Loader source trees.
+- Loader plugins were intentionally not applied in this narrow validation harness.
+
+Command shape per module:
+gradle --gradle-user-home D:\UserCache\Temp\gradle-home-20261020-131903 -p <module> validateEnchADDResources validateEnchADDBehaviorAdapters --offline --no-daemon --console plain
+
+Results:
+- fabric-1.21.11: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+- fabric-26.3: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+- forge-1.21.11: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+- forge-26.3: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+- neoforge-1.21.11: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+- neoforge-26.3: BUILD SUCCESSFUL; validateEnchADDResources PASS; validateEnchADDBehaviorAdapters PASS
+
+Resource assertions:
+- afterglide: level 3, chest slot, minecraft:elytra
+- skim: level 3, chest slot, minecraft:elytra
+- tideshell: level 1, mainhand slot, minecraft:nautilus_shell
+- fleetfoot: level 3, feet slot, #minecraft:enchantable/foot_armor
+- tide_runner: level 3, feet slot, #minecraft:enchantable/foot_armor
+- lethargy: level 3, feet slot, #minecraft:enchantable/foot_armor
+
+Evidence boundary:
+- This log proves generated resource parity and source-level Common/Loader adapter routing only.
+- It does not prove a formal six-loader packaged JAR build, server startup, or player-triggered behavior.
+- The normal six-loader build attempt was blocked while resolving external Maven artifacts, including Fabric Loom 1.18.4, Mercury 0.4.3, and Kotlin Metadata JVM 2.4.0.
+- Player behavior remains NOT_VERIFIED.

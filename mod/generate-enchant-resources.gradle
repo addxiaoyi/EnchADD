@@ -20,6 +20,8 @@ def maxLevelFor = { String id, boolean curse ->
     if (id == 'overwhelm') return 2
     if (id == 'executioner') return 5
     if (id == 'beheading') return 1
+    if (id == 'tideshell') return 1
+    if (id == 'lethargy') return 3
     ['greed', 'misfortune', 'fragility', 'shatter'].contains(id) ? 3 : (curse ? 1 : 3)
 }
 def exclusiveSetFor = { String id ->
@@ -37,8 +39,8 @@ def itemGroups = [
         mace    : ['meteor', 'overwhelm', 'tremor', 'updraft'] as Set,
         armor   : ['airbag', 'afterglide', 'arrowguard', 'blastguard', 'defense', 'firebreak', 'fireguard', 'fortitude', 'frostguard', 'insomnia', 'panic', 'purify', 'shroud', 'vampirism_curse'] as Set,
         chest   : ['debilitate', 'rally'] as Set,
-        feet    : ['evasion', 'featherstep'] as Set,
-        trident : ['cadence', 'cinder', 'highground', 'initiative', 'lodestar', 'measured', 'momentum', 'poise', 'pursuit', 'resonance', 'shadowstrike', 'tide_runner', 'tracer', 'undertow', 'underdog', 'wingclip'] as Set,
+        feet    : ['evasion', 'featherstep', 'fleetfoot', 'tide_runner', 'lethargy'] as Set,
+        trident : ['cadence', 'cinder', 'highground', 'initiative', 'lodestar', 'measured', 'momentum', 'poise', 'pursuit', 'resonance', 'shadowstrike', 'tracer', 'undertow', 'underdog', 'wingclip'] as Set,
         weapon  : ['backfire', 'beheading', 'breakguard', 'decapitate', 'executioner', 'frostbrand', 'greed', 'hemorrhage', 'immolate', 'misfortune', 'rashness', 'shatter', 'sunder'] as Set
 ]
 
@@ -47,6 +49,8 @@ def supportedItems = { String id ->
     if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
         return catalogEntry[2].split(';').collect { it.trim() }
     }
+    if (id in ['afterglide', 'skim']) return ['minecraft:elytra']
+    if (id == 'tideshell') return ['minecraft:nautilus_shell']
     if (spearIds.contains(id)) {
         return ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
                 'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
@@ -59,6 +63,8 @@ def supportedItems = { String id ->
 
 def slotsFor = { String id ->
     if (id == 'fragility') return ['any']
+    if (id in ['afterglide', 'skim']) return ['chest']
+    if (id == 'tideshell') return ['mainhand']
     if (itemGroups.shield.contains(id)) return ['offhand']
     if (itemGroups.armor.contains(id)) return ['armor']
     if (itemGroups.chest.contains(id)) return ['chest']
@@ -298,6 +304,30 @@ tasks.register('validateEnchADDResources') {
         assert insightFactor.type == 'minecraft:linear'
         assert insightFactor.base == 1.30 && insightFactor.per_level_above_first == 0.30:
                 'Insight must increase block XP multiplier by 0.30 per level'
+        def afterglide = parser.parse(new File(enchantDir, 'afterglide.json'))
+        assert afterglide.max_level == 3 && afterglide.slots == ['chest']
+        assert (afterglide.supported_items as Set) == ['minecraft:elytra'] as Set:
+                'Afterglide must be limited to Elytra and the chest slot'
+        assert afterglide.effects == [:]: 'Afterglide must use the shared player-state adapter only'
+        def skim = parser.parse(new File(enchantDir, 'skim.json'))
+        assert skim.max_level == 3 && skim.slots == ['chest']
+        assert (skim.supported_items as Set) == ['minecraft:elytra'] as Set:
+                'Skim must be limited to Elytra and the chest slot'
+        assert skim.effects == [:]: 'Skim must use the shared melee adapter only'
+        def tideshell = parser.parse(new File(enchantDir, 'tideshell.json'))
+        assert tideshell.max_level == 1 && tideshell.slots == ['mainhand']
+        assert (tideshell.supported_items as Set) == ['minecraft:nautilus_shell'] as Set:
+                'Tideshell must be limited to a nautilus shell in the main hand'
+        assert tideshell.effects == [:]: 'Tideshell must use the shared water-use adapter only'
+        def footEnchantments = ['fleetfoot', 'tide_runner', 'lethargy']
+        footEnchantments.each { id ->
+            def parsed = parser.parse(new File(enchantDir, "${id}.json"))
+            assert parsed.max_level == 3 && parsed.slots == ['feet']:
+                    "${id} must use the Paper foot slot and level cap"
+            assert parsed.supported_items == '#minecraft:enchantable/foot_armor':
+                    "${id} must use the vanilla foot armor tag"
+            assert parsed.effects == [:]: "${id} must use the shared player-state adapter only"
+        }
         def chestplates = ['minecraft:leather_chestplate', 'minecraft:chainmail_chestplate',
                 'minecraft:iron_chestplate', 'minecraft:golden_chestplate', 'minecraft:diamond_chestplate',
                 'minecraft:netherite_chestplate'] as Set
@@ -460,14 +490,26 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'Pursuit must target sprinting players and use Paper bonus defaults'
         def sourceRoot = new File(project.projectDir, 'src/main/java/net/enchadd/mod')
         def loader = project.projectDir.name
+        def playerStateBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/PlayerStateBehavior.java')
+        def waterMovementBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/WaterMovementBehavior.java')
+        assert playerStateBehavior.text.contains('FLEETFOOT')
+        assert playerStateBehavior.text.contains('AFTERGLIDE')
+        assert playerStateBehavior.text.contains('LETHARGY')
+        assert waterMovementBehavior.text.contains('TIDESHELL')
+        assert waterMovementBehavior.text.contains('TIDE_RUNNER')
         if (loader.startsWith('fabric-')) {
             def adapter = new File(sourceRoot, 'EnchADDFabricMeleeEffects.java')
             def entrypoint = new File(sourceRoot, 'EnchADDFabric.java')
+            def playerStates = new File(sourceRoot, 'EnchADDFabricPlayerStates.java')
+            def water = new File(sourceRoot, 'EnchADDFabricWater.java')
             def combo = new File(project.projectDir, 'src/main/java/net/enchadd/mod/mixin/ComboDamageMixin.java')
             def headAdapter = new File(sourceRoot, 'mixin/HeadDropsMixin.java')
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Fabric damage adapter must invoke Debilitate behavior'
             assert combo.text.contains('MeleeEffectBehavior.adjustDamage'): 'Fabric must route melee effects through ComboDamageMixin'
             assert entrypoint.text.contains('EnchADDFabricMeleeEffects.init()'): 'Fabric entrypoint must register the melee damage adapter'
+            assert playerStates.text.contains('PlayerStateBehavior::tick'): 'Fabric must route player-state effects through server ticks'
+            assert water.text.contains('WaterMovementBehavior.useShell') && water.text.contains('WaterMovementBehavior::tick'):
+                    'Fabric must route water effects through use and player-tick callbacks'
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert mixins.contains('ComboDamageMixin'): 'Fabric must register the shared melee damage Mixin'
             assert mixins.contains('HeadDropsMixin') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
@@ -477,6 +519,8 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         } else if (loader.startsWith('forge-')) {
             def adapter = new File(sourceRoot, 'EnchADDForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDForge.java')
+            def playerStates = new File(sourceRoot, 'EnchADDForgePlayerStates.java')
+            def water = new File(sourceRoot, 'EnchADDForgeWater.java')
             def meleeAdapter = new File(sourceRoot, 'EnchADDForgeMeleeEffects.java')
             def headAdapter = new File(sourceRoot, 'EnchADDForgeHeadDrops.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDForgeBackfire.java')
@@ -484,6 +528,9 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Forge damage adapter must invoke Debilitate behavior'
             assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'Forge must route melee effects through its damage adapter'
             assert entrypoint.text.contains('EnchADDForgeMeleeEffects.register()'): 'Forge entrypoint must register the melee damage adapter'
+            assert playerStates.text.contains('PlayerStateBehavior.tick'): 'Forge must route player-state effects through player ticks'
+            assert water.text.contains('WaterMovementBehavior.useShell') && water.text.contains('WaterMovementBehavior.tick'):
+                    'Forge must route water effects through use and player-tick events'
             assert entrypoint.text.contains('EnchADDForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Forge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
@@ -493,6 +540,8 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         } else if (loader.startsWith('neoforge-')) {
             def adapter = new File(sourceRoot, 'EnchADDNeoForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDNeoForge.java')
+            def playerStates = new File(sourceRoot, 'EnchADDNeoForgePlayerStates.java')
+            def water = new File(sourceRoot, 'EnchADDNeoForgeWater.java')
             def meleeAdapter = new File(sourceRoot, 'EnchADDNeoForgeMeleeEffects.java')
             def headAdapter = new File(sourceRoot, 'EnchADDNeoForgeHeadDrops.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDNeoForgeBackfire.java')
@@ -500,6 +549,9 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'NeoForge damage adapter must invoke Debilitate behavior'
             assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'NeoForge must route melee effects through its damage adapter'
             assert entrypoint.text.contains('EnchADDNeoForgeMeleeEffects.register()'): 'NeoForge entrypoint must register the melee damage adapter'
+            assert playerStates.text.contains('PlayerStateBehavior.tick'): 'NeoForge must route player-state effects through player ticks'
+            assert water.text.contains('WaterMovementBehavior.useShell') && water.text.contains('WaterMovementBehavior.tick'):
+                    'NeoForge must route water effects through use and player-tick events'
             assert entrypoint.text.contains('EnchADDNeoForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'NeoForge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'

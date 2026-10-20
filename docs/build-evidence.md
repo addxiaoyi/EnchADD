@@ -17,6 +17,12 @@ All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1
 
 Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.13-protected.jar`: 702380 bytes, SHA-256 `DC786A1F182F1DC5DD85CF5E95BC0F7D80CCE179D7B4EF260BEF73196CABB634`.
 
+## v2.1.14 Static Parity Checkpoint
+
+The v2.1.14 source update corrects the generated resource constraints for afterglide, skim, tideshell, fleetfoot, tide_runner, and lethargy. A narrow Gradle 9.7.1/JDK 25.0.3 harness ran `validateEnchADDResources` and `validateEnchADDBehaviorAdapters` successfully for all six loader source trees. The detailed log is `docs/validation-logs/v2.1.14-static-validation-20261020.txt`, and the 36-cell traceability file is `docs/movement-resource-parity-v2.1.14.csv`.
+
+This is a static resource and adapter checkpoint only. The normal six-loader build could not resolve external Maven artifacts in the current environment, so no v2.1.14 packaged JAR hash, loader startup, or player-trigger evidence is claimed. Player behavior remains `NOT_VERIFIED`.
+
 ## Resource and Adapter Updates
 
 Executioner matches Paper's level cap and weapon scope. Beheading and Decapitate match the Paper axe/sword ranges, levels, and pairwise conflicts; the shared head-drop path preserves player profiles, uses Paper-supported mob-head mappings, and avoids a duplicate player head when Beheading succeeds. Validators cover all six loader registration paths. All six builds and Paper `clean verify` pass; packaged-JAR player behavior remains `NOT_VERIFIED`.
