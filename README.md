@@ -5,16 +5,16 @@ EnchADD 是一个 Minecraft 附魔项目，提供两套独立实现：
 - Paper 插件：面向 Paper 服务端。
 - Mod 模组：支持 Fabric、Forge 和 NeoForge。
 
-当前版本：`2.1.12`
+当前版本：`2.1.13`
 
 ## 选择发行版
 
 | 目标平台 | 文档 | 发布文件 |
 | --- | --- | --- |
-| Paper | [Paper 插件说明](#paper-插件) | `enchadd-plugin-2.1.12-protected.jar` |
+| Paper | [Paper 插件说明](#paper-插件) | `enchadd-plugin-2.1.13-protected.jar` |
 | Fabric / Forge / NeoForge | [Mod 模组说明](mod/README.md) | 六个 Loader 专用 JAR |
 
-2.1.12 对齐 Initiative、Wingclip、Tracer 和 Pursuit 的剑、斧、三叉戟范围，并强化六 Loader 条件校验；实际游戏触发仍需验证。
+2.1.13 对齐 Executioner、Beheading、Decapitate 的等级、武器范围和冲突规则，修正玩家头档案并防止重复掉头；实际游戏触发仍需验证。
 
 Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端类型选择其中一种，不要无目的地同时安装。
 
@@ -24,10 +24,10 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 
 下载时请根据文件名确认：
 
-- Paper 服务端：下载 `enchadd-plugin-2.1.12-protected.jar`。
-- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.12.jar`（或 `enchadd-fabric-26.3-2.1.12.jar`）。
-- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.12.jar`（或 `enchadd-forge-26.3-2.1.12.jar`）。
-- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.12.jar`（或 `enchadd-neoforge-26.3-2.1.12.jar`）。
+- Paper 服务端：下载 `enchadd-plugin-2.1.13-protected.jar`。
+- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.13.jar`（或 `enchadd-fabric-26.3-2.1.13.jar`）。
+- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.13.jar`（或 `enchadd-forge-26.3-2.1.13.jar`）。
+- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.13.jar`（或 `enchadd-neoforge-26.3-2.1.13.jar`）。
 - `1.21.11` 和 `26.3` 使用不同的 Loader 与 Java 版本，请勿混用。
 
 ## Paper 插件
@@ -36,7 +36,7 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 
 ### 安装
 
-1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载 `enchadd-plugin-2.1.12-protected.jar`。
+1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载 `enchadd-plugin-2.1.13-protected.jar`。
 2. 将文件放入服务端的 `plugins/` 目录。
 3. 启动服务端并编辑 `plugins/EnchADD/config.yml`。
 

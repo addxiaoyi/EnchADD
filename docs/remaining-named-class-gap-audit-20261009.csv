@@ -6,7 +6,7 @@ irrigation,IrrigationBehavior,6,Fabric block callback; Forge Break/Interact even
 arborist,ToolInteractionBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
 trailblazer,ToolInteractionBehavior,6,Common behavior plus six platform adapters/Mixins,ADAPTER-CONFIRMED
 furrow,FurrowBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
-executioner,MeleeEffectBehavior,6,Fabric CinderDamageMixin; Forge/NeoForge melee adapters,SHARED-MELEE-ADAPTER
+executioner,MeleeEffectBehavior,6,Fabric ComboDamageMixin; Forge/NeoForge MeleeEffects,SHARED-MELEE-ADAPTER
 beheading,HeadDropBehavior,6,Fabric HeadDropsMixin; Forge/NeoForge HeadDrops,ADAPTER-CONFIRMED
 smelting,SmeltingBehavior,6,Fabric block callback; Forge Break/Interact events; NeoForge BlockDrops/Interact events,ADAPTER-CONFIRMED
 stonewake,StonewakeBehavior,6,Common behavior and six platform adapters/Mixins,ADAPTER-CONFIRMED

@@ -1,29 +1,29 @@
-# EnchADD 2.1.12 Cross-Loader Build Evidence
+# EnchADD 2.1.13 Cross-Loader Build Evidence
 
 ## Mod JARs
 
-All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.12`.
+All six Mod modules were built on 2026-10-20 with JDK `25.0.3` and Gradle `9.7.1`. Each build and resource/adapter validator passed; every packaged metadata file reports version `2.1.13`.
 
 | Module | Result | JAR | Bytes | SHA-256 | Build log |
 |---|---|---|---:|---|---|
-| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.12.jar | 300168 | `CFF4E5B0AC21B6C7877672CEB463B4D4121221C3603D98031DF67BD2F2C65860` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
-| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.12.jar | 308973 | `52B65E5FCF8DA0C571C5AE43961A59BA79D7980ECFF5FB4343BD9AEAFBA0F20A` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
-| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.12.jar | 306106 | `4FF9ACA52C0DCE549E6BFF50CB931DF202B1207158659DBC21045D404B753F99` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
-| forge-26.3 | PASS | enchadd-forge-26.3-2.1.12.jar | 306466 | `828DC3148E5B27DB80C0594C55D003B81D7BB0215B385204BBCA042A71AAA245` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
-| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.12.jar | 303331 | `563CDD470C82704BCCEE945A54B4EDD3E5E60FF655276C970BAEB7CF57AA79BE` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
-| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.12.jar | 303673 | `DF8BD440A124DB1F568FDF36060B01B1DE6B85FBE16EB048952997886269321B` | `docs/validation-logs/v2.1.12-six-loader-build-20261020.txt` |
+| fabric-1.21.11 | PASS | enchadd-fabric-1.21.11-2.1.13.jar | 301576 | `B4A3D054247CEA4E3CC31F93E6DA50EB77D5AD85318C9F8083B4F5B71148914C` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
+| fabric-26.3 | PASS | enchadd-fabric-26.3-2.1.13.jar | 310389 | `4E4FFE75156F4DF82F8418EB7213FEDF6A5673DE65FF4344C0352752D9957725` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
+| forge-1.21.11 | PASS | enchadd-forge-1.21.11-2.1.13.jar | 307456 | `1F433E424B721AC5267A967BF4B722B120CB8F86F0610CD350914E45B905CB6D` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
+| forge-26.3 | PASS | enchadd-forge-26.3-2.1.13.jar | 307802 | `C7666E182C3DFF04BB9F3644AC17DFEC83D4FAAB8C3ABD8CB2EC24C6218FB4B0` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
+| neoforge-1.21.11 | PASS | enchadd-neoforge-1.21.11-2.1.13.jar | 304681 | `8CA9CA4C5EC725150EB7919B41CCDC810A18584B0111F0AE5F6D48C1B0E64695` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
+| neoforge-26.3 | PASS | enchadd-neoforge-26.3-2.1.13.jar | 305009 | `DF73D86C973A11BA8FCF93DBE6A6F3E11EA3ACC18A41EFA0E0DE4C86B9045F49` | `docs/validation-logs/v2.1.13-six-loader-build-20261020.txt` |
 
 ## Paper Plugin
 
-Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.12-protected.jar`: 702382 bytes, SHA-256 `124CF6C71E8D34C491E9F564D34D5F8EB049994F0F81BED725D734AD19062C36`.
+Paper protected-release `clean verify` passed on JDK 21. All 322 tests passed (0 failures, 0 errors, 0 skipped). Artifact `enchadd-plugin-2.1.13-protected.jar`: 702380 bytes, SHA-256 `DC786A1F182F1DC5DD85CF5E95BC0F7D80CCE179D7B4EF260BEF73196CABB634`.
 
 ## Resource and Adapter Updates
 
-Initiative, Wingclip, Tracer, and Pursuit now use the Paper sword/axe/trident allowlist instead of a trident-only tag. Resource validators check each trigger condition and bonus bound; adapter checks verify the shared melee method is registered through all six loader entrypoints. Builds and validators pass; player behavior remains `NOT_VERIFIED`.
+Executioner matches Paper's level cap and weapon scope. Beheading and Decapitate match the Paper axe/sword ranges, levels, and pairwise conflicts; the shared head-drop path preserves player profiles, uses Paper-supported mob-head mappings, and avoids a duplicate player head when Beheading succeeds. Validators cover all six loader registration paths. All six builds and Paper `clean verify` pass; packaged-JAR player behavior remains `NOT_VERIFIED`.
 
 ## Previous Release Notes
 
-2.1.11 aligned Rebound, Insight, Debilitate, Cadence, Underdog, and Rally resource constraints. 2.1.10 aligned Fragility, Shatter, and Backfire constraints. Earlier published behavior notes and the historical runtime evidence below remain scoped to their recorded versions; 2.1.12 player-trigger behavior remains `NOT_VERIFIED`.
+2.1.12 aligned Initiative, Wingclip, Tracer, and Pursuit item ranges. 2.1.11 aligned Rebound, Insight, Debilitate, Cadence, Underdog, and Rally resource constraints. Earlier runtime evidence below remains scoped to its recorded versions; 2.1.13 player-trigger behavior remains `NOT_VERIFIED`.
 
 
 ## Historical Runtime Evidence

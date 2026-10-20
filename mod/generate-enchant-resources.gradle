@@ -18,7 +18,14 @@ def normalIds = catalog.findAll { it[1] == 'normal' }.collect { it[0] }
 def curseIds = catalog.findAll { it[1] == 'curse' }.collect { it[0] }
 def maxLevelFor = { String id, boolean curse ->
     if (id == 'overwhelm') return 2
+    if (id == 'executioner') return 5
+    if (id == 'beheading') return 1
     ['greed', 'misfortune', 'fragility', 'shatter'].contains(id) ? 3 : (curse ? 1 : 3)
+}
+def exclusiveSetFor = { String id ->
+    if (id in ['executioner', 'decapitate']) return 'enchadd:exclusive_set/executioner_decapitate'
+    if (id == 'beheading') return 'enchadd:exclusive_set/beheading_looting'
+    null
 }
 def spearIds = ['lancer', 'reach', 'skewer', 'counterthrust'] as Set
 def itemGroups = [
@@ -180,6 +187,8 @@ tasks.register('generateEnchADDResources') {
                     supported_items: supportedItems(id),
                     weight       : 1
             ]
+            def exclusiveSet = exclusiveSetFor(id)
+            if (exclusiveSet) definition.exclusive_set = "#${exclusiveSet}"
             def target = new File(generatedDir, "data/enchadd/enchantment/${id}.json")
             target.parentFile.mkdirs()
             target.text = JsonOutput.prettyPrint(JsonOutput.toJson(definition)) + System.lineSeparator()
@@ -198,6 +207,13 @@ tasks.register('generateEnchADDResources') {
         tag('curse', curseIds)
         tag('treasure', curseIds)
         tag('on_random_loot', normalIds + curseIds)
+        def customEnchantmentTag = { String name, List<String> values ->
+            def target = new File(generatedDir, "data/enchadd/tags/enchantment/${name}.json")
+            target.parentFile.mkdirs()
+            target.text = JsonOutput.prettyPrint(JsonOutput.toJson([replace: false, values: values])) + System.lineSeparator()
+        }
+        customEnchantmentTag('exclusive_set/executioner_decapitate', ['enchadd:executioner', 'enchadd:decapitate'])
+        customEnchantmentTag('exclusive_set/beheading_looting', ['enchadd:beheading', 'minecraft:looting'])
 
         def packMeta = is26_3
                 ? [pack: [description: 'EnchADD data pack', min_format: 121, max_format: 121]]
@@ -309,6 +325,52 @@ tasks.register('validateEnchADDResources') {
         assert backfire.max_level == 1 && backfire.slots == ['hand']
         assert (backfire.supported_items as Set) == ['#minecraft:enchantable/weapon'] as Set:
                 'Backfire must be limited to its main-hand weapon'
+        def executioner = parser.parse(new File(enchantDir, 'executioner.json'))
+        assert executioner.max_level == 5 && executioner.slots == ['hand']
+        assert executioner.supported_items == '#minecraft:enchantable/weapon'
+        assert executioner.exclusive_set == '#enchadd:exclusive_set/executioner_decapitate'
+        assert executioner.effects == [:]: 'Executioner must use the shared melee damage adapter only'
+        def executionerBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
+        assert executionerBehavior.text.contains('victim.getHealth() / maxHealth < 0.25')
+        assert executionerBehavior.text.contains('Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(executionerHolder, attacker.getMainHandItem()))')
+        assert executionerBehavior.text.contains('Math.min(2.5, 1.0 + 0.05 * executionerLevel)'):
+                'Executioner must preserve the Paper health threshold and damage multiplier'
+        def beheading = parser.parse(new File(enchantDir, 'beheading.json'))
+        assert beheading.max_level == 1 && beheading.slots == ['hand']
+        assert (beheading.supported_items as Set) == ['#minecraft:axes'] as Set:
+                'Beheading must match Paper max level and axe-only eligibility'
+        assert beheading.exclusive_set == '#enchadd:exclusive_set/beheading_looting'
+        assert beheading.effects == [:]: 'Beheading must use the shared death adapter only'
+        def decapitate = parser.parse(new File(enchantDir, 'decapitate.json'))
+        def decapitateItems = ['#minecraft:swords', '#minecraft:axes'] as Set
+        assert decapitate.max_level == 3 && decapitate.slots == ['hand']
+        assert (decapitate.supported_items as Set) == decapitateItems:
+                'Decapitate must match Paper sword/axe eligibility'
+        assert decapitate.exclusive_set == executioner.exclusive_set
+        def exclusiveSetDir = new File(generatedDir, 'data/enchadd/tags/enchantment/exclusive_set')
+        def executionerConflicts = parser.parse(new File(exclusiveSetDir, 'executioner_decapitate.json'))
+        assert (executionerConflicts.values as Set) == ['enchadd:executioner', 'enchadd:decapitate'] as Set
+        def beheadingConflicts = parser.parse(new File(exclusiveSetDir, 'beheading_looting.json'))
+        assert (beheadingConflicts.values as Set) == ['enchadd:beheading', 'minecraft:looting'] as Set:
+                'Exclusive sets must match Paper Executioner/Decapitate and Beheading/Looting conflicts'
+        assert decapitate.effects == [:]: 'Decapitate must use the shared death adapter only'
+        def headDrops = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/HeadDropBehavior.java')
+        assert headDrops.isFile(): 'Missing shared Beheading/Decapitate behavior'
+        assert headDrops.text.contains('Math.min(MAX_BEHEADING_LEVEL, EnchantmentHelper.getEnchantmentLevel(beheading, attacker))')
+        assert headDrops.text.contains('Math.min(0.5, 0.1 * beheadingLevel)')
+        assert headDrops.text.contains('Math.min(MAX_DECAPITATE_LEVEL, EnchantmentHelper.getEnchantmentLevel(decapitate, attacker))')
+        assert headDrops.text.contains('Math.min(0.3, 0.1 * decapitateLevel)')
+        assert headDrops.text.contains('source.getDirectEntity() != source.getEntity()')
+        ['zombie', 'skeleton', 'wither_skeleton', 'creeper', 'ender_dragon', 'piglin'].each { entityType ->
+            assert headDrops.text.contains('type.equals("' + entityType + '")'):
+                    "Beheading must preserve Paper head mapping for ${entityType}"
+        }
+        ['husk', 'drowned', 'stray', 'bogged', 'piglin_brute', 'zombified_piglin'].each { entityType ->
+            assert !headDrops.text.contains('type.equals("' + entityType + '")'):
+                    "Beheading must not broaden Paper head drops to ${entityType}"
+        }
+        assert headDrops.text.contains('ResolvableProfile.createResolved(player.getGameProfile())'):
+                'Player-head drops must retain the killed player profile'
         def weaponItems = ['minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
                 'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
                 'minecraft:wooden_axe', 'minecraft:stone_axe', 'minecraft:iron_axe',
@@ -357,9 +419,30 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'Backfire must require a direct player attack'
         def meleeBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
         assert meleeBehavior.isFile(): 'Missing shared melee effect behavior'
-        ['CADENCE', 'UNDERDOG', 'RALLY', 'INITIATIVE', 'WINGCLIP', 'TRACER', 'PURSUIT'].each { id ->
+        ['CADENCE', 'UNDERDOG', 'RALLY', 'INITIATIVE', 'WINGCLIP', 'TRACER', 'PURSUIT', 'EXECUTIONER'].each { id ->
             assert meleeBehavior.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
                     "Shared melee behavior must define ${id}"
+        }
+        assert meleeBehavior.text.contains('victim.getHealth() / maxHealth < 0.25')
+        assert meleeBehavior.text.contains('Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(executionerHolder, attacker.getMainHandItem()))')
+        assert meleeBehavior.text.contains('Math.min(2.5, 1.0 + 0.05 * executionerLevel)'):
+                'Executioner must use Paper low-health threshold and bounded multiplier defaults'
+        def headDrops = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/HeadDropBehavior.java')
+        assert headDrops.isFile(): 'Missing shared beheading and decapitation behavior'
+        ['BEHEADING', 'DECAPITATE'].each { id ->
+            assert headDrops.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
+                    "Shared head-drop behavior must define ${id}"
+        }
+        assert headDrops.text.contains('Math.min(MAX_BEHEADING_LEVEL, EnchantmentHelper.getEnchantmentLevel(beheading, attacker))')
+        assert headDrops.text.contains('Math.min(MAX_DECAPITATE_LEVEL, EnchantmentHelper.getEnchantmentLevel(decapitate, attacker))')
+        assert headDrops.text.contains('if (head.is(Items.PLAYER_HEAD))'):
+                'Beheading player-head success must suppress duplicate Decapitate player-head drops'
+        assert headDrops.text.contains('victim instanceof ServerPlayer')
+        assert headDrops.text.contains('ResolvableProfile.createResolved(player.getGameProfile())'):
+                'Player heads must retain the killed player profile'
+        ['husk', 'drowned', 'stray', 'bogged', 'piglin_brute', 'zombified_piglin'].each { entityType ->
+            assert !headDrops.text.contains('type.equals("' + entityType + '")'):
+                    "Beheading target types must match Paper's drop list; found ${entityType}"
         }
         assert meleeBehavior.text.contains('source.getDirectEntity() != attacker'):
                 'Shared melee damage behavior must reject indirect attacks'
@@ -381,22 +464,28 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             def adapter = new File(sourceRoot, 'EnchADDFabricMeleeEffects.java')
             def entrypoint = new File(sourceRoot, 'EnchADDFabric.java')
             def combo = new File(project.projectDir, 'src/main/java/net/enchadd/mod/mixin/ComboDamageMixin.java')
+            def headAdapter = new File(sourceRoot, 'mixin/HeadDropsMixin.java')
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Fabric damage adapter must invoke Debilitate behavior'
             assert combo.text.contains('MeleeEffectBehavior.adjustDamage'): 'Fabric must route melee effects through ComboDamageMixin'
             assert entrypoint.text.contains('EnchADDFabricMeleeEffects.init()'): 'Fabric entrypoint must register the melee damage adapter'
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert mixins.contains('ComboDamageMixin'): 'Fabric must register the shared melee damage Mixin'
+            assert mixins.contains('HeadDropsMixin') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
+                    'Fabric must register the shared head-drop behavior'
             assert mixins.contains('DurabilityCurseMixin'): 'Fabric must register the shared durability curse hook'
             assert adapter.text.contains('BackfireBehavior.onAttack'): 'Fabric must invoke Backfire on completed attacks'
         } else if (loader.startsWith('forge-')) {
             def adapter = new File(sourceRoot, 'EnchADDForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDForge.java')
             def meleeAdapter = new File(sourceRoot, 'EnchADDForgeMeleeEffects.java')
+            def headAdapter = new File(sourceRoot, 'EnchADDForgeHeadDrops.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDForgeBackfire.java')
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'Forge damage adapter must invoke Debilitate behavior'
             assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'Forge must route melee effects through its damage adapter'
             assert entrypoint.text.contains('EnchADDForgeMeleeEffects.register()'): 'Forge entrypoint must register the melee damage adapter'
+            assert entrypoint.text.contains('EnchADDForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
+                    'Forge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDForgeDebilitate.register()'): 'Forge must register Debilitate adapter'
             assert entrypoint.text.contains('EnchADDForgeBackfire.register()') && backfireAdapter.text.contains('BackfireBehavior.onAttack'):
                     'Forge must register Backfire behavior'
@@ -405,11 +494,14 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             def adapter = new File(sourceRoot, 'EnchADDNeoForgeDebilitate.java')
             def entrypoint = new File(sourceRoot, 'EnchADDNeoForge.java')
             def meleeAdapter = new File(sourceRoot, 'EnchADDNeoForgeMeleeEffects.java')
+            def headAdapter = new File(sourceRoot, 'EnchADDNeoForgeHeadDrops.java')
             def backfireAdapter = new File(sourceRoot, 'EnchADDNeoForgeBackfire.java')
             def mixins = new File(project.projectDir, 'src/main/resources/enchadd.mixins.json').text
             assert adapter.text.contains('DebilitateBehavior.onDamage'): 'NeoForge damage adapter must invoke Debilitate behavior'
             assert meleeAdapter.text.contains('MeleeEffectBehavior.adjustDamage'): 'NeoForge must route melee effects through its damage adapter'
             assert entrypoint.text.contains('EnchADDNeoForgeMeleeEffects.register()'): 'NeoForge entrypoint must register the melee damage adapter'
+            assert entrypoint.text.contains('EnchADDNeoForgeHeadDrops.register()') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
+                    'NeoForge must register the shared head-drop behavior'
             assert entrypoint.text.contains('EnchADDNeoForgeDebilitate.register()'): 'NeoForge must register Debilitate adapter'
             assert entrypoint.text.contains('EnchADDNeoForgeBackfire.register()') && backfireAdapter.text.contains('BackfireBehavior.onAttack'):
                     'NeoForge must register Backfire behavior'
