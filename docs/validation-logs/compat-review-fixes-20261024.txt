@@ -1,0 +1,72 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+Configuration on demand is an incubating feature.
+
+> Configure project :fabric-1.21.1
+Fabric Loom: 1.18.4
+
+> Configure project :forge-1.21.1
+Minecraft Maven is up-to-date, took 0:01.045
+
+> Task :fabric-1.21.1:compileJava UP-TO-DATE
+> Task :fabric-1.21.1:generateEnchADDResources
+> Task :fabric-1.21.1:processResources UP-TO-DATE
+> Task :fabric-1.21.1:classes UP-TO-DATE
+> Task :fabric-1.21.1:compileClientJava NO-SOURCE
+> Task :fabric-1.21.1:processClientResources NO-SOURCE
+> Task :fabric-1.21.1:jar UP-TO-DATE
+> Task :fabric-1.21.1:processIncludeJars UP-TO-DATE
+> Task :fabric-1.21.1:remapJar UP-TO-DATE
+> Task :fabric-1.21.1:remapSourcesJar SKIPPED
+> Task :fabric-1.21.1:assemble UP-TO-DATE
+> Task :fabric-1.21.1:clientClasses UP-TO-DATE
+> Task :fabric-1.21.1:compileTestJava NO-SOURCE
+> Task :fabric-1.21.1:processTestResources NO-SOURCE
+> Task :fabric-1.21.1:testClasses UP-TO-DATE
+> Task :fabric-1.21.1:test NO-SOURCE
+> Task :fabric-1.21.1:validateAccessWidener NO-SOURCE
+> Task :fabric-1.21.1:validateEnchADDResources
+> Task :fabric-1.21.1:validateEnchADDBehaviorAdapters
+> Task :fabric-1.21.1:check
+> Task :fabric-1.21.1:build
+> Task :forge-1.21.1:compileJava UP-TO-DATE
+> Task :forge-1.21.1:generateEnchADDResources
+> Task :forge-1.21.1:processResources UP-TO-DATE
+> Task :forge-1.21.1:classes UP-TO-DATE
+> Task :forge-1.21.1:jar UP-TO-DATE
+> Task :forge-1.21.1:assemble UP-TO-DATE
+> Task :forge-1.21.1:compileTestJava NO-SOURCE
+> Task :forge-1.21.1:processTestResources NO-SOURCE
+> Task :forge-1.21.1:testClasses UP-TO-DATE
+> Task :forge-1.21.1:test NO-SOURCE
+> Task :forge-1.21.1:validateEnchADDResources
+> Task :forge-1.21.1:validateEnchADDBehaviorAdapters
+> Task :forge-1.21.1:check
+> Task :forge-1.21.1:build
+> Task :neoforge-1.21.1:createMinecraftArtifacts UP-TO-DATE
+> Task :neoforge-1.21.1:compileJava UP-TO-DATE
+> Task :neoforge-1.21.1:generateEnchADDResources
+> Task :neoforge-1.21.1:processResources UP-TO-DATE
+> Task :neoforge-1.21.1:classes UP-TO-DATE
+> Task :neoforge-1.21.1:jarJar NO-SOURCE
+> Task :neoforge-1.21.1:jar UP-TO-DATE
+> Task :neoforge-1.21.1:assemble UP-TO-DATE
+> Task :neoforge-1.21.1:compileTestJava NO-SOURCE
+> Task :neoforge-1.21.1:processTestResources NO-SOURCE
+> Task :neoforge-1.21.1:testClasses UP-TO-DATE
+> Task :neoforge-1.21.1:test NO-SOURCE
+> Task :neoforge-1.21.1:validateEnchADDResources
+> Task :neoforge-1.21.1:validateEnchADDBehaviorAdapters
+> Task :neoforge-1.21.1:check
+> Task :neoforge-1.21.1:build
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 14s
+21 actionable tasks: 9 executed, 12 up-to-date

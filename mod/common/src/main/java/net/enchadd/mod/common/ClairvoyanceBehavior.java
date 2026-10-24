@@ -35,7 +35,8 @@ public final class ClairvoyanceBehavior {
         if (!(victim instanceof ServerPlayer player) || source == null) {
             return;
         }
-        if (!(source.getEntity() instanceof LivingEntity attacker) || !attacker.hasEffect(MobEffects.INVISIBILITY)) {
+        if (!(source.getEntity() instanceof LivingEntity attacker) || source.getDirectEntity() != attacker
+                || !attacker.hasEffect(MobEffects.INVISIBILITY)) {
             return;
         }
         Holder<Enchantment> holder = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(CLAIRVOYANCE);

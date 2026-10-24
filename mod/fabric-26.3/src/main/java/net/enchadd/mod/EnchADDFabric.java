@@ -9,7 +9,6 @@ public final class EnchADDFabric implements ModInitializer {
         EnchADDFabricDelvesense.init();
         EnchADDFabricLastStand.init();
         EnchADDFabricFortitude.init();
-        EnchADDFabricBulwark.init();
         EnchADDFabricWard.init();
         EnchADDFabricBarrier.init();
         EnchADDFabricParry.init();

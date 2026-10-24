@@ -6,6 +6,8 @@ def catalogFile = rootProject.name == 'enchadd-mod'
         : rootProject.file('../common/src/main/resources/data/enchadd/enchantments.list')
 def generatedDir = layout.buildDirectory.dir('generated/enchadd-resources').get().asFile
 def is26_3 = project.projectDir.name.endsWith('26.3')
+def is1_21_1 = project.projectDir.name == 'fabric-1.21.1' || project.projectDir.name == 'forge-1.21.1' || project.projectDir.name == 'neoforge-1.21.1'
+def commonSourceRoot = new File(project.projectDir, is1_21_1 ? 'common-1.21.1/net/enchadd/mod/common' : '../common/src/main/java/net/enchadd/mod/common')
 def requirementType = is26_3 ? 'type' : 'condition'
 def requirement = { String type, Map fields = [:] -> [(requirementType): type] + fields }
 def damageTagId = { String tag -> is26_3 ? "#minecraft:${tag}" : "minecraft:${tag}" }
@@ -49,6 +51,32 @@ def itemGroups = [
         weapon  : ['backfire', 'beheading', 'breakguard', 'decapitate', 'executioner', 'frostbrand', 'greed', 'hemorrhage', 'immolate', 'misfortune', 'rashness', 'shatter', 'sunder'] as Set
 ]
 
+def enchadd1211TagItems = [
+        weapon: ['minecraft:diamond_axe', 'minecraft:diamond_sword', 'minecraft:golden_axe', 'minecraft:golden_sword', 'minecraft:iron_axe', 'minecraft:iron_sword', 'minecraft:mace', 'minecraft:netherite_axe', 'minecraft:netherite_sword', 'minecraft:stone_axe', 'minecraft:stone_sword', 'minecraft:wooden_axe', 'minecraft:wooden_sword'],
+        durability: ['minecraft:bow', 'minecraft:brush', 'minecraft:carrot_on_a_stick', 'minecraft:chainmail_boots', 'minecraft:chainmail_chestplate', 'minecraft:chainmail_helmet', 'minecraft:chainmail_leggings', 'minecraft:crossbow', 'minecraft:diamond_axe', 'minecraft:diamond_boots', 'minecraft:diamond_chestplate', 'minecraft:diamond_helmet', 'minecraft:diamond_hoe', 'minecraft:diamond_leggings', 'minecraft:diamond_pickaxe', 'minecraft:diamond_shovel', 'minecraft:diamond_sword', 'minecraft:elytra', 'minecraft:fishing_rod', 'minecraft:flint_and_steel', 'minecraft:golden_axe', 'minecraft:golden_boots', 'minecraft:golden_chestplate', 'minecraft:golden_helmet', 'minecraft:golden_hoe', 'minecraft:golden_leggings', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel', 'minecraft:golden_sword', 'minecraft:iron_axe', 'minecraft:iron_boots', 'minecraft:iron_chestplate', 'minecraft:iron_helmet', 'minecraft:iron_hoe', 'minecraft:iron_leggings', 'minecraft:iron_pickaxe', 'minecraft:iron_shovel', 'minecraft:iron_sword', 'minecraft:leather_boots', 'minecraft:leather_chestplate', 'minecraft:leather_helmet', 'minecraft:leather_leggings', 'minecraft:mace', 'minecraft:netherite_axe', 'minecraft:netherite_boots', 'minecraft:netherite_chestplate', 'minecraft:netherite_helmet', 'minecraft:netherite_hoe', 'minecraft:netherite_leggings', 'minecraft:netherite_pickaxe', 'minecraft:netherite_shovel', 'minecraft:netherite_sword', 'minecraft:shears', 'minecraft:shield', 'minecraft:stone_axe', 'minecraft:stone_hoe', 'minecraft:stone_pickaxe', 'minecraft:stone_shovel', 'minecraft:stone_sword', 'minecraft:trident', 'minecraft:turtle_helmet', 'minecraft:warped_fungus_on_a_stick', 'minecraft:wooden_axe', 'minecraft:wooden_hoe', 'minecraft:wooden_pickaxe', 'minecraft:wooden_shovel', 'minecraft:wooden_sword'],
+        bow: ['minecraft:bow'],
+        crossbow: ['minecraft:crossbow'],
+        fishing: ['minecraft:fishing_rod'],
+        mining: ['minecraft:diamond_axe', 'minecraft:diamond_hoe', 'minecraft:diamond_pickaxe', 'minecraft:diamond_shovel', 'minecraft:golden_axe', 'minecraft:golden_hoe', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel', 'minecraft:iron_axe', 'minecraft:iron_hoe', 'minecraft:iron_pickaxe', 'minecraft:iron_shovel', 'minecraft:netherite_axe', 'minecraft:netherite_hoe', 'minecraft:netherite_pickaxe', 'minecraft:netherite_shovel', 'minecraft:shears', 'minecraft:stone_axe', 'minecraft:stone_hoe', 'minecraft:stone_pickaxe', 'minecraft:stone_shovel', 'minecraft:wooden_axe', 'minecraft:wooden_hoe', 'minecraft:wooden_pickaxe', 'minecraft:wooden_shovel'],
+        mace: ['minecraft:mace'],
+        trident: ['minecraft:trident'],
+        chest_armor: ['minecraft:chainmail_chestplate', 'minecraft:diamond_chestplate', 'minecraft:golden_chestplate', 'minecraft:iron_chestplate', 'minecraft:leather_chestplate', 'minecraft:netherite_chestplate'],
+        foot_armor: ['minecraft:chainmail_boots', 'minecraft:diamond_boots', 'minecraft:golden_boots', 'minecraft:iron_boots', 'minecraft:leather_boots', 'minecraft:netherite_boots'],
+        head_armor: ['minecraft:chainmail_helmet', 'minecraft:diamond_helmet', 'minecraft:golden_helmet', 'minecraft:iron_helmet', 'minecraft:leather_helmet', 'minecraft:netherite_helmet', 'minecraft:turtle_helmet'],
+        leg_armor: ['minecraft:chainmail_leggings', 'minecraft:diamond_leggings', 'minecraft:golden_leggings', 'minecraft:iron_leggings', 'minecraft:leather_leggings', 'minecraft:netherite_leggings'],
+        armor: [],
+        axes: ['minecraft:diamond_axe', 'minecraft:golden_axe', 'minecraft:iron_axe', 'minecraft:netherite_axe', 'minecraft:stone_axe', 'minecraft:wooden_axe'],
+        swords: ['minecraft:diamond_sword', 'minecraft:golden_sword', 'minecraft:iron_sword', 'minecraft:netherite_sword', 'minecraft:stone_sword', 'minecraft:wooden_sword']
+]
+enchadd1211TagItems.armor = ['head_armor', 'chest_armor', 'leg_armor', 'foot_armor'].collectMany { enchadd1211TagItems[it] }.unique()
+def legacyTagItems = { String tag ->
+    if (!enchadd1211TagItems.containsKey(tag) || enchadd1211TagItems[tag].isEmpty()) throw new GradleException('Unknown or empty 1.21.1 item tag: ' + tag)
+    enchadd1211TagItems[tag]
+}
+def groupTag = { group ->
+    [shield: 'durability', chest: 'chest_armor', feet: 'foot_armor', armor: 'armor'][group?.key] ?: group?.key
+}
+def tagExp = { String tag -> is1_21_1 ? (enchadd1211TagItems[tag] as Set) : (tag in ["axes","swords"] ? "#minecraft:" + tag : "#minecraft:enchantable/" + tag) }
 def supportedItems = { String id ->
     if (id in ['afterglide', 'skim', 'airbag', 'wingguard']) return ['minecraft:elytra']
     if (id == 'bulwark') return ['minecraft:shield']
@@ -75,15 +103,18 @@ def supportedItems = { String id ->
     if (id == 'freshcatch') return ['minecraft:fishing_rod']
     def catalogEntry = catalog.find { it[0] == id }
     if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
+        def raw = catalogEntry[2].split(';').collect { it.trim() }
+        if (is1_21_1) return raw.collect { it.startsWith('#') ? legacyTagItems(it.substring(1).replace('minecraft:enchantable/','').replace('minecraft:','')) : it }.flatten().unique()
         return catalogEntry[2].split(';').collect { it.trim() }
     }
     if (id == 'tideshell') return ['minecraft:nautilus_shell']
     if (spearIds.contains(id)) {
-        return ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
+        return is1_21_1 ? ['minecraft:trident'] : ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
                 'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
                 'minecraft:netherite_spear', 'minecraft:trident']
     }
     def group = itemGroups.find { it.value.contains(id) }
+    if (is1_21_1) return legacyTagItems(group ? groupTag(group) : 'durability')
     def tagName = [shield: 'durability', chest: 'chest_armor', feet: 'foot_armor'][group?.key] ?: group?.key
     return group ? "#minecraft:enchantable/${tagName}" : '#minecraft:enchantable/durability'
 }
@@ -183,7 +214,7 @@ def effectsFor = { String id ->
         case 'firebreak': return [
                 'minecraft:attributes': [[
                         amount: [type: 'minecraft:linear', base: -0.20, per_level_above_first: -0.20],
-                        attribute: 'minecraft:burning_time',
+                        attribute: is1_21_1 ? 'minecraft:generic.burning_time' : 'minecraft:burning_time',
                         id: 'minecraft:enchantment.firebreak',
                         operation: 'add_multiplied_base'
                 ]],
@@ -254,7 +285,7 @@ tasks.register('generateEnchADDResources') {
 
         def packMeta = is26_3
                 ? [pack: [description: 'EnchADD data pack', min_format: 121, max_format: 121]]
-                : [pack: [description: 'EnchADD data pack', min_format: [94, 1], max_format: 94]]
+                : (is1_21_1 ? [pack: [description: 'EnchADD data pack', pack_format: 48]] : [pack: [description: 'EnchADD data pack', min_format: [94, 1], max_format: 94]])
         new File(generatedDir, 'pack.mcmeta').text = JsonOutput.prettyPrint(JsonOutput.toJson(packMeta)) + System.lineSeparator()
         def lang = new File(generatedDir, 'assets/enchadd/lang/en_us.json')
         lang.parentFile.mkdirs()
@@ -287,6 +318,16 @@ tasks.register('validateEnchADDResources') {
             def parsed = parser.parse(file)
             assert parsed.description?.translate: "Missing description in ${file.name}"
             assert parsed.weight instanceof Number: "Missing weight in ${file.name}"
+            if (is1_21_1) {
+                assert parsed.supported_items instanceof List && !parsed.supported_items.isEmpty():
+                        "1.21.1 item allowlist must be nonempty: ${file.name}"
+                assert parsed.supported_items.every { !it.startsWith('#') }:
+                        "1.21.1 item allowlist contains an unexpanded tag: ${file.name}"
+                if (parsed.slots == ['armor']) {
+                    assert enchadd1211TagItems.armor.containsAll(parsed.supported_items):
+                            "Armor enchantment accepts non-armor items: ${file.name}"
+                }
+            }
         }
         def paperFrostbrandItems = [
                 'minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
@@ -312,7 +353,7 @@ tasks.register('validateEnchADDResources') {
         assert (sunder.supported_items as Set) == axeItems:
                 'Sunder supported_items must match the Paper axe allowlist'
         def rebound = parser.parse(new File(enchantDir, 'rebound.json'))
-        def reboundItems = ['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set
+def reboundItems = is1_21_1 ? ((enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
         assert rebound.max_level == 3 && rebound.slots == ['hand']:
                 'Rebound must use the Paper max level and hand slot'
         assert (rebound.supported_items as Set) == reboundItems:
@@ -329,7 +370,7 @@ tasks.register('validateEnchADDResources') {
                 'Rebound must refund one durability with a bounded 0.12 chance per level'
         def insight = parser.parse(new File(enchantDir, 'insight.json'))
         assert insight.max_level == 3 && insight.slots == ['hand']
-        assert insight.supported_items == '#minecraft:enchantable/mining':
+        assert insight.supported_items as Set == (tagExp('mining') as Set):
                 'Insight must remain a main-hand mining enchantment'
         def insightFactor = insight.effects['minecraft:block_experience'][0].effect.factor
         assert insightFactor.type == 'minecraft:linear'
@@ -355,18 +396,18 @@ tasks.register('validateEnchADDResources') {
             def parsed = parser.parse(new File(enchantDir, "${id}.json"))
             assert parsed.max_level == 3 && parsed.slots == ['feet']:
                     "${id} must use the Paper foot slot and level cap"
-            assert parsed.supported_items == '#minecraft:enchantable/foot_armor':
+            assert parsed.supported_items as Set == (tagExp('foot_armor') as Set):
                     "${id} must use the vanilla foot armor tag"
             assert parsed.effects == [:]: "${id} must use the shared player-state adapter only"
         }
         def tenderstep = parser.parse(new File(enchantDir, 'tenderstep.json'))
         assert tenderstep.max_level == 1 && tenderstep.slots == ['feet']
-        assert tenderstep.supported_items == '#minecraft:enchantable/foot_armor'
+        assert tenderstep.supported_items as Set == (tagExp('foot_armor') as Set)
         assert tenderstep.effects == [:]: 'Tenderstep must use its dedicated trample adapter only'
         ['steadfast', 'gravitation'].each { id ->
             def parsed = parser.parse(new File(enchantDir, "${id}.json"))
             assert parsed.max_level == 3 && parsed.slots == ['feet']
-            assert parsed.supported_items == '#minecraft:enchantable/foot_armor':
+            assert parsed.supported_items as Set == (tagExp('foot_armor') as Set):
                     "${id} must use the Paper foot armor restriction"
             assert parsed.effects == [:]: "${id} must use its custom damage/knockback adapter only"
         }
@@ -410,7 +451,7 @@ tasks.register('validateEnchADDResources') {
         assert ricochet.effects == [:]: 'Ricochet must use the shared projectile adapter only'
         def evasion = parser.parse(new File(enchantDir, 'evasion.json'))
         assert evasion.max_level == 3 && evasion.slots == ['feet']
-        assert evasion.supported_items == '#minecraft:enchantable/foot_armor'
+        assert evasion.supported_items as Set == (tagExp('foot_armor') as Set)
         assert evasion.effects == [:]: 'Evasion must use the shared projectile-dodge adapter only'
         def shroud = parser.parse(new File(enchantDir, 'shroud.json'))
         def leggingsForShroud = ['minecraft:leather_leggings', 'minecraft:chainmail_leggings',
@@ -432,14 +473,13 @@ tasks.register('validateEnchADDResources') {
                 'Debilitate must use the Paper chestplate item and slot restrictions'
         assert debilitate.effects == [:]: 'Debilitate effects are provided by the cooldown-aware event adapter'
         def fragility = parser.parse(new File(enchantDir, 'fragility.json'))
-        def fragilityItems = ['#minecraft:enchantable/armor', '#minecraft:enchantable/mining',
-                '#minecraft:enchantable/durability'] as Set
+        def fragilityItems = is1_21_1 ? ((enchadd1211TagItems['armor'] + enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/armor', '#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
         assert fragility.max_level == 3 && fragility.slots == ['any']:
                 'Fragility must match Paper max level and all-slot eligibility'
         assert (fragility.supported_items as Set) == fragilityItems:
                 'Fragility supported_items must match the Paper armor/mining/durability tags'
         def shatter = parser.parse(new File(enchantDir, 'shatter.json'))
-        def shatterItems = ['#minecraft:enchantable/weapon', '#minecraft:enchantable/mining'] as Set
+        def shatterItems = is1_21_1 ? ((enchadd1211TagItems['weapon'] + enchadd1211TagItems['mining']) as Set) : (['#minecraft:enchantable/weapon', '#minecraft:enchantable/mining'] as Set)
         assert shatter.max_level == 3 && shatter.slots == ['hand']:
                 'Shatter must match Paper max level and main-hand eligibility'
         assert (shatter.supported_items as Set) == shatterItems:
@@ -448,26 +488,26 @@ tasks.register('validateEnchADDResources') {
                 'Durability curses must use the shared durability adapter only'
         def backfire = parser.parse(new File(enchantDir, 'backfire.json'))
         assert backfire.max_level == 1 && backfire.slots == ['hand']
-        assert (backfire.supported_items as Set) == ['#minecraft:enchantable/weapon'] as Set:
+        assert (backfire.supported_items as Set) == (tagExp('weapon') as Set):
                 'Backfire must be limited to its main-hand weapon'
         def executioner = parser.parse(new File(enchantDir, 'executioner.json'))
         assert executioner.max_level == 5 && executioner.slots == ['hand']
-        assert executioner.supported_items == '#minecraft:enchantable/weapon'
+        assert executioner.supported_items as Set == (tagExp('weapon') as Set)
         assert executioner.exclusive_set == '#enchadd:exclusive_set/executioner_decapitate'
         assert executioner.effects == [:]: 'Executioner must use the shared melee damage adapter only'
-        def executionerBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
+        def executionerBehavior = new File(commonSourceRoot, 'MeleeEffectBehavior.java')
         assert executionerBehavior.text.contains('victim.getHealth() / maxHealth < 0.25')
         assert executionerBehavior.text.contains('Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(executionerHolder, attacker.getMainHandItem()))')
         assert executionerBehavior.text.contains('Math.min(2.5, 1.0 + 0.05 * executionerLevel)'):
                 'Executioner must preserve the Paper health threshold and damage multiplier'
         def beheading = parser.parse(new File(enchantDir, 'beheading.json'))
         assert beheading.max_level == 1 && beheading.slots == ['hand']
-        assert (beheading.supported_items as Set) == ['#minecraft:axes'] as Set:
+        assert (beheading.supported_items as Set) == (tagExp('axes') as Set):
                 'Beheading must match Paper max level and axe-only eligibility'
         assert beheading.exclusive_set == '#enchadd:exclusive_set/beheading_looting'
         assert beheading.effects == [:]: 'Beheading must use the shared death adapter only'
         def decapitate = parser.parse(new File(enchantDir, 'decapitate.json'))
-        def decapitateItems = ['#minecraft:swords', '#minecraft:axes'] as Set
+        def decapitateItems = is1_21_1 ? ((enchadd1211TagItems['swords'] + enchadd1211TagItems['axes']) as Set) : (['#minecraft:swords', '#minecraft:axes'] as Set)
         assert decapitate.max_level == 3 && decapitate.slots == ['hand']
         assert (decapitate.supported_items as Set) == decapitateItems:
                 'Decapitate must match Paper sword/axe eligibility'
@@ -479,7 +519,7 @@ tasks.register('validateEnchADDResources') {
         assert (beheadingConflicts.values as Set) == ['enchadd:beheading', 'minecraft:looting'] as Set:
                 'Exclusive sets must match Paper Executioner/Decapitate and Beheading/Looting conflicts'
         assert decapitate.effects == [:]: 'Decapitate must use the shared death adapter only'
-        def headDrops = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/HeadDropBehavior.java')
+        def headDrops = new File(commonSourceRoot, 'HeadDropBehavior.java')
         assert headDrops.isFile(): 'Missing shared Beheading/Decapitate behavior'
         assert headDrops.text.contains('Math.min(MAX_BEHEADING_LEVEL, EnchantmentHelper.getEnchantmentLevel(beheading, attacker))')
         assert headDrops.text.contains('Math.min(0.5, 0.1 * beheadingLevel)')
@@ -494,7 +534,7 @@ tasks.register('validateEnchADDResources') {
             assert !headDrops.text.contains('type.equals("' + entityType + '")'):
                     "Beheading must not broaden Paper head drops to ${entityType}"
         }
-        assert headDrops.text.contains('ResolvableProfile.createResolved(player.getGameProfile())'):
+        assert headDrops.text.contains(is1_21_1 ? 'new ResolvableProfile(player.getGameProfile())' : 'ResolvableProfile.createResolved(player.getGameProfile())'):
                 'Player-head drops must retain the killed player profile'
         def weaponItems = ['minecraft:wooden_sword', 'minecraft:stone_sword', 'minecraft:iron_sword',
                 'minecraft:golden_sword', 'minecraft:diamond_sword', 'minecraft:netherite_sword',
@@ -525,24 +565,24 @@ tasks.register('validateEnchADDResources') {
 tasks.register('validateEnchADDBehaviorAdapters') {
     dependsOn(tasks.named('validateEnchADDResources'))
     doLast {
-        def commonBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DamageProtectionBehavior.java')
+        def commonBehavior = new File(commonSourceRoot, 'DamageProtectionBehavior.java')
         assert commonBehavior.isFile(): 'Missing shared armor damage protection behavior'
-        def debilitateBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DebilitateBehavior.java')
+        def debilitateBehavior = new File(commonSourceRoot, 'DebilitateBehavior.java')
         assert debilitateBehavior.isFile(): 'Missing shared Debilitate event behavior'
-        def spearDefense = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearDefenseBehavior.java')
+        def spearDefense = new File(commonSourceRoot, 'SpearDefenseBehavior.java')
         assert spearDefense.isFile(): 'Missing Counterthrust shared behavior'
-        def spearCombat = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SpearCombatBehavior.java')
+        def spearCombat = new File(commonSourceRoot, 'SpearCombatBehavior.java')
         assert spearCombat.isFile(): 'Missing Skewer shared behavior'
-        def backfire = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/BackfireBehavior.java')
+        def backfire = new File(commonSourceRoot, 'BackfireBehavior.java')
         assert backfire.isFile(): 'Missing Backfire shared behavior'
-        def mobExperience = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MobExperienceBehavior.java')
+        def mobExperience = new File(commonSourceRoot, 'MobExperienceBehavior.java')
         assert mobExperience.isFile(): 'Missing shared mob experience behavior'
-        def durabilityCurse = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/DurabilityCurseBehavior.java')
+        def durabilityCurse = new File(commonSourceRoot, 'DurabilityCurseBehavior.java')
         assert durabilityCurse.isFile(): 'Missing shared durability curse behavior'
-        def backfireBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/BackfireBehavior.java')
+        def backfireBehavior = new File(commonSourceRoot, 'BackfireBehavior.java')
         assert backfireBehavior.text.contains('source.getDirectEntity() != player'):
                 'Backfire must require a direct player attack'
-        def meleeBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/MeleeEffectBehavior.java')
+        def meleeBehavior = new File(commonSourceRoot, 'MeleeEffectBehavior.java')
         assert meleeBehavior.isFile(): 'Missing shared melee effect behavior'
         ['CADENCE', 'UNDERDOG', 'RALLY', 'INITIATIVE', 'WINGCLIP', 'TRACER', 'PURSUIT', 'EXECUTIONER'].each { id ->
             assert meleeBehavior.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
@@ -552,7 +592,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         assert meleeBehavior.text.contains('Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(executionerHolder, attacker.getMainHandItem()))')
         assert meleeBehavior.text.contains('Math.min(2.5, 1.0 + 0.05 * executionerLevel)'):
                 'Executioner must use Paper low-health threshold and bounded multiplier defaults'
-        def headDrops = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/HeadDropBehavior.java')
+        def headDrops = new File(commonSourceRoot, 'HeadDropBehavior.java')
         assert headDrops.isFile(): 'Missing shared beheading and decapitation behavior'
         ['BEHEADING', 'DECAPITATE'].each { id ->
             assert headDrops.text.contains('key("' + id.toLowerCase(Locale.ROOT) + '")'):
@@ -563,7 +603,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
         assert headDrops.text.contains('if (head.is(Items.PLAYER_HEAD))'):
                 'Beheading player-head success must suppress duplicate Decapitate player-head drops'
         assert headDrops.text.contains('victim instanceof ServerPlayer')
-        assert headDrops.text.contains('ResolvableProfile.createResolved(player.getGameProfile())'):
+        assert headDrops.text.contains(is1_21_1 ? 'new ResolvableProfile(player.getGameProfile())' : 'ResolvableProfile.createResolved(player.getGameProfile())'):
                 'Player heads must retain the killed player profile'
         ['husk', 'drowned', 'stray', 'bogged', 'piglin_brute', 'zombified_piglin'].each { entityType ->
             assert !headDrops.text.contains('type.equals("' + entityType + '")'):
@@ -591,19 +631,26 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                 'EvasionBehavior.java', 'ShroudBehavior.java', 'FreshcatchRules.java'
         ]
         def missingSharedSupport = sharedSupportFiles.findAll { name ->
-            !new File(project.projectDir, "../common/src/main/java/net/enchadd/mod/common/${name}").isFile()
+            !new File(commonSourceRoot, "${name}").isFile()
         }
         assert missingSharedSupport.isEmpty():
                 "Equipment and projectile parity candidates are missing Common support: ${missingSharedSupport}"
-        def airbagBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/AirbagBehavior.java')
-        def steadfastBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/SteadfastBehavior.java')
-        def tenderstepBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/TenderstepBehavior.java')
-        def wingguardBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/WingguardBehavior.java')
+        def bulwarkBehavior = new File(commonSourceRoot, 'BulwarkBehavior.java')
+        assert bulwarkBehavior.text.contains('entity instanceof ServerPlayer player')
+        assert bulwarkBehavior.text.contains('RESISTANCE_AMPLIFIER = 0'):
+                'Bulwark must be player-only and use Paper Resistance I'
+        def clairvoyanceBehavior = new File(commonSourceRoot, 'ClairvoyanceBehavior.java')
+        assert clairvoyanceBehavior.text.contains('source.getDirectEntity() != attacker'):
+                'Clairvoyance must require a direct invisible living attacker'
+        def airbagBehavior = new File(commonSourceRoot, 'AirbagBehavior.java')
+        def steadfastBehavior = new File(commonSourceRoot, 'SteadfastBehavior.java')
+        def tenderstepBehavior = new File(commonSourceRoot, 'TenderstepBehavior.java')
+        def wingguardBehavior = new File(commonSourceRoot, 'WingguardBehavior.java')
         assert airbagBehavior.isFile() && steadfastBehavior.isFile() && tenderstepBehavior.isFile() && wingguardBehavior.isFile()
         assert meleeBehavior.text.contains('BRITTLE') && meleeBehavior.text.contains('GRAVITATION'):
                 'Shared melee behavior must define the fall-damage curses'
-        def playerStateBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/PlayerStateBehavior.java')
-        def waterMovementBehavior = new File(project.projectDir, '../common/src/main/java/net/enchadd/mod/common/WaterMovementBehavior.java')
+        def playerStateBehavior = new File(commonSourceRoot, 'PlayerStateBehavior.java')
+        def waterMovementBehavior = new File(commonSourceRoot, 'WaterMovementBehavior.java')
         assert playerStateBehavior.text.contains('FLEETFOOT')
         assert playerStateBehavior.text.contains('AFTERGLIDE')
         assert playerStateBehavior.text.contains('LETHARGY')
@@ -628,13 +675,19 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'Fabric must register the equipment protection Mixin chain'
             assert entrypoint.text.contains('EnchADDFabricWingguard.init()'):
                     'Fabric must register the Elytra rescue adapter'
-            assert entrypoint.text.contains('EnchADDFabricBulwark.init()')
+            assert mixins.contains('BulwarkMixin')
+            def bulwarkMixin = new File(project.projectDir, 'src/main/java/net/enchadd/mod/mixin/BulwarkMixin.java')
+            assert (is1_21_1 ? bulwarkMixin.text.contains('hurtCurrentlyUsedShield(F)V') && bulwarkMixin.text.contains('blocked > 0.0f') : bulwarkMixin.text.contains('method = "applyItemBlocking') && bulwarkMixin.text.contains('callback.getReturnValue() > 0.0f')):
+                    'Fabric Bulwark must only trigger from a positive shield-blocked amount'
             assert entrypoint.text.contains('EnchADDFabricEvasion.init()')
             assert entrypoint.text.contains('EnchADDFabricProjectileStatus.init()')
+            assert adapter.text.contains('MeleeEffectBehavior.adjustDamage') || combo.text.contains('MeleeEffectBehavior.adjustDamage')
             assert entrypoint.text.contains('EnchADDFabricRicochet.init()')
             assert mixins.contains('FishingHookFreshcatchMixin') && mixins.contains('ShroudMixin')
             assert mixins.contains('LucidityMixin') && mixins.contains('ClairvoyanceDamageMixin')
             assert mixins.contains('PurifyMixin') && mixins.contains('DispelDamageMixin')
+            assert mixins.contains('RicochetProjectileMixin'):
+                    'Fabric must register Ricochet launch-state capture'
             assert mixins.contains('HeadDropsMixin') && headAdapter.text.contains('HeadDropBehavior.onDeath'):
                     'Fabric must register the shared head-drop behavior'
             assert mixins.contains('DurabilityCurseMixin'): 'Fabric must register the shared durability curse hook'
@@ -658,7 +711,10 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert entrypoint.text.contains('EnchADDForgeSteadfast.register()')
             assert entrypoint.text.contains('EnchADDForgeTenderstep.register()')
             assert entrypoint.text.contains('EnchADDForgeWingguard.register()')
+            def bulwarkAdapter = new File(sourceRoot, 'EnchADDForgeBulwark.java')
             assert entrypoint.text.contains('EnchADDForgeBulwark.register()')
+            assert bulwarkAdapter.text.contains('ShieldBlockEvent') && bulwarkAdapter.text.contains('getBlockedDamage() > 0.0f'):
+                    'Forge Bulwark must require a successful positive shield block'
             assert entrypoint.text.contains('EnchADDForgeEvasion.register()')
             assert entrypoint.text.contains('EnchADDForgeProjectileStatus.register()')
             assert new File(sourceRoot, 'EnchADDForgeProjectileStatus.java').text.contains('RicochetBehavior.recordLaunch')
@@ -694,7 +750,10 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert entrypoint.text.contains('EnchADDNeoForgeSteadfast.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeTenderstep.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeWingguard.register()')
+            def bulwarkAdapter = new File(sourceRoot, 'EnchADDNeoForgeBulwark.java')
             assert entrypoint.text.contains('EnchADDNeoForgeBulwark.register()')
+            assert bulwarkAdapter.text.contains('LivingDamageEvent.Post') && bulwarkAdapter.text.contains('getBlockedDamage() > 0.0f'):
+                    'NeoForge Bulwark must require a successful positive shield block'
             assert entrypoint.text.contains('EnchADDNeoForgeEvasion.register()')
             assert entrypoint.text.contains('EnchADDNeoForgeProjectileStatus.register()')
             assert new File(sourceRoot, 'EnchADDNeoForgeProjectileStatus.java').text.contains('RicochetBehavior.recordLaunch')
@@ -717,12 +776,12 @@ tasks.register('validateEnchADDBehaviorAdapters') {
             assert mixins.contains('NeoForgeDurabilityCurseMixin'): 'NeoForge must register the shared durability curse hook'
         }
         def required = switch (loader) {
-            case 'fabric-1.21.11', 'fabric-26.3' -> [
+            case 'fabric-1.21.1', 'fabric-1.21.11', 'fabric-26.3' -> [
                     'EnchADDNourishBehavior.java',
                     'EnchADDFabricDelvesense.java',
                     'EnchADDFabricLastStand.java',
                     'EnchADDFabricFortitude.java',
-                    'EnchADDFabricBulwark.java',
+                    'mixin/BulwarkMixin.java',
                     'EnchADDFabricWard.java',
                     'EnchADDFabricBreakguard.java',
                     'EnchADDFabricBarrier.java',
@@ -779,7 +838,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'mixin/ComboDamageMixin.java',
                     'mixin/ProjectileDamageMixin.java'
             ]
-            case 'forge-1.21.11', 'forge-26.3' -> [
+            case 'forge-1.21.1', 'forge-1.21.11', 'forge-26.3' -> [
                     'EnchADDForgeDebilitate.java',
                     'EnchADDForgeNourishBehavior.java',
                     'EnchADDForgeDelvesense.java',
@@ -833,7 +892,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'EnchADDForgePivot.java',
                     'EnchADDForgeShroud.java'
             ]
-            case 'neoforge-1.21.11', 'neoforge-26.3' -> [
+            case 'neoforge-1.21.1', 'neoforge-1.21.11', 'neoforge-26.3' -> [
                     'EnchADDNeoForgeDebilitate.java',
                     'EnchADDNeoForgeNourishBehavior.java',
                     'EnchADDNeoForgeDelvesense.java',
@@ -927,9 +986,3 @@ tasks.named('check').configure { dependsOn(tasks.named('validateEnchADDBehaviorA
 
 sourceSets.main.resources.srcDir(generatedDir)
 tasks.named('processResources').configure { dependsOn(tasks.named('generateEnchADDResources')) }
-
-
-
-
-
-
