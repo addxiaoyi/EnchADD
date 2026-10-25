@@ -82,7 +82,7 @@ def setTagSeq = 0
 def makeSynthTag = { List<String> tagRefs ->
     setTagSeq = setTagSeq + 1
     def key = "synth-" + setTagSeq
-    def values = tagRefs.collect { it.replaceFirst("^#", "minecraft:") }
+    def values = tagRefs.collect { '#' + it.replaceFirst('^minecraft:', 'minecraft:') }
     synthTagQueue << [key: key, values: values]
     return "#enchadd:" + key
 }
