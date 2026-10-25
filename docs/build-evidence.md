@@ -383,3 +383,13 @@ ot-audited/MISSING fields for poise, measured, lodestar, rally, starwish, wayson
 
 
 - Historical 2026-10-13 Fabric 26.3 combo-adapter build passed resource and adapter validation. Its JAR hash `0AA6E8FE790CDBDB33297E04E4A963E6F351C77F49170A6C5AD49488D41CC9EE` is superseded by the v2.1.2 artifact above; runtime behavior remains NOT_VERIFIED.
+
+## 2026-10-25：1.21.1 行为验证 + 1.21.11 synth-tag 加载修复
+
+- Fabric 1.21.1 生产 runServer（Done 9.352s）+ 五项盾挡行为 bot 测试全部通过（Bulwark Resistance / Breakguard 穿透 / 低伤害全挡 / 禁盾绕过 / 校准）：`docs/validation-logs/v2.1.17-fabric-1.21.1-shield-behavior-20261025.log`。
+- Forge 1.21.1（installer 生产服务器 52.1.20）：Done 2.803s + 四项盾挡行为通过；`EnchADDForgeBreakguard` 从 LivingHurtEvent 改为 ShieldBlockEvent（加成穿透修复）：`docs/validation-logs/v2.1.17-forge-1.21.1-shield-behavior-20261025.log`。
+- NeoForge 1.21.1（installer 生产服务器 21.1.264）：Done 0.733s + Bulwark（双通道）/ Breakguard / 低伤害全挡通过；`EnchADDNeoForgeBreakguard` 改为 LivingShieldBlockEvent、`EnchADDNeoForgeBulwark` 加 LivingShieldBlockEvent 通道：`docs/validation-logs/v2.1.17-neoforge-1.21.1-shield-behavior-20261025.log`。
+- **发现并修复跨版本数据格式缺陷**：HolderSet 数组内 `#tag` 引用在 1.21.x 真实服务器全部被拒绝（"Not a valid resource location"）。单 tag 引用改为字符串形式，多 tag 目录合成 `enchadd:synth-N` item 标签（`generate-enchant-resources.gradle`）。该缺陷意味着此前 1.21.11/26.3 打包 JAR 中 shatter/rebound/fragility/decapitate/backfire/beheading/executioner/insight/tenderstep/evasion 等 tag-ref 附魔在真实服务器上从未加载成功——此前的"JAR 构建通过"不含数据包加载验证。
+- Fabric 1.21.11 生产服务器（fabric-server-launch + 打包 JAR + fabric-api 0.141.6）：Done 0.216s，数据包自动加载、EnchADD 初始化、无解析错误：`docs/validation-logs/v2.1.17-fabric-1.21.11-prod-load-20261025.log`。
+- 六平台行为回归边界：mineflayer 4.39/minecraft-data 3.117 对 1.21.11 与 26.3 协议握手 ECONNRESET（与 2026-10-12 记录一致），bot 行为测试无法覆盖这两个版本；1.21.11 生产加载证据如上。
+- v2.1.17 GitHub Release（pre-release）已发布并随修复更新资产：https://github.com/addxiaoyi/EnchADD/releases/tag/v2.1.17

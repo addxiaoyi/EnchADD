@@ -3,8 +3,8 @@ const { Rcon } = require('./rcon');
 async function wait(ms) { return new Promise(r => setTimeout(r, ms)) }
 async function main() {
   const port = 25567, rport = 25577;
-  const d = await (async () => { const b = mineflayer.createBot({ host: '127.0.0.1', port, username: 'EnchaddDefBot', auth: 'offline', version: '1.21.1' }); await new Promise((res, rej) => { b.once('spawn', res); b.once('error', rej) }); return b })();
-  const a = await (async () => { const b = mineflayer.createBot({ host: '127.0.0.1', port, username: 'EnchaddAtkBot', auth: 'offline', version: '1.21.1' }); await new Promise((res, rej) => { b.once('spawn', res); b.once('error', rej) }); return b })();
+  const d = await (async () => { const b = mineflayer.createBot({ host: '127.0.0.1', port, username: 'EnchaddDefBot', auth: 'offline', version: process.env.MC_VERSION || '1.21.1' }); await new Promise((res, rej) => { b.once('spawn', res); b.once('error', rej) }); return b })();
+  const a = await (async () => { const b = mineflayer.createBot({ host: '127.0.0.1', port, username: 'EnchaddAtkBot', auth: 'offline', version: process.env.MC_VERSION || '1.21.1' }); await new Promise((res, rej) => { b.once('spawn', res); b.once('error', rej) }); return b })();
   await wait(3000);
   const rcon = new Rcon(rport, 'enchadd'); await rcon.connect();
   await rcon.cmd('op EnchaddDefBot'); await rcon.cmd('op EnchaddAtkBot'); await wait(200);

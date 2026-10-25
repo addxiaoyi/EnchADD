@@ -1,7 +1,7 @@
 const mineflayer = require('mineflayer');
 const { Rcon } = require('./rcon');
 (async () => {
-  const b = mineflayer.createBot({ host: '127.0.0.1', port: 25565, username: 'EnchaddDefBot', auth: 'offline', version: '1.21.1' });
+  const b = mineflayer.createBot({ host: '127.0.0.1', port: 25565, username: 'EnchaddDefBot', auth: 'offline', version: process.env.MC_VERSION || '1.21.1' });
   await new Promise((res, rej) => { b.once('spawn', res); b.once('error', rej) });
   await new Promise(r => setTimeout(r, 2000));
   const rcon = new Rcon(25575, 'enchadd'); await rcon.connect();

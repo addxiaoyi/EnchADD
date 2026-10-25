@@ -3,7 +3,7 @@ const { Rcon } = require('./rcon')
 const PORT = parseInt(process.argv[2] || '25565')
 const results = {}
 function record(name, pass, detail) { results[name] = { pass, detail }; console.log(`RESULT|${name}|${pass ? 'PASS' : 'FAIL'}|${detail}`) }
-function mkBot(u) { return mineflayer.createBot({ host: '127.0.0.1', port: PORT, username: u, auth: 'offline', version: '1.21.1' }) }
+function mkBot(u) { return mineflayer.createBot({ host: '127.0.0.1', port: PORT, username: u, auth: 'offline', version: process.env.MC_VERSION || '1.21.1' }) }
 async function wait(ms) { return new Promise(r => setTimeout(r, ms)) }
 
 async function main() {
