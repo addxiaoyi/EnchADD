@@ -1,0 +1,246 @@
+{
+  "rows": [
+    {
+      "test": "low-damage",
+      "amount": 0,
+      "before": "ShieldProbe has the following entity data: 20.0f",
+      "after": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "test": "low-damage",
+      "amount": 0.1,
+      "before": "ShieldProbe has the following entity data: 20.0f",
+      "after": "ShieldProbe has the following entity data: 19.9f"
+    },
+    {
+      "test": "low-damage",
+      "amount": 0.5,
+      "before": "ShieldProbe has the following entity data: 20.0f",
+      "after": "ShieldProbe has the following entity data: 19.5f"
+    },
+    {
+      "test": "low-damage",
+      "amount": 1,
+      "before": "ShieldProbe has the following entity data: 20.0f",
+      "after": "ShieldProbe has the following entity data: 19.0f"
+    },
+    {
+      "test": "low-damage",
+      "amount": 2,
+      "before": "ShieldProbe has the following entity data: 20.0f",
+      "after": "ShieldProbe has the following entity data: 18.0f"
+    },
+    {
+      "test": "shield-break",
+      "inventory": "ShieldProbe has the following entity data: []",
+      "effects": "ShieldProbe has the following entity data: [{duration: 120, show_icon: 1b, id: \"minecraft:resistance\", show_particles: 0b}]",
+      "health": "ShieldProbe has the following entity data: 18.0f"
+    }
+  ],
+  "commands": [
+    {
+      "command": "gamerule naturalRegeneration false",
+      "reply": "Gamerule naturalRegeneration is now set to: false"
+    },
+    {
+      "command": "gamerule doMobSpawning false",
+      "reply": "Gamerule doMobSpawning is now set to: false"
+    },
+    {
+      "command": "time set night",
+      "reply": "Set the time to 13000"
+    },
+    {
+      "command": "fill -3 99 -3 3 99 5 minecraft:stone",
+      "reply": "No blocks were filled"
+    },
+    {
+      "command": "tp ShieldProbe 0 100 0 0 0",
+      "reply": "Teleported ShieldProbe to 0.500000, 100.000000, 0.500000"
+    },
+    {
+      "command": "gamemode survival ShieldProbe",
+      "reply": ""
+    },
+    {
+      "command": "summon minecraft:zombie 0 100 2 {Tags:[\"shield_attacker\"],NoAI:1b,Silent:1b,PersistenceRequired:1b}",
+      "reply": "Summoned new Zombie"
+    },
+    {
+      "command": "kill @e[tag=shield_attacker]",
+      "reply": "Killed 2 entities"
+    },
+    {
+      "command": "summon minecraft:zombie 0 100 2 {Tags:[\"shield_attacker\"],NoAI:1b,Silent:1b}",
+      "reply": "Summoned new Zombie"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Removed every effect from ShieldProbe"
+    },
+    {
+      "command": "effect give ShieldProbe minecraft:instant_health 1 10",
+      "reply": "Applied effect Instant Health to ShieldProbe"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{\"enchadd:breakguard\":3}}]",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "damage ShieldProbe 0 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Target is invulnerable to the given damage type"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Target has no effects to remove"
+    },
+    {
+      "command": "effect give ShieldProbe minecraft:instant_health 1 10",
+      "reply": "Applied effect Instant Health to ShieldProbe"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{\"enchadd:breakguard\":3}}]",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "damage ShieldProbe 0.1 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Applied 0.1 damage to ShieldProbe"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 19.9f"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Target has no effects to remove"
+    },
+    {
+      "command": "effect give ShieldProbe minecraft:instant_health 1 10",
+      "reply": "Applied effect Instant Health to ShieldProbe"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{\"enchadd:breakguard\":3}}]",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "damage ShieldProbe 0.5 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Applied 0.5 damage to ShieldProbe"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 19.5f"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Target has no effects to remove"
+    },
+    {
+      "command": "effect give ShieldProbe minecraft:instant_health 1 10",
+      "reply": "Applied effect Instant Health to ShieldProbe"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{\"enchadd:breakguard\":3}}]",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "damage ShieldProbe 1 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Applied 1.0 damage to ShieldProbe"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 19.0f"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Target has no effects to remove"
+    },
+    {
+      "command": "effect give ShieldProbe minecraft:instant_health 1 10",
+      "reply": "Applied effect Instant Health to ShieldProbe"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{\"enchadd:breakguard\":3}}]",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 20.0f"
+    },
+    {
+      "command": "damage ShieldProbe 2 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Applied 2.0 damage to ShieldProbe"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 18.0f"
+    },
+    {
+      "command": "effect clear ShieldProbe",
+      "reply": "Target has no effects to remove"
+    },
+    {
+      "command": "item replace entity @e[tag=shield_attacker,limit=1] weapon.mainhand with minecraft:diamond_sword",
+      "reply": "Replaced a slot on Zombie with [Diamond Sword]"
+    },
+    {
+      "command": "item replace entity ShieldProbe weapon.offhand with minecraft:shield[minecraft:damage=335,minecraft:enchantments={levels:{\"enchadd:bulwark\":3}}]",
+      "reply": "Replaced a slot on ShieldProbe with [Shield]"
+    },
+    {
+      "command": "damage ShieldProbe 10 minecraft:mob_attack by @e[tag=shield_attacker,limit=1]",
+      "reply": "Target is invulnerable to the given damage type"
+    },
+    {
+      "command": "data get entity ShieldProbe Inventory",
+      "reply": "ShieldProbe has the following entity data: []"
+    },
+    {
+      "command": "data get entity ShieldProbe active_effects",
+      "reply": "ShieldProbe has the following entity data: [{duration: 120, show_icon: 1b, id: \"minecraft:resistance\", show_particles: 0b}]"
+    },
+    {
+      "command": "data get entity ShieldProbe Health",
+      "reply": "ShieldProbe has the following entity data: 18.0f"
+    }
+  ]
+}
