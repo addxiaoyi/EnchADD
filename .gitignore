@@ -164,3 +164,4 @@ mod/cfr-in/
 
 # Release binaries live on GitHub Releases, not in the repo
 release-assets/
+mod/fabric-1.21.11/prod-run/
