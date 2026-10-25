@@ -67,3 +67,8 @@
 - Fabric/Forge/NeoForge 1.21.1 的服务器加载与 Bulwark/Breakguard/盾挡边界玩家行为验证通过（隔离 bot 环境）。
 - 仍未验证：1.21.1 其余 109 个附魔的玩家行为、1.21.11/26.3 六平台的本批（2.1.17）玩家行为回归、客户端（非 bot）交互。
 - 结论：GitHub Release 仍不标记为"完全验证发布"；可将 1.21.1 构件标注为"启动+盾挡行为已验证"发布候选。
+
+## 2026-10-25 附魔抽样回归（fabric-1.21.1，bot 环境补充）
+- Immolate：PASS——8/8 次清除冷却后的近战命中均点燃目标（RCON Fire NBT 权威验证；bot 客户端 fire 元数据同步不可信，vanilla fire_aspect 对照确认）。
+- Sunder：行为符合设计——无甲目标加成为 0（bonus 随目标护甲点数缩放）；带甲目标的加成数值需属性精确的测试对象，bot 属性同步不可用，标 PARTIAL。
+- Thirst / Volley：bot 元数据（food/箭实体）不可测，1.21.1 保持 NOT_VERIFIED。

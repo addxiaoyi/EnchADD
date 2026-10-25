@@ -1,0 +1,24 @@
+# v2.1.17 fabric-1.21.1 enchant sample regression (mineflayer, 2026-10-25)
+
+## Immolate — PASS
+Server restart, fresh bots, single strike with immolate:2 sword.
+Fire NBT via RCON after strike: 8/8 strikes ignited the defender
+(probability 0.40/level-2 nominal; every cleared-cooldown strike
+triggered). Earlier 0/12 runs were a mineflayer client-side fire
+metadata sync issue (vanilla fire_aspect probe also read 0 via
+client, but RCON Fire=152s confirmed real ignition).
+
+## Sunder — behavior correct; bonus unmeasurable via bot
+Base axe damage with unarmored defender: 8.17 (full hit).
+Sunder II vs same unarmored defender: 8.17 — expected, since the
+Sunder bonus scales with target armor points (0 armor -> 0 bonus).
+Defender armor equip succeeds (Inventory slots 100-103) but bot
+attribute sync reports generic.armor=0.0, so armor-scaled bonus and
+armor damage reduction cannot be measured through this harness.
+Sunder needs an armored, attribute-accurate test subject (real
+client or a server-side synthetic armor check) to fully verify.
+
+## Thirst / Volley — not completed
+Thirst drains food (bot food metadata unreliable, same sync issue).
+Volley needs projectile count observation; arrow entity tracking via
+RCON is not available. Both remain NOT_VERIFIED for 1.21.1.
