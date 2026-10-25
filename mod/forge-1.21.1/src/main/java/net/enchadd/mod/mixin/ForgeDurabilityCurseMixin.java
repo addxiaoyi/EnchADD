@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ItemStack.class)
 abstract class ForgeDurabilityCurseMixin {
-    @ModifyVariable(method = "processDurabilityChange(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;)I", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+    @ModifyVariable(method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At("HEAD"), argsOnly = true, ordinal = 0)
     private int enchadd$adjustDurability(int amount, int originalAmount, ServerLevel level, ServerPlayer player) {
         return DurabilityCurseBehavior.adjust((ItemStack) (Object) this, player, amount);
     }

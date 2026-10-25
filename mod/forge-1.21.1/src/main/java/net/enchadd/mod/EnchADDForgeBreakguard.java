@@ -2,17 +2,20 @@ package net.enchadd.mod;
 
 import net.enchadd.mod.common.BreakguardBehavior;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 
 final class EnchADDForgeBreakguard {
     static void register() {
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.addListener(new EnchADDForgeBreakguard()::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(new EnchADDForgeBreakguard()::onShieldBlock);
     }
 
-    @SubscribeEvent
-    public void onHurt(LivingHurtEvent event) {
-        event.setAmount(BreakguardBehavior.adjustIncoming(
-                event.getEntity(), event.getSource(), event.getAmount()));
+    // ShieldBlockEvent fires after vanilla shield absorption; lowering blockedDamage
+    // converts the Breakguard bonus into damage the defender still takes.
+    private void onShieldBlock(ShieldBlockEvent event) {
+        float reduced = BreakguardBehavior.reduceBlockedAmount(
+                event.getEntity(), event.getDamageSource(), event.getOriginalBlockedDamage(), event.getBlockedDamage());
+        if (reduced < event.getBlockedDamage()) {
+            event.setBlockedDamage(reduced);
+        }
     }
 }
