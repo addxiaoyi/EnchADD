@@ -161,3 +161,6 @@ mod/forge-1.21.1/prod-run/
 mod/neoforge-1.21.1/prod-run/
 mod/cfr-out/
 mod/cfr-in/
+
+# Release binaries live on GitHub Releases, not in the repo
+release-assets/
