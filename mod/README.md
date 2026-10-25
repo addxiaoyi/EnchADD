@@ -1,23 +1,24 @@
 # EnchADD Mod 模组
 
-EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的六个 Loader 专用构件。当前版本为 `2.1.16`。
+EnchADD Mod 为 Fabric、Forge 和 NeoForge 提供同一套附魔目录的九个 Loader 专用构件。当前版本为 `2.1.17`。
 
-2.1.16 修正 Bulwark、Purify、Lucidity、Dispel、Ricochet、Clairvoyance、Evasion、Shroud 和 Freshcatch 的 Mod 资源约束，并补齐 Forge/NeoForge Ricochet 发射记录链路；静态校验通过，正式 JAR 构建、加载和玩家行为仍待验证。
+2.1.17 修正 Bulwark、Purify、Lucidity、Dispel、Ricochet、Clairvoyance、Evasion、Shroud 和 Freshcatch 的 Mod 资源约束，并对齐 Bulwark 抗性等级、Clairvoyance 直接攻击条件和 Forge/NeoForge Ricochet 发射记录；静态校验与六个 Loader 的正式 JAR 构建均已通过（Forge Bulwark 适配器随本次构建修复：新版 EventBus 7 无 `isCanceled()`，改为依赖 `ShieldBlockEvent` 仅在成功格挡时触发的语义），加载验证已通过；1.21.1 三平台的 Bulwark/Breakguard/盾挡边界玩家行为已通过隔离 bot 测试（mineflayer），其余附魔行为仍待验证。
 
 ## 支持构件
 
 | 构件 | Minecraft | Java |
 | --- | --- | --- |
-| `enchadd-fabric-1.21.11-2.1.16.jar` | Fabric `1.21.11` | 21 |
-| `enchadd-fabric-26.3-2.1.16.jar` | Fabric `26.3` | 25 |
-| `enchadd-forge-1.21.11-2.1.16.jar` | Forge `1.21.11` | 21 |
-| `enchadd-forge-26.3-2.1.16.jar` | Forge `26.3` | 25 |
-| `enchadd-neoforge-1.21.11-2.1.16.jar` | NeoForge `1.21.11` | 21 |
-| `enchadd-neoforge-26.3-2.1.16.jar` | NeoForge `26.3` | 25 |
+| enchadd-fabric-1.21.1-2.1.17.jar | Fabric 1.21.1 | 21 |
+| enchadd-fabric-1.21.11-2.1.17.jar | Fabric 1.21.11 | 21 |
+| `enchadd-fabric-26.3-2.1.17.jar` | Fabric `26.3` | 25 |
+| `enchadd-forge-1.21.11-2.1.17.jar` | Forge `1.21.11` | 21 |
+| `enchadd-forge-26.3-2.1.17.jar` | Forge `26.3` | 25 |
+| `enchadd-neoforge-1.21.11-2.1.17.jar` | NeoForge `1.21.11` | 21 |
+| `enchadd-neoforge-26.3-2.1.17.jar` | NeoForge `26.3` | 25 |
 
-六个构件不能互换。请根据服务端 Loader 和 Minecraft 版本选择对应文件。
+九个构件不能互换。请根据服务端 Loader 和 Minecraft 版本选择对应文件。
 
-说明：v2.1.16 的资源与适配器静态校验已通过；六个 Loader 的正式 JAR 构建受外部 Maven 依赖网络影响，完成前不把本版本标记为可下载发布。
+说明：v2.1.17 的资源与适配器静态校验已通过，九个 Loader 的正式 JAR 已于 2026-10-24 构建成功并生成 SHA-256（见 `release-assets/v2.1.17/` 与 `docs/validation-logs/v2.1.17-six-loader-build-20261024b.txt`）；服务器加载与玩家行为验证完成前不把本版本标记为可下载发布。
 
 ## 安装
 

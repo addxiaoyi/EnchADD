@@ -5,20 +5,20 @@ EnchADD 是一个 Minecraft 附魔项目，提供两套独立实现：
 - Paper 插件：面向 Paper 服务端。
 - Mod 模组：支持 Fabric、Forge 和 NeoForge。
 
-当前版本：`2.1.16`
+当前版本：`2.1.17`
 
 ## 选择发行版
 
 | 目标平台 | 文档 | 发布文件 |
 | --- | --- | --- |
-| Paper | [Paper 插件说明](#paper-插件) | `enchadd-plugin-2.1.16-protected.jar` |
-| Fabric / Forge / NeoForge | [Mod 模组说明](mod/README.md) | 六个 Loader 专用 JAR |
+| Paper | [Paper 插件说明](#paper-插件) | `enchadd-plugin-2.1.17-protected.jar` |
+| Fabric / Forge / NeoForge | [Mod 模组说明](mod/README.md) | 九个 Loader 专用 JAR |
 
-2.1.16 修正 Bulwark、Purify、Lucidity、Dispel、Ricochet、Clairvoyance、Evasion、Shroud 和 Freshcatch 的 Mod 资源约束，并补齐 Forge/NeoForge Ricochet 发射记录链路；六个平台静态资源与适配器校验通过，正式 JAR 构建和玩家行为仍待验证。
+2.1.17 修正 Bulwark、Purify、Lucidity、Dispel、Ricochet、Clairvoyance、Evasion、Shroud 和 Freshcatch 的 Mod 资源约束，并对齐 Bulwark 抗性等级、Clairvoyance 直接攻击条件和 Forge/NeoForge Ricochet 发射记录。六平台静态校验与六个 Loader 的正式 JAR 构建均已通过，玩家行为仍待验证。
 
 Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端类型选择其中一种，不要无目的地同时安装。
 
-说明：v2.1.16 已完成六个平台的资源与适配器静态校验；六个新的 Mod JAR 仍需等待外部 Maven 依赖恢复后重新构建，GitHub Release 资产尚未发布。
+说明：v2.1.17 已完成六个平台的资源与适配器静态校验，并于 2026-10-24 完成九个 Loader JAR 的正式构建（SHA-256 见 `release-assets/v2.1.17/SHA256SUMS.txt`）；服务器加载与玩家行为验证完成前，GitHub Release 资产暂不发布。
 
 ## Releases 下载
 
@@ -26,10 +26,10 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 
 下载时请根据文件名确认：
 
-- Paper 服务端：下载 `enchadd-plugin-2.1.16-protected.jar`。
-- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.16.jar`（或 `enchadd-fabric-26.3-2.1.16.jar`）。
-- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.16.jar`（或 `enchadd-forge-26.3-2.1.16.jar`）。
-- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.16.jar`（或 `enchadd-neoforge-26.3-2.1.16.jar`）。
+- Paper 服务端：下载 `enchadd-plugin-2.1.17-protected.jar`。
+- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.17.jar`（或 `enchadd-fabric-26.3-2.1.17.jar`）。
+- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.17.jar`（或 `enchadd-forge-26.3-2.1.17.jar`）。
+- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.17.jar`（或 `enchadd-neoforge-26.3-2.1.17.jar`）。
 - `1.21.11` 和 `26.3` 使用不同的 Loader 与 Java 版本，请勿混用。
 
 ## Paper 插件
@@ -38,7 +38,7 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 
 ### 安装
 
-1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载 `enchadd-plugin-2.1.16-protected.jar`。
+1. 从 [GitHub Releases](https://github.com/addxiaoyi/EnchADD/releases) 下载 `enchadd-plugin-2.1.17-protected.jar`。
 2. 将文件放入服务端的 `plugins/` 目录。
 3. 启动服务端并编辑 `plugins/EnchADD/config.yml`。
 

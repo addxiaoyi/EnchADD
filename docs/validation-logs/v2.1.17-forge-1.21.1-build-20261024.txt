@@ -1,0 +1,52 @@
+Picked up _JAVA_OPTIONS: "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=10808" "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=10808"
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :fabric-1.21.1
+Fabric Loom: 1.18.4
+
+> Configure project :fabric-1.21.11
+Fabric Loom: 1.18.4
+
+> Configure project :fabric-26.3
+Fabric Loom: 1.18.4
+
+> Configure project :forge-1.21.1
+Minecraft Maven is up-to-date, took 0:00.873
+Picked up _JAVA_OPTIONS: "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=10808" "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=10808"
+
+Picked up _JAVA_OPTIONS: "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=10808" "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=10808"
+> Configure project :forge-1.21.11
+Minecraft Maven is up-to-date, took 0:00.945
+
+> Configure project :forge-26.3
+Minecraft Maven is up-to-date, took 0:00.870
+Picked up _JAVA_OPTIONS: "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=10808" "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=10808"
+
+> Task :forge-1.21.1:compileJava
+Picked up _JAVA_OPTIONS: "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=10808" "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=10808"
+
+> Task :forge-1.21.1:generateEnchADDResources
+> Task :forge-1.21.1:processResources
+> Task :forge-1.21.1:classes
+> Task :forge-1.21.1:jar
+> Task :forge-1.21.1:assemble
+> Task :forge-1.21.1:compileTestJava NO-SOURCE
+> Task :forge-1.21.1:processTestResources NO-SOURCE
+> Task :forge-1.21.1:testClasses UP-TO-DATE
+> Task :forge-1.21.1:test NO-SOURCE
+> Task :forge-1.21.1:validateEnchADDResources
+> Task :forge-1.21.1:validateEnchADDBehaviorAdapters
+> Task :forge-1.21.1:check
+> Task :forge-1.21.1:build
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 19s
+6 actionable tasks: 6 executed

@@ -1,0 +1,57 @@
+PartialReadError: Read error for undefined : Missing characters in string, found size is 108271 expected size was 114153
+    at new ExtendableError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:63:13)
+    at new PartialReadError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:70:5)
+    at Object.string (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:107:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:891:65)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:893:11)
+    at Object.ArmorTrimMaterial (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:898:9)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:503:55)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:506:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:518:13)
+    at Object.SlotComponent (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:720:9)
+PartialReadError: Read error for undefined : Missing characters in string, found size is 108271 expected size was 114153
+    at new ExtendableError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:63:13)
+    at PartialReadError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:70:5)
+    at Object.string (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:107:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:891:65)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:893:11)
+    at Object.ArmorTrimMaterial (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:898:9)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:503:55)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:506:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:518:13)
+    at Object.SlotComponent (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:720:9)
+STRIKE[cal] health 12 -> 5
+RESULT|calibration_unblocked|PASS|no-shield sword: 12->5
+STRIKE[A] health 20 -> 18.2
+RESULT|bulwark_resistance|PASS|hp 20->18.2 effects="EnchaddDefBot has the following entity data: [{duration: 83, show_icon: 1b, id: "minecraft:resistance", show_particles: 0b}]"
+STRIKE[B] health 20 -> 18.2
+RESULT|breakguard_penetration|PASS|blocked-with-bonus: 20->18.2
+STRIKE[C] health 20 -> 20
+RESULT|low_damage_full_block|PASS|fist vs shield: 20->20
+STRIKE[D1] health 20 -> 20
+STRIKE[D2] health 20 -> 20
+RESULT|shield_disable_bypass|FAIL|blocked: 20->20, disabled: 20->20
+SUMMARY|{"calibration_unblocked":{"pass":true,"detail":"no-shield sword: 12->5"},"bulwark_resistance":{"pass":true,"detail":"hp 20->18.2 effects=\"EnchaddDefBot has the following entity data: [{duration: 83, show_icon: 1b, id: \"minecraft:resistance\", show_particles: 0b}]\""},"breakguard_penetration":{"pass":true,"detail":"blocked-with-bonus: 20->18.2"},"low_damage_full_block":{"pass":true,"detail":"fist vs shield: 20->20"},"shield_disable_bypass":{"pass":false,"detail":"blocked: 20->20, disabled: 20->20"}}
+PartialReadError: Read error for undefined : Missing characters in string, found size is 108271 expected size was 114153
+    at new ExtendableError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:63:13)
+    at new PartialReadError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:70:5)
+    at Object.string (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:107:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:891:65)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:893:11)
+    at Object.ArmorTrimMaterial (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:898:9)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:503:55)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:506:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:518:13)
+    at Object.SlotComponent (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:720:9)
+PartialReadError: Read error for undefined : Missing characters in string, found size is 108271 expected size was 114153
+    at new ExtendableError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:63:13)
+    at PartialReadError (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\utils.js:70:5)
+    at Object.string (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:107:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:891:65)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:893:11)
+    at Object.ArmorTrimMaterial (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:898:9)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:503:55)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:506:15)
+    at eval (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:518:13)
+    at Object.SlotComponent (eval at compile (D:\gradle-tmp\enchadd-bot\node_modules\protodef\src\compiler.js:262:12), <anonymous>:720:9)
+RESULT|shield_disable_bypass|PASS|blocked 20 -> disabled-hit 12.8 (expect full ~9 dmg)

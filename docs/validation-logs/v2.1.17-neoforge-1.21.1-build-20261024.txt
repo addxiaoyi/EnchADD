@@ -1,0 +1,107 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :fabric-1.21.1
+Fabric Loom: 1.18.4
+
+> Configure project :fabric-1.21.11
+Fabric Loom: 1.18.4
+
+> Configure project :fabric-26.3
+Fabric Loom: 1.18.4
+
+> Configure project :forge-1.21.11
+Minecraft Maven is up-to-date, took 0:00.983
+
+> Configure project :forge-26.3
+Minecraft Maven is up-to-date, took 0:00.819
+
+> Task :neoforge-1.21.1:createMinecraftArtifacts
+Loaded 145 artifacts from D:\qwq\..\Enchantio-master\mod\neoforge-1.21.1\build\tmp\createMinecraftArtifacts\nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  DL    https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  DL    https://piston-meta.mojang.com/v1/packages/1757c8b1fbfc6b638504e1f6cceb05893f7389d5/1.21.1.json
+ [1m[92mDONE [23;0m Completed [4mdownloadJson[23;0m in 1.83s
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+[1m*** Started working on [4mdownloadClientMappings[23;0m[23;0m
+  DL    https://piston-data.mojang.com/v1/objects/2244b6f072256667bcd9a73df124d6c58de77992/client.txt
+  DL    https://piston-data.mojang.com/v1/objects/30c73b1c5da787909b2f73340419fdf13b9def88/client.jar
+  DL    https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar
+ [1m[92mDONE [23;0m Completed [4mdownloadClientMappings[23;0m in 6.71s
+[1m*** Started working on [4mmergeMappings[23;0m[23;0m
+ RUN   Running external tool net.neoforged.installertools:installertools:2.1.2:fatjar
+ [1m[92mDONE [23;0m Completed [4mmergeMappings[23;0m in 1.83s
+ [1m[92mDONE [23;0m Completed [4mdownloadClient[23;0m in 8.64s
+[1m*** Started working on [4mstripClient[23;0m[23;0m
+ [1m[92mDONE [23;0m Completed [4mstripClient[23;0m in 2.13s
+ [1m[92mDONE [23;0m Completed [4mdownloadServer[23;0m in 16.80s
+[1m*** Started working on [4mextractServer[23;0m[23;0m
+ RUN   Running external tool net.neoforged.installertools:installertools:2.1.2:fatjar
+ [1m[92mDONE [23;0m Completed [4mextractServer[23;0m in 0.45s
+[1m*** Started working on [4mstripServer[23;0m[23;0m
+ [1m[92mDONE [23;0m Completed [4mstripServer[23;0m in 1.36s
+[1m*** Started working on [4mmerge[23;0m[23;0m
+ RUN   Running external tool net.neoforged:mergetool:2.0.3:fatjar
+ [1m[92mDONE [23;0m Completed [4mmerge[23;0m in 2.27s
+[1m*** Started working on [4mrename[23;0m[23;0m
+ RUN   Running external tool net.neoforged:AutoRenamingTool:2.0.3:all
+ [1m[92mDONE [23;0m Completed [4mrename[23;0m in 4.28s
+[1m*** Started working on [4mdecompile[23;0m[23;0m
+ RUN   Running external tool org.vineflower:vineflower:1.10.1
+ [1m[92mDONE [23;0m Completed [4mdecompile[23;0m in 22.78s
+[1m*** Started working on [4minject[23;0m[23;0m
+ [1m[92mDONE [23;0m Completed [4minject[23;0m in 2.27s
+[1m*** Started working on [4mpatch[23;0m[23;0m
+ RUN   Running external tool io.codechicken:DiffPatch:2.0.0.36:all
+ [1m[92mDONE [23;0m Completed [4mpatch[23;0m in 9.02s
+[1m*** Started working on [4mapplyNeoforgePatches[23;0m[23;0m
+ RUN   Running external tool io.codechicken:DiffPatch:2.0.0.36:all
+ [1m[92mDONE [23;0m Completed [4mapplyNeoforgePatches[23;0m in 3.80s
+[1m*** Started working on [4mtransformSources[23;0m[23;0m
+ RUN   Running external tool net.neoforged.jst:jst-cli-bundle:2.0.11
+ [1m[92mDONE [23;0m Completed [4mtransformSources[23;0m in 6.01s
+[1m*** Started working on [4mrecompile[23;0m[23;0m
+ 110 items on the compile classpath
+ 0 items on the sourcepath
+[1m*** Started working on [4msourcesWithNeoForge[23;0m[23;0m
+ Compiling 5364 source files
+ [1m[92mDONE [23;0m Completed [4msourcesWithNeoForge[23;0m in 3.97s
+Copied 0 resource files
+ [1m[92mDONE [23;0m Completed [4mrecompile[23;0m in 30.92s
+[1m*** Started working on [4mcompiledWithNeoForge[23;0m[23;0m
+ [1m[92mDONE [23;0m Completed [4mcompiledWithNeoForge[23;0m in 5.86s
+[1m*** Started working on [4msourcesAndCompiledWithNeoForge[23;0m[23;0m
+ [1m[92mDONE [23;0m Completed [4msourcesAndCompiledWithNeoForge[23;0m in 2.15s
+Total runtime: 111.99s
+
+
+> Task :neoforge-1.21.1:compileJava
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+
+> Task :neoforge-1.21.1:generateEnchADDResources
+> Task :neoforge-1.21.1:processResources
+> Task :neoforge-1.21.1:classes
+> Task :neoforge-1.21.1:jarJar NO-SOURCE
+> Task :neoforge-1.21.1:jar
+> Task :neoforge-1.21.1:assemble
+> Task :neoforge-1.21.1:compileTestJava NO-SOURCE
+> Task :neoforge-1.21.1:processTestResources NO-SOURCE
+> Task :neoforge-1.21.1:testClasses UP-TO-DATE
+> Task :neoforge-1.21.1:test NO-SOURCE
+> Task :neoforge-1.21.1:validateEnchADDResources
+> Task :neoforge-1.21.1:validateEnchADDBehaviorAdapters
+> Task :neoforge-1.21.1:check
+> Task :neoforge-1.21.1:build
+
+[Incubating] Problems report is available at: file:///D:/qwq/%E9%A1%B9%E7%9B%AE/Enchantio-master/mod/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 45s
+7 actionable tasks: 7 executed

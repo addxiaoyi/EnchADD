@@ -1,0 +1,36 @@
+const mineflayer = require('mineflayer')
+const { Rcon } = require('./rcon')
+async function wait(ms) { return new Promise(r => setTimeout(r, ms)) }
+async function main() {
+  const defender = mineflayer.createBot({ host: '127.0.0.1', port: 25565, username: 'EnchaddDefBot', auth: 'offline', version: '1.21.1' })
+  await new Promise((res, rej) => { defender.once('spawn', res); defender.once('error', rej) })
+  const attacker = mineflayer.createBot({ host: '127.0.0.1', port: 25565, username: 'EnchaddAtkBot', auth: 'offline', version: '1.21.1' })
+  await new Promise((res, rej) => { attacker.once('spawn', res); attacker.once('error', rej) })
+  await wait(3000)
+  const rcon = new Rcon(25575, 'enchadd'); await rcon.connect()
+  await rcon.cmd('op EnchaddDefBot'); await rcon.cmd('op EnchaddAtkBot'); await wait(300)
+  const hp = async () => parseFloat(/([\d.]+)f\s*$/.exec((await rcon.cmd('data get entity EnchaddDefBot Health')).trim())[1])
+  // 完全重置
+  await rcon.cmd('kill @e[type=!player]')
+  await rcon.cmd('effect clear EnchaddDefBot')
+  await rcon.cmd('attribute EnchaddDefBot minecraft:generic.max_health base set 20')
+  await rcon.cmd('effect give EnchaddDefBot minecraft:instant_health 1 20 true')
+  await rcon.cmd('item replace entity EnchaddDefBot weapon.offhand with minecraft:shield[minecraft:enchantments={levels:{"enchadd:bulwark":3}}]')
+  await rcon.cmd('item replace entity EnchaddAtkBot weapon.mainhand with minecraft:diamond_sword[minecraft:enchantments={levels:{"enchadd:breakguard":3}}]')
+  await rcon.cmd('tp EnchaddDefBot 500 78 500'); await rcon.cmd('tp EnchaddAtkBot 500.9 78 500')
+  await wait(1000)
+  console.log('PRE hp=', await hp())
+  // 持盾
+  await defender.lookAt(attacker.entity.position.offset(0, 1.2, 0), true)
+  defender.activateItem(true)
+  await wait(1500)
+  // 攻击
+  await attacker.lookAt(defender.entity.position.offset(0, 1.2, 0), true)
+  attacker.attack(defender.entity)
+  await wait(800)
+  console.log('POST hp=', await hp())
+  const eff = await rcon.cmd('data get entity EnchaddDefBot active_effects')
+  console.log('EFFECTS:', eff)
+  rcon.close(); defender.quit(); attacker.quit(); setTimeout(() => process.exit(0), 1200)
+}
+main().catch(e => { console.error('FATAL', e.message); process.exit(2) })

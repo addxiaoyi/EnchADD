@@ -1,5 +1,5 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '[7.0.40,8.0)'
+    id 'net.minecraftforge.gradle' version '[7.0.29,8.0)'
     id 'java'
 }
 

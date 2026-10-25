@@ -155,3 +155,9 @@ dist/
 /mod/cache-seed/
 /META-INF/
 /licenses/
+
+# 1.21.1 生产式服务器运行目录
+mod/forge-1.21.1/prod-run/
+mod/neoforge-1.21.1/prod-run/
+mod/cfr-out/
+mod/cfr-in/
