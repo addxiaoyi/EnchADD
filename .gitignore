@@ -165,3 +165,10 @@ mod/cfr-in/
 # Release binaries live on GitHub Releases, not in the repo
 release-assets/
 mod/fabric-1.21.11/prod-run/
+
+# build/test helper scripts (session-scoped)
+mod/patch-*.ps1
+mod/vb*.ps1
+mod/rs-*.ps1
+mod/run-*.ps1
+mod/settings.gradle.full
