@@ -1,7 +1,7 @@
 package net.enchadd.mod;
 import net.enchadd.mod.common.VolleyBehavior;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;

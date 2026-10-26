@@ -4,7 +4,7 @@ import net.enchadd.mod.common.ProjectileStatusBehavior;
 import net.enchadd.mod.common.RicochetBehavior;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;

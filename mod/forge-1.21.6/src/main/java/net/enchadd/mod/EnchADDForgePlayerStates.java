@@ -7,8 +7,8 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 final class EnchADDForgePlayerStates {
-    static void register() { TickEvent.PlayerTickEvent.Post.BUS.addListener(new EnchADDForgePlayerStates()::onTick); }
-    @SubscribeEvent public void onTick(TickEvent.PlayerTickEvent.Post event) {
-        if (event.player() instanceof ServerPlayer player) PlayerStateBehavior.tick(player);
+    static void register() { TickEvent.PlayerTickEvent.BUS.addListener(new EnchADDForgePlayerStates()::onTick); }
+    @SubscribeEvent public void onTick(TickEvent.PlayerTickEvent event) {
+        if (event.player instanceof ServerPlayer player) PlayerStateBehavior.tick(player);
     }
 }
