@@ -7,6 +7,7 @@ def catalogFile = rootProject.name == 'enchadd-mod'
 def generatedDir = layout.buildDirectory.dir('generated/enchadd-resources').get().asFile
 def is26_3 = project.projectDir.name.endsWith('26.3')
 def is1_21_1 = project.projectDir.name == 'fabric-1.21.1' || project.projectDir.name == 'forge-1.21.1' || project.projectDir.name == 'neoforge-1.21.1'
+def isG2 = project.projectDir.name.endsWith('1.21.2') || project.projectDir.name.endsWith('1.21.3') || project.projectDir.name.endsWith('1.21.5')
 def commonSourceRoot = new File(project.projectDir, is1_21_1 ? 'common-1.21.1/net/enchadd/mod/common' : '../common/src/main/java/net/enchadd/mod/common')
 def requirementType = is26_3 ? 'type' : 'condition'
 def requirement = { String type, Map fields = [:] -> [(requirementType): type] + fields }
@@ -120,7 +121,7 @@ def supportedItems = { String id ->
     }
     if (id == 'tideshell') return ['minecraft:nautilus_shell']
     if (spearIds.contains(id)) {
-        return is1_21_1 ? ['minecraft:trident'] : ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
+        return (is1_21_1 || isG2) ? legacyTagItems('weapon') : ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
                 'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
                 'minecraft:netherite_spear', 'minecraft:trident']
     }
@@ -301,7 +302,7 @@ tasks.register('generateEnchADDResources') {
         }
         def packMeta = is26_3
                 ? [pack: [description: 'EnchADD data pack', min_format: 121, max_format: 121]]
-                : (is1_21_1 ? [pack: [description: 'EnchADD data pack', pack_format: 48]] : [pack: [description: 'EnchADD data pack', min_format: [94, 1], max_format: 94]])
+        : (is1_21_1 ? [pack: [description: 'EnchADD data pack', pack_format: 48]] : (isG2 ? [pack: [description: 'EnchADD data pack', min_format: [71, 1], max_format: 71]] : [pack: [description: 'EnchADD data pack', min_format: [94, 1], max_format: 94]]))
         new File(generatedDir, 'pack.mcmeta').text = JsonOutput.prettyPrint(JsonOutput.toJson(packMeta)) + System.lineSeparator()
         def lang = new File(generatedDir, 'assets/enchadd/lang/en_us.json')
         lang.parentFile.mkdirs()
@@ -693,7 +694,7 @@ tasks.register('validateEnchADDBehaviorAdapters') {
                     'Fabric must register the Elytra rescue adapter'
             assert mixins.contains('BulwarkMixin')
             def bulwarkMixin = new File(project.projectDir, 'src/main/java/net/enchadd/mod/mixin/BulwarkMixin.java')
-            assert (is1_21_1 ? bulwarkMixin.text.contains('hurtCurrentlyUsedShield(F)V') && bulwarkMixin.text.contains('blocked > 0.0f') : bulwarkMixin.text.contains('method = "applyItemBlocking') && bulwarkMixin.text.contains('callback.getReturnValue() > 0.0f')):
+            assert ((isG2 ? bulwarkMixin.text.contains('method = "isDamageSourceBlocked"') && bulwarkMixin.text.contains('Boolean.TRUE.equals(callback.getReturnValue())') : (is1_21_1 ? bulwarkMixin.text.contains('hurtCurrentlyUsedShield(F)V') && bulwarkMixin.text.contains('blocked > 0.0f') : bulwarkMixin.text.contains('method = "applyItemBlocking') && bulwarkMixin.text.contains('callback.getReturnValue() > 0.0f')))):
                     'Fabric Bulwark must only trigger from a positive shield-blocked amount'
             assert entrypoint.text.contains('EnchADDFabricEvasion.init()')
             assert entrypoint.text.contains('EnchADDFabricProjectileStatus.init()')

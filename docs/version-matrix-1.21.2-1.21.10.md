@@ -30,3 +30,61 @@
 
 - 仓库中不存在任何 `fabric-1.21.1`/`forge-1.21.1`/`neoforge-1.21.1` 模块源码（`mod/settings.gradle` 仅 include 六个 1.21.11/26.3 模块；`mod/.gradle/loom-cache/projects/fabric-1.21.1` 只有空目录残留）。因此“重试 1.21.1 Fabric 校验与构建”和“隔离 Forge 1.21.1 配置”两个待办的前置条件不成立——不是 Maven 或 Gradle 阻塞，而是模块本身从未进入当前源码树。1.21.1 需要独立模块（pack_format 48/65 世代、fabric-api ≤0.116.x+1.21.1、NeoForge 21.1.x ≤21.1.264、Forge ≤52.x）。
 - 三个 Maven 均已恢复（HTTP 200）：fabric-api `0.116.17+1.21.1` 可解析，NeoForge `21.1.x` 元数据可解析。若后续决定重建 1.21.1 模块，网络条件已具备；在重建之前，不恢复任何 1.21.1 支持声明（遵守约定）。
+
+## 2026-10-25 适配器世代图谱（mappings 逐版本验证）
+
+基于 Mojang 官方 client mappings 逐版本扫描（scan-mappings.ps1 可复现）：
+
+| 断点 | 1.21.1 | 1.21.2-1.21.5 | 1.21.6-1.21.10 | 1.21.11/26.3 |
+| --- | --- | --- | --- | --- |
+| LivingEntity 伤害入口 | `hurt(DamageSource,float)` | `hurtServer(ServerLevel,DamageSource,float)` ✓ | 同左 ✓ | 同左 ✓ |
+| `applyItemBlocking` | ✗ | ✗ | ✓（1.21.6 引入） | ✓ |
+| `isDamageSourceBlocked` | ✓（public） | ✓（public） | ✗（1.21.6 移除/收窄） | ✗ |
+| `Identifier` vs `ResourceLocation` | ResourceLocation | ResourceLocation | ResourceLocation | **Identifier**（1.21.11 改名） |
+| `MobEffects` 常量名 | 新名（MOVEMENT_SPEED 等） | 新名 | 新名 | 新名 |
+| `ItemCooldowns` 键 | Item | ItemStack | ItemStack | Item |
+| `ItemStack.processDurabilityChange` | ✗（用 hurtAndBreak(II…)） | ✓ | ✓ | ✗（签名变更，用 hurtAndBreak(II…)） |
+| `ItemStack.hurtAndBreak` 签名 | `(int,LivingEntity,EquipmentSlot)` 含双 int 重载 | `(int,int?,ServerLevel,ServerPlayer,Consumer)` | 同左 | `(int,ServerLevel,ServerPlayer,Consumer)` |
+| `Consumable.onConsume` | ✗（组件不存在） | ✓ | ✓ | ✓ |
+| `MobEffectInstance.withScaledDuration` | ✗ | ✗ | ✗ | ✓ |
+| `Level.recipeAccess` | ✗（getRecipeManager） | ✓ | ✓ | ✓ |
+| `LivingEntity.getLastHurtByPlayer` | ✗（getKillCredit） | ✓ | ✓ | ✓ |
+| `TeleportTransition` | ✗（DimensionTransition） | ✓ | ✓ | ✓ |
+| `Player.findRespawnPositionAndUseSpawnBlock` | ✗（PlayerList 上） | ✓（Player 上） | ✓ | ✓ |
+| 原版 spear 物品（lancer 组） | ✗ → fallback trident | ✗ → fallback trident | ✗ → fallback trident | ✓ 原版存在 |
+| 原版 copper 工具/甲 | ✗ | ✗ | ✗（1.21.9 无）| ✗（26.x 才有——copper_spear 引用仅 26.3 世代安全） |
+| PALE_OAK 方块 | ✗ | ✓（1.21.2 引入） | ✓ | ✓ |
+
+### 推广结论
+- **世代 2/3（1.21.2-1.21.10）共用一套源码**：与 1.21.11 模块的差异只有 ResourceLocation 命名、ItemCooldowns 键型、processDurabilityChange(II) 签名、Lucidity withScaledDuration 手动展开、spear fallback、（1.21.2-1.21.5 追加）Bulwark/Breakguard 走 isDamageSourceBlocked、pack_format。
+- **1.21.6-1.21.10 与 1.21.11 的 mixin 断点几乎一致**（applyItemBlocking 存在），仅命名与 DurabilityCurse 不同。
+- pack_format：57/57/61/71/80/81/81/88/88（1.21.2→1.21.10）。
+
+## 2026-10-25 平台可用性与模块规划
+
+Loader 官方支持矩阵（1.21.2-1.21.10）：
+
+| MC | Fabric | Forge | NeoForge |
+| --- | --- | --- | --- |
+| 1.21.2 | ✓ 0.106.1 | ✗（跳过） | ✗（跳过） |
+| 1.21.3 | ✓ | 53.1.16 | 21.3.100 |
+| 1.21.4 | ✓ | 54.1.22 | 21.4.161 |
+| 1.21.5 | ✓ | 55.1.18 | 21.5.101 |
+| 1.21.6 | ✓ | 56.0.0 | ✗（跳过） |
+| 1.21.7 | ✓ | 57.0.0 | ✗（跳过） |
+| 1.21.8 | ✓ | 58.1.26 | 21.8.57 |
+| 1.21.9 | ✓ | 59.0.5 | ✗（跳过） |
+| 1.21.10 | ✓ | 60.1.18 | 21.10.64 |
+
+### 模块规划（世代覆盖式，6 个新模块）
+
+| 新模块 | 覆盖 MC | 世代断点 | Forge/NeoForge 事件世代 | pack_format |
+| --- | --- | --- | --- | --- |
+| fabric-1.21.2 | 1.21.2-1.21.5 | G2 | （无 Forge 依赖面） | 71（末端小版本） |
+| forge-1.21.3 | 1.21.3-1.21.5 | G2 | 经典总线（同 52） | 71 |
+| neoforge-1.21.3 | 1.21.3-1.21.5 | G2 | NeoForge 21.3-21.5 | 71 |
+| fabric-1.21.6 | 1.21.6-1.21.10 | G3 | （无 Forge 依赖面） | 88 |
+| forge-1.21.6 | 1.21.6-1.21.10 | G3 | EventBus 7（同 61） | 88 |
+| neoforge-1.21.8 | 1.21.8-1.21.10 | G3 | NeoForge 21.8/21.10 | 88 |
+
+JAR 内 minecraft depends 范围声明世代区间；pack_format 取世代末端值（旧小版本加载时仅提示不阻断）。
