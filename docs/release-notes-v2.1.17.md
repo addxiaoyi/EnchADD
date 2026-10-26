@@ -72,3 +72,19 @@
 - Immolate：PASS——8/8 次清除冷却后的近战命中均点燃目标（RCON Fire NBT 权威验证；bot 客户端 fire 元数据同步不可信，vanilla fire_aspect 对照确认）。
 - Sunder：行为符合设计——无甲目标加成为 0（bonus 随目标护甲点数缩放）；带甲目标的加成数值需属性精确的测试对象，bot 属性同步不可用，标 PARTIAL。
 - Thirst / Volley：bot 元数据（food/箭实体）不可测，1.21.1 保持 NOT_VERIFIED。
+
+## 2026-10-26：forge-1.21.6 构建完成——1.21.x 全版本覆盖达成
+
+- mavenizer 1.21.6-56.0.9 管线完成（vineflower-1.11.1 与 mcp_config zip 的损坏缓存用 curl 完整下载修复后通过）。
+- forge-1.21.6 JAR 已构建并上传（SHA-256 见 SHA256SUMS.txt）；PlayerTick 适配器采用经典事件 + END-phase 过滤。
+- **最终覆盖：14 个 Loader 组合，1.21.1-1.21.11 + 26.3 全版本**：
+
+| MC 版本 | Fabric | Forge | NeoForge |
+| --- | --- | --- | --- |
+| 1.21.1 | ✓ | ✓ 52.1.20 | ✓ 21.1.264 |
+| 1.21.2-1.21.4 | ✓ fabric-1.21.2 | ✓ forge-1.21.3 (53.1.16) | ✓ neoforge-1.21.3 (21.3.100) |
+| 1.21.5-1.21.10 | ✓ fabric-1.21.6 | ✓ forge-1.21.6 (56.0.9) | ✓ neoforge-1.21.8 (21.8.57，覆盖 21.8/21.10) |
+| 1.21.11 | ✓ | ✓ 61.1.1 | ✓ 21.11.45 |
+| 26.3 | ✓ | ✓ 66.0.9 | ✓ |
+
+- 未发布 loader 版本（1.21.2 无 Forge/NeoForge，1.21.6/1.21.7/1.21.9 无 NeoForge）为上游官方跳版，非本项目缺口。
