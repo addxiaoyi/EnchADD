@@ -1,0 +1,12 @@
+#General configuration settings
+[general]
+	#A config option to help developers find known legacy modded tags that have common convention equivalents when running on integrated server. Defaults to OFF.
+	#Allowed Values: OFF, ONLY_IN_DEV_ENV, ALWAYS
+	logLegacyTagWarnings = "OFF"
+	#Maximum size to use to store the channel list for a network connection.
+	#The other end of the connection may send as many channels as it wishes.
+	#Some malicious actors may use this to use up all your memory causing OutOfMemoryException
+	#A sane default is 1KB (1024), but may need to be expanded for larger modpacks.
+	#Forge will auto-adjust this if mods register their channels using our channel manager.
+	#Range: 1 ~ 9223372036854775807
+	channelListLimit = 1024

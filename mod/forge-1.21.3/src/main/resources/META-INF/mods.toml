@@ -7,13 +7,16 @@ version="${version}"
 displayName="EnchADD"
 description='''EnchADD custom enchantments.'''
 [[dependencies.enchadd]]
-versionRange="[53,)"
-ordering="NONE"
-side="BOTH"
+    modId="forge"
+    type="required"
+    mandatory=true
+    versionRange="[53,)"
+    ordering="NONE"
+    side="BOTH"
 [[dependencies.enchadd]]
-modId="minecraft"
-type="required"
-mandatory=true
-versionRange="[1.21.3,1.21.6)"
-ordering="NONE"
-side="BOTH"
+    modId="minecraft"
+    type="required"
+    mandatory=true
+    versionRange="[1.21.3,1.21.6)"
+    ordering="NONE"
+    side="BOTH"

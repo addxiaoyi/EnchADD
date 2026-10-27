@@ -8,7 +8,7 @@ def generatedDir = layout.buildDirectory.dir('generated/enchadd-resources').get(
 def is26_3 = project.projectDir.name.endsWith('26.3')
 def is1_21_1 = project.projectDir.name == 'fabric-1.21.1' || project.projectDir.name == 'forge-1.21.1' || project.projectDir.name == 'neoforge-1.21.1'
 def isG2 = project.projectDir.name.endsWith('1.21.2') || project.projectDir.name.endsWith('1.21.3')
-def isG3int = project.projectDir.name.endsWith('1.21.6') || project.projectDir.name.endsWith('1.21.7') || project.projectDir.name.endsWith('1.21.9')
+def isG3int = project.projectDir.name.endsWith('1.21.6') || project.projectDir.name.endsWith('1.21.7') || project.projectDir.name.endsWith('1.21.8') || project.projectDir.name.endsWith('1.21.9') || project.projectDir.name.endsWith('1.21.10')
 def commonSourceRoot = new File(project.projectDir, is1_21_1 ? 'common-1.21.1/net/enchadd/mod/common' : '../common/src/main/java/net/enchadd/mod/common')
 def requirementType = is26_3 ? 'type' : 'condition'
 def requirement = { String type, Map fields = [:] -> [(requirementType): type] + fields }
