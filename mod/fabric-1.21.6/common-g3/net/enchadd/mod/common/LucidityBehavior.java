@@ -31,7 +31,7 @@ public final class LucidityBehavior {
             return effect;
         }
         double reduction = Math.min(MAX_REDUCTION, REDUCTION_PER_LEVEL * level);
-        MobEffectInstance adjusted = effect.withScaledDuration((float) (1.0 - reduction));
+        MobEffectInstance adjusted = new MobEffectInstance(effect.getEffect(), Math.max(1, (int) (effect.getDuration() * (1.0 - reduction))), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon());
         return adjusted.getDuration() < effect.getDuration() ? adjusted : effect;
     }
 

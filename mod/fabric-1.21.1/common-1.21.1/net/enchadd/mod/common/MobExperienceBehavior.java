@@ -67,3 +67,5 @@ public final class MobExperienceBehavior {
         return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("enchadd", id));
     }
 }
+
+
