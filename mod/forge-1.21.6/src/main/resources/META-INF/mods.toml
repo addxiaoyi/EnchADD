@@ -17,6 +17,6 @@ description='''EnchADD custom enchantments.'''
     modId="minecraft"
     type="required"
     mandatory=true
-    versionRange="[1.21.5,1.21.11)"
+    versionRange="[1.21.6,1.21.11)"
     ordering="NONE"
     side="BOTH"

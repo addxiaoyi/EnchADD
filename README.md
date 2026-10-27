@@ -27,9 +27,9 @@ Paper 插件和 Mod 是两套独立的运行时实现。请根据你的服务端
 下载时请根据文件名确认：
 
 - Paper 服务端：下载 `enchadd-plugin-2.1.17-protected.jar`。
-- Fabric 服务端：下载 `enchadd-fabric-1.21.11-2.1.17.jar`（或 `enchadd-fabric-26.3-2.1.17.jar`）。
-- Forge 服务端：下载 `enchadd-forge-1.21.11-2.1.17.jar`（或 `enchadd-forge-26.3-2.1.17.jar`）。
-- NeoForge 服务端：下载 `enchadd-neoforge-1.21.11-2.1.17.jar`（或 `enchadd-neoforge-26.3-2.1.17.jar`）。
+   - Fabric \u670d\u52a1\u7aef\uff1a\u6839\u636e\u7248\u672c\u9009\u62e9 `enchadd-fabric-1.21.1-2.1.17.jar`\u3001`enchadd-fabric-1.21.2-2.1.17.jar`\uff081.21.2-1.21.4\uff09\u3001`enchadd-fabric-1.21.6-2.1.17.jar`\uff081.21.5-1.21.10\uff09\u3001`enchadd-fabric-1.21.11-2.1.17.jar` \u6216 `enchadd-fabric-26.3-2.1.17.jar`\uff1b
+   - Forge \u670d\u52a1\u7aef\uff1a\u6839\u636e\u7248\u672c\u9009\u62e9 `enchadd-forge-1.21.1-2.1.17.jar`\u3001`enchadd-forge-1.21.3-2.1.17.jar`\uff081.21.3-1.21.5\uff09\u3001`enchadd-forge-1.21.6-2.1.17.jar`\uff081.21.6-1.21.10\uff09\u3001`enchadd-forge-1.21.11-2.1.17.jar` \u6216 `enchadd-forge-26.3-2.1.17.jar`\uff1b
+   - NeoForge \u670d\u52a1\u7aef\uff1a\u6839\u636e\u7248\u672c\u9009\u62e9 `enchadd-neoforge-1.21.1-2.1.17.jar`\u3001`enchadd-neoforge-1.21.3-2.1.17.jar`\uff081.21.3-1.21.5\uff09\u3001`enchadd-neoforge-1.21.8-2.1.17.jar`\uff081.21.8-1.21.10\uff09\u3001`enchadd-neoforge-1.21.11-2.1.17.jar` \u6216 `enchadd-neoforge-26.3-2.1.17.jar`\uff1b
 - `1.21.11` 和 `26.3` 使用不同的 Loader 与 Java 版本，请勿混用。
 
 ## Paper 插件
@@ -57,10 +57,19 @@ Mod 的六个构件并不通用，必须选择与服务端 Loader 和 Minecraft 
 
 | Loader | Minecraft | Java |
 | --- | --- | --- |
+| Fabric | `1.21.1` | 21 |
+| Fabric | `1.21.2-1.21.4` | 21 |
+| Fabric | `1.21.5-1.21.10` | 21 |
 | Fabric | `1.21.11` | 21 |
 | Fabric | `26.3` | 25 |
+| Forge | `1.21.1` | 21 |
+| Forge | `1.21.3-1.21.5` | 21 |
+| Forge | `1.21.6-1.21.10` | 21 |
 | Forge | `1.21.11` | 21 |
 | Forge | `26.3` | 25 |
+| NeoForge | `1.21.1` | 21 |
+| NeoForge | `1.21.3-1.21.5` | 21 |
+| NeoForge | `1.21.8-1.21.10` | 21 |
 | NeoForge | `1.21.11` | 21 |
 | NeoForge | `26.3` | 25 |
 
