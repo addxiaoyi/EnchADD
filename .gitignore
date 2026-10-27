@@ -173,3 +173,9 @@ mod/rs-*.ps1
 mod/run-*.ps1
 mod/settings.gradle.full
 mod/syntax-check.ps1
+
+# prod-run installer scripts and helpers
+mod/install-*.ps1
+mod/rb-*.ps1
+mod/run-prod-*.ps1
+mod/run-prod-*.cmd
