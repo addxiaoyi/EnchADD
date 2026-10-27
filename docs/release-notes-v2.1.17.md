@@ -100,3 +100,15 @@
 
 *mineflayer 4.39 对 1.21.2+ 协议握手 ECONNRESET/版本不匹配（与 1.21.11/26.3 一致）；行为回归需真实客户端或 mineflayer 协议层升级。
 启动与加载证据：`docs/validation-logs/v2.1.17-{fabric-1.21.2,fabric-1.21.6,forge-1.21.3,neoforge-1.21.8}-runserver-20261026.log`。
+
+## 2026-10-27：fabric-1.21.6 / forge-1.21.6 附魔注册验证
+
+通过 RCON 在运行中的服务器上验证 EnchADD 附魔注册表：
+
+| 验证项 | fabric-1.21.6 | forge-1.21.6 |
+| --- | --- | --- |
+| mod 数据包启用 | ✅ [mod:enchadd] | ✅ [mod:enchadd] |
+| 附魔命令接受合法目标 | ✅ Bulwark III on shield | ✅ Bulwark III on shield |
+| supported_items 约束拒绝非法目标 | ✅ Telepathy ≠ sword | ✅ Bulwark ≠ sword |
+
+证据：`docs/validation-logs/v2.1.17-{fabric,forge}-1.21.6-enchant-registry-20261027.log`
