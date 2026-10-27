@@ -9,6 +9,7 @@ def is26_3 = project.projectDir.name.endsWith('26.3')
 def is1_21_1 = project.projectDir.name == 'fabric-1.21.1' || project.projectDir.name == 'forge-1.21.1' || project.projectDir.name == 'neoforge-1.21.1'
 def isG2 = project.projectDir.name.endsWith('1.21.2') || project.projectDir.name.endsWith('1.21.3')
 def isG3int = project.projectDir.name.endsWith('1.21.6') || project.projectDir.name.endsWith('1.21.7') || project.projectDir.name.endsWith('1.21.8') || project.projectDir.name.endsWith('1.21.9') || project.projectDir.name.endsWith('1.21.10')
+def isLegacy = is1_21_1 || isG2 || isG3int
 def commonSourceRoot = new File(project.projectDir, is1_21_1 ? 'common-1.21.1/net/enchadd/mod/common' : '../common/src/main/java/net/enchadd/mod/common')
 def requirementType = is26_3 ? 'type' : 'condition'
 def requirement = { String type, Map fields = [:] -> [(requirementType): type] + fields }
@@ -78,13 +79,11 @@ def legacyTagItems = { String tag ->
 def groupTag = { group ->
     [shield: 'durability', chest: 'chest_armor', feet: 'foot_armor', armor: 'armor'][group?.key] ?: group?.key
 }
-def tagExp = { String tag -> (is1_21_1 || isG2 || isG3int) ? (enchadd1211TagItems[tag] as Set) : (tag in ["axes","swords"] ? "#minecraft:" + tag : "#minecraft:enchantable/" + tag) }
+def tagExp = { String tag -> (isLegacy) ? (enchadd1211TagItems[tag] as Set) : (tag in ["axes","swords"] ? "#minecraft:" + tag : "#minecraft:enchantable/" + tag) }
 def synthTagQueue = []
-def setTagSeq = 0
 def makeSynthTag = { List<String> tagRefs ->
-    setTagSeq = setTagSeq + 1
-    def key = "synth-" + setTagSeq
-    def values = tagRefs.collect { '#' + it.replaceFirst('^minecraft:', 'minecraft:') }
+    def key = "synth-" + tagRefs.sort().collect { it.replace("minecraft:", "").replaceAll("[^a-z0-9]", "-") }.join("-")
+    def values = tagRefs.collect { "#" + it }
     synthTagQueue << [key: key, values: values]
     return "#enchadd:" + key
 }
@@ -115,19 +114,19 @@ def supportedItems = { String id ->
     def catalogEntry = catalog.find { it[0] == id }
     if (catalogEntry?.size() > 2 && catalogEntry[2].trim()) {
         def raw = catalogEntry[2].split(';').collect { it.trim() }
-        if (is1_21_1 || isG2 || isG3int) return raw.collect { it.startsWith('#') ? legacyTagItems(it.substring(1).replace('minecraft:enchantable/','').replace('minecraft:','')) : it }.flatten().unique()
+        if (isLegacy) return raw.collect { it.startsWith('#') ? legacyTagItems(it.substring(1).replace('minecraft:enchantable/','').replace('minecraft:','')) : it }.flatten().unique()
         if (raw.size() == 1 && raw[0].startsWith('#')) return raw[0]
         if (raw.every { it.startsWith('#') }) return makeSynthTag(raw.collect { it.substring(1) })
         return raw
     }
     if (id == 'tideshell') return ['minecraft:nautilus_shell']
     if (spearIds.contains(id)) {
-        return (is1_21_1 || isG2 || isG3int) ? legacyTagItems('weapon') : ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
+        return (isLegacy) ? legacyTagItems('weapon') : ['minecraft:wooden_spear', 'minecraft:stone_spear', 'minecraft:copper_spear',
                 'minecraft:iron_spear', 'minecraft:golden_spear', 'minecraft:diamond_spear',
                 'minecraft:netherite_spear', 'minecraft:trident']
     }
     def group = itemGroups.find { it.value.contains(id) }
-    if (is1_21_1 || isG2 || isG3int) return legacyTagItems(group ? groupTag(group) : 'durability')
+    if (isLegacy) return legacyTagItems(group ? groupTag(group) : 'durability')
     def tagName = [shield: 'durability', chest: 'chest_armor', feet: 'foot_armor'][group?.key] ?: group?.key
     return group ? "#minecraft:enchantable/${tagName}" : '#minecraft:enchantable/durability'
 }
@@ -371,10 +370,10 @@ tasks.register('validateEnchADDResources') {
         assert (sunder.supported_items as Set) == axeItems:
                 'Sunder supported_items must match the Paper axe allowlist'
         def rebound = parser.parse(new File(enchantDir, 'rebound.json'))
-def reboundItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
+def reboundItems = (isLegacy) ? ((enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
         assert rebound.max_level == 3 && rebound.slots == ['hand']:
                 'Rebound must use the Paper max level and hand slot'
-        assert (is1_21_1 || isG2 || isG3int) ? (rebound.supported_items as Set) == reboundItems : (rebound.supported_items instanceof String && rebound.supported_items.startsWith('#enchadd:synth-')):
+        assert (isLegacy) ? (rebound.supported_items as Set) == reboundItems : (rebound.supported_items instanceof String && rebound.supported_items.startsWith('#enchadd:synth-')):
                 'Rebound must support Paper mining and durability item tags'
         def reboundEffect = rebound.effects['minecraft:item_damage'][0]
         assert reboundEffect.effect.type == 'minecraft:add'
@@ -491,16 +490,16 @@ def reboundItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['mining
                 'Debilitate must use the Paper chestplate item and slot restrictions'
         assert debilitate.effects == [:]: 'Debilitate effects are provided by the cooldown-aware event adapter'
         def fragility = parser.parse(new File(enchantDir, 'fragility.json'))
-        def fragilityItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['armor'] + enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/armor', '#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
+        def fragilityItems = (isLegacy) ? ((enchadd1211TagItems['armor'] + enchadd1211TagItems['mining'] + enchadd1211TagItems['durability']) as Set) : (['#minecraft:enchantable/armor', '#minecraft:enchantable/mining', '#minecraft:enchantable/durability'] as Set)
         assert fragility.max_level == 3 && fragility.slots == ['any']:
                 'Fragility must match Paper max level and all-slot eligibility'
-        assert (is1_21_1 || isG2 || isG3int) ? (fragility.supported_items as Set) == fragilityItems : (fragility.supported_items instanceof String && fragility.supported_items.startsWith('#enchadd:synth-')):
+        assert (isLegacy) ? (fragility.supported_items as Set) == fragilityItems : (fragility.supported_items instanceof String && fragility.supported_items.startsWith('#enchadd:synth-')):
                 'Fragility supported_items must match the Paper armor/mining/durability tags'
         def shatter = parser.parse(new File(enchantDir, 'shatter.json'))
-        def shatterItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['weapon'] + enchadd1211TagItems['mining']) as Set) : (['#minecraft:enchantable/weapon', '#minecraft:enchantable/mining'] as Set)
+        def shatterItems = (isLegacy) ? ((enchadd1211TagItems['weapon'] + enchadd1211TagItems['mining']) as Set) : (['#minecraft:enchantable/weapon', '#minecraft:enchantable/mining'] as Set)
         assert shatter.max_level == 3 && shatter.slots == ['hand']:
                 'Shatter must match Paper max level and main-hand eligibility'
-        assert (is1_21_1 || isG2 || isG3int) ? (shatter.supported_items as Set) == shatterItems : (shatter.supported_items instanceof String && shatter.supported_items.startsWith('#enchadd:synth-')):
+        assert (isLegacy) ? (shatter.supported_items as Set) == shatterItems : (shatter.supported_items instanceof String && shatter.supported_items.startsWith('#enchadd:synth-')):
                 'Shatter supported_items must match the Paper weapon/mining tags'
         assert fragility.effects == [:] && shatter.effects == [:]:
                 'Durability curses must use the shared durability adapter only'
@@ -525,9 +524,9 @@ def reboundItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['mining
         assert beheading.exclusive_set == '#enchadd:exclusive_set/beheading_looting'
         assert beheading.effects == [:]: 'Beheading must use the shared death adapter only'
         def decapitate = parser.parse(new File(enchantDir, 'decapitate.json'))
-        def decapitateItems = (is1_21_1 || isG2 || isG3int) ? ((enchadd1211TagItems['swords'] + enchadd1211TagItems['axes']) as Set) : (['#minecraft:swords', '#minecraft:axes'] as Set)
+        def decapitateItems = (isLegacy) ? ((enchadd1211TagItems['swords'] + enchadd1211TagItems['axes']) as Set) : (['#minecraft:swords', '#minecraft:axes'] as Set)
         assert decapitate.max_level == 3 && decapitate.slots == ['hand']
-        assert (is1_21_1 || isG2 || isG3int) ? (decapitate.supported_items as Set) == decapitateItems : (decapitate.supported_items instanceof String && decapitate.supported_items.startsWith('#enchadd:synth-')):
+        assert (isLegacy) ? (decapitate.supported_items as Set) == decapitateItems : (decapitate.supported_items instanceof String && decapitate.supported_items.startsWith('#enchadd:synth-')):
                 'Decapitate must match Paper sword/axe eligibility'
         assert decapitate.exclusive_set == executioner.exclusive_set
         def exclusiveSetDir = new File(generatedDir, 'data/enchadd/tags/enchantment/exclusive_set')
