@@ -88,3 +88,15 @@
 | 26.3 | ✓ | ✓ 66.0.9 | ✓ |
 
 - 未发布 loader 版本（1.21.2 无 Forge/NeoForge，1.21.6/1.21.7/1.21.9 无 NeoForge）为上游官方跳版，非本项目缺口。
+
+## 2026-10-27：新平台（1.21.2-1.21.10）验证状态补充
+
+| 验证项 | fabric-1.21.2 | fabric-1.21.6 | forge-1.21.3 | forge-1.21.6 | neoforge-1.21.8 |
+| --- | --- | --- | --- | --- | --- |
+| 生产/runServer 启动 Done | ✅ 4.364s | ✅ 5.274s | ✅ 2.792s | ✅ 2.377s | ✅ 5.359s |
+| 数据包加载（无 parse 错误） | ✅ | ✅ | ✅ | ✅ | ✅ |
+| EnchADD 初始化 | ✅ | ✅（STDOUT→DEBUG） | ✅（STDOUT→DEBUG） | ✅（STDOUT→DEBUG） | ✅ |
+| 盾挡行为 bot 回归 | ⚠️ 协议限制* | ⚠️ 协议限制* | ⚠️ 协议限制* | ⚠️ 协议限制* | ⚠️ 协议限制* |
+
+*mineflayer 4.39 对 1.21.2+ 协议握手 ECONNRESET/版本不匹配（与 1.21.11/26.3 一致）；行为回归需真实客户端或 mineflayer 协议层升级。
+启动与加载证据：`docs/validation-logs/v2.1.17-{fabric-1.21.2,fabric-1.21.6,forge-1.21.3,neoforge-1.21.8}-runserver-20261026.log`。
