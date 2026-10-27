@@ -1,0 +1,69 @@
+[10:17:38] [main/INFO]: Loading Minecraft 1.21.11 with Fabric Loader 0.20.1
+[10:17:38] [main/INFO]: Loading 42 mods:
+	- enchadd 2.1.17
+	- fabric-api 0.141.6+1.21.11
+	   |-- fabric-api-base 1.0.5+4ebb5c083e
+	   |-- fabric-api-lookup-api-v1 1.6.114+20dc27073e
+	   |-- fabric-biome-api-v1 17.1.1+4fc5413f3e
+	   |-- fabric-block-api-v1 1.1.10+4ebb5c083e
+	   |-- fabric-block-view-api-v2 1.0.39+4ebb5c083e
+	   |-- fabric-command-api-v2 2.4.7+6b42a6003e
+	   |-- fabric-content-registries-v0 10.2.14+4fc5413f3e
+	   |-- fabric-convention-tags-v1 2.1.55+7f945d5b3e
+	   |-- fabric-convention-tags-v2 2.17.3+8ef948ba3e
+	   |-- fabric-crash-report-info-v1 0.3.23+4ebb5c083e
+	   |-- fabric-data-attachment-api-v1 1.8.48+eed0806f3e
+	   |-- fabric-data-generation-api-v1 23.5.0+88d7da613e
+	   |-- fabric-dimensions-v1 4.0.28+4fc5413f3e
+	   |-- fabric-entity-events-v1 3.1.1+1d0ab4303e
+	   |-- fabric-events-interaction-v0 4.1.1+3b89ecf63e
+	   |-- fabric-game-rule-api-v1 2.0.3+4fc5413f3e
+	   |-- fabric-item-api-v1 11.6.0+67f17bb43e
+	   |-- fabric-item-group-api-v1 4.2.36+4fc5413f3e
+	   |-- fabric-lifecycle-events-v1 2.6.15+4ebb5c083e
+	   |-- fabric-loot-api-v2 3.0.73+3f89f5a53e
+	   |-- fabric-loot-api-v3 2.0.20+78c8b4663e
+	   |-- fabric-message-api-v1 6.1.12+4ebb5c083e
+	   |-- fabric-networking-api-v1 5.1.6+6b6d71a53e
+	   |-- fabric-object-builder-api-v1 21.1.40+4fc5413f3e
+	   |-- fabric-particles-v1 4.2.12+4fc5413f3e
+	   |-- fabric-recipe-api-v1 8.2.4+4ebb5c083e
+	   |-- fabric-registry-sync-v0 6.2.6+1718722b3e
+	   |-- fabric-rendering-fluids-v1 3.1.43+4ebb5c083e
+	   |-- fabric-resource-conditions-api-v1 5.0.35+4fc5413f3e
+	   |-- fabric-resource-loader-v0 3.3.4+4fc5413f3e
+	   |-- fabric-resource-loader-v1 1.0.10+78c8b4663e
+	   |-- fabric-screen-handler-api-v1 1.3.162+4fc5413f3e
+	   |-- fabric-serialization-api-v1 1.0.5+4ebb5c083e
+	   |-- fabric-tag-api-v1 1.3.0+88d7da613e
+	   |-- fabric-transfer-api-v1 6.0.25+4fc5413f3e
+	   \-- fabric-transitive-access-wideners-v1 7.1.0+014c8cec3e
+	- fabricloader 0.20.1
+	   \-- mixinextras 0.5.5
+	- java 25
+	- minecraft 1.21.11
+[10:17:38] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/D:/qwq/%e9%a1%b9%e7%9b%ae/Enchantio-master/mod/fabric-1.21.11/prod-run/libraries/net/fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[10:17:38] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[10:17:44] [main/INFO]: [STDOUT]: [EnchADD] Fabric mod initialized: EnchADD mod core 2.1.10; supported=ModVersion[major=1, minor=21, patch=11]..ModVersion[major=26, minor=3, patch=0]; customWeight=1
+[10:17:44] [main/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[10:17:46] [main/INFO]: Loaded 1470 recipes
+[10:17:46] [main/INFO]: Loaded 1584 advancements
+[10:17:46] [main/INFO]: Applied 0 biome modifications to 0 of 65 new biomes in 1.602 ms
+[10:17:46] [Server thread/INFO]: Starting minecraft server version 1.21.11
+[10:17:46] [Server thread/INFO]: Loading properties
+[10:17:46] [Server thread/INFO]: Default game type: SURVIVAL
+[10:17:46] [Server thread/INFO]: Generating keypair
+[10:17:46] [Server thread/INFO]: Starting Minecraft server on *:25568
+[10:17:46] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[10:17:46] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[10:17:46] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[10:17:46] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[10:17:46] [Server thread/INFO]: Preparing level "world"
+[10:17:46] [Server thread/INFO]: Loading 0 persistent chunks...
+[10:17:47] [Server thread/INFO]: Preparing spawn area: 100%
+[10:17:47] [Server thread/INFO]: Time elapsed: 44 ms
+[10:17:47] [Server thread/INFO]: Done (0.288s)! For help, type "help"
+[10:17:47] [Server thread/INFO]: Starting remote control listener
+[10:17:47] [Server thread/INFO]: Thread RCON Listener started
+[10:17:47] [Server thread/INFO]: RCON running on 0.0.0.0:25578
+[10:18:46] [Server thread/INFO]: Server empty for 60 seconds, pausing
