@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract class TenderstepMixin {
     @Inject(method = "fallOn", at = @At("HEAD"), cancellable = true)
     private void enchadd$protect(Level level, BlockState state, BlockPos pos, Entity entity,
-                                 double fallDistance, CallbackInfo callback) {
+                                 float fallDistance, CallbackInfo callback) {
         if (TenderstepBehavior.protects(entity, state)) callback.cancel();
     }
 }

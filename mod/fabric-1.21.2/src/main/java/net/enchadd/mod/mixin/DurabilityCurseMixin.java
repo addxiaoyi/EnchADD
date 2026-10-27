@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ItemStack.class)
 abstract class DurabilityCurseMixin {
     @ModifyVariable(method = "processDurabilityChange", at = @At("HEAD"), argsOnly = true, ordinal = 0)
-    private int enchadd$adjustDurability(int amount, ServerLevel level, ServerPlayer player) {
+    private int enchadd$adjustDurability(int amount, int originalAmount, ServerLevel level, ServerPlayer player) {
         return DurabilityCurseBehavior.adjust((ItemStack) (Object) this, player, amount);
     }
 }
