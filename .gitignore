@@ -172,3 +172,4 @@ mod/vb*.ps1
 mod/rs-*.ps1
 mod/run-*.ps1
 mod/settings.gradle.full
+mod/syntax-check.ps1
